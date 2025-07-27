@@ -1,0 +1,132 @@
+using UnityEngine;
+using DamageNumbersPro;
+
+public class Enemy : MonoBehaviour
+{
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rb;
+    private Animator anim;
+    private Collider2D col;
+
+    [SerializeField] bool rangedAttack;
+    [SerializeField] bool meleeAttack;
+
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float damage;
+    [SerializeField] private float health;
+    [SerializeField] private int experienceToGive;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float pushTime;
+    [SerializeField] private float dropChance;
+    [SerializeField] private GameObject itemDrop;
+
+    private float pushCounter;
+    private Vector3 direction;
+    private bool isAttacking = false;
+
+    [SerializeField] private DamageNumber numberPrefab;
+    [SerializeField] private GameObject destroyEffect;
+
+	void Awake()
+	{
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        col = GetComponent<Collider2D>();
+	}
+
+	void FixedUpdate()
+    {
+        if (PlayerController.Instance.gameObject.activeSelf)
+        {
+            float distance = Vector2.Distance(transform.position, PlayerController.Instance.transform.position);
+
+            if (meleeAttack && !isAttacking && distance <= attackRange)
+                {
+                    // Start attack
+                    Attack();
+                }
+
+            // face the player
+            if (PlayerController.Instance.transform.position.x > transform.position.x)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else
+            {
+                spriteRenderer.flipX = false;
+            }
+
+            // push back
+            if (pushCounter > 0)
+            {
+                pushCounter -= Time.deltaTime;
+                if (moveSpeed > 0)
+                {
+                    moveSpeed = -moveSpeed;
+                }
+                if (pushCounter <= 0)
+                {
+                    moveSpeed = Mathf.Abs(moveSpeed);
+                }
+            }
+            // move towards the player
+            direction = (PlayerController.Instance.transform.position - transform.position).normalized;
+            rb.linearVelocity = new Vector2(direction.x * moveSpeed, direction.y * moveSpeed);
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    // reaches player
+    // void OnCollisionStay2D(Collision2D collision)
+    // {
+    //     if (meleeAttack && collision.gameObject.CompareTag("Player"))
+    //     {
+    //         Attack();
+    //     }
+    // }
+
+    void Attack()
+    {
+        isAttacking = true;
+        anim.SetBool("isAttacking", true);
+        PlayerController.Instance.TakeDamage(damage);
+    }
+
+    public void OnAttackFinished()
+    {
+        isAttacking = false;
+        anim.SetBool("isAttacking", false);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        DamageNumber damageNumber = numberPrefab.Spawn(transform.position, damage);
+        pushCounter = pushTime;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        DropItem();
+        col.enabled = false;
+        moveSpeed = 0;
+        anim.SetTrigger("Dead"); //StateMachine destroys object after death animation
+        PlayerController.Instance.GetExperience(experienceToGive);
+        AudioController.Instance.PlayModifiedSound(AudioController.Instance.enemyDie);
+    }
+
+    void DropItem()
+    {
+        if (Random.Range(0f, 1f) < dropChance)
+        {
+            GameObject drop = Instantiate(itemDrop, transform.position, transform.rotation);
+        }
+    }
+}
