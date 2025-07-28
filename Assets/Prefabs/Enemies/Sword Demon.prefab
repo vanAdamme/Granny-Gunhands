@@ -110,7 +110,7 @@ MonoBehaviour:
   damage: 1
   health: 5
   experienceToGive: 1
-  attackRange: 4
+  attackRange: 1
   pushTime: 0.5
   dropChance: 0.1
   itemDrop: {fileID: 507035622283459166, guid: 30b80b825cd964c4f9ca2c0358867598, type: 3}
@@ -150,7 +150,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8284610609497238385}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

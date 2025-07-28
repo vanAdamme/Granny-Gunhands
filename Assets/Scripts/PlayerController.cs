@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DamageNumbersPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     [SerializeField] private InputAction playerControls;
+    [SerializeField] private DamageNumber numberPrefab;
+    public Collider2D col;
 
     [SerializeField] private float moveSpeed;
     public Vector2 playerMoveDirection;
@@ -35,6 +38,8 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        col = GetComponent<Collider2D>();
+
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -97,6 +102,7 @@ public class PlayerController : MonoBehaviour
         if (!isImmune)
         {
             playerHealth -= damage;
+            DamageNumber damageNumber = numberPrefab.Spawn(transform.position, damage);
             UIController.Instance.UpdateHealthSlider();
             SetImmune(true);
             if (playerHealth <= 0)

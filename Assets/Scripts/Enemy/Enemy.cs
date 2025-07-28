@@ -1,5 +1,6 @@
 using UnityEngine;
 using DamageNumbersPro;
+using Unity.VisualScripting;
 
 public class Enemy : MonoBehaviour
 {
@@ -80,18 +81,19 @@ public class Enemy : MonoBehaviour
     }
 
     // reaches player
-    // void OnCollisionStay2D(Collision2D collision)
-    // {
-    //     if (meleeAttack && collision.gameObject.CompareTag("Player"))
-    //     {
-    //         Attack();
-    //     }
-    // }
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (meleeAttack && collision.gameObject.CompareTag("Player"))
+        {
+            Attack();
+        }
+    }
 
     void Attack()
     {
         isAttacking = true;
         anim.SetBool("isAttacking", true);
+        if (col.IsTouching(PlayerController.Instance.col))
         PlayerController.Instance.TakeDamage(damage);
     }
 
