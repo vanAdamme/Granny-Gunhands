@@ -1,3 +1,4 @@
+using UnityEditor.XR;
 using UnityEngine;
 
 public class ArmController : MonoBehaviour
@@ -12,14 +13,14 @@ public class ArmController : MonoBehaviour
     [SerializeField] float fireRate = 0.5f;
 
     private float timeSinceLastShot = 0f;
-    Transform closestEnemy;
+    private bool canShoot = false;
+    // Transform closestEnemy;
     Animator anim;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         timeSinceLastShot = fireRate;
-
     }
 
     void Update()
@@ -27,7 +28,7 @@ public class ArmController : MonoBehaviour
         AimAtMouse();
         CheckTiming();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             Shoot();
         }
@@ -48,20 +49,28 @@ public class ArmController : MonoBehaviour
         timeSinceLastShot += Time.deltaTime;
         if (timeSinceLastShot >= fireRate)
         {
-            timeSinceLastShot = 0;
+            canShoot = true;
+            // timeSinceLastShot = 0;
         }
     }
 
     void Shoot()
     {
-        var muzzleGo = Instantiate(muzzle, muzzlePosition.position, transform.rotation);
-        muzzleGo.transform.SetParent(transform);
-        Destroy(muzzleGo, 0.5f);
+        if (canShoot)
+        {
+            var muzzleGo = Instantiate(muzzle, muzzlePosition.position, transform.rotation);
+            muzzleGo.transform.SetParent(transform);
+            Destroy(muzzleGo, 0.5f);
 
-        var projectileGo = Instantiate(projectile, muzzlePosition.position, transform.rotation);
-        Destroy(projectileGo, 3); // make variable
+            var projectileGo = Instantiate(projectile, muzzlePosition.position, transform.rotation);
+            Destroy(projectileGo, 3); // make variable
+
+            timeSinceLastShot = 0;
+            canShoot = false;
+        }
     }
 
+/*
     void FindClosestEnemy()
     {
         closestEnemy = null;
@@ -90,4 +99,5 @@ public class ArmController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }
     }
+*/
 }

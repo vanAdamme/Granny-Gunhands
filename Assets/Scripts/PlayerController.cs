@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Item")
+            if (other.gameObject.CompareTag("Item"))
             {
                 GetCoin();
                 Destroy(other.gameObject);
@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        UIController.Instance.LevelUpPanelOpen();
+        // UIController.Instance.LevelUpPanelOpen();
     }
 
     private void AddWeapon(int index)

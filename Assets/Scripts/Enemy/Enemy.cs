@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
 	{
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        col = GetComponent<Collider2D>();
+        // col = GetComponent<Collider2D>();
 	}
 
 	private void Start()
@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
             if (meleeAttack && !isAttacking && distance <= attackRange)
                 {
                     // Start attack
-                    Attack();
+                    //Attack();
                 }
 
             // face the player
@@ -91,18 +91,17 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerHitbox"))
         {
-            Debug.Log("player hit");
+            PlayerController.Instance.TakeDamage(damage);
         }
 	}
 
-
-	void Attack()
-    {
-        isAttacking = true;
-        anim.SetBool("isAttacking", true);
-        if (col.IsTouching(PlayerController.Instance.col))
-        PlayerController.Instance.TakeDamage(damage);
-    }
+	// void Attack()
+    // {
+    //     isAttacking = true;
+    //     anim.SetBool("isAttacking", true);
+    //     if (col.IsTouching(PlayerController.Instance.col))
+    //     PlayerController.Instance.TakeDamage(damage);
+    // }
 
     public void OnAttackFinished()
     {
@@ -134,9 +133,11 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         DropItem();
-        col.enabled = false;
-        moveSpeed = 0;
-        anim.SetTrigger("Dead"); //StateMachine destroys object after death animation
+        // col.enabled = false;
+        // moveSpeed = 0;
+        // anim.SetTrigger("Dead"); //StateMachine destroys object after death animation
+        Destroy(gameObject);
+        Instantiate(destroyEffect, transform.position, transform.rotation);
         PlayerController.Instance.GetExperience(experienceToGive);
         AudioController.Instance.PlayModifiedSound(AudioController.Instance.enemyDie);
     }
