@@ -1,6 +1,5 @@
 using UnityEngine;
 using DamageNumbersPro;
-using Unity.VisualScripting;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] bool rangedAttack;
     [SerializeField] bool meleeAttack;
+    [SerializeField] bool touchAttack;
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float damage;
@@ -28,11 +28,18 @@ public class Enemy : MonoBehaviour
     [SerializeField] private DamageNumber numberPrefab;
     [SerializeField] private GameObject destroyEffect;
 
+    private DamageFlash _damageFlash;
+
 	void Awake()
 	{
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
+	}
+
+	private void Start()
+	{
+        _damageFlash = GetComponent<DamageFlash>();
 	}
 
 	void FixedUpdate()
@@ -80,16 +87,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // reaches player
-    void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (meleeAttack && collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerHitbox"))
         {
-            Attack();
+            Debug.Log("player hit");
         }
-    }
+	}
 
-    void Attack()
+
+	void Attack()
     {
         isAttacking = true;
         anim.SetBool("isAttacking", true);
@@ -105,13 +112,23 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        // take damage
         health -= damage;
+
+        // damage popup
         DamageNumber damageNumber = numberPrefab.Spawn(transform.position, damage);
+
+        // push enemy back
         pushCounter = pushTime;
+
+        // dead?
         if (health <= 0)
         {
             Die();
         }
+
+        // damage flash
+        _damageFlash.CallDamageFlash();
     }
 
     void Die()

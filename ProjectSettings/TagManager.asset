@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Item
+  - PlayerHitBox
   layers:
   - Default
   - TransparentFX
@@ -14,10 +15,10 @@ TagManager:
   - Water
   - UI
   - Player
+  - PlayerFeet
+  - PlayerHitbox
   - Enemies
   - Projectiles
-  - 
-  - 
   - 
   - 
   - 

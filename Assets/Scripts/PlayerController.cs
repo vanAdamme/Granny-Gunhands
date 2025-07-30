@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
         AddWeapon(Random.Range(0, inactiveWeapons.Count));
     }
 
-    // Update is called once per frame
     void Update()
     {
         float inputX = Input.GetAxisRaw("Horizontal");
@@ -79,7 +78,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("moving", true);
             animator.SetFloat("moveX", inputX);
             animator.SetFloat("moveY", inputY);
-            lastMoveDirection = playerMoveDirection;
+            // lastMoveDirection = playerMoveDirection;
         }
 
         if (immunityTimer > 0)
@@ -101,10 +100,10 @@ public class PlayerController : MonoBehaviour
     {
         if (!isImmune)
         {
+            SetImmune(true);
             playerHealth -= damage;
             DamageNumber damageNumber = numberPrefab.Spawn(transform.position, damage);
             UIController.Instance.UpdateHealthSlider();
-            SetImmune(true);
             if (playerHealth <= 0)
             {
                 gameObject.SetActive(false);

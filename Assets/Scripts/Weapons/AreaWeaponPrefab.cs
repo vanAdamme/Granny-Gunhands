@@ -12,7 +12,6 @@ public class AreaWeaponPrefab : MonoBehaviour
     void Start()
     {
         weapon = GameObject.Find("Area Weapon").GetComponent<AreaWeapon>();
-        //Destroy(gameObject, weapon.duration);
         targetSize = Vector3.one * weapon.stats[weapon.weaponLevel].range;
         transform.localScale = Vector3.zero;
         timer = weapon.stats[weapon.weaponLevel].duration;
