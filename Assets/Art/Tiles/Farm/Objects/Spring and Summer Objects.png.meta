@@ -220,12 +220,12 @@ TextureImporter:
       name: Spring and Summer Objects_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 130
-        width: 48
-        height: 78
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -330,10 +330,10 @@ TextureImporter:
       name: Spring and Summer Objects_5
       rect:
         serializedVersion: 2
-        x: 49
-        y: 129
-        width: 14
-        height: 9
+        x: 48
+        y: 128
+        width: 16
+        height: 15
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -352,10 +352,10 @@ TextureImporter:
       name: Spring and Summer Objects_6
       rect:
         serializedVersion: 2
-        x: 66
-        y: 129
-        width: 13
-        height: 13
+        x: 64
+        y: 128
+        width: 16
+        height: 15
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -375,9 +375,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 80
-        y: 113
+        y: 112
         width: 16
-        height: 30
+        height: 31
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -441,9 +441,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 181
-        y: 112
+        y: 144
         width: 22
-        height: 58
+        height: 26
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -462,12 +462,12 @@ TextureImporter:
       name: Spring and Summer Objects_11
       rect:
         serializedVersion: 2
-        x: 0
-        y: 112
-        width: 19
+        x: 48
+        y: 96
+        width: 16
         height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -485,9 +485,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 96
-        width: 32
-        height: 32
+        y: 112
+        width: 16
+        height: 16
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -572,10 +572,10 @@ TextureImporter:
       name: Spring and Summer Objects_16
       rect:
         serializedVersion: 2
-        x: 81
+        x: 80
         y: 96
-        width: 14
-        height: 15
+        width: 16
+        height: 16
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1096,6 +1096,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Spring and Summer Objects_40
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b325b52a8bd663499553709bb25f626
+      internalID: -327762689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring and Summer Objects_41
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 112
+        width: 22
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03d3baa9f8d27f344ae459de728cc13d
+      internalID: 389355596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -1147,6 +1191,8 @@ TextureImporter:
       Spring and Summer Objects_38: 1454608908
       Spring and Summer Objects_39: 2018424165
       Spring and Summer Objects_4: -72069424
+      Spring and Summer Objects_40: -327762689
+      Spring and Summer Objects_41: 389355596
       Spring and Summer Objects_5: -639138881
       Spring and Summer Objects_6: 267457672
       Spring and Summer Objects_7: -994553556

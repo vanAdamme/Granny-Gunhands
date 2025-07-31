@@ -1,5 +1,11 @@
-using UnityEditor.XR;
+// using UnityEditor.XR;
 using UnityEngine;
+
+public enum FireButton
+{
+    LeftClick = 0,
+    RightClick = 1
+}
 
 public class ArmController : MonoBehaviour
 {
@@ -9,12 +15,15 @@ public class ArmController : MonoBehaviour
     [SerializeField] GameObject projectile;
 
     [Header("Config")]
-    [SerializeField] float fireDistance = 10;
+    // [SerializeField] float fireDistance = 10;
     [SerializeField] float fireRate = 0.5f;
+
+    [SerializeField] private FireButton fireButton;
 
     private float timeSinceLastShot = 0f;
     private bool canShoot = false;
-    // Transform closestEnemy;
+    Transform closestEnemy;
+        [SerializeField] GameObject grandChild;
     Animator anim;
 
     void Start()
@@ -28,10 +37,13 @@ public class ArmController : MonoBehaviour
         AimAtMouse();
         CheckTiming();
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton((int)fireButton))
         {
-            Shoot();
+            // Shoot();
+            SummonGrandchild();
         }
+
+
     }
 
     void AimAtMouse()
@@ -70,34 +82,31 @@ public class ArmController : MonoBehaviour
         }
     }
 
-/*
-    void FindClosestEnemy()
+    void SummonGrandchild()
     {
-        closestEnemy = null;
-
-        Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
-
-        foreach (Enemy enemy in enemies)
+        if (canShoot)
         {
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
-            if (distance <= fireDistance)
+            var grandChildGo = Instantiate(grandChild, PlayerController.Instance.transform.position, PlayerController.Instance.transform.rotation);
+            Destroy(grandChildGo, 3f);
+
+                        timeSinceLastShot = 0;
+            canShoot = false;
+        }
+    }
+
+    
+/*
+        void AimAtEnemy()
+        {
+            if (closestEnemy != null)
             {
-                closestEnemy = enemy.transform;
+                Vector3 direction = closestEnemy.position - transform.position;
+                direction.Normalize();
+
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                transform.rotation = Quaternion.Euler(0, 0, angle);
             }
         }
-    }
-
-    void AimAtEnemy()
-    {
-        if (closestEnemy != null)
-        {
-            Vector3 direction = closestEnemy.position - transform.position;
-            direction.Normalize();
-
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-            transform.rotation = Quaternion.Euler(0, 0, angle);
-        }
-    }
-*/
+    */
 }
