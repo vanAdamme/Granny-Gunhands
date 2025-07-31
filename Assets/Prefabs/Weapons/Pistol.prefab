@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 191413889970702321}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35, y: 5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7000550099256340210}
@@ -75,9 +75,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 911499633
-  m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingLayerID: 1919248021
+  m_SortingLayer: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: -8505740992458538012, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -101,9 +101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb7b70146146bb4bb88854397d1709e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 4307658229903141588, guid: 1f276ff45b2ed4b40a7422ce851c7e99, type: 3}
-  spawnPoint: {fileID: 7000550099256340210}
   fireRate: 0.3
+  bulletPrefab: {fileID: 4307658229903141588, guid: 1f276ff45b2ed4b40a7422ce851c7e99, type: 3}
+  muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
+  muzzlePoint: {fileID: 7000550099256340210}
 --- !u!1 &4092820920812928512
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,7 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7000550099256340210}
   m_Layer: 0
-  m_Name: SpawnPoint
+  m_Name: Muzzle Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 4092820920812928512}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.932, y: 0.037, z: 0}
+  m_LocalPosition: {x: -0.88, y: 0.077, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

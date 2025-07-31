@@ -10,9 +10,10 @@ public enum FireButton
 public class ArmWeaponHandler : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] GameObject muzzle;
-    [SerializeField] Transform muzzlePosition;
-    [SerializeField] GameObject projectile;
+    // [SerializeField] GameObject muzzle;
+    [SerializeField] Transform hand;
+    // [SerializeField] GameObject projectile;
+    // [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private GameObject[] weaponPrefabs;
 
 
@@ -22,21 +23,20 @@ public class ArmWeaponHandler : MonoBehaviour
 
     [SerializeField] private FireButton fireButton;
 
-    private float timeSinceLastShot = 0f;
-    private bool canFire = false;
     Transform closestEnemy;
-        [SerializeField] GameObject grandChild;
-    Animator anim;
+    // [SerializeField] GameObject grandChild;
+    // Animator anim;
 
     void Start()
     {
         EquipWeapon(0); // Equip first weapon by default
-        anim = GetComponent<Animator>();
-        
+        // anim = GetComponent<Animator>();
     }
 
     void Update()
     {
+        AimAtMouse();
+
         if (Input.GetMouseButton((int)fireButton))
         {
             currentWeaponScript?.Fire();
@@ -48,7 +48,6 @@ public class ArmWeaponHandler : MonoBehaviour
         }
     }
 
-    
     private void EquipWeapon(int index)
     {
         // Destroy old
@@ -57,7 +56,7 @@ public class ArmWeaponHandler : MonoBehaviour
 
         // Instantiate new
         currentWeaponIndex = index;
-        currentWeaponInstance = Instantiate(weaponPrefabs[index], transform);
+        currentWeaponInstance = Instantiate(weaponPrefabs[index], hand);
         currentWeaponScript = currentWeaponInstance.GetComponent<WeaponBehaviour>();
     }
 
@@ -67,8 +66,23 @@ public class ArmWeaponHandler : MonoBehaviour
         EquipWeapon(nextIndex);
     }
 
-    
-
+    void AimAtMouse()
+    {
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0;
+        Vector3 dir = mouseWorldPos - transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+   
+        // Vector3 mousePosScreen = Input.mousePosition;
+        // Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePosScreen.x, mousePosScreen.y, Camera.main.transform.position.z));
+        // mousePosWorld.z = 0f;
+        // Vector3 direction = mousePosWorld - transform.position;
+        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+}
+/*
     void SummonGrandchild()
     {
         if (canFire)
@@ -81,19 +95,16 @@ public class ArmWeaponHandler : MonoBehaviour
         }
     }
 
-    
-/*
-        void AimAtEnemy()
+    void AimAtEnemy()
+    {
+        if (closestEnemy != null)
         {
-            if (closestEnemy != null)
-            {
-                Vector3 direction = closestEnemy.position - transform.position;
-                direction.Normalize();
+            Vector3 direction = closestEnemy.position - transform.position;
+            direction.Normalize();
 
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-                transform.rotation = Quaternion.Euler(0, 0, angle);
-            }
+            transform.rotation = Quaternion.Euler(0, 0, angle);
         }
-    */
-}
+    }
+*/
