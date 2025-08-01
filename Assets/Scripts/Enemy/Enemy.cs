@@ -1,5 +1,6 @@
 using UnityEngine;
 using DamageNumbersPro;
+using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private Collider2D col;
+    private AIPath path;
+    [SerializeField] private Transform target;
 
     [SerializeField] bool rangedAttack;
     [SerializeField] bool meleeAttack;
@@ -30,17 +33,26 @@ public class Enemy : MonoBehaviour
 
     private DamageFlash _damageFlash;
 
-	void Awake()
-	{
+    void Awake()
+    {
+        
+    }
+
+    private void Start()
+    {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        _damageFlash = GetComponent<DamageFlash>();
         // col = GetComponent<Collider2D>();
+        path = GetComponent<AIPath>();
+        target = GameObject.FindWithTag("Player").transform;
 	}
 
-	private void Start()
-	{
-        _damageFlash = GetComponent<DamageFlash>();
-	}
+    private void Update()
+    {
+        path.maxSpeed = moveSpeed;
+        path.destination = target.position;
+    }
 
 	void FixedUpdate()
     {
