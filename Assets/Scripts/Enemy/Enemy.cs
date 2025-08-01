@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private DamageNumber numberPrefab;
     [SerializeField] private GameObject destroyEffect;
 
-    private DamageFlash _damageFlash;
+    private DamageFlash damageFlash;
 
     void Awake()
     {
@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        _damageFlash = GetComponent<DamageFlash>();
+        damageFlash = GetComponent<DamageFlash>();
         // col = GetComponent<Collider2D>();
         path = GetComponent<AIPath>();
         target = GameObject.FindWithTag("Player").transform;
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        path.maxSpeed = moveSpeed;
+        // path.maxSpeed = moveSpeed;
         path.destination = target.position;
     }
 
@@ -139,7 +139,7 @@ public class Enemy : MonoBehaviour
         }
 
         // damage flash
-        _damageFlash.CallDamageFlash();
+        damageFlash.CallDamageFlash();
     }
 
     void Die()
