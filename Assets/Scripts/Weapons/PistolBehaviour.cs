@@ -18,8 +18,9 @@ public class PistolBehaviour : WeaponBehaviour
         timeSinceLastShot = fireRate;
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         CheckTiming();
     }
 

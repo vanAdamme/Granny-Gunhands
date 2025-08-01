@@ -88,7 +88,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &5953254588003903268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb7b70146146bb4bb88854397d1709e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 8658528696238980354}
   fireRate: 0.3
   bulletPrefab: {fileID: 4307658229903141588, guid: 1f276ff45b2ed4b40a7422ce851c7e99, type: 3}
   muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
