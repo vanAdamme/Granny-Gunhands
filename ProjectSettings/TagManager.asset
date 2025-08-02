@@ -11,7 +11,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Boundaries
+  - 
   - Water
   - UI
   - Player
@@ -19,11 +19,11 @@ TagManager:
   - PlayerHitbox
   - Enemies
   - Projectiles
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Interactable
+  - Obstacles
+  - NoCollision
+  - Triggers
+  - Ground
   - 
   - 
   - 
@@ -47,17 +47,20 @@ TagManager:
   - name: Background
     uniqueID: 3267387403
     locked: 0
-  - name: Weapons
+  - name: GroundDetails
     uniqueID: 911499633
     locked: 0
-  - name: Objects
+  - name: ObjectsBehindPlayer
     uniqueID: 1919248021
     locked: 0
-  - name: Foreground
+  - name: Player
     uniqueID: 470246339
     locked: 0
-  - name: UI
+  - name: ObjectsInFrontOfPlayer
     uniqueID: 4245507003
+    locked: 0
+  - name: UI
+    uniqueID: 3038877007
     locked: 0
   m_RenderingLayers:
   - Default

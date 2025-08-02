@@ -189,7 +189,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -243,9 +243,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 54
-        y: 148
+        y: 155
         width: 35
-        height: 60
+        height: 53
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1127,7 +1127,7 @@ TextureImporter:
         width: 22
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1136,6 +1136,28 @@ TextureImporter:
       bones: []
       spriteID: 03d3baa9f8d27f344ae459de728cc13d
       internalID: 389355596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring and Summer Objects_42
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 148
+        width: 15
+        height: 7
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2a8b0bad5241b6499d794dd3010264e
+      internalID: -795107788
       vertices: []
       indices: 
       edges: []
@@ -1193,6 +1215,7 @@ TextureImporter:
       Spring and Summer Objects_4: -72069424
       Spring and Summer Objects_40: -327762689
       Spring and Summer Objects_41: 389355596
+      Spring and Summer Objects_42: -795107788
       Spring and Summer Objects_5: -639138881
       Spring and Summer Objects_6: 267457672
       Spring and Summer Objects_7: -994553556
