@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
   m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: -8505740992458538012, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -102,6 +102,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 8658528696238980354}
+  damage: 1
+  range: 3
   fireRate: 0.3
   bulletPrefab: {fileID: 4307658229903141588, guid: 1f276ff45b2ed4b40a7422ce851c7e99, type: 3}
   muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
