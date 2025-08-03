@@ -1,11 +1,14 @@
-// using System.Collections.Generic;
 using UnityEngine;
 
 public class PistolBehaviour : WeaponBehaviour
 {
     [Header("Config")]
-    // [SerializeField] float fireDistance = 10;
-    [SerializeField] private float fireRate = 0.5f;
+    [SerializeField] private float damage;
+    [SerializeField] private float speed;
+    [SerializeField] private float range;
+
+    // [SerializeField] float range;
+    [SerializeField] private float fireRate;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject muzzleFlashPrefab;
     [SerializeField] private Transform muzzlePoint;
@@ -36,23 +39,15 @@ public class PistolBehaviour : WeaponBehaviour
 
         if (muzzleFlashPrefab)
         {
-            var muzzleFlash = Instantiate(muzzleFlashPrefab, muzzlePoint.position, muzzlePoint.rotation);
-            // muzzleGo.transform.SetParent(transform);
+            var muzzleFlash = Instantiate(muzzleFlashPrefab, muzzlePoint.position, transform.rotation);
             Destroy(muzzleFlash, 0.05f);
         }
 
-        var bullet = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);
-        Destroy(bullet, 3); // make variable
+        var bullet = Instantiate(bulletPrefab, muzzlePoint.position, transform.rotation);
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.Initialise(damage, speed, range);
 
         timeSinceLastShot = 0f;
         canFire = false;
     }
 }
-
-/*
-
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (mouseWorldPos - transform.position);
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-*/

@@ -17,14 +17,19 @@ public abstract class WeaponBehaviour : MonoBehaviour
 
     protected void FlipSprite()
     {
-        // correct orientation
+        if (PlayerController.Instance == null) return;
+
+        Vector3 scale = transform.localScale;
+
         if (transform.position.x > PlayerController.Instance.transform.position.x)
         {
-            spriteRenderer.flipY = false;
+            scale.y = Mathf.Abs(scale.y);
         }
         else
         {
-            spriteRenderer.flipY = true;
+            scale.y = -Mathf.Abs(scale.y);
         }
+
+        transform.localScale = scale;
     }
 }

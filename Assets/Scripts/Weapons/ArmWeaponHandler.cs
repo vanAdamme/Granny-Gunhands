@@ -10,12 +10,8 @@ public enum FireButton
 public class ArmWeaponHandler : MonoBehaviour
 {
     [Header("Prefabs")]
-    // [SerializeField] GameObject muzzle;
     [SerializeField] Transform hand;
-    // [SerializeField] GameObject projectile;
-    // [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private GameObject[] weaponPrefabs;
-
 
     private int currentWeaponIndex = 0;
     private GameObject currentWeaponInstance;
@@ -23,14 +19,9 @@ public class ArmWeaponHandler : MonoBehaviour
 
     [SerializeField] private FireButton fireButton;
 
-    Transform closestEnemy;
-    // [SerializeField] GameObject grandChild;
-    // Animator anim;
-
     void Start()
     {
         EquipWeapon(0); // Equip first weapon by default
-        // anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -73,38 +64,5 @@ public class ArmWeaponHandler : MonoBehaviour
         Vector3 dir = mouseWorldPos - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
-   
-        // Vector3 mousePosScreen = Input.mousePosition;
-        // Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(new Vector3(mousePosScreen.x, mousePosScreen.y, Camera.main.transform.position.z));
-        // mousePosWorld.z = 0f;
-        // Vector3 direction = mousePosWorld - transform.position;
-        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        // transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }
-/*
-    void SummonGrandchild()
-    {
-        if (canFire)
-        {
-            var grandChildGo = Instantiate(grandChild, PlayerController.Instance.transform.position, PlayerController.Instance.transform.rotation);
-            Destroy(grandChildGo, 3f);
-
-                        timeSinceLastShot = 0;
-            canFire = false;
-        }
-    }
-
-    void AimAtEnemy()
-    {
-        if (closestEnemy != null)
-        {
-            Vector3 direction = closestEnemy.position - transform.position;
-            direction.Normalize();
-
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-            transform.rotation = Quaternion.Euler(0, 0, angle);
-        }
-    }
-*/

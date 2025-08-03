@@ -2,22 +2,34 @@ using UnityEngine;
 
 public class Grandchild : MonoBehaviour
 {
-    Transform closestEnemy;
-    [SerializeField] GameObject grandChild;
-    public float duration = 3f;
+	private float damage = 1f;
+	private float speed = 12f;
+    private float range = 15f;
 
-    float speed = 12f; // make variable
+    private Vector3 startPosition;
+    Transform closestEnemy;
+
+    public void Initialise(float damage, float speed, float range)
+    {
+        this.damage = damage;
+        this.speed = speed;
+        this.range = range;
+        startPosition = transform.position;
+    }
 
     private void Start()
     {
         FindClosestEnemy();
-        // Destroy(gameObject, duration);
-	}
+    }
 
     private void FixedUpdate()
     {
-         transform.position = Vector3.MoveTowards(transform.position, closestEnemy.transform.position, speed * Time.deltaTime);
-        // transform.Translate(Vector2.right * speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, closestEnemy.transform.position, speed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, startPosition) >= range)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void FindClosestEnemy()
@@ -31,11 +43,11 @@ public class Grandchild : MonoBehaviour
 
         foreach (Enemy enemy in enemies)
         {
-            float _distance = Vector2.Distance(PlayerController.Instance.transform.position, enemy.transform.position);
-            if (_distance <= closestEnemyDist)
+            float distance = Vector2.Distance(PlayerController.Instance.transform.position, enemy.transform.position);
+            if (distance <= closestEnemyDist)
             {
                 closestEnemy = enemy.transform;
-                closestEnemyDist = _distance;
+                closestEnemyDist = distance;
             }
         }
     }
@@ -46,8 +58,7 @@ public class Grandchild : MonoBehaviour
         {
             Enemy enemy = collider.gameObject.GetComponent<Enemy>();
             Destroy(gameObject);
-            enemy.TakeDamage(5); //make variable
-            // enemy.TakeDamage(weapon.stats[weapon.weaponLevel].damage);
+            enemy.TakeDamage(damage); //make variable
             // AudioController.Instance.PlaySound(AudioController.Instance.directionalWeaponHit);
         }
     }

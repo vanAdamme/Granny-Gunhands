@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
         playerHealth = playerMaxHealth;
         UIController.Instance.UpdateHealthSlider();
         UIController.Instance.UpdateExperienceSlider();
-        AddWeapon(Random.Range(0, inactiveWeapons.Count));
+        // AddWeapon(Random.Range(0, inactiveWeapons.Count));
     }
 
     void Update()
@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
         UIController.Instance.UpdateExperienceSlider();
         if (experience >= playerLevels[currentLevel - 1])
         {
-            LevelUp();
+            // LevelUp();
         }
     }
 
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
     {
         coins++;
     }
-
+/*
     public void LevelUp()
     {
         experience -= playerLevels[currentLevel - 1];
@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
         activeWeapons.Add(weapon);
         inactiveWeapons.Remove(weapon);
     }
-
+*/
     public bool isHurt()
     {
         return (playerHealth < playerMaxHealth);

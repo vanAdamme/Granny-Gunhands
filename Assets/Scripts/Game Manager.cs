@@ -8,54 +8,68 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public bool gameActive;
 
-    void Awake(){
-        if (Instance != null && Instance != this){
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
             Destroy(this);
-        } else {
+        }
+        else
+        {
             Instance = this;
         }
     }
 
-    void Start(){
+    void Start()
+    {
         gameActive = true;
     }
 
-    void Update(){
-        if (gameActive){
+    void Update()
+    {
+        if (gameActive)
+        {
             gameTime += Time.deltaTime;
             UIController.Instance.UpdateTimer(gameTime);
+            UIController.Instance.UpdateSpecialWeaponTimer(gameTime);
 
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)){
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+            {
                 Pause();
             }
         }
     }
 
-    public void GameOver(){
+    public void GameOver()
+    {
         gameActive = false;
         StartCoroutine(ShowGameOverScreen());
     }
 
-    IEnumerator ShowGameOverScreen(){
+    IEnumerator ShowGameOverScreen()
+    {
         yield return new WaitForSeconds(1.5f);
         UIController.Instance.gameOverPanel.SetActive(true);
         AudioController.Instance.PlaySound(AudioController.Instance.gameOver);
     }
 
-    public void Restart(){
+    public void Restart()
+    {
         SceneManager.LoadScene("Game");
     }
 
-    public void Pause(){
-        if (UIController.Instance.levelUpPanel.activeSelf == false){
-            if (
-                UIController.Instance.pausePanel.activeSelf == false && 
-                UIController.Instance.gameOverPanel.activeSelf == false
-                ){
+    public void Pause()
+    {
+        if (UIController.Instance.levelUpPanel.activeSelf == false)
+        {
+            if (UIController.Instance.pausePanel.activeSelf == false && UIController.Instance.gameOverPanel.activeSelf == false)
+            {
                 UIController.Instance.pausePanel.SetActive(true);
                 Time.timeScale = 0f;
                 AudioController.Instance.PlaySound(AudioController.Instance.pause);
-            } else {
+            }
+            else
+            {
                 UIController.Instance.pausePanel.SetActive(false);
                 Time.timeScale = 1f;
                 AudioController.Instance.PlaySound(AudioController.Instance.unpause);
@@ -63,11 +77,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void QuitGame(){
+    public void QuitGame()
+    {
         Application.Quit();
     }
 
-    public void GoToMainMenu(){
+    public void GoToMainMenu()
+    {
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1f;
     }

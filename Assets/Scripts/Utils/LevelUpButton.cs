@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelUpButton : MonoBehaviour
-{
+{/*
     public TMP_Text weaponName;
     public TMP_Text weaponDescription;
     public Image weaponIcon;
@@ -34,4 +34,5 @@ public class LevelUpButton : MonoBehaviour
         UIController.Instance.LevelUpPanelClose();
         AudioController.Instance.PlaySound(AudioController.Instance.selectUpgrade);
     }
+*/
 }
