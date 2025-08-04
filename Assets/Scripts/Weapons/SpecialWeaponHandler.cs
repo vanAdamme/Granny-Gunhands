@@ -18,7 +18,7 @@ public class SpecialWeaponHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            currentWeaponScript?.Activate();
+            currentWeaponScript?.ToggleActivate();
         }
 
         if (Input.GetKeyDown(KeyCode.R))

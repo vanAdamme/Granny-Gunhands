@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 0}
-  instantiatePosition: {x: 0, y: 0, z: 0}
-  bulletPrefab: {fileID: 7225799043808159828, guid: 2aebb4762011bcb44b87faf68d1f1294, type: 3}
+  spinningBulletPrefab: {fileID: 7225799043808159828, guid: 2aebb4762011bcb44b87faf68d1f1294, type: 3}
   damage: 5
   speed: 300
   range: 1
+  quantity: 3

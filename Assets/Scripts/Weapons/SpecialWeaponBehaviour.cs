@@ -4,7 +4,7 @@ public abstract class SpecialWeaponBehaviour : MonoBehaviour
 {
     [SerializeField] protected SpriteRenderer spriteRenderer;
 
-    public abstract void Activate();
+    public abstract void ToggleActivate();
 
     protected virtual void Awake()
     {

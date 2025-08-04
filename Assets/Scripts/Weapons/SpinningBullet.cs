@@ -19,9 +19,18 @@ public class SpinningBullet : MonoBehaviour
 		damage = value;
 	}
 
+	public void SetSpeed(float value)
+	{
+		speed = value;
+	}
+
+    
+	public void SetRange(float value)
+	{
+		range = value;
+	}
     private void FixedUpdate()
     {
-        Debug.Log(range);
         rotationCentre = PlayerController.Instance.transform.Find("Bun rotation point");
         this.transform.RotateAround(rotationCentre.position * range, Vector3.forward, speed * Time.deltaTime);
 
