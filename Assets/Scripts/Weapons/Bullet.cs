@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
         this.range = range;
         startPosition = transform.position;
     }
-	
+
 	public void SetDamage(float value)
 	{
 		damage = value;

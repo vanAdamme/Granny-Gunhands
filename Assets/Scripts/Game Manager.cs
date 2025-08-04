@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
         if (gameActive)
         {
             gameTime += Time.deltaTime;
-            UIController.Instance.UpdateTimer(gameTime);
-            UIController.Instance.UpdateSpecialWeaponTimer(gameTime);
+            // UIController.Instance.UpdateTimer(gameTime);
+            // UIController.Instance.UpdateSpecialWeaponTimer(gameTime);
 
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
             {

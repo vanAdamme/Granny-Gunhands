@@ -7,7 +7,6 @@ public class PistolBehaviour : WeaponBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float range;
 
-    // [SerializeField] float range;
     [SerializeField] private float fireRate;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject muzzleFlashPrefab;
