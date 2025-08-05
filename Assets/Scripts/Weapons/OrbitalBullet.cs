@@ -51,7 +51,6 @@ public class OrbitalBullet : MonoBehaviour
                 Destroy(gameObject);
                 enemy.TakeDamage(damage);
             }
-            AudioController.Instance.PlaySound(AudioController.Instance.directionalWeaponHit);
         }
     }
 }

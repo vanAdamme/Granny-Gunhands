@@ -3,6 +3,8 @@ using UnityEngine;
 public abstract class WeaponBehaviour : MonoBehaviour
 {
     [SerializeField] protected SpriteRenderer spriteRenderer;
+    [SerializeField] public Sprite icon;
+
     public abstract void Fire();
 
     protected virtual void Awake()

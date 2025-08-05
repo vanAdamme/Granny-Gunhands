@@ -5,17 +5,22 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     public static UIController Instance;
+
+    [Header("Prefabs")]
     [SerializeField] private Slider playerHealthSlider;
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private Slider specialWeaponTimer;
     [SerializeField] private TMP_Text specialWeaponText;
     [SerializeField] private Slider playerExperienceSlider;
     [SerializeField] private TMP_Text experienceText;
+    [SerializeField] private Image leftWeaponIcon;
+    [SerializeField] private Image rightWeaponIcon;
+    [SerializeField] private Image specialWeaponIcon;
+    [SerializeField] private TMP_Text timerText;
+
     public GameObject gameOverPanel;
     public GameObject pausePanel;
     public GameObject levelUpPanel;
-    [SerializeField] private TMP_Text timerText;
-
     public LevelUpButton[] levelUpButtons;
 
     void Awake()
@@ -58,6 +63,20 @@ public class UIController : MonoBehaviour
         specialWeaponTimer.value = timer;
     }
 
+    public void UpdateLeftWeaponIcon(Sprite wIcon)
+    {
+        leftWeaponIcon.sprite = wIcon;
+    }
+
+    public void UpdateRightWeaponIcon(Sprite wIcon)
+    {
+        rightWeaponIcon.sprite = wIcon;
+    }
+
+    public void UpdateSpecialWeaponIcon(Sprite wIcon)
+    {
+        specialWeaponIcon.sprite = wIcon;
+    }
     public void LevelUpPanelOpen()
     {
         levelUpPanel.SetActive(true);

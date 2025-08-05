@@ -16,10 +16,15 @@ public class Bullet : MonoBehaviour
         startPosition = transform.position;
     }
 
-	public void SetDamage(float value)
+	private void Start()
 	{
-		damage = value;
+		// AudioController.Instance.PlaySound(AudioController.Instance.shoot);
 	}
+
+	public void SetDamage(float value)
+    {
+        damage = value;
+    }
 
     private void FixedUpdate()
     {
@@ -41,7 +46,6 @@ public class Bullet : MonoBehaviour
                 Destroy(gameObject);
                 enemy.TakeDamage(damage);
             }
-            AudioController.Instance.PlaySound(AudioController.Instance.directionalWeaponHit);
         }
 	}
 }

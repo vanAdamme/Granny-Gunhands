@@ -17,26 +17,19 @@ public class OrbitalWeapon : SpecialWeaponBehaviour
     private SpecialWeaponBehaviour bulletScript;
     private bool active = false;
 
-    private void Start()
-    {
-        orbitPoint = transform.Find("Bun");
-        if (orbitPoint == null)
-        {
-            Debug.LogError("OrbitPoint not found as child of " + gameObject.name);
-        }
-    }
-
     private void Activate()
     {
         if (orbitPoint == null)
         {
-            orbitPoint = transform.parent.Find("Bun");
+            orbitPoint = PlayerController.Instance.transform.Find("Bun");
+
             if (orbitPoint == null)
             {
                 Debug.LogError("OrbitPoint not found on player.");
                 return;
             }
         }
+
         for (int i = 0; i < quantity; i++)
         {
             float angle = (360f / quantity) * i;

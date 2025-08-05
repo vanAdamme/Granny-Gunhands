@@ -85,7 +85,6 @@ public class EnemySpawner : MonoBehaviour
             spawnPoint = transform.position;
         }
 
-
         return spawnPoint;
     }
 }

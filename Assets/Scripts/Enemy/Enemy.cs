@@ -1,6 +1,7 @@
 using UnityEngine;
 using DamageNumbersPro;
 using Pathfinding;
+using UnityEditor.Timeline.Actions;
 
 public class Enemy : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float pushTime;
     [SerializeField] private float dropChance;
     [SerializeField] private GameObject itemDrop;
+    [SerializeField] private AudioClip deathClip;
 
     private float pushCounter;
     private Vector3 direction;
@@ -31,11 +33,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private DamageNumber numberPrefab;
     [SerializeField] private GameObject destroyEffect;
 
+    private AudioSource audioSource;
     private DamageFlash damageFlash;
 
     void Awake()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -107,14 +110,6 @@ public class Enemy : MonoBehaviour
         }
 	}
 
-	// void Attack()
-    // {
-    //     isAttacking = true;
-    //     anim.SetBool("isAttacking", true);
-    //     if (col.IsTouching(PlayerController.Instance.col))
-    //     PlayerController.Instance.TakeDamage(damage);
-    // }
-
     public void OnAttackFinished()
     {
         isAttacking = false;
@@ -148,10 +143,12 @@ public class Enemy : MonoBehaviour
         // col.enabled = false;
         // moveSpeed = 0;
         // anim.SetTrigger("Dead"); //StateMachine destroys object after death animation
+        audioSource.PlayOneShot(deathClip);
         Destroy(gameObject);
         Instantiate(destroyEffect, transform.position, transform.rotation);
         PlayerController.Instance.GetExperience(experienceToGive);
-        AudioController.Instance.PlayModifiedSound(AudioController.Instance.enemyDie);
+        // AudioController.Instance.PlaySound(deathSound);
+        
     }
 
     void DropItem()

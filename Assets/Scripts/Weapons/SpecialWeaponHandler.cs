@@ -8,6 +8,7 @@ public class SpecialWeaponHandler : MonoBehaviour
     private int currentWeaponIndex = 0;
     private GameObject currentWeaponInstance;
     private SpecialWeaponBehaviour currentWeaponScript;
+    private Sprite icon;
 
     void Start()
     {
@@ -37,6 +38,7 @@ public class SpecialWeaponHandler : MonoBehaviour
         currentWeaponIndex = index;
         currentWeaponInstance = Instantiate(weaponPrefabs[index]);
         currentWeaponScript = currentWeaponInstance.GetComponent<SpecialWeaponBehaviour>();
+        UIController.Instance.UpdateSpecialWeaponIcon(currentWeaponScript.icon);
     }
 
     private void CycleWeapon()

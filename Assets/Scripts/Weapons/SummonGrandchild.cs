@@ -1,44 +1,50 @@
 using UnityEngine;
+using System.Collections.Generic;
 
-public class SummonGrandchild : WeaponBehaviour
+public class SummonGrandchild : SpecialWeaponBehaviour
 {
     [Header("Config")]
+    [SerializeField] private GameObject grandchildPrefab;
     [SerializeField] private float damage;
     [SerializeField] private float speed;
     [SerializeField] private float range;
+    [SerializeField] private int quantity;
 
-    // [SerializeField] float range;
-    [SerializeField] private float fireRate;
-    [SerializeField] private GameObject grandchildPrefab;
-
-    private float timeSinceLastShot;
-    private bool canFire = true;
-
-    private void Start()
+    private bool active = false;
+    private List<Grandchild> grandchildList = new List<Grandchild>();
+    
+    public override void ToggleActivate()
     {
-        timeSinceLastShot = fireRate;
+        if (active)
+        {
+            Deactivate();
+            active = false;
+        }
+        else
+        {
+            Activate();
+            active = true;
+        }
+    }
+    
+    private void Activate()
+    {
+        for (int i = 0; i < quantity; i++)
+        {
+            GameObject grandchildGO = Instantiate(grandchildPrefab, PlayerController.Instance.transform);
+            Grandchild grandchild = grandchildGO.GetComponent<Grandchild>();
+            grandchild.Initialise(damage, speed, range);
+            grandchildList.Add(grandchild);
+        }
     }
 
-    protected override void Update()
+    private void Deactivate()
     {
-        base.Update();
-        CheckTiming();
-    }
-
-    void CheckTiming()
-    {
-        timeSinceLastShot += Time.deltaTime;
-        canFire = timeSinceLastShot >= fireRate;
-    }
-
-    public override void Fire()
-    {
-        if (!canFire) return;
-        var grandchild = Instantiate(grandchildPrefab, transform.position, transform.rotation);
-        Grandchild grandchildScript = grandchild.GetComponent<Grandchild>();
-        grandchildScript.Initialise(damage, speed, range);
- 
-        timeSinceLastShot = 0f;
-        canFire = false;
+        foreach (var grandchild in grandchildList)
+        {
+            if (grandchild != null)
+                Destroy(grandchild.gameObject);
+        }
+        grandchildList.Clear();
     }
 }

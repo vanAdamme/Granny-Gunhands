@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum FireButton
@@ -15,6 +16,7 @@ public class WeaponHandler : MonoBehaviour
     private int currentWeaponIndex = 0;
     private GameObject currentWeaponInstance;
     private WeaponBehaviour currentWeaponScript;
+    private Sprite icon;
 
     [SerializeField] private FireButton fireButton;
 
@@ -32,7 +34,12 @@ public class WeaponHandler : MonoBehaviour
             currentWeaponScript?.Fire();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (fireButton == FireButton.LeftClick && Input.GetKeyDown(KeyCode.Q))
+        {
+            CycleWeapon();
+        }
+
+        if (fireButton == FireButton.RightClick && Input.GetKeyDown(KeyCode.E))
         {
             CycleWeapon();
         }
@@ -48,6 +55,14 @@ public class WeaponHandler : MonoBehaviour
         currentWeaponIndex = index;
         currentWeaponInstance = Instantiate(weaponPrefabs[index], hand);
         currentWeaponScript = currentWeaponInstance.GetComponent<WeaponBehaviour>();
+        if (fireButton == FireButton.LeftClick)
+        {
+            UIController.Instance.UpdateLeftWeaponIcon(currentWeaponScript.icon);
+        }
+        else
+        {
+            UIController.Instance.UpdateRightWeaponIcon(currentWeaponScript.icon);
+        }
     }
 
     private void CycleWeapon()
