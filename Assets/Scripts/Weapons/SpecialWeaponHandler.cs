@@ -3,6 +3,7 @@ using UnityEngine;
 public class SpecialWeaponHandler : MonoBehaviour
 {
     [Header("Prefabs")]
+    [SerializeField] Transform slot;
     [SerializeField] private GameObject[] weaponPrefabs;
 
     private int currentWeaponIndex = 0;
@@ -36,7 +37,7 @@ public class SpecialWeaponHandler : MonoBehaviour
 
         // Instantiate new
         currentWeaponIndex = index;
-        currentWeaponInstance = Instantiate(weaponPrefabs[index]);
+        currentWeaponInstance = Instantiate(weaponPrefabs[index], slot);
         currentWeaponScript = currentWeaponInstance.GetComponent<SpecialWeaponBehaviour>();
         UIController.Instance.UpdateSpecialWeaponIcon(currentWeaponScript.icon);
     }

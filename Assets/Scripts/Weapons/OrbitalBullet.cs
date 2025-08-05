@@ -4,9 +4,11 @@ public class OrbitalBullet : MonoBehaviour
 {
 	private float damage = 1f;
 	private float speed = 12f;
-    private float range = 15f;
+    private float range;
     private float angle;
     private Transform center;
+
+    public bool die = false;
 
     public void Initialise(Transform centerPos, float damageVal, float speedVal, float rangeVal, float angleVal)
     {
@@ -22,23 +24,33 @@ public class OrbitalBullet : MonoBehaviour
         transform.position = center.position + offset;
     }
 
+    private void SetRange(float rangeVal)
+    {
+        range = rangeVal;
+    }
+
     private void FixedUpdate()
     {
         if (center == null) return;
 
+        if (die)
+        {
+            range--;
+        }
+
+        if (range <= 0)
+        {
+            Destroy(gameObject);
+        }
+
         // Update angle
-        angle += speed * Time.fixedDeltaTime;
+            angle += speed * Time.fixedDeltaTime;
         angle %= 360f;
 
         // Calculate new position
         float rad = angle * Mathf.Deg2Rad;
         Vector3 offset = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0f) * range;
         transform.position = center.position + offset;
-
-        //if (time > duration)
-        // {
-        //     Destroy(gameObject);
-        // }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -48,7 +60,6 @@ public class OrbitalBullet : MonoBehaviour
             Enemy enemy = collider.GetComponent<Enemy>();
             if (enemy != null)
             {
-                Destroy(gameObject);
                 enemy.TakeDamage(damage);
             }
         }

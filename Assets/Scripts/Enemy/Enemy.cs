@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
         // col = GetComponent<Collider2D>();
         path = GetComponent<AIPath>();
         target = GameObject.FindWithTag("Player").transform;
-	}
+    }
 
     private void Update()
     {
@@ -57,17 +57,17 @@ public class Enemy : MonoBehaviour
         path.destination = target.position;
     }
 
-	void FixedUpdate()
+    void FixedUpdate()
     {
         if (PlayerController.Instance.gameObject.activeSelf)
         {
             float distance = Vector2.Distance(transform.position, PlayerController.Instance.transform.position);
 
             if (meleeAttack && !isAttacking && distance <= attackRange)
-                {
-                    // Start attack
-                    //Attack();
-                }
+            {
+                // Start attack
+                //Attack();
+            }
 
             // face the player
             if (PlayerController.Instance.transform.position.x > transform.position.x)
@@ -108,7 +108,7 @@ public class Enemy : MonoBehaviour
         {
             PlayerController.Instance.TakeDamage(damage);
         }
-	}
+    }
 
     public void OnAttackFinished()
     {
@@ -139,16 +139,11 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
+        DeathCroak();
         DropItem();
-        // col.enabled = false;
-        // moveSpeed = 0;
-        // anim.SetTrigger("Dead"); //StateMachine destroys object after death animation
-        audioSource.PlayOneShot(deathClip);
-        Destroy(gameObject);
         Instantiate(destroyEffect, transform.position, transform.rotation);
+        Destroy(gameObject);
         PlayerController.Instance.GetExperience(experienceToGive);
-        // AudioController.Instance.PlaySound(deathSound);
-        
     }
 
     void DropItem()
@@ -157,5 +152,17 @@ public class Enemy : MonoBehaviour
         {
             GameObject drop = Instantiate(itemDrop, transform.position, transform.rotation);
         }
+    }
+
+    void DeathCroak()
+    {
+        // Create a temporary object just for the death sound
+        GameObject soundObj = new GameObject("DeathCroak");
+        AudioSource tempSource = soundObj.AddComponent<AudioSource>();
+        tempSource.clip = deathClip;
+        tempSource.Play();
+
+        // Destroy the sound object after the clip ends
+        Destroy(soundObj, deathClip.length);
     }
 }

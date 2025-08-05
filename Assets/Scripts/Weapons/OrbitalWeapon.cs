@@ -1,6 +1,7 @@
 // using System.Runtime.CompilerServices;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class OrbitalWeapon : SpecialWeaponBehaviour
 {
@@ -11,33 +12,60 @@ public class OrbitalWeapon : SpecialWeaponBehaviour
     [SerializeField] private float speed; //degrees per second
     [SerializeField] private float range;
     [SerializeField] private int quantity;
+    [SerializeField] private float duration;
 
     private Transform orbitPoint;
     private List<OrbitalBullet> bulletList = new List<OrbitalBullet>();
     private SpecialWeaponBehaviour bulletScript;
     private bool active = false;
+    private bool canActivate;
+    public float timer;
 
-    private void Activate()
+    void Start()
     {
-        if (orbitPoint == null)
-        {
-            orbitPoint = PlayerController.Instance.transform.Find("Bun");
+        timer = duration;
+        canActivate = true;
+	}
 
-            if (orbitPoint == null)
-            {
-                Debug.LogError("OrbitPoint not found on player.");
-                return;
-            }
+    void Update()
+    {
+        if (active)
+        {
+            timer -= Time.deltaTime;
         }
 
-        for (int i = 0; i < quantity; i++)
+        if (timer <= 0)
         {
-            float angle = (360f / quantity) * i;
+            Deactivate();
+            canActivate = false;
+        }
+	}
 
-            GameObject bulletGO = Instantiate(orbiterPrefab);
-            OrbitalBullet bullet = bulletGO.GetComponent<OrbitalBullet>();
-            bullet.Initialise(orbitPoint, damage, speed, range, angle);
-            bulletList.Add(bullet);
+	private void Activate()
+    {
+        if (canActivate)
+        {
+            if (orbitPoint == null)
+            {
+                orbitPoint = PlayerController.Instance.transform.Find("Bun");
+
+                if (orbitPoint == null)
+                {
+                    Debug.LogError("OrbitPoint not found on player.");
+                    return;
+                }
+            }
+
+            for (int i = 0; i < quantity; i++)
+            {
+                float angle = (360f / quantity) * i;
+                GameObject bulletGO = Instantiate(orbiterPrefab);
+                OrbitalBullet bullet = bulletGO.GetComponent<OrbitalBullet>();
+                bullet.Initialise(orbitPoint, damage, speed, range, angle);
+                bulletList.Add(bullet);
+            }
+
+            active = true;
         }
     }
 
@@ -46,9 +74,12 @@ public class OrbitalWeapon : SpecialWeaponBehaviour
         foreach (var bullet in bulletList)
         {
             if (bullet != null)
-                Destroy(bullet.gameObject);
+            {
+                bullet.die = true;
+            }
         }
         bulletList.Clear();
+        active = false;
     }
 
     public override void ToggleActivate()
