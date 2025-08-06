@@ -29,20 +29,20 @@ public class WeaponHandler : MonoBehaviour
     {
         AimAtMouse();
 
-        if (Input.GetMouseButton((int)fireButton))
-        {
-            currentWeaponScript?.Fire();
-        }
+        // if (Input.GetMouseButton((int)fireButton))
+        // {
+        //     currentWeaponScript?.Fire();
+        // }
 
-        if (fireButton == FireButton.LeftClick && Input.GetKeyDown(KeyCode.Q))
-        {
-            CycleWeapon();
-        }
+        // // if (fireButton == FireButton.LeftClick && Input.GetKeyDown(KeyCode.Q))
+        // // {
+        // //     CycleWeapon();
+        // // }
 
-        if (fireButton == FireButton.RightClick && Input.GetKeyDown(KeyCode.E))
-        {
-            CycleWeapon();
-        }
+        // // if (fireButton == FireButton.RightClick && Input.GetKeyDown(KeyCode.E))
+        // // {
+        // //     CycleWeapon();
+        // // }
     }
 
     private void EquipWeapon(int index)
@@ -55,14 +55,14 @@ public class WeaponHandler : MonoBehaviour
         currentWeaponIndex = index;
         currentWeaponInstance = Instantiate(weaponPrefabs[index], hand);
         currentWeaponScript = currentWeaponInstance.GetComponent<WeaponBehaviour>();
-        if (fireButton == FireButton.LeftClick)
-        {
-            UIController.Instance.UpdateLeftWeaponIcon(currentWeaponScript.icon);
-        }
-        else
-        {
-            UIController.Instance.UpdateRightWeaponIcon(currentWeaponScript.icon);
-        }
+        // if (fireButton == FireButton.LeftClick)
+        // {
+        //     UIController.Instance.UpdateLeftWeaponIcon(currentWeaponInstance.icon);
+        // }
+        // else
+        // {
+        //     UIController.Instance.UpdateRightWeaponIcon(currentWeaponScript.icon);
+        // }
     }
 
     private void CycleWeapon()
@@ -70,7 +70,7 @@ public class WeaponHandler : MonoBehaviour
         int nextIndex = (currentWeaponIndex + 1) % weaponPrefabs.Length;
         EquipWeapon(nextIndex);
     }
-
+ 
     void AimAtMouse()
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
