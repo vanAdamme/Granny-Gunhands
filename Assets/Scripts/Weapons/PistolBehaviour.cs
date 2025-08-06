@@ -45,6 +45,7 @@ public class PistolBehaviour : WeaponBehaviour
         var bullet = Instantiate(bulletPrefab, muzzlePoint.position, transform.rotation);
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.Initialise(damage, speed, range);
+        base.Bang();
 
         timeSinceLastShot = 0f;
         canFire = false;

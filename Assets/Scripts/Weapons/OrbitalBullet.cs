@@ -35,7 +35,7 @@ public class OrbitalBullet : MonoBehaviour
 
         if (die)
         {
-            range--;
+            range -= 0.2f;
         }
 
         if (range <= 0)

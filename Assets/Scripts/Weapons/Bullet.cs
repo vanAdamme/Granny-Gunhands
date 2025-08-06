@@ -16,11 +16,6 @@ public class Bullet : MonoBehaviour
         startPosition = transform.position;
     }
 
-	private void Start()
-	{
-		// AudioController.Instance.PlaySound(AudioController.Instance.shoot);
-	}
-
 	public void SetDamage(float value)
     {
         damage = value;

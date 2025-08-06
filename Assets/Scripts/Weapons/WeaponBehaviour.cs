@@ -4,6 +4,7 @@ public abstract class WeaponBehaviour : MonoBehaviour
 {
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] public Sprite icon;
+    [SerializeField] protected AudioClip fireClip;
 
     public abstract void Fire();
 
@@ -33,5 +34,17 @@ public abstract class WeaponBehaviour : MonoBehaviour
         }
 
         transform.localScale = scale;
+    }
+
+    protected void Bang()
+    {
+        // Create a temporary object just for the death sound
+        GameObject soundObj = new GameObject("Bang");
+        AudioSource tempSource = soundObj.AddComponent<AudioSource>();
+        tempSource.clip = fireClip;
+        tempSource.Play();
+
+        // Destroy the sound object after the clip ends
+        Destroy(soundObj, fireClip.length);
     }
 }

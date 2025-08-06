@@ -53,7 +53,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        // path.maxSpeed = moveSpeed;
         path.destination = target.position;
     }
 
