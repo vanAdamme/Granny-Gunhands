@@ -38,7 +38,6 @@ public class Health : MonoBehaviour
     // Applies damage to the GameObject.
     public virtual void TakeDamage(float amount)
     {
-        Debug.Log("took damage: " + amount);
         // If already dead, do nothing
         if (m_IsDead || m_IsInvulnerable)
             return;

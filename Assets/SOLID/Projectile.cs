@@ -40,7 +40,6 @@ public class Projectile : MonoBehaviour
             Target target = collider.GetComponent<Target>();
             if (target != null)
             {
-                Debug.Log("collided");
                 Deactivate();
                 target.TakeDamage(damage);
             }
