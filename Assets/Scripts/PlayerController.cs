@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void GetExperience(int experienceToGet)
+    public void AddExperience(int experienceToGet)
     {
         experience += experienceToGet;
         UIController.Instance.UpdateExperienceSlider();

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using DamageNumbersPro;
 
 /// <summary>
 /// Basic behavior for tracking the health of an object.
@@ -8,7 +9,8 @@ public class Health : MonoBehaviour
 {
     [SerializeField] float m_MaxHealth = 100f;
     [SerializeField] float m_CurrentHealth;
-    [SerializeField] bool m_ResetOnStart;
+    // [SerializeField] bool m_ResetOnStart;
+    [SerializeField] private DamageNumber damageNumberPrefab;
 
     // [Tooltip("Notifies listeners that this object has died")]
     // public UnityEvent Died;
@@ -26,7 +28,7 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
-        if (m_ResetOnStart)
+        // if (m_ResetOnStart)
             m_CurrentHealth = MaxHealth;
     }
 
@@ -45,8 +47,10 @@ public class Health : MonoBehaviour
         m_CurrentHealth -= amount;
 
         // damage popup
-        // DamageNumber damageNumber = numberPrefab.Spawn(transform.position, damage);
-
+        if (damageNumberPrefab != null)
+        {
+            DamageNumber damageNumber = damageNumberPrefab.Spawn(transform.position, amount);
+        }
         // push enemy back
         // pushCounter = pushTime;
 

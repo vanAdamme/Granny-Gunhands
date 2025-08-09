@@ -35,14 +35,12 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Target"))
+        IDamageable damageable = collider.GetComponent<IDamageable>();
+        if (damageable != null)
         {
-            Target target = collider.GetComponent<Target>();
-            if (target != null)
-            {
-                Deactivate();
-                target.TakeDamage(damage);
-            }
+            Debug.Log("target hit");
+            damageable.TakeDamage(damage);
+            Deactivate();
         }
 	}
 
