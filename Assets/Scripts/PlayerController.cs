@@ -1,42 +1,39 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using DamageNumbersPro;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Target
 {
     public static PlayerController Instance;
 
+    [Header("Refs")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     [SerializeField] private InputAction playerControls;
-    [SerializeField] private DamageNumber numberPrefab;
     public Collider2D col;
 
-    [SerializeField] private float moveSpeed;
+    [Header("Movement")]
+    [SerializeField] private float moveSpeed = 6f;
     public Vector2 playerMoveDirection;
-    public Vector2 lastMoveDirection;
-    public float playerMaxHealth;
-    public float playerHealth;
 
+    [Header("Progression")]
     public int experience;
     public int currentLevel;
     public int maxLevel;
     public int coins;
+    public List<int> playerLevels;
 
+    [Header("Weapons")]
     [SerializeField] private List<Weapon> inactiveWeapons;
     public List<Weapon> activeWeapons;
     [SerializeField] private List<Weapon> upgradeableWeapons;
     public List<Weapon> maxLevelWeapons;
 
-    private bool isImmune;
-    [SerializeField] private float immunityDuration;
-    [SerializeField] private float immunityTimer;
+    [Header("Damage / Immunity")]
+    [SerializeField] private float immunityDuration = 0.5f;
+    private float immunityTimer;
 
-    public List<int> playerLevels;
-
-    void Awake()
+    private void Awake()
     {
         col = GetComponent<Collider2D>();
 
@@ -50,23 +47,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
-        lastMoveDirection = new Vector2(0, -1);
+        // Fill playerLevels list to maxLevel
         for (int i = playerLevels.Count; i < maxLevel; i++)
         {
             playerLevels.Add(Mathf.CeilToInt(playerLevels[playerLevels.Count - 1] * 1.1f + 15));
         }
-        playerHealth = playerMaxHealth;
+
+        // Health now comes from Health/Target base class:
+        // MaxHealth (get/set) and CurrentHealth (get)
+        // Ensure UI reflects starting values
         UIController.Instance.UpdateHealthSlider();
         UIController.Instance.UpdateExperienceSlider();
-        // AddWeapon(Random.Range(0, inactiveWeapons.Count));
     }
 
-    void Update()
+    private void Update()
     {
-        float inputX = Input.GetAxisRaw("Horizontal");
-        float inputY = Input.GetAxisRaw("Vertical");
+        // Input (new Input System)
         playerMoveDirection = playerControls.ReadValue<Vector2>();
 
         if (playerMoveDirection == Vector2.zero)
@@ -76,59 +74,79 @@ public class PlayerController : MonoBehaviour
         else if (Time.timeScale != 0)
         {
             animator.SetBool("moving", true);
+
+            // Old anim parameters used raw axes—keep that feel
+            float inputX = Input.GetAxisRaw("Horizontal");
+            float inputY = Input.GetAxisRaw("Vertical");
             animator.SetFloat("moveX", inputX);
             animator.SetFloat("moveY", inputY);
-            // lastMoveDirection = playerMoveDirection;
         }
 
-        if (immunityTimer > 0)
+        // Handle immunity countdown (maps to Health.IsInvulnerable)
+        if (immunityTimer > 0f)
         {
             immunityTimer -= Time.deltaTime;
-        }
-        else
-        {
-            isImmune = false;
+            if (immunityTimer <= 0f)
+                SetImmune(false);
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(playerMoveDirection.x * moveSpeed, playerMoveDirection.y * moveSpeed);
+        rb.linearVelocity = playerMoveDirection * moveSpeed;
     }
 
-    public void TakeDamage(float damage)
+    /// <summary>
+    /// Override TakeDamage so we can apply brief immunity & update UI,
+    /// then forward to base (Target → Health) to actually reduce HP.
+    /// </summary>
+    public override void TakeDamage(float amount)
     {
-        if (!isImmune)
-        {
-            SetImmune(true);
-            playerHealth -= damage;
-            DamageNumber damageNumber = numberPrefab.Spawn(transform.position, damage);
-            UIController.Instance.UpdateHealthSlider();
-            if (playerHealth <= 0)
-            {
-                gameObject.SetActive(false);
-                GameManager.Instance.GameOver();
-            }
-        }
+        // Respect current invulnerability (Immunity window)
+        if (IsInvulnerable) return;
+
+        SetImmune(true);
+
+        base.TakeDamage(amount);          // applies damage + popup + death check
+        UIController.Instance.UpdateHealthSlider();
+    }
+
+    /// <summary>
+    /// Player-specific death behaviour.
+    /// </summary>
+    protected override void Die()
+    {
+        base.Die(); // sets dead flag & deactivates the GameObject
+        GameManager.Instance.GameOver();
     }
 
     private void SetImmune(bool state)
     {
-        Color spriteAlpha = Instance.GetComponent<SpriteRenderer>().color;
-
-        if (state == true)
+        IsInvulnerable = state;
+        if (state)
         {
-            isImmune = true;
             immunityTimer = immunityDuration;
-            spriteAlpha.a = 0.8f;
-            Instance.GetComponent<SpriteRenderer>().color = spriteAlpha;
+
+            // small visual alpha cue
+            var sr = GetComponent<SpriteRenderer>();
+            if (sr)
+            {
+                var c = sr.color;
+                c.a = 0.8f;
+                sr.color = c;
+            }
         }
         else
         {
-            isImmune = false;
-            immunityTimer = 0;
-            spriteAlpha.a = 1f;
-            Instance.GetComponent<SpriteRenderer>().color = spriteAlpha;
+            immunityTimer = 0f;
+
+            var sr = GetComponent<SpriteRenderer>();
+            if (sr)
+            {
+                var c = sr.color;
+                c.a = 1f;
+                sr.color = c;
+            }
         }
     }
 
@@ -136,88 +154,42 @@ public class PlayerController : MonoBehaviour
     {
         experience += experienceToGet;
         UIController.Instance.UpdateExperienceSlider();
-        if (experience >= playerLevels[currentLevel - 1])
-        {
-            // LevelUp();
-        }
+        // Level-up logic can remain commented or restored later
+        // if (experience >= playerLevels[currentLevel - 1]) { ... }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Item"))
         {
-            if (other.gameObject.CompareTag("Item"))
-            {
-                GetCoin();
-                Destroy(other.gameObject);
-            }
+            GetCoin();
+            Destroy(other.gameObject);
         }
+    }
 
     public void GetCoin()
     {
         coins++;
-    }
-/*
-    public void LevelUp()
-    {
-        experience -= playerLevels[currentLevel - 1];
-        currentLevel++;
-        UIController.Instance.UpdateExperienceSlider();
-        //UIController.Instance.levelUpButtons[0].ActivateButton(activeWeapon);
-
-        upgradeableWeapons.Clear();
-
-        if (activeWeapons.Count > 0)
-        {
-            upgradeableWeapons.AddRange(activeWeapons);
-        }
-        if (inactiveWeapons.Count > 0)
-        {
-            upgradeableWeapons.AddRange(inactiveWeapons);
-        }
-        for (int i = 0; i < UIController.Instance.levelUpButtons.Length; i++)
-        {
-            if (upgradeableWeapons.ElementAtOrDefault(i) != null)
-            {
-                UIController.Instance.levelUpButtons[i].ActivateButton(upgradeableWeapons[i]);
-                UIController.Instance.levelUpButtons[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                UIController.Instance.levelUpButtons[i].gameObject.SetActive(false);
-            }
-        }
-
-        // UIController.Instance.LevelUpPanelOpen();
+        // update coin UI if you have one
     }
 
-    private void AddWeapon(int index)
-    {
-        activeWeapons.Add(inactiveWeapons[index]);
-        inactiveWeapons[index].gameObject.SetActive(true);
-        inactiveWeapons.RemoveAt(index);
-    }
-
-    public void ActivateWeapon(Weapon weapon)
-    {
-        weapon.gameObject.SetActive(true);
-        activeWeapons.Add(weapon);
-        inactiveWeapons.Remove(weapon);
-    }
-*/
     public bool isHurt()
     {
-        return (playerHealth < playerMaxHealth);
+        // Kept for compatibility where it’s used elsewhere
+        return CurrentHealth < MaxHealth;
     }
 
     public void Heal(int value)
     {
-        playerHealth = Mathf.MoveTowards(playerHealth, playerMaxHealth, value);
+        // Use Health.Heal and then refresh UI
+        base.Heal(value);
         UIController.Instance.UpdateHealthSlider();
     }
 
     public void IncreaseMaxHealth(int value)
     {
-        playerMaxHealth += value;
-        playerHealth = playerMaxHealth;
+        MaxHealth += value;
+        base.Heal(value); // top up by the same amount, effectively setting to new max
         UIController.Instance.UpdateHealthSlider();
 
         UIController.Instance.LevelUpPanelClose();
@@ -232,13 +204,6 @@ public class PlayerController : MonoBehaviour
         AudioController.Instance.PlaySound(AudioController.Instance.selectUpgrade);
     }
 
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-    
-    private void OnDisable()
-	{
-        playerControls.Disable();
-	}
+    private void OnEnable()  => playerControls.Enable();
+    private void OnDisable() => playerControls.Disable();
 }
