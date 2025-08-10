@@ -33,6 +33,12 @@ public class Pistol : MonoBehaviour
     [SerializeField] int defaultCapacity = 64;
     [SerializeField] int maxSize = 512;
 
+    public float CooldownWindow
+    {
+        get => cooldownWindow;
+        set => cooldownWindow = Mathf.Max(0.01f, value);
+    }
+
     void Awake()
     {
         cam = Camera.main;
