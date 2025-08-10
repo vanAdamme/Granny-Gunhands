@@ -15,6 +15,7 @@ public class PlayerController : Target
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 6f;
     public Vector2 playerMoveDirection;
+    public Vector2 lastMoveDirection = new Vector2(0, -1);
 
     [Header("Progression")]
     public int experience;
@@ -33,8 +34,10 @@ public class PlayerController : Target
     [SerializeField] private float immunityDuration = 0.5f;
     private float immunityTimer;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         col = GetComponent<Collider2D>();
 
         if (Instance != null && Instance != this)
@@ -49,45 +52,40 @@ public class PlayerController : Target
 
     private void Start()
     {
-        // Fill playerLevels list to maxLevel
+        // Fill levels list up to maxLevel if needed
         for (int i = playerLevels.Count; i < maxLevel; i++)
-        {
             playerLevels.Add(Mathf.CeilToInt(playerLevels[playerLevels.Count - 1] * 1.1f + 15));
-        }
 
-        // Health now comes from Health/Target base class:
-        // MaxHealth (get/set) and CurrentHealth (get)
-        // Ensure UI reflects starting values
+        // Health is initialised in Health.Awake() → CurrentHealth = MaxHealth
         UIController.Instance.UpdateHealthSlider();
         UIController.Instance.UpdateExperienceSlider();
     }
 
     private void Update()
     {
-        // Input (new Input System)
+        // Input
+        float inputX = Input.GetAxisRaw("Horizontal");
+        float inputY = Input.GetAxisRaw("Vertical");
         playerMoveDirection = playerControls.ReadValue<Vector2>();
 
+        // Anim
         if (playerMoveDirection == Vector2.zero)
         {
             animator.SetBool("moving", false);
         }
-        else if (Time.timeScale != 0)
+        else if (Time.timeScale != 0f)
         {
             animator.SetBool("moving", true);
-
-            // Old anim parameters used raw axes—keep that feel
-            float inputX = Input.GetAxisRaw("Horizontal");
-            float inputY = Input.GetAxisRaw("Vertical");
             animator.SetFloat("moveX", inputX);
             animator.SetFloat("moveY", inputY);
+            lastMoveDirection = playerMoveDirection;
         }
 
-        // Handle immunity countdown (maps to Health.IsInvulnerable)
+        // Immunity countdown (maps to Health.IsInvulnerable)
         if (immunityTimer > 0f)
         {
             immunityTimer -= Time.deltaTime;
-            if (immunityTimer <= 0f)
-                SetImmune(false);
+            if (immunityTimer <= 0f) SetImmune(false);
         }
     }
 
@@ -96,66 +94,48 @@ public class PlayerController : Target
         rb.linearVelocity = playerMoveDirection * moveSpeed;
     }
 
-    /// <summary>
-    /// Override TakeDamage so we can apply brief immunity & update UI,
-    /// then forward to base (Target → Health) to actually reduce HP.
-    /// </summary>
     public override void TakeDamage(float amount)
     {
-        // Respect current invulnerability (Immunity window)
         if (IsInvulnerable) return;
 
-        SetImmune(true);
-
-        base.TakeDamage(amount);          // applies damage + popup + death check
+        base.TakeDamage(amount);
         UIController.Instance.UpdateHealthSlider();
+        SetImmune(true);
     }
 
-    /// <summary>
-    /// Player-specific death behaviour.
-    /// </summary>
     protected override void Die()
     {
-        base.Die(); // sets dead flag & deactivates the GameObject
+        base.Die();                           // marks dead + sets inactive
         GameManager.Instance.GameOver();
     }
 
     private void SetImmune(bool state)
     {
         IsInvulnerable = state;
+        var sr = GetComponent<SpriteRenderer>();
         if (state)
         {
             immunityTimer = immunityDuration;
-
-            // small visual alpha cue
-            var sr = GetComponent<SpriteRenderer>();
-            if (sr)
-            {
-                var c = sr.color;
-                c.a = 0.8f;
-                sr.color = c;
-            }
+            // if (sr)
+            // {
+            //     var c = sr.color; c.a = 0.8f; sr.color = c;
+            // }
         }
         else
         {
             immunityTimer = 0f;
-
-            var sr = GetComponent<SpriteRenderer>();
-            if (sr)
-            {
-                var c = sr.color;
-                c.a = 1f;
-                sr.color = c;
-            }
+            // if (sr)
+            // {
+            //     var c = sr.color; c.a = 1f; sr.color = c;
+            // }
         }
     }
 
-    public void AddExperience(int experienceToGet)
+    public void AddExperience(int amount)
     {
-        experience += experienceToGet;
+        experience += amount;
         UIController.Instance.UpdateExperienceSlider();
-        // Level-up logic can remain commented or restored later
-        // if (experience >= playerLevels[currentLevel - 1]) { ... }
+        // if (experience >= playerLevels[currentLevel - 1]) { ... level-up flow ... }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -167,21 +147,13 @@ public class PlayerController : Target
         }
     }
 
-    public void GetCoin()
-    {
-        coins++;
-        // update coin UI if you have one
-    }
+    public void GetCoin() => coins++;
 
-    public bool isHurt()
-    {
-        // Kept for compatibility where it’s used elsewhere
-        return CurrentHealth < MaxHealth;
-    }
+    // Compatibility helpers that UI/other systems might still call
+    public bool isHurt() => CurrentHealth < MaxHealth;
 
     public void Heal(int value)
     {
-        // Use Health.Heal and then refresh UI
         base.Heal(value);
         UIController.Instance.UpdateHealthSlider();
     }
@@ -189,7 +161,7 @@ public class PlayerController : Target
     public void IncreaseMaxHealth(int value)
     {
         MaxHealth += value;
-        base.Heal(value); // top up by the same amount, effectively setting to new max
+        base.Heal(value); // top-up by the same amount
         UIController.Instance.UpdateHealthSlider();
 
         UIController.Instance.LevelUpPanelClose();
@@ -199,7 +171,6 @@ public class PlayerController : Target
     public void IncreaseMovementSpeed(float multiplier)
     {
         moveSpeed *= multiplier;
-
         UIController.Instance.LevelUpPanelClose();
         AudioController.Instance.PlaySound(AudioController.Instance.selectUpgrade);
     }

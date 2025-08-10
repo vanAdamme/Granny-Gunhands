@@ -8,7 +8,7 @@ public class Enemy : Target
     [SerializeField] private int experienceOnDeath = 1;
 
     [Header("Contact Damage")]
-    [SerializeField] private Damager contactHitbox;
+    [SerializeField] private Damager contactDamager;   // on the same GameObject as Enemy
     [SerializeField] private float contactDamage = 1f;
 
     private Transform player;
@@ -17,28 +17,43 @@ public class Enemy : Target
     private void Start()
     {
         player = PlayerController.Instance?.transform;
-        path = GetComponent<AIPath>();
-        path.maxSpeed = moveSpeed;
 
-        // Assign contact hitbox owner/team if set in Inspector
-        if (contactHitbox != null)
+        path = GetComponent<AIPath>();
+        if (path) path.maxSpeed = moveSpeed;
+
+        // Prefer Damager on the base object. Fall back to child search only if missing.
+        if (!contactDamager)
+            contactDamager = GetComponent<Damager>() ?? GetComponentInChildren<Damager>(true);
+
+        if (contactDamager)
         {
-            contactHitbox.Configure(gameObject, LayerMask.GetMask("Player"), contactDamage);
+            // Hit only the Player layer; owner prevents self-hits
+            contactDamager.Configure(gameObject, LayerMask.GetMask("Player"), contactDamage);
+        }
+        else
+        {
+            Debug.LogWarning($"[Enemy] No Damager found on '{name}'. Contact damage will be disabled.");
         }
     }
 
     private void Update()
     {
-        if (player == null) return;
-
-        path.destination = player.position;
+        if (player && path)
+            path.destination = player.position;
     }
 
     protected override void Die()
     {
-        base.Die(); // Sets m_IsDead, deactivates object
-
-        // Enemy-specific death logic
+        base.Die(); // Deactivates object
         PlayerController.Instance?.AddExperience(experienceOnDeath);
     }
+
+#if UNITY_EDITOR
+    // Helpful in the editor to auto-wire on prefab changes
+    private void OnValidate()
+    {
+        if (!contactDamager)
+            contactDamager = GetComponent<Damager>();
+    }
+#endif
 }

@@ -31,35 +31,38 @@ public class Damager : MonoBehaviour
         if (hitCooldown > 0f)
             Hit(other);
     }
-
+    
     private void Hit(Collider2D other)
     {
-        if (Time.time - lastHitTime < hitCooldown)
-            return;
+        if (Time.time - lastHitTime < hitCooldown) return;
 
-        // Ignore self
-        if (owner != null && other.transform.root.gameObject == owner)
-            return;
+        // Ignore self/owner
+        if (owner != null && other.transform.root.gameObject == owner) return;
 
-        // Check layer mask — if other object's layer isn't in the mask, skip
-        if ((targetLayers.value & (1 << other.gameObject.layer)) == 0)
-            return;
+        // Ignore anything under the same spawned projectile root
+        if (other.transform.root == transform.root) return;
 
-        // Try to damage
-        IDamageable damageable = other.GetComponentInParent<IDamageable>();
-        if (damageable != null)
+        // Use the RB host or root as the authoritative “team layer”
+        GameObject targetGO = other.attachedRigidbody
+            ? other.attachedRigidbody.gameObject
+            : other.transform.root.gameObject;
+
+        if (!IsInLayerMask(targetGO, targetLayers)) return;
+
+        var damageable = other.GetComponentInParent<IDamageable>();
+        if (damageable == null) return;
+
+        damageable.TakeDamage(damage);
+        lastHitTime = Time.time;
+
+        if (destroyOnHit)
         {
-            damageable.TakeDamage(damage);
-            lastHitTime = Time.time;
-
-            if (destroyOnHit)
-            {
-                // Prefer pooled release if available
-                if (TryGetComponent<IPooledRelease>(out var pooled))
-                    pooled.Release();
-                else
-                    Destroy(gameObject);
-            }
+            // Prefer pool release if available
+            var pooled = GetComponent<IPooledRelease>();
+            if (pooled != null)
+                pooled.Release();
+            else
+                Destroy(gameObject);
         }
     }
 
@@ -71,5 +74,10 @@ public class Damager : MonoBehaviour
         owner = ownerObj;
         targetLayers = targets;
         damage = dmg;
+    }
+
+    private static bool IsInLayerMask(GameObject go, LayerMask mask)
+    {
+        return (mask.value & (1 << go.layer)) != 0;
     }
 }

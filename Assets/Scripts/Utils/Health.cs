@@ -7,7 +7,7 @@ using DamageNumbersPro;
 /// </summary>
 public class Health : MonoBehaviour
 {
-    [SerializeField] float m_MaxHealth = 100f;
+    [SerializeField, Min(1f)] private float m_MaxHealth = 1f;
     [SerializeField] float m_CurrentHealth;
     // [SerializeField] bool m_ResetOnStart;
     [SerializeField] private DamageNumber damageNumberPrefab;
@@ -26,10 +26,15 @@ public class Health : MonoBehaviour
     public float CurrentHealth => m_CurrentHealth;
     public bool IsInvulnerable { get => m_IsInvulnerable; set => m_IsInvulnerable = value; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        // if (m_ResetOnStart)
-            m_CurrentHealth = MaxHealth;
+        m_CurrentHealth = MaxHealth;
+    }
+
+    private void OnValidate()
+    {
+        if (m_MaxHealth < 1f) m_MaxHealth = 1f;
+        if (m_CurrentHealth > m_MaxHealth) m_CurrentHealth = m_MaxHealth;
     }
 
     private void Start()

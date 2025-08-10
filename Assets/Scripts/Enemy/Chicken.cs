@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Chicken : Target
+public class Chicken : MonoBehaviour
 {
 	
 }
