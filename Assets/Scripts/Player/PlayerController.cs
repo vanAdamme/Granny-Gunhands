@@ -53,7 +53,7 @@ public class PlayerController : Target, IPlayerContext
         set => base.IsInvulnerable = value;
     }
 
-    public void Heal(float amount)
+    public override void Heal(float amount)
     {
         base.Heal(amount);
         UIController.Instance.UpdateHealthSlider();

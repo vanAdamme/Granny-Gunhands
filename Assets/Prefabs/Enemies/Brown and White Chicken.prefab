@@ -193,12 +193,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b2b4ab47325049986449b8862238f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 2
   destroyOnHit: 0
   hitCooldown: 0.1
   targetLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 64
 --- !u!82 &2800199502460603135
 AudioSource:
   m_ObjectHideFlags: 0
@@ -381,10 +381,11 @@ MonoBehaviour:
   m_MaxHealth: 10
   m_CurrentHealth: 0
   damageNumberPrefab: {fileID: 2556215940150367559, guid: 3665fc2192b950245823ff3a982f8f0a, type: 3}
+  damageFlash: {fileID: 6642056972338137007}
   m_DamageMultiplier: 1
   moveSpeed: 1
   experienceOnDeath: 2
-  contactHitbox: {fileID: 3744998149094034096}
+  contactDamager: {fileID: 3744998149094034096}
   contactDamage: 1
 --- !u!114 &6642056972338137007
 MonoBehaviour:
@@ -398,34 +399,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897803d5f4cffab4d8747f8ab26319bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flashColour: {r: 1, g: 1, b: 1, a: 1}
-  _flashTime: 0.25
-  _flashSpeedCurve:
+  flashColour: {r: 1, g: 1, b: 1, a: 1}
+  flashTime: 0.1
+  flashSpeedCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -17.268082
-      outSlope: -17.268082
+      inSlope: -35.411983
+      outSlope: -35.411983
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.033396874
-      value: 0.42330003
-      inSlope: -9.611174
-      outSlope: -9.611174
+      time: 0.018923072
+      value: 0.32989642
+      inSlope: -19.740458
+      outSlope: -19.740458
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.25
+      time: 0.1
       value: 0
-      inSlope: -1.9542655
-      outSlope: -1.9542655
+      inSlope: -4.068931
+      outSlope: -4.068931
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

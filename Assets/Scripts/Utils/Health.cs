@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
     [SerializeField] float m_CurrentHealth;
     // [SerializeField] bool m_ResetOnStart;
     [SerializeField] private DamageNumber damageNumberPrefab;
+    [SerializeField] private DamageFlash damageFlash;
 
     // [Tooltip("Notifies listeners that this object has died")]
     // public UnityEvent Died;
@@ -29,6 +30,13 @@ public class Health : MonoBehaviour
     protected virtual void Awake()
     {
         m_CurrentHealth = MaxHealth;
+
+        if (!damageFlash)
+        {
+            TryGetComponent(out damageFlash);
+            if (!damageFlash)
+                damageFlash = GetComponentInChildren<DamageFlash>(includeInactive: true);
+        }
     }
 
     private void OnValidate()
@@ -60,21 +68,21 @@ public class Health : MonoBehaviour
         // pushCounter = pushTime;
 
         // damage flash
-        // damageFlash.CallDamageFlash();
+        if (damageFlash != null) damageFlash.CallDamageFlash();
 
         // Check for death condition.
-        if (m_CurrentHealth <= 0)
-        {
-            m_CurrentHealth = 0;
-            Die();
-        }
+            if (m_CurrentHealth <= 0)
+            {
+                m_CurrentHealth = 0;
+                Die();
+            }
 
         // Notify listeners of the health change with the current health percentage.
         // HealthChanged.Invoke(CurrentHealth / MaxHealth); // Pass the current health percentage
     }
 
     // Heals the GameObject, up to the maximum value and notifies listeners
-    public void Heal(float amount)
+    public virtual void Heal(float amount)
     {
         // Don't heal if already dead
         if (m_IsDead)
