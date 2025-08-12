@@ -1,5 +1,27 @@
 {
   "dependencies": {
+    "com.seanba.super-tiled2unity": {
+      "version": "file:com.seanba.super-tiled2unity",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.2d.sprite": "1.0.0",
+        "com.unity.2d.tilemap": "1.0.0",
+        "com.unity.modules.animation": "1.0.0",
+        "com.unity.modules.physics2d": "1.0.0",
+        "com.unity.modules.tilemap": "1.0.0",
+        "com.unity.burst": "1.0.0"
+      }
+    },
+    "com.skner.dualgrid": {
+      "version": "file:com.skner.dualgrid",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.2d.tilemap.extras": "3.1.2",
+        "com.unity.2d.tilemap": "1.0.0"
+      }
+    },
     "com.unity.2d.animation": {
       "version": "11.0.0",
       "depth": 1,
@@ -98,7 +120,7 @@
     },
     "com.unity.burst": {
       "version": "1.8.23",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",

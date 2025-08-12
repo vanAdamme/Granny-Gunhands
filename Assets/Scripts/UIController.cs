@@ -39,7 +39,8 @@ public class UIController : MonoBehaviour
     {
         var p = PlayerController.Instance;
         playerHealthSlider.maxValue = p.MaxHealth;
-        playerHealthSlider.value    = p.CurrentHealth;
+        playerHealthSlider.value = p.CurrentHealth;
+        healthText.text = p.CurrentHealth + " / " + p.MaxHealth;
     }
 
     public void UpdateExperienceSlider()

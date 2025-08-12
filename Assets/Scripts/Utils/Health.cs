@@ -71,11 +71,11 @@ public class Health : MonoBehaviour
         if (damageFlash != null) damageFlash.CallDamageFlash();
 
         // Check for death condition.
-            if (m_CurrentHealth <= 0)
-            {
-                m_CurrentHealth = 0;
-                Die();
-            }
+        if (m_CurrentHealth <= 0)
+        {
+            m_CurrentHealth = 0;
+            Die();
+        }
 
         // Notify listeners of the health change with the current health percentage.
         // HealthChanged.Invoke(CurrentHealth / MaxHealth); // Pass the current health percentage
@@ -103,12 +103,15 @@ public class Health : MonoBehaviour
         if (m_IsDead)
             return;
 
-    // DeathCroak();
-    // DropItem();
-    // PlayerController.Instance.GetExperience(experienceToGive);
+        // DeathCroak();
+        // DropItem();
+        // PlayerController.Instance.GetExperience(experienceToGive);
 
         m_IsDead = true;
         // Died.Invoke();
         gameObject.SetActive(false);
     }
+
+    // Compatibility helpers that UI/other systems might still call
+    public bool IsHurt() => m_CurrentHealth < MaxHealth;
 }

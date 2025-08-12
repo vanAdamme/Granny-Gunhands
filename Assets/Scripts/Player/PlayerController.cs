@@ -15,7 +15,6 @@ public class PlayerController : Target, IPlayerContext
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 6f;
     public Vector2 playerMoveDirection;
-    public Vector2 lastMoveDirection = new Vector2(0, -1);
 
     [Header("Progression")]
     public int experience;
@@ -31,6 +30,7 @@ public class PlayerController : Target, IPlayerContext
     public List<Weapon> maxLevelWeapons;
 
     [Header("Damage / Immunity")]
+    [Tooltip("0 = permanent")]
     [SerializeField] private float immunityDuration = 0.5f;
     private float immunityTimer;
 
@@ -93,8 +93,6 @@ public class PlayerController : Target, IPlayerContext
     }
     // =========================================
 
-
-
     protected override void Awake()
     {
         base.Awake();
@@ -139,7 +137,6 @@ public class PlayerController : Target, IPlayerContext
             animator.SetBool("moving", true);
             animator.SetFloat("moveX", inputX);
             animator.SetFloat("moveY", inputY);
-            lastMoveDirection = playerMoveDirection;
         }
 
         // Immunity countdown (maps to Health.IsInvulnerable)
@@ -161,12 +158,12 @@ public class PlayerController : Target, IPlayerContext
 
         base.TakeDamage(amount);
         UIController.Instance.UpdateHealthSlider();
-        SetImmune(true);
+        if (immunityDuration > 0f) SetImmune(true);
     }
 
     protected override void Die()
     {
-        base.Die();                           // marks dead + sets inactive
+        base.Die();
         GameManager.Instance.GameOver();
     }
 
@@ -209,9 +206,6 @@ public class PlayerController : Target, IPlayerContext
     }
 
     public void GetCoin() => coins++;
-
-    // Compatibility helpers that UI/other systems might still call
-    public bool isHurt() => CurrentHealth < MaxHealth;
 
     public void IncreaseMaxHealth(int value)
     {

@@ -6,7 +6,7 @@ public class HealthPotion : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && PlayerController.Instance.isHurt())
+        if (other.CompareTag("Player") && PlayerController.Instance.IsHurt())
         {
             PlayerController.Instance.Heal(value);
             Destroy(gameObject);

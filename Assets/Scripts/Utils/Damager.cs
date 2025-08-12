@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider2D))]
 public class Damager : MonoBehaviour
@@ -13,6 +14,7 @@ public class Damager : MonoBehaviour
 
     private GameObject owner;
     private float lastHitTime = -999f;
+    private readonly Dictionary<Collider2D, float> _nextAllowedHit = new();
 
     private void Awake()
     {
@@ -20,49 +22,49 @@ public class Damager : MonoBehaviour
         GetComponent<Collider2D>().isTrigger = true;
     }
 
+    private void OnTriggerStay2D(Collider2D other) => Hit(other);
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        _nextAllowedHit.Remove(other);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         Hit(other);
     }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        // For contact damage — allow re-hitting after cooldown
-        if (hitCooldown > 0f)
-            Hit(other);
-    }
-    
     private void Hit(Collider2D other)
     {
-        if (Time.time - lastHitTime < hitCooldown) return;
-
-        // Ignore self/owner
-        if (owner != null && other.transform.root.gameObject == owner) return;
-
-        // Ignore anything under the same spawned projectile root
+        // ignore owner / same root
+        if (owner && other.transform.root.gameObject == owner) return;
         if (other.transform.root == transform.root) return;
 
-        // Use the RB host or root as the authoritative “team layer”
-        GameObject targetGO = other.attachedRigidbody
-            ? other.attachedRigidbody.gameObject
-            : other.transform.root.gameObject;
+        // layer check
+        GameObject targetGO = other.attachedRigidbody ? other.attachedRigidbody.gameObject : other.transform.root.gameObject;
+        if ((targetLayers.value & (1 << targetGO.layer)) == 0) return;
 
-        if (!IsInLayerMask(targetGO, targetLayers)) return;
+        // per-target cooldown gate
+        float now = Time.time;
+        if (_nextAllowedHit.TryGetValue(other, out float next) && now < next) return;
 
+        // don’t waste cooldown while invulnerable
+        var health = other.GetComponentInParent<Health>();
+        if (health != null && health.IsInvulnerable) return;
+
+        // apply damage
         var damageable = other.GetComponentInParent<IDamageable>();
         if (damageable == null) return;
 
         damageable.TakeDamage(damage);
-        lastHitTime = Time.time;
+
+        // start cooldown for THIS collider only
+        _nextAllowedHit[other] = now + hitCooldown;
 
         if (destroyOnHit)
         {
-            // Prefer pool release if available
-            var pooled = GetComponent<IPooledRelease>();
-            if (pooled != null)
-                pooled.Release();
-            else
-                Destroy(gameObject);
+            if (TryGetComponent<IPooledRelease>(out var pooled)) pooled.Release();
+            else Destroy(gameObject);
         }
     }
 
