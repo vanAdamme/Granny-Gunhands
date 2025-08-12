@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Runtime.ExceptionServices;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class DamageFlash : MonoBehaviour
 {

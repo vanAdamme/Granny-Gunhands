@@ -101,9 +101,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e2b9b5ed841e4459c9c76585eb089b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 800721682885484642, guid: e2fcb6b40a2b3a74eaecae217791c233, type: 3}
+  spriteRenderer: {fileID: 8658528696238980354}
   muzzlePosition: {fileID: 7000550099256340210}
+  muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
+  icon: {fileID: -1198099712212326842, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
   cooldownWindow: 0.1
+  useMouseAim: 1
+  autoHoldToFire: 1
+  projectilePrefab: {fileID: 800721682885484642, guid: e2fcb6b40a2b3a74eaecae217791c233, type: 3}
   projectileSpeed: 18
   damage: 1
   range: 12
@@ -113,11 +118,6 @@ MonoBehaviour:
   wallLayers:
     serializedVersion: 2
     m_Bits: 8
-  aimAtMouse: 1
-  icon: {fileID: -1198099712212326842, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
-  m_GunFired:
-    m_PersistentCalls:
-      m_Calls: []
   collectionCheck: 1
   defaultCapacity: 64
   maxSize: 512

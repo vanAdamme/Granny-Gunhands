@@ -29,10 +29,10 @@ public class PlayerController : Target, IPlayerContext
     [SerializeField] private List<Weapon> upgradeableWeapons;
     public List<Weapon> maxLevelWeapons;
 
-    [Header("Damage / Immunity")]
+    [Header("Damage / Invulnerability")]
     [Tooltip("0 = permanent")]
-    [SerializeField] private float immunityDuration = 0.5f;
-    private float immunityTimer;
+    [SerializeField] private float invulnerabilityDuration = 0.5f;
+    private float invulnerabilityTimer;
 
     // ===== IPlayerContext implementation =====
     public float MoveSpeed
@@ -139,11 +139,11 @@ public class PlayerController : Target, IPlayerContext
             animator.SetFloat("moveY", inputY);
         }
 
-        // Immunity countdown (maps to Health.IsInvulnerable)
-        if (immunityTimer > 0f)
+        // Invulnerability countdown (maps to Health.IsInvulnerable)
+        if (invulnerabilityTimer > 0f)
         {
-            immunityTimer -= Time.deltaTime;
-            if (immunityTimer <= 0f) SetImmune(false);
+            invulnerabilityTimer -= Time.deltaTime;
+            if (invulnerabilityTimer <= 0f) SetInvulnerable(false);
         }
     }
 
@@ -158,7 +158,7 @@ public class PlayerController : Target, IPlayerContext
 
         base.TakeDamage(amount);
         UIController.Instance.UpdateHealthSlider();
-        if (immunityDuration > 0f) SetImmune(true);
+        SetInvulnerable(true);
     }
 
     protected override void Die()
@@ -167,25 +167,25 @@ public class PlayerController : Target, IPlayerContext
         GameManager.Instance.GameOver();
     }
 
-    private void SetImmune(bool state)
+    private void SetInvulnerable(bool state)
     {
         IsInvulnerable = state;
         var sr = GetComponent<SpriteRenderer>();
         if (state)
         {
-            immunityTimer = immunityDuration;
-            // if (sr)
-            // {
-            //     var c = sr.color; c.a = 0.8f; sr.color = c;
-            // }
+            invulnerabilityTimer = invulnerabilityDuration;
+            if (sr)
+            {
+                var c = sr.color; c.a = 0.8f; sr.color = c;
+            }
         }
         else
         {
-            immunityTimer = 0f;
-            // if (sr)
-            // {
-            //     var c = sr.color; c.a = 1f; sr.color = c;
-            // }
+            invulnerabilityTimer = 0f;
+            if (sr)
+            {
+                var c = sr.color; c.a = 1f; sr.color = c;
+            }
         }
     }
 
