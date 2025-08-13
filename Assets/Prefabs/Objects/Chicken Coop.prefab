@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 5446745974171355662}
   - component: {fileID: 7873836511899184400}
   - component: {fileID: 6361259673634895031}
+  - component: {fileID: -3699558378358287374}
+  - component: {fileID: 5526495734665819114}
   m_Layer: 0
   m_Name: Chicken Coop
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 1919248021
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -825422204, guid: ff335104f2f3a654ea09ebb112cb9f59, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 53ce163d80ed02c4abfed2ee2422d7c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,15 +124,93 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.4724375}
+  m_Offset: {x: -0.0038526058, y: -0.98000205}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 2.625, y: 3}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.25, y: 3}
     newSize: {x: 2.625, y: 3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.625, y: 0.9753423}
+  m_Size: {x: 2.1241589, y: 1.0755103}
   m_EdgeRadius: 0
+--- !u!114 &-3699558378358287374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3933032987307873244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa0297545942b87408fbf15742ef4b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxHealth: 100
+  m_CurrentHealth: 0
+  m_ResetOnStart: 1
+  m_DamageMultiplier: 1
+  sprites:
+  - {fileID: 21300000, guid: 53ce163d80ed02c4abfed2ee2422d7c0, type: 3}
+  - {fileID: 21300000, guid: 2042ece4602d8274c88ac925995cd8c5, type: 3}
+  - {fileID: 21300000, guid: fcd8832fc8fd6e642ad28e64525b39ee, type: 3}
+  - {fileID: 21300000, guid: 7a3b6cd2105f52f4bb4b129895f15635, type: 3}
+  - {fileID: 21300000, guid: 127c9162c352cf54292ee45972987ed2, type: 3}
+  - {fileID: 21300000, guid: ae3636b9fd037b94dbe68cf4e1510bc4, type: 3}
+  - {fileID: 21300000, guid: e5c6c7308a7a91a41b9015848dcad098, type: 3}
+  - {fileID: 21300000, guid: fa397456158bc04448d00cbf8eadac07, type: 3}
+--- !u!60 &5526495734665819114
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3933032987307873244}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.25, y: 3}
+    newSize: {x: 2.625, y: 3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.06421602, y: 1.4922948}
+      - {x: -1.1172947, y: 0.47774222}
+      - {x: -1.125, y: -1.5}
+      - {x: 1.125, y: -1.5}
+      - {x: 1.1172948, y: 0.45035335}
+      - {x: 0.07277928, y: 1.4922948}
+  m_UseDelaunayMesh: 0

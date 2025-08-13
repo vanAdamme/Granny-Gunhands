@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1f;
         gameActive = true;
     }
 
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
+        Time.timeScale = 1f; //unpause physics before reload
         SceneManager.LoadScene("Game");
     }
 

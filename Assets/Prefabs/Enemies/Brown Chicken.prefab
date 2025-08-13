@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6512164461757534258}
   - component: {fileID: 143090996209182637}
-  - component: {fileID: 1997685148579974603}
   - component: {fileID: 1573330575133687114}
   - component: {fileID: 5743244376666759807}
   - component: {fileID: 5791162285397877659}
@@ -18,6 +17,8 @@ GameObject:
   - component: {fileID: -6296755768178852152}
   - component: {fileID: 6030493029336309263}
   - component: {fileID: 8526228938570613571}
+  - component: {fileID: 4424195688997342039}
+  - component: {fileID: 1466282970647586984}
   m_Layer: 9
   m_Name: Brown Chicken
   m_TagString: Enemy
@@ -95,34 +96,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &1997685148579974603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8284610609497238385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69000391031958e41a238cf55c73e9fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 143090996209182637}
-  target: {fileID: 0}
-  rangedAttack: 0
-  meleeAttack: 0
-  touchAttack: 1
-  moveSpeed: 1
-  damage: 2
-  health: 10
-  experienceToGive: 2
-  attackRange: 0
-  pushTime: 0.5
-  dropChance: 0.15
-  itemDrop: {fileID: 507035622283459166, guid: 30b80b825cd964c4f9ca2c0358867598, type: 3}
-  deathClip: {fileID: 8300000, guid: 501004b944137414690ea21c742ce729, type: 3}
-  numberPrefab: {fileID: 2556215940150367559, guid: 3665fc2192b950245823ff3a982f8f0a, type: 3}
-  destroyEffect: {fileID: 3655094787856938160, guid: 0ca0953cc88af3549bb5bc3445920d28, type: 3}
 --- !u!50 &1573330575133687114
 Rigidbody2D:
   serializedVersion: 5
@@ -422,3 +395,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4424195688997342039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8284610609497238385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1f83f52d8bac842b8a5eef4a4b3bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxHealth: 15
+  m_CurrentHealth: 0
+  damageNumberPrefab: {fileID: 0}
+  m_DamageMultiplier: 1
+  moveSpeed: 1.2
+  experienceOnDeath: 3
+  contactHitbox: {fileID: 1466282970647586984}
+  contactDamage: 2
+--- !u!114 &1466282970647586984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8284610609497238385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 223b2b4ab47325049986449b8862238f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2
+  destroyOnHit: 0
+  hitCooldown: 0.1
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 0
