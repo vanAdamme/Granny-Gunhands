@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1916460495471805438}
   - component: {fileID: 1904351059236200200}
   - component: {fileID: 4268217467879288487}
+  - component: {fileID: 3372328106425316388}
   - component: {fileID: 3458885261953601105}
-  - component: {fileID: 2648207072497396869}
-  - component: {fileID: 1535529643460428747}
+  - component: {fileID: 7521499041402277150}
   m_Layer: 0
   m_Name: Pentagram
   m_TagString: Untagged
@@ -129,21 +129,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3458885261953601105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3229248051958147765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fddaca1a0308494ab23adee66714677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageFlash: {fileID: 4268217467879288487}
---- !u!68 &2648207072497396869
-EdgeCollider2D:
+--- !u!60 &3372328106425316388
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -177,19 +164,24 @@ EdgeCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8, y: 8}
+    newSize: {x: 6.0625, y: 5.0625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   m_Points:
-  - {x: -2.4247081, y: 3.6223826}
-  - {x: 2.454815, y: 3.651053}
-  - {x: 3.7890825, y: -0.88201845}
-  - {x: -0.0737617, y: -3.5664225}
-  - {x: -3.8231204, y: -0.92036724}
-  - {x: -2.408719, y: 3.630377}
-  m_AdjacentStartPoint: {x: -2.67, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!114 &1535529643460428747
+    m_Paths:
+    - - {x: -3.6887624, y: -0.8905513}
+      - {x: -0.08180046, y: -3.493256}
+      - {x: 3.7010703, y: -0.8535063}
+      - {x: 2.350936, y: 3.5447555}
+      - {x: -2.3618069, y: 3.5563455}
+  m_UseDelaunayMesh: 0
+--- !u!114 &3458885261953601105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,12 +190,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 3229248051958147765}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c69fef138b2c9647a8206b99b37dcbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fddaca1a0308494ab23adee66714677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageFlash: {fileID: 4268217467879288487}
+--- !u!114 &7521499041402277150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3229248051958147765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb2d20ee1a0f5a48a53767105210d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damagePerTick: 5
-  tickInterval: 1
+  tickInterval: 0.1
+  tickOnEnter: 1
   targetLayers:
     serializedVersion: 2
-    m_Bits: 2112
-  owner: {fileID: 3229248051958147765}
+    m_Bits: 64
+  onceOnly: 1
+  disableGameObject: 0
+  tickVfxPrefab: {fileID: 0}
+  vfxLifetime: 1
+  vfxOffset: {x: 0, y: 0, z: 0}
+  tickSfx: {fileID: 0}
+  audioSource: {fileID: 0}
+  onTick:
+    m_PersistentCalls:
+      m_Calls: []

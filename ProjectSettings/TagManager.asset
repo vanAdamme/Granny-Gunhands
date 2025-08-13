@@ -45,8 +45,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Background
+  - name: BackgroundLava
     uniqueID: 3267387403
+    locked: 0
+  - name: Ground
+    uniqueID: 1649621695
     locked: 0
   - name: Weapons
     uniqueID: 911499633

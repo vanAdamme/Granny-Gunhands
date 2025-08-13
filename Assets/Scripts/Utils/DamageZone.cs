@@ -1,79 +1,125 @@
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider2D))]
 public class DamageZone : MonoBehaviour
 {
-    [Header("Damage")]
-    [SerializeField] private float damagePerTick = 1f;
-    [SerializeField, Min(0f)] private float tickInterval = 0.2f;
+    [Header("Tick Settings")]
+    [SerializeField] float damagePerTick = 1f;
+    [SerializeField, Min(0f)] float tickInterval = 1f;
+    [SerializeField] bool tickOnEnter = false;
 
     [Header("Targeting")]
-    [SerializeField] private LayerMask targetLayers;
-    [SerializeField] private GameObject owner; // optional; ignored if null
+    [SerializeField] LayerMask targetLayers;  // set to Player layer (or whatever) in Inspector
 
-    private Collider2D col;
-    private readonly ContactFilter2D filter = new ContactFilter2D() { useTriggers = true };
-    private readonly List<Collider2D> overlaps = new List<Collider2D>(16);
-    private readonly Dictionary<int, float> nextTickAt = new Dictionary<int, float>();
+    [Header("One-Shot Mode")]
+    [SerializeField] bool onceOnly = false;           // if true, zone disables after first successful tick
+    [SerializeField] bool disableGameObject = false;  // if true, SetActive(false); else just disable component
+
+    [Header("FX")]
+    [SerializeField] GameObject tickVfxPrefab;   // optional; spawned at target root
+    [SerializeField, Min(0f)] float vfxLifetime = 1f;
+    [SerializeField] Vector3 vfxOffset = Vector3.zero;
+
+    [SerializeField] AudioClip tickSfx;          // optional; plays on tick
+    [SerializeField] AudioSource audioSource;    // optional; if null we’ll try AudioController (if you use one)
+
+    [Header("Events")]
+    public UnityEvent onTick;                    // raised after damage is applied
+
+    // runtime
+    IDamageable target;
+    Health targetHealth;
+    Transform targetRoot;
+    float timer;
 
     void Awake()
     {
-        col = GetComponent<Collider2D>();
-        col.isTrigger = true; // zone should be a trigger
+        GetComponent<Collider2D>().isTrigger = true;
     }
 
-    void FixedUpdate()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        overlaps.Clear();
-        col.Overlap(filter, overlaps); // ask physics for current overlaps (stable, once per step)
+        var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
+        if (!IsInLayerMask(root.gameObject.layer, targetLayers)) return;
 
-        // Deduplicate multiple colliders from the same target in this step
-        var processedThisStep = new HashSet<int>();
+        target      = root.GetComponentInChildren<IDamageable>();
+        targetHealth= root.GetComponentInChildren<Health>();
+        targetRoot  = root;
 
-        float now = Time.time;
+        if (target == null) return;
 
-        foreach (var c in overlaps)
+        timer = tickOnEnter ? 0f : tickInterval;
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
+        if (!IsInLayerMask(root.gameObject.layer, targetLayers)) return;
+
+        if (root == targetRoot)
         {
-            if (!c) continue;
+            target = null;
+            targetHealth = null;
+            targetRoot = null;
+        }
+    }
 
-            // Resolve target root
-            var root = c.attachedRigidbody ? c.attachedRigidbody.transform.root : c.transform.root;
-            if (!root) continue;
+    void Update()
+    {
+        if (target == null) return;
 
-            if (owner && root.gameObject == owner) continue;                // ignore owner
-            if ((targetLayers.value & (1 << root.gameObject.layer)) == 0) continue; // layer mask
+        timer -= Time.deltaTime;
+        if (timer > 0f) return;
 
-            // Must have something we can damage
-            var dmgComp = root.GetComponentInChildren<IDamageable>() as Component;
-            if (!dmgComp) continue;
+        // respect i-frames: wait until invulnerability ends, then tick immediately
+        if (targetHealth != null && targetHealth.IsInvulnerable) return;
 
-            int id = root.GetInstanceID();
-            if (!processedThisStep.Add(id)) continue; // already handled this target this step
+        DoTick();
+        timer = tickInterval;
 
-            // Respect i-frames without burning the timer
-            var health = root.GetComponentInChildren<Health>();
-            if (health && health.IsInvulnerable) continue;
+        if (onceOnly)
+        {
+            if (disableGameObject) gameObject.SetActive(false);
+            else enabled = false;
+        }
+    }
 
-            // Tick gate
-            if (nextTickAt.TryGetValue(id, out float next) && now < next) continue;
+    void DoTick()
+    {
+        // Damage
+        target.TakeDamage(damagePerTick);
 
-            // Apply damage and schedule next tick
-            (dmgComp as IDamageable).TakeDamage(damagePerTick);
-            nextTickAt[id] = now + tickInterval;
+        // VFX
+        if (tickVfxPrefab && targetRoot)
+        {
+            var v = Instantiate(tickVfxPrefab, targetRoot.position + vfxOffset, Quaternion.identity);
+            if (vfxLifetime > 0f) Destroy(v, vfxLifetime);
         }
 
-        // Optional housekeeping: prune long-gone entries (keeps dict small even if targets despawn while inside)
-        // Not strictly required, but nice to have:
-        // You can add a small periodic sweep here if you like.
+        // SFX (prefer project AudioSource; otherwise try your AudioController singleton if you have one)
+        if (tickSfx)
+        {
+            if (audioSource) audioSource.PlayOneShot(tickSfx);
+            else
+            {
+                // Optional integration with your existing AudioController
+                // AudioController.Instance?.PlaySound(tickSfx);
+            }
+        }
+
+        // Event
+        onTick?.Invoke();
     }
 
-    /// <summary>Optional: configure at runtime.</summary>
-    public void Configure(GameObject ownerObj, LayerMask targets, float dmgPerTick, float interval)
+    static bool IsInLayerMask(int layer, LayerMask mask) => (mask.value & (1 << layer)) != 0;
+
+    #if UNITY_EDITOR
+    void OnDrawGizmosSelected()
     {
-        owner = ownerObj;
-        targetLayers = targets;
-        damagePerTick = dmgPerTick;
-        tickInterval = Mathf.Max(0f, interval);
+        Gizmos.color = Color.red;
+        var c = GetComponent<Collider2D>();
+        if (c) Gizmos.DrawWireCube(c.bounds.center, c.bounds.size);
     }
+    #endif
 }
