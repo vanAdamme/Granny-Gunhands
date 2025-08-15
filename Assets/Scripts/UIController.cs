@@ -9,8 +9,8 @@ public class UIController : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private Slider playerHealthSlider;
     [SerializeField] private TMP_Text healthText;
-    [SerializeField] private Slider specialWeaponTimer;
-    [SerializeField] private TMP_Text specialWeaponText;
+    [SerializeField] private Slider killChargeSlider;
+    [SerializeField] private TMP_Text killChargeText;
     [SerializeField] private Slider playerExperienceSlider;
     [SerializeField] private TMP_Text experienceText;
     [SerializeField] private Image leftWeaponIcon;
@@ -58,10 +58,11 @@ public class UIController : MonoBehaviour
         timerText.text = min + ":" + sec.ToString("00");
     }
 
-    public void UpdateSpecialWeaponTimer(float timer)
+    public void UpdateKillCharge(int current, int required)
     {
-        specialWeaponTimer.maxValue = 100;
-        specialWeaponTimer.value = timer;
+        killChargeSlider.maxValue = required;
+        killChargeSlider.value = current;
+        killChargeText.text = current + " / " + required;
     }
 
     public void UpdateLeftWeaponIcon(Sprite wIcon)

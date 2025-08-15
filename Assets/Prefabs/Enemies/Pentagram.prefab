@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1916460495471805438}
   - component: {fileID: 1904351059236200200}
   - component: {fileID: 4268217467879288487}
-  - component: {fileID: 3372328106425316388}
   - component: {fileID: 3458885261953601105}
-  - component: {fileID: 7521499041402277150}
+  - component: {fileID: 7273833970948221847}
+  - component: {fileID: 3238422256308819956}
+  - component: {fileID: 5089121553697726881}
   m_Layer: 0
   m_Name: Pentagram
   m_TagString: Untagged
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: a05e0b9face32bd4eb3e970671a67eee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -129,7 +130,23 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!60 &3372328106425316388
+--- !u!114 &3458885261953601105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3229248051958147765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fddaca1a0308494ab23adee66714677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageFlash: {fileID: 4268217467879288487}
+  triggerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!60 &7273833970948221847
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,13 +192,18 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -3.6887624, y: -0.8905513}
-      - {x: -0.08180046, y: -3.493256}
-      - {x: 3.7010703, y: -0.8535063}
-      - {x: 2.350936, y: 3.5447555}
-      - {x: -2.3618069, y: 3.5563455}
+    - - {x: 1.4282211, y: 0.7584586}
+      - {x: 2.2681086, y: 3.3985937}
+      - {x: 0.0053244657, y: 1.7999905}
+      - {x: -2.2460537, y: 3.4146175}
+      - {x: -1.4249305, y: 0.7685864}
+      - {x: -3.656246, y: -0.8736544}
+      - {x: -0.8859801, y: -0.910388}
+      - {x: -0.013630297, y: -3.5399756}
+      - {x: 0.8773651, y: -0.91664714}
+      - {x: 3.6478224, y: -0.89957905}
   m_UseDelaunayMesh: 0
---- !u!114 &3458885261953601105
+--- !u!114 &3238422256308819956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,11 +212,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3229248051958147765}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fddaca1a0308494ab23adee66714677, type: 3}
+  m_Script: {fileID: 11500000, guid: 1663c07819f6e5b46bbd45a7f2a2024d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageFlash: {fileID: 4268217467879288487}
---- !u!114 &7521499041402277150
+  radiusA: 1.5
+  radiusB: 3.84
+  points: 5
+  rotation: 17.796616
+  localOffset: {x: 0, y: 0.3}
+--- !u!114 &5089121553697726881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,13 +232,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb2d20ee1a0f5a48a53767105210d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePerTick: 5
-  tickInterval: 0.1
+  damagePerTick: 2
+  tickInterval: 1
   tickOnEnter: 1
   targetLayers:
     serializedVersion: 2
-    m_Bits: 64
-  onceOnly: 1
+    m_Bits: 128
+  onceOnly: 0
   disableGameObject: 0
   tickVfxPrefab: {fileID: 0}
   vfxLifetime: 1

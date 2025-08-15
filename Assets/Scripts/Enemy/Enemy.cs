@@ -1,5 +1,6 @@
 using UnityEngine;
 using Pathfinding;
+using System;
 
 public class Enemy : Target
 {
@@ -17,7 +18,6 @@ public class Enemy : Target
     private void Start()
     {
         player = PlayerController.Instance?.transform;
-
         path = GetComponent<AIPath>();
         if (path) path.maxSpeed = moveSpeed;
 
@@ -44,7 +44,9 @@ public class Enemy : Target
 
     protected override void Die()
     {
-        base.Die(); // Deactivates object
+        EnemyEvents.RaiseEnemyKilled();
+
+        base.Die(); // Sets m_IsDead, deactivates object
         PlayerController.Instance?.AddExperience(experienceOnDeath);
     }
 

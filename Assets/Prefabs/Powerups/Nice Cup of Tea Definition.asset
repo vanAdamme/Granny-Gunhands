@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 461cece210a0162449754ded599fa2c0, type: 3}
+  m_Name: Nice Cup of Tea Definition
+  m_EditorClassIdentifier: 
+  displayName: Nice Cup of Tea
+  icon: {fileID: 638614168610754204, guid: 62f433defc0aa4540b2e1da264914ffd, type: 3}
+  description: A nice cup of tea. This'll hit the spot.
+  durationSeconds: 0
+  stacking: 0
+  pickupVFXPrefab: {fileID: 3655094787856938160, guid: 4e94f46721874094e9cb9ead3b1af530, type: 3}
+  pickupVFXAttach: 2
+  pickupAnchorName: Head
+  pickupVFXLifetime: 0
+  durationVFXPrefab: {fileID: 0}
+  durationVFXAttach: 0
+  durationAnchorName: 
+  durationVFXClampToBuff: 0
+  durationVFXUnparentOnEnd: 1
+  effects: []
+  oneShotEffects:
+  - {fileID: 11400000, guid: 1f970a5c8efb14c40b2ebeb1734f514e, type: 2}

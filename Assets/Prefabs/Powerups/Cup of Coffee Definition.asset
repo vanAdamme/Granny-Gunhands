@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 461cece210a0162449754ded599fa2c0, type: 3}
+  m_Name: Cup of Coffee Definition
+  m_EditorClassIdentifier: 
+  displayName: Cup of Coffee
+  icon: {fileID: 3151766094847308127, guid: 62f433defc0aa4540b2e1da264914ffd, type: 3}
+  description: This will get the engine running!
+  durationSeconds: 10
+  stacking: 1
+  pickupVFXPrefab: {fileID: 0}
+  pickupVFXAttach: 2
+  pickupAnchorName: 
+  pickupVFXLifetime: 0
+  durationVFXPrefab: {fileID: 3655094787856938160, guid: 0f9b448e46eb8704ea651b8dab9f0151, type: 3}
+  durationVFXAttach: 2
+  durationAnchorName: Head
+  durationVFXClampToBuff: 1
+  durationVFXUnparentOnEnd: 1
+  effects:
+  - {fileID: 11400000, guid: 15e3303956eaa9448b821455bbf2ad5a, type: 2}
+  oneShotEffects: []

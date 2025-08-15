@@ -40,22 +40,34 @@ public class DamageZone : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
-        if (!IsInLayerMask(root.gameObject.layer, targetLayers)) return;
+        var root       = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
+        var colliderGO = other.gameObject; // the child collider that actually touched
 
-        target      = root.GetComponentInChildren<IDamageable>();
-        targetHealth= root.GetComponentInChildren<Health>();
-        targetRoot  = root;
+        bool layerMatch =
+            IsInLayerMask(colliderGO.layer, targetLayers) ||
+            IsInLayerMask(root.gameObject.layer, targetLayers);
+
+        if (!layerMatch) return;
+
+        // Always damage the root (player)
+        target       = root.GetComponentInChildren<IDamageable>();
+        targetHealth = root.GetComponentInChildren<Health>();
+        targetRoot   = root;
 
         if (target == null) return;
-
         timer = tickOnEnter ? 0f : tickInterval;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
-        if (!IsInLayerMask(root.gameObject.layer, targetLayers)) return;
+        var root       = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
+        var colliderGO = other.gameObject;
+
+        bool layerMatch =
+            IsInLayerMask(colliderGO.layer, targetLayers) ||
+            IsInLayerMask(root.gameObject.layer, targetLayers);
+
+        if (!layerMatch) return;
 
         if (root == targetRoot)
         {
