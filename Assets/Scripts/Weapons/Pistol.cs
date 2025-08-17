@@ -27,10 +27,16 @@ public class Pistol : Weapon
             collectionCheck, defaultCapacity, maxSize);
     }
 
-    protected override void Shoot(Vector2 dir)
+    protected override void Shoot(Vector2 _ /* ignored */)
     {
+        // Fallbacks if the muzzle isn't assigned
+        Vector3 spawnPos = muzzlePosition ? muzzlePosition.position : transform.position;
+        Vector2 dir      = muzzlePosition ? (Vector2)muzzlePosition.right : (Vector2)transform.right;
+        Quaternion rot   = muzzlePosition ? muzzlePosition.rotation
+                                        : Quaternion.AngleAxis(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, Vector3.forward);
+
         var b = pool.Get();
-        b.transform.position = muzzlePosition.position;
+        b.transform.SetPositionAndRotation(spawnPos, rot);
 
         var hb = b.GetComponent<Damager>();
         if (hb) hb.Configure(ownerRoot, targetLayers, damage);

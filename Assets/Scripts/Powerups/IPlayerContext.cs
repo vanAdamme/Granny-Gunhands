@@ -14,9 +14,8 @@ public interface IPlayerContext
     void AddExperience(int amount);
 
     // Weapons
-    // Provide safe hooks instead of exposing collections directly
-    void AddWeapon(Weapon weaponPrefab);
-    bool TryGetActiveWeapon<T>(out T weapon) where T : MonoBehaviour;
+    bool TryGetActiveWeapon(Hand hand, out Weapon weapon);
+    bool TryGetActiveWeapon<T>(Hand hand, out T weapon) where T : Weapon;
 
     // Misc
     Transform Transform { get; }

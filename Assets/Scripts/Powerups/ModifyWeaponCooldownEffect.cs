@@ -9,24 +9,24 @@ public class ModifyWeaponCooldownEffect : PowerUpEffectBase
     {
         private readonly float m;
         private float original;
-        private Pistol pistol;
+        private Weapon weapon;
 
         public Runtime(float m) { this.m = m; }
 
-        public void Apply(IPlayerContext player)
+    public void Apply(IPlayerContext player)
+    {
+        if (player.TryGetActiveWeapon(Hand.Left, out weapon) || 
+            player.TryGetActiveWeapon(Hand.Right, out weapon))
         {
-            if (player.TryGetActiveWeapon<Pistol>(out pistol) && pistol != null)
-            {
-                original = GetCooldown(pistol);
-                SetCooldown(pistol, original * m);
-            }
+            original = weapon.CooldownWindow;
+            weapon.CooldownWindow = original * m;
         }
+    }
 
-        public void Remove(IPlayerContext player)
-        {
-            if (pistol != null)
-                SetCooldown(pistol, original);
-        }
+    public void Remove(IPlayerContext player)
+    {
+        if (weapon) weapon.CooldownWindow = original;
+    }
 
         private static float GetCooldown(Pistol p)
         {

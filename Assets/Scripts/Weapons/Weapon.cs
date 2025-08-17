@@ -2,25 +2,29 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-	public enum FireMode { SemiAuto, FullAuto }
+    public enum FireMode { SemiAuto, FullAuto }
 
     [Header("General")]
     [SerializeField] protected SpriteRenderer spriteRenderer;
-    [SerializeField] protected Transform muzzlePosition;
+    [SerializeField] protected Transform muzzlePosition;   // make sure this points out of the barrel in +X
     [SerializeField] protected GameObject muzzleFlashPrefab;
     [SerializeField] public Sprite icon;
+    [SerializeField] public bool autoFlip = true;
 
     [Header("Firing (shared)")]
     [SerializeField, Min(0.01f)] protected float cooldownWindow = 0.1f;
-	[SerializeField] private FireMode fireMode = FireMode.FullAuto;
+    [SerializeField] private FireMode fireMode = FireMode.FullAuto;
+    public FireMode Mode => fireMode;
     protected float nextFire;
+    public bool Ready => Time.time >= nextFire;
+
+    public WeaponDefinition Definition { get; private set; }
+    public void SetDefinition(WeaponDefinition def) { Definition = def; if (def && def.Icon) icon = def.Icon; }
 
     protected GameObject ownerRoot;
+    public void SetOwner(GameObject root) => ownerRoot = root ? root : gameObject;
 
-	public FireMode Mode => fireMode;
-
-	// Expose muzzle so handlers can aim from the correct point
-	public Transform Muzzle => muzzlePosition;
+    public Transform Muzzle => muzzlePosition;
 
     protected virtual void Awake()
     {
@@ -28,18 +32,21 @@ public abstract class Weapon : MonoBehaviour
         ownerRoot = transform.root.gameObject;
     }
 
-    protected virtual void Update()
-    {
-        FlipSprite();
-    }
+    protected virtual void Update() => FlipSprite();
 
-    // Called by handlers/AI. Handles cooldown + VFX and delegates to child.
-    public bool TryFire(Vector2 direction)
+    // Old signature kept for compatibility (ignored param):
+    public bool TryFire(Vector2 _) => TryFireFromMuzzle();
+
+    public bool TryFireFromMuzzle()
     {
         if (Time.time < nextFire) return false;
 
         DoMuzzleFlash();
-        Shoot(direction.sqrMagnitude > 0f ? direction.normalized : Vector2.right);
+
+        // ALWAYS use the muzzle’s facing
+        Vector2 dir = muzzlePosition ? (Vector2)muzzlePosition.right : (Vector2)transform.right;
+
+        Shoot(dir);
         nextFire = Time.time + cooldownWindow;
         return true;
     }
@@ -53,9 +60,15 @@ public abstract class Weapon : MonoBehaviour
         Destroy(m, 0.05f);
     }
 
+    public float CooldownWindow
+    {
+        get => cooldownWindow;
+        set => cooldownWindow = Mathf.Max(0.01f, value);
+    }
+
     protected void FlipSprite()
     {
-        if (!PlayerController.Instance) return;
+        if (!autoFlip || !PlayerController.Instance) return;
         var scale = transform.localScale;
         if (transform.position.x > PlayerController.Instance.transform.position.x)
             scale.y = Mathf.Abs(scale.y);

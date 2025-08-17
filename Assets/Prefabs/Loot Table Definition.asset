@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1ffacebb977414287997c9c025fad6, type: 3}
+  m_Name: Loot Table Definition
+  m_EditorClassIdentifier: 
+  raritySettings: {fileID: 11400000, guid: 16a6e4ba997e725418b17128a623c9d3, type: 2}
+  entries:
+  - weaponDef: {fileID: 11400000, guid: ef342f91b593a8d46914ea136f8e929c, type: 2}
+    powerUpDef: {fileID: 0}
+    prefab: {fileID: 0}
+    dropChanceOverride: 0
+    weightOverride: 0
+  - weaponDef: {fileID: 11400000, guid: 95adee8733bbf8947a8b36840ffffc75, type: 2}
+    powerUpDef: {fileID: 0}
+    prefab: {fileID: 0}
+    dropChanceOverride: 0
+    weightOverride: 0
+  overallDropChance: 0.3
+  weaponPickupPrefab: {fileID: -2376700922227354871, guid: 39ab352b6cc316c46a95eca7d1ae81a4, type: 3}
+  powerUpPickupPrefab: {fileID: 0}
+  spawnJitter: {x: 0.25, y: 0.25}

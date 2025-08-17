@@ -3,20 +3,26 @@ using UnityEngine.Pool;
 
 public class EnemyShooter : MonoBehaviour
 {
+    [Header("Projectile")]
     [SerializeField] private BulletKinetic projectilePrefab;
     [SerializeField] private float projectileSpeed = 8f;
     [SerializeField] private float projectileDamage = 6f;
-    [SerializeField] private float range = 10f;
+    [SerializeField] private float range = 10f; // projectile travel distance
+
+    [Header("Fire Control")]
     [SerializeField] private float fireCooldown = 1.2f;
+    float timer;
 
     [Header("Aim/Spawn")]
-    [SerializeField] private Transform muzzle;  // assign a child at the weapon tip
+    [Tooltip("What actually rotates to aim (e.g., the enemy's hand/weapon root). If empty, uses this transform.")]
+    [SerializeField] private Transform aimRoot;
+    [Tooltip("Child transform at the weapon tip. Its local +X (right) must point out of the barrel.")]
+    [SerializeField] private Transform muzzle;
 
     [Header("Masks")]
     [SerializeField] private LayerMask targetLayers;   // should include "Player"
     [SerializeField] private LayerMask wallLayers;
 
-    float timer;
     Transform player;
 
     IObjectPool<BulletKinetic> pool;
@@ -34,10 +40,28 @@ public class EnemyShooter : MonoBehaviour
     void Start()
     {
         player = PlayerController.Instance?.transform;
+        if (!aimRoot) aimRoot = transform;
+        if (targetLayers.value == 0) targetLayers = LayerMask.GetMask("Player");
+    }
 
-        // Safety: default the mask if not set in the Inspector
-        if (targetLayers.value == 0)
-            targetLayers = LayerMask.GetMask("Player");
+    // Aiming: point the mount at the player, but don't use that vector for firing
+    void LateUpdate()
+    {
+        if (!player || !aimRoot) return;
+
+        Vector3 pivot = muzzle ? muzzle.position : aimRoot.position;
+
+        // Prefer the player's collider centre if available (less jitter than transform.position)
+        Vector3 target = player.position;
+        var pc = PlayerController.Instance;
+        if (pc && pc.col) target = pc.col.bounds.center;
+
+        Vector2 toTarget = (target - pivot);
+        if (toTarget.sqrMagnitude > 0.0001f)
+        {
+            float angle = Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg;
+            aimRoot.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
     }
 
     void Update()
@@ -49,13 +73,8 @@ public class EnemyShooter : MonoBehaviour
         {
             Vector3 spawnPos = muzzle ? muzzle.position : transform.position;
 
-            // Aim at the player's collider center (falls back to transform.position)
-            var pc = PlayerController.Instance;
-            Vector3 aimPos = (pc && pc.col) ? (Vector3)pc.col.bounds.center : player.position;
-
-            Vector2 dir = (aimPos - spawnPos).sqrMagnitude > 0.0001f
-                ? (Vector2)(aimPos - spawnPos).normalized
-                : Vector2.right;
+            // 🔒 Direction is always the barrel's facing
+            Vector2 dir = muzzle ? (Vector2)muzzle.right : (Vector2)transform.right;
 
             Fire(spawnPos, dir);
             timer = fireCooldown;
@@ -65,14 +84,17 @@ public class EnemyShooter : MonoBehaviour
     void Fire(Vector3 spawnPos, Vector2 dir)
     {
         var b = pool.Get();
-        b.transform.SetPositionAndRotation(spawnPos,
-            Quaternion.AngleAxis(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, Vector3.forward));
+
+        // Align projectile sprite with the barrel
+        Quaternion rot = muzzle ? muzzle.rotation
+                                : Quaternion.AngleAxis(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, Vector3.forward);
+        b.transform.SetPositionAndRotation(spawnPos, rot);
 
         // who to hurt + how much
         var dmg = b.GetComponent<Damager>();
         if (dmg) dmg.Configure(gameObject, targetLayers, projectileDamage);
 
-        // move + range + despawn layers
+        // move + range + despawn layers (BulletKinetic handles travel/despawn)
         b.Init(dir, projectileSpeed, range, wallLayers, targetLayers, pool);
     }
 

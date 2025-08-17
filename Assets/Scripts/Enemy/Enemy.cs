@@ -7,6 +7,7 @@ public class Enemy : Target
     [Header("Enemy Settings")]
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private int experienceOnDeath = 1;
+    [SerializeField] private LootTableDefinition lootTable;
 
     [Header("Contact Damage")]
     [SerializeField] private Damager contactDamager;   // on the same GameObject as Enemy
@@ -45,6 +46,9 @@ public class Enemy : Target
     protected override void Die()
     {
         EnemyEvents.RaiseEnemyKilled();
+
+        // Spawn loot
+        if (lootTable) lootTable.TrySpawnDrop(transform.position);
 
         base.Die(); // Sets m_IsDead, deactivates object
         PlayerController.Instance?.AddExperience(experienceOnDeath);

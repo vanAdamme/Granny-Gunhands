@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3927130412677130167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.153, y: 0.146, z: 0}
+  m_LocalPosition: {x: 2.186, y: 0.146, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8192767345145581685}
   - component: {fileID: 3278971652586529522}
-  - component: {fileID: 1240861979450214919}
+  - component: {fileID: 3138697601379575569}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 7444165997222519593}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.074, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -107,7 +107,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: -7579322072880458250, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -120,7 +120,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1240861979450214919
+--- !u!114 &3138697601379575569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,21 +136,21 @@ MonoBehaviour:
   muzzlePosition: {fileID: 1594121814020586523}
   muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
   icon: {fileID: -7579322072880458250, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
-  cooldownWindow: 1
+  autoFlip: 1
+  cooldownWindow: 0.1
   fireMode: 0
-  projectilePrefab: {fileID: 800721682885484642, guid: 5e270374c322ca3468179f0693c61fa6, type: 3}
-  projectileSpeed: 26
-  range: 3
-  pelletCount: 5
-  spreadAngle: 15
-  randomJitter: 3
-  pelletDamage: 0.5
+  projectilePrefab: {fileID: 800721682885484642, guid: e2fcb6b40a2b3a74eaecae217791c233, type: 3}
+  projectileSpeed: 14
+  damagePerPellet: 0.9
+  range: 10
+  pelletCount: 6
+  spreadAngle: 18
   targetLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 4608
   wallLayers:
     serializedVersion: 2
     m_Bits: 8
   collectionCheck: 1
-  defaultCapacity: 128
-  maxSize: 1024
+  defaultCapacity: 64
+  maxSize: 512

@@ -22,7 +22,8 @@ public class BulletKinetic : MonoBehaviour, IPooledRelease
         rb = GetComponent<Rigidbody2D>();
         // Prefab hints:
         // BodyType=Dynamic, GravityScale=0, CollisionDetection=Continuous, Interpolate=Interpolate
-        // Collider2D: IsTrigger = true
+        var col = GetComponent<Collider2D>();
+        col.isTrigger = true;
     }
 
     void OnEnable()

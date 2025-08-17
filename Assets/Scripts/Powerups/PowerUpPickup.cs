@@ -4,6 +4,7 @@ using UnityEngine;
 public class PowerUpPickup : MonoBehaviour
 {
     [SerializeField] private PowerUpDefinition powerUp;
+    public void Init(PowerUpDefinition def) => powerUp = def;
 
     [Header("Optional: exact VFX parent")]
     [Tooltip("If set and the asset uses CustomParentHint, the effect will be parented to this Transform.")]
@@ -18,8 +19,9 @@ public class PowerUpPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        var controller = other.GetComponent<PowerUpController>();
-        if (!controller) return;
+        var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
+        var controller = root.GetComponentInChildren<PowerUpController>();
+        if (!controller || !powerUp) return;
 
         // 1) Fire one-shot + start timed effects (controller will spawn duration VFX)
         controller.Apply(powerUp, vfxParentOverride, transform.position);
@@ -60,5 +62,12 @@ public class PowerUpPickup : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    public void SetDefinition(PowerUpDefinition def)
+    {
+        var f = typeof(PowerUpPickup).GetField("powerUp",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+        f?.SetValue(this, def);
     }
 }

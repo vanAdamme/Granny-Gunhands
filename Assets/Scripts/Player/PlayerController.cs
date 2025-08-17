@@ -24,10 +24,7 @@ public class PlayerController : Target, IPlayerContext
     public List<int> playerLevels;
 
     [Header("Weapons")]
-    [SerializeField] private List<Weapon> inactiveWeapons;
-    public List<Weapon> activeWeapons;
-    [SerializeField] private List<Weapon> upgradeableWeapons;
-    public List<Weapon> maxLevelWeapons;
+    [SerializeField] private WeaponInventory weaponInventory;
 
     [Header("Damage / Invulnerability")]
     [Tooltip("0 = permanent")]
@@ -59,38 +56,19 @@ public class PlayerController : Target, IPlayerContext
         UIController.Instance.UpdateHealthSlider();
     }
 
+    public bool TryGetActiveWeapon(Hand hand, out Weapon w)
+    {
+        w = weaponInventory ? weaponInventory.GetWeapon(hand) : null;
+        return w != null;
+    }
+    public bool TryGetActiveWeapon<T>(Hand hand, out T w) where T : Weapon
+    {
+        w = weaponInventory ? weaponInventory.GetWeapon(hand) as T : null;
+        return w != null;
+    }
+
     public Transform Transform => transform;
 
-    public void AddWeapon(Weapon weaponPrefab)
-    {
-        if (!weaponPrefab) return;
-
-        // Instantiate and parent under player (so pooled/scene hierarchy stays tidy)
-        var w = Instantiate(weaponPrefab, transform);
-        // Track in active list if you’re using it elsewhere
-        if (activeWeapons == null) activeWeapons = new List<Weapon>();
-        activeWeapons.Add(w);
-
-        // Optional: hook up UI icon if you have left/right slots etc.
-        // UIController.Instance.UpdateLeftWeaponIcon(w.weaponImage);
-    }
-
-    public bool TryGetActiveWeapon<T>(out T weapon) where T : MonoBehaviour
-    {
-        // 1) look through the activeWeapons list
-        if (activeWeapons != null)
-        {
-            foreach (var w in activeWeapons)
-            {
-                if (w == null) continue;
-                weapon = w.GetComponent<T>();
-                if (weapon != null) return true;
-            }
-        }
-        // 2) fallback: search children (in case you spawn elsewhere)
-        weapon = GetComponentInChildren<T>();
-        return weapon != null;
-    }
     // =========================================
 
     protected override void Awake()
@@ -118,6 +96,22 @@ public class PlayerController : Target, IPlayerContext
         // Health is initialised in Health.Awake() → CurrentHealth = MaxHealth
         UIController.Instance.UpdateHealthSlider();
         UIController.Instance.UpdateExperienceSlider();
+
+        if (weaponInventory != null)
+        {
+            weaponInventory.OnEquippedChanged += (hand, weapon) =>
+            {
+                if (!UIController.Instance) return;
+                var icon = weapon ? weapon.icon : null;
+
+                if (hand == Hand.Left)  UIController.Instance.UpdateLeftWeaponIcon(icon);
+                else                    UIController.Instance.UpdateRightWeaponIcon(icon);
+            };
+
+            // Push initial icons
+            if (weaponInventory.Left)   UIController.Instance.UpdateLeftWeaponIcon(weaponInventory.Left.icon);
+            if (weaponInventory.Right)  UIController.Instance.UpdateRightWeaponIcon(weaponInventory.Right.icon);
+        }
     }
 
     private void Update()
@@ -138,6 +132,8 @@ public class PlayerController : Target, IPlayerContext
             animator.SetFloat("moveX", inputX);
             animator.SetFloat("moveY", inputY);
         }
+
+        HandleWeaponSwitching();
 
         // Invulnerability countdown (maps to Health.IsInvulnerable)
         if (invulnerabilityTimer > 0f)
@@ -189,6 +185,17 @@ public class PlayerController : Target, IPlayerContext
         }
     }
 
+    private void HandleWeaponSwitching()
+    {
+        if (!weaponInventory) return;
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            weaponInventory.Cycle(Hand.Left, +1);
+
+        if (Input.GetKeyDown(KeyCode.E))
+            weaponInventory.Cycle(Hand.Right, +1);
+    }
+
     public void AddExperience(int amount)
     {
         experience += amount;
@@ -224,6 +231,6 @@ public class PlayerController : Target, IPlayerContext
         AudioController.Instance.PlaySound(AudioController.Instance.selectUpgrade);
     }
 
-    private void OnEnable()  => playerControls.Enable();
+    private void OnEnable() => playerControls.Enable();
     private void OnDisable() => playerControls.Disable();
 }
