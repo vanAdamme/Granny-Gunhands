@@ -16,7 +16,16 @@ public class InventoryUI : MonoBehaviour
 
     [Header("Panel")]
     [SerializeField] private CanvasGroup panel;                   // for show/hide
-    [SerializeField] private KeyCode toggleKey = KeyCode.I;
+    [SerializeField] public KeyCode toggleKey = KeyCode.Tab;
+
+    [Header("Fields")]
+    [SerializeField] private bool pauseWhileOpen = true;
+    [SerializeField] private bool pauseAudio = true;
+    [SerializeField] private bool manageCursor = true;
+
+    float savedTimeScale = 1f;
+    CursorLockMode savedLockState;
+    bool savedCursorVisible;
 
     private readonly List<WeaponItemButton> items = new();
     private Hand assignTarget = Hand.Left;
@@ -53,10 +62,45 @@ public class InventoryUI : MonoBehaviour
     public void Show(bool show)
     {
         if (!panel) return;
+
         panel.alpha = show ? 1f : 0f;
         panel.blocksRaycasts = show;
         panel.interactable = show;
-        if (show) { Rebuild(); RefreshAssignButtons(); }
+
+        if (show)
+        {
+            Rebuild();
+            RefreshAssignButtons();
+
+            if (pauseWhileOpen)
+            {
+                savedTimeScale = Time.timeScale;
+                Time.timeScale = 0f;
+                if (pauseAudio) AudioListener.pause = true;
+            }
+            if (manageCursor)
+            {
+                savedLockState = Cursor.lockState;
+                savedCursorVisible = Cursor.visible;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            Pause.Set(true, this);
+        }
+        else
+        {
+            if (pauseWhileOpen)
+            {
+                Time.timeScale = savedTimeScale <= 0f ? 1f : savedTimeScale;
+                if (pauseAudio) AudioListener.pause = false;
+            }
+            if (manageCursor)
+            {
+                Cursor.lockState = savedLockState;
+                Cursor.visible = savedCursorVisible;
+            }
+            Pause.Set(false, this);
+        }
     }
 
     private void Rebuild()

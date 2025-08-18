@@ -6,7 +6,7 @@ public class InventoryUIToggle : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(ui.toggleKey))
             ui.Toggle();
     }
 }

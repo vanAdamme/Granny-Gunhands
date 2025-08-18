@@ -14,7 +14,7 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
-        if (!cam || inventory == null) return;
+        if (!cam || inventory == null || Pause.IsPaused) return;
 
         Vector3 mouse = cam.ScreenToWorldPoint(Input.mousePosition);
         mouse.z = 0f;

@@ -32,7 +32,11 @@ public abstract class Weapon : MonoBehaviour
         ownerRoot = transform.root.gameObject;
     }
 
-    protected virtual void Update() => FlipSprite();
+    protected virtual void Update()
+    {
+        if (Pause.IsPaused) return;
+        FlipSprite();
+    }
 
     // Old signature kept for compatibility (ignored param):
     public bool TryFire(Vector2 _) => TryFireFromMuzzle();

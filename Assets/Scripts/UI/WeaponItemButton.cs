@@ -20,6 +20,9 @@ public class WeaponItemButton : MonoBehaviour
         myIndex = index;
         onClick = onClickHandler;
 
+        iconImage.preserveAspect = true;
+        iconImage.sprite = w && w.Definition ? w.Definition.Icon : null;
+
         if (iconImage) iconImage.sprite = w ? w.icon : null;
         if (label)     label.text = w && w.Definition ? w.Definition.DisplayName : (w ? w.name : "—");
 
