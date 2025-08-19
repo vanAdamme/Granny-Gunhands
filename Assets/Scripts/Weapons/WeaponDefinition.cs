@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WeaponCategory { Pistol, Shotgun, Laser, SMG, Rifle, Rocket, Other }
+
 [CreateAssetMenu(menuName = "Weapons/Weapon Definition")]
 public class WeaponDefinition : ScriptableObject
 {
@@ -10,13 +12,16 @@ public class WeaponDefinition : ScriptableObject
     [SerializeField] private Sprite icon;
     [SerializeField] private Rarity rarity = Rarity.Common;
 
+    [Header("Classification")]
+    [SerializeField] private WeaponCategory category = WeaponCategory.Other;
+    public WeaponCategory Category => category;
+
     [Header("Prefab (factory uses this)")]
     [SerializeField] private Weapon prefab;
 
     [Header("Levels")]
     [SerializeField] private List<WeaponLevelData> levels = new();
 
-    // ----- Public API expected by other systems -----
     public string Id => id;
     public string DisplayName => displayName;
     public Sprite Icon => icon;
@@ -35,7 +40,6 @@ public class WeaponDefinition : ScriptableObject
     public class WeaponLevelData
     {
         [Min(1)] public int level = 1;
-
         [Header("Firing")]
         [Min(0.01f)] public float cooldown = 0.15f;
         [Min(0.1f)]  public float damage = 3f;
@@ -53,7 +57,7 @@ public class WeaponDefinition : ScriptableObject
         public GameObject muzzleFlashPrefab;
 
         [Header("Projectile Prefabs")]
-        public GameObject projectilePrefab; // must carry `Projectile`
-        public GameObject grenadePrefab;    // optional future use
+        public GameObject projectilePrefab;
+        public GameObject grenadePrefab;
     }
 }

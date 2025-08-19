@@ -20,7 +20,6 @@ public class PlayerController : Target, IPlayerContext
     public int experience;
     public int currentLevel;
     public int maxLevel;
-    public int coins;
     public List<int> playerLevels;
 
     [Header("Weapons")]
@@ -203,16 +202,6 @@ public class PlayerController : Target, IPlayerContext
         // if (experience >= playerLevels[currentLevel - 1]) { ... level-up flow ... }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Item"))
-        {
-            GetCoin();
-            Destroy(other.gameObject);
-        }
-    }
-
-    public void GetCoin() => coins++;
 
     public void IncreaseMaxHealth(int value)
     {

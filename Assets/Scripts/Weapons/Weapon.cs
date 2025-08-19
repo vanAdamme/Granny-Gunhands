@@ -18,6 +18,7 @@ public abstract class Weapon : MonoBehaviour
     // Data wiring
     public WeaponDefinition Definition { get; protected set; }
     protected int currentLevel = 1;
+    public int Level => currentLevel;
     protected WeaponDefinition.WeaponLevelData data;
 
     // cooldown gate

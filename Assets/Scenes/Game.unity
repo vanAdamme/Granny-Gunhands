@@ -4908,7 +4908,6 @@ MonoBehaviour:
   experience: 0
   currentLevel: 1
   maxLevel: 30
-  coins: 0
   playerLevels: 0a000000140000001e000000
   weaponInventory: {fileID: 555842019}
   invulnerabilityDuration: 1
@@ -63943,6 +63942,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24756a2c099df448beb6b35cb952c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedCategories: 00000000
+  equippedOnly: 1
+  consumeIfNoMatch: 0
+  upgradeVFX: {fileID: 0}
+  vfxLifetime: 1.5
+  onUpgraded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1309794633
 Transform:
   m_ObjectHideFlags: 0
@@ -64002,6 +64009,7 @@ GameObject:
   - component: {fileID: 1403413556}
   - component: {fileID: 1403413555}
   - component: {fileID: 1403413559}
+  - component: {fileID: 1403413560}
   m_Layer: 5
   m_Name: UI Canvas
   m_TagString: Untagged
@@ -64134,6 +64142,19 @@ MonoBehaviour:
   - {fileID: 1511465077}
   - {fileID: 391493543}
   - {fileID: 967768730}
+--- !u!114 &1403413560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403413554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0423fb80f7595424f89605738011a5a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seconds: 1.2
 --- !u!1 &1414733342
 GameObject:
   m_ObjectHideFlags: 0
@@ -79108,6 +79129,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24756a2c099df448beb6b35cb952c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedCategories: 00000000
+  equippedOnly: 1
+  consumeIfNoMatch: 0
+  upgradeVFX: {fileID: 0}
+  vfxLifetime: 1.5
+  onUpgraded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &2105704210
 Transform:
   m_ObjectHideFlags: 0
