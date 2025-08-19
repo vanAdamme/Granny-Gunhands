@@ -9,15 +9,10 @@ public class Health : MonoBehaviour
 {
     [SerializeField, Min(1f)] private float m_MaxHealth = 1f;
     [SerializeField] float m_CurrentHealth;
-    // [SerializeField] bool m_ResetOnStart;
     [SerializeField] private DamageNumber damageNumberPrefab;
     [SerializeField] private DamageFlash damageFlash;
 
-    // [Tooltip("Notifies listeners that this object has died")]
-    // public UnityEvent Died;
-
-    // [Tooltip("Notifies listeners of updated health percentage")]
-    // public UnityEvent<float> HealthChanged;
+    public event System.Action OnDied;
 
     protected bool m_IsInvulnerable;
     protected bool m_IsDead;
@@ -43,11 +38,6 @@ public class Health : MonoBehaviour
     {
         if (m_MaxHealth < 1f) m_MaxHealth = 1f;
         if (m_CurrentHealth > m_MaxHealth) m_CurrentHealth = m_MaxHealth;
-    }
-
-    private void Start()
-    {
-        // HealthChanged.Invoke(CurrentHealth / MaxHealth);
     }
 
     // Applies damage to the GameObject.
@@ -76,9 +66,6 @@ public class Health : MonoBehaviour
             m_CurrentHealth = 0;
             Die();
         }
-
-        // Notify listeners of the health change with the current health percentage.
-        // HealthChanged.Invoke(CurrentHealth / MaxHealth); // Pass the current health percentage
     }
 
     // Heals the GameObject, up to the maximum value and notifies listeners
@@ -92,23 +79,16 @@ public class Health : MonoBehaviour
 
         if (m_CurrentHealth > MaxHealth)
             m_CurrentHealth = MaxHealth;
-
-        // HealthChanged.Invoke(CurrentHealth / MaxHealth);
     }
 
     // Notify listeners that this object is dead and disable the GameObject to prevent further interaction.
     protected virtual void Die()
     {
         // Only die once
-        if (m_IsDead)
-            return;
-
-        // DeathCroak();
-        // DropItem();
-        // PlayerController.Instance.GetExperience(experienceToGive);
+        if (m_IsDead) return;
 
         m_IsDead = true;
-        // Died.Invoke();
+        OnDied?.Invoke(); // <— notify listeners
         gameObject.SetActive(false);
     }
 

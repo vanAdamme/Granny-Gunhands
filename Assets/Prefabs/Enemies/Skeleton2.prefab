@@ -83,7 +83,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d4d5a8c3ad9119b4cb1cf5517d2235d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -115,6 +115,7 @@ MonoBehaviour:
   m_DamageMultiplier: 1
   moveSpeed: 1.2
   experienceOnDeath: 2
+  lootTable: {fileID: 11400000, guid: c70fab3c90e33734ea452f6c2084d796, type: 2}
   contactDamager: {fileID: 837774404801458333}
   contactDamage: 2
 --- !u!50 &5065733521576241343
