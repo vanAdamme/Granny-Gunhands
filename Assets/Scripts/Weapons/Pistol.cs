@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -27,7 +28,7 @@ public class Pistol : Weapon
             collectionCheck, defaultCapacity, maxSize);
     }
 
-    protected override void Shoot(Vector2 _ /* ignored */)
+    protected override void Shoot(Vector2 _)
     {
         // Fallbacks if the muzzle isn't assigned
         Vector3 spawnPos = muzzlePosition ? muzzlePosition.position : transform.position;
@@ -49,3 +50,4 @@ public class Pistol : Weapon
     void OnRelease(BulletKinetic b) => b.gameObject.SetActive(false);
     void OnDestroyPooled(BulletKinetic b) { if (b) Destroy(b.gameObject); }
 }
+*/

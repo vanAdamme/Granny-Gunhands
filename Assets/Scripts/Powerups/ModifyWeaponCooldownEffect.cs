@@ -13,32 +13,19 @@ public class ModifyWeaponCooldownEffect : PowerUpEffectBase
 
         public Runtime(float m) { this.m = m; }
 
-    public void Apply(IPlayerContext player)
-    {
-        if (player.TryGetActiveWeapon(Hand.Left, out weapon) || 
-            player.TryGetActiveWeapon(Hand.Right, out weapon))
+        public void Apply(IPlayerContext player)
         {
-            original = weapon.CooldownWindow;
-            weapon.CooldownWindow = original * m;
+            if (player.TryGetActiveWeapon(Hand.Left, out weapon) ||
+                player.TryGetActiveWeapon(Hand.Right, out weapon))
+            {
+                original = weapon.CooldownWindow;
+                weapon.CooldownWindow = original * m;
+            }
         }
-    }
 
-    public void Remove(IPlayerContext player)
-    {
-        if (weapon) weapon.CooldownWindow = original;
-    }
-
-        private static float GetCooldown(Pistol p)
+        public void Remove(IPlayerContext player)
         {
-            var f = typeof(Pistol).GetField("cooldownWindow",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-            return (float)f.GetValue(p);
-        }
-        private static void SetCooldown(Pistol p, float value)
-        {
-            var f = typeof(Pistol).GetField("cooldownWindow",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-            f.SetValue(p, value);
+            if (weapon) weapon.CooldownWindow = original;
         }
     }
 

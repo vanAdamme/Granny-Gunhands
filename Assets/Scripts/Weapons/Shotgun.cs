@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -30,7 +31,7 @@ public class Shotgun : Weapon
                                              collectionCheck, defaultCapacity, maxSize);
     }
 
-    protected override void Shoot(Vector2 _ /* ignored */)
+    protected override void Shoot(Vector2 _)
     {
         // Base forward from the barrel's +X
         Vector3 spawnPos = muzzlePosition ? muzzlePosition.position : transform.position;
@@ -79,3 +80,4 @@ public class Shotgun : Weapon
         return new Vector2(v.x * cs - v.y * sn, v.x * sn + v.y * cs);
     }
 }
+*/
