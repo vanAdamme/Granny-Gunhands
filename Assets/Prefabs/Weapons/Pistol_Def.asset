@@ -15,4 +15,57 @@ MonoBehaviour:
   id: 0794731c-3672-4dee-8a6a-0bb303a1b3f7
   displayName: Pistol
   icon: {fileID: -1198099712212326842, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
-  weaponPrefab: {fileID: 5606832574467767432, guid: c03b91acd5ff408489ac8eb1aecb555f, type: 3}
+  rarity: 0
+  prefab: {fileID: 4138980111198988156, guid: ec42b4ee26d17c447829c77cd2ba37b3, type: 3}
+  levels:
+  - level: 1
+    cooldown: 0.15
+    damage: 1
+    range: 8
+    projectileSpeed: 12
+    targetLayers:
+      serializedVersion: 2
+      m_Bits: 512
+    obstacleLayers:
+      serializedVersion: 2
+      m_Bits: 8
+    maxPierces: 0
+    pierceThroughObstacles: 0
+    spriteOverride: {fileID: 0}
+    muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
+    projectilePrefab: {fileID: 4307658229903141588, guid: e2fcb6b40a2b3a74eaecae217791c233, type: 3}
+    grenadePrefab: {fileID: 0}
+  - level: 2
+    cooldown: 0.15
+    damage: 1
+    range: 10
+    projectileSpeed: 12
+    targetLayers:
+      serializedVersion: 2
+      m_Bits: 512
+    obstacleLayers:
+      serializedVersion: 2
+      m_Bits: 8
+    maxPierces: 0
+    pierceThroughObstacles: 0
+    spriteOverride: {fileID: -1230275211637329022, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
+    muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
+    projectilePrefab: {fileID: 4307658229903141588, guid: e2fcb6b40a2b3a74eaecae217791c233, type: 3}
+    grenadePrefab: {fileID: 0}
+  - level: 3
+    cooldown: 0.15
+    damage: 2
+    range: 8
+    projectileSpeed: 10
+    targetLayers:
+      serializedVersion: 2
+      m_Bits: 512
+    obstacleLayers:
+      serializedVersion: 2
+      m_Bits: 8
+    maxPierces: 0
+    pierceThroughObstacles: 0
+    spriteOverride: {fileID: 3256892852131339308, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
+    muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
+    projectilePrefab: {fileID: 4307658229903141588, guid: e2fcb6b40a2b3a74eaecae217791c233, type: 3}
+    grenadePrefab: {fileID: 0}

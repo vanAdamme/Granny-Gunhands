@@ -48,11 +48,16 @@ public sealed class WeaponInventory : MonoBehaviour
         // Optional defaults
         if (inventory.Count > 0)
         {
-            Equip(Hand.Left,  0, true, false);
-            Equip(Hand.Right, Mathf.Min(1, inventory.Count - 1), true, false);
-            OnEquippedChanged?.Invoke(Hand.Left,  Left);
-            OnEquippedChanged?.Invoke(Hand.Right, Right);
+            Equip(Hand.Left, 0, true, false);
+
+            if (inventory.Count > 1)
+                Equip(Hand.Right, 1, true, false);
+            else
+                rightIndex = -1; // no right-hand weapon yet
         }
+
+        OnEquippedChanged?.Invoke(Hand.Left,  Left);
+        OnEquippedChanged?.Invoke(Hand.Right, Right);
     }
 
     // ---------- Public API ----------
@@ -156,7 +161,14 @@ public sealed class WeaponInventory : MonoBehaviour
     {
         if (!IsValid(index)) return;
 
-        // Deactivate previous
+        // Prevent using the same instance in both hands unless allowed
+        if (!allowSameInBothHands)
+        {
+            if (hand == Hand.Left  && index == rightIndex) return;
+            if (hand == Hand.Right && index == leftIndex)  return;
+        }
+
+        // Deactivate previous for this hand
         var prev = (hand == Hand.Left) ? Left : Right;
         if (prev) prev.gameObject.SetActive(false);
 

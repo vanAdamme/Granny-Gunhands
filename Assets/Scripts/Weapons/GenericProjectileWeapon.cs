@@ -54,13 +54,16 @@ public class GenericProjectileWeapon : Weapon
         // Initialise and push runtime settings
         p.Init(ownerRoot, data.targetLayers, data.damage, dir);
 
-        float lifetime = data.projectileSpeed > 0.01f ? data.range / data.projectileSpeed : 999f;
-        SetPrivate(p, "speed", data.projectileSpeed);
-        SetPrivate(p, "lifetime", lifetime);
-        SetPrivate(p, "obstacleLayers", data.obstacleLayers);
-        SetPrivate(p, "maxPierces", data.maxPierces);
-        SetPrivate(p, "pierceThroughObstacles", data.pierceThroughObstacles);
-        p.ObjectPool = pool;
+		p.SetRuntime(
+			speedOverride: data.projectileSpeed,
+			rangeOverride: data.range,
+			obstacleOverride: data.obstacleLayers,
+			maxPiercesOverride: data.maxPierces,
+			pierceObstaclesOverride: data.pierceThroughObstacles,
+			radiusOverride: null,                        // or expose in level data if you like
+			vfxOverride: data.muzzleFlashPrefab ? null : null // keep projectile's own VFX unless you add a hitVFX to level data
+		);
+		p.ObjectPool = pool;
 
         if (data.muzzleFlashPrefab && muzzle)
             VFX.Spawn(data.muzzleFlashPrefab, muzzle.position, transform.rotation, 0.1f);
