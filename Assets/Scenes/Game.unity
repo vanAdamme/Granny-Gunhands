@@ -5140,7 +5140,7 @@ MonoBehaviour:
   - {fileID: 4138980111198988156, guid: ec42b4ee26d17c447829c77cd2ba37b3, type: 3}
   leftMount: {fileID: 1334901709}
   rightMount: {fileID: 513919341}
-  allowSameInBothHands: 1
+  allowSameInBothHands: 0
 --- !u!114 &555842020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6610,8 +6610,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 634602839}
   m_HandleRect: {fileID: 634602838}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.9999999
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8825,7 +8825,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 678514852}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.78333336
+  m_Size: 0.87333333
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

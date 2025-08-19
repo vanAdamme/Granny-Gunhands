@@ -49,15 +49,15 @@ public sealed class WeaponInventory : MonoBehaviour
         if (inventory.Count > 0)
         {
             Equip(Hand.Left, 0, true, false);
+            if (inventory.Count > 1) Equip(Hand.Right, 1, true, false);
 
-            if (inventory.Count > 1)
-                Equip(Hand.Right, 1, true, false);
-            else
-                rightIndex = -1; // no right-hand weapon yet
+            // Re-assert mounts just in case
+            EnsureMounted(Left,  leftMount);
+            EnsureMounted(Right, rightMount);
+
+            OnEquippedChanged?.Invoke(Hand.Left,  Left);
+            OnEquippedChanged?.Invoke(Hand.Right, Right);
         }
-
-        OnEquippedChanged?.Invoke(Hand.Left,  Left);
-        OnEquippedChanged?.Invoke(Hand.Right, Right);
     }
 
     // ---------- Public API ----------
@@ -141,18 +141,24 @@ public sealed class WeaponInventory : MonoBehaviour
         int cur = (hand == Hand.Left) ? leftIndex : rightIndex;
         if (cur < 0) cur = 0;
 
+        Weapon other = (hand == Hand.Left) ? Right : Left;
+
         for (int step = 0; step < inventory.Count; step++)
         {
             cur = Mod(cur + direction, inventory.Count);
             if (!IsValid(cur)) continue;
 
+            // Block same index (legacy safety)
             if (!allowSameInBothHands)
             {
                 if (hand == Hand.Left  && cur == rightIndex) continue;
                 if (hand == Hand.Right && cur == leftIndex)  continue;
+
+                // NEW: block same *instance* as the other hand
+                if (other && inventory[cur] == other) continue;
             }
 
-            Equip(hand, cur, true, true);
+            Equip(hand, cur, applyMount: true, raiseEvents: true);
             return;
         }
     }
@@ -161,11 +167,11 @@ public sealed class WeaponInventory : MonoBehaviour
     {
         if (!IsValid(index)) return;
 
-        // Prevent using the same instance in both hands unless allowed
+        // Do not allow equipping the same *instance* in both hands
         if (!allowSameInBothHands)
         {
-            if (hand == Hand.Left  && index == rightIndex) return;
-            if (hand == Hand.Right && index == leftIndex)  return;
+            var other = (hand == Hand.Left) ? Right : Left;
+            if (other && inventory[index] == other) return;
         }
 
         // Deactivate previous for this hand
@@ -177,10 +183,13 @@ public sealed class WeaponInventory : MonoBehaviour
         var now = (hand == Hand.Left) ? Left : Right;
         if (now)
         {
-            Transform mount = hand == Hand.Left ? leftMount : rightMount;
+            Transform mount = (hand == Hand.Left) ? leftMount : rightMount;
             if (applyMount)
             {
-                now.transform.SetParent(mount ? mount : transform, false);
+                var targetParent = mount ? mount : transform;
+                if (now.transform.parent != targetParent) // avoid redundant SetParent
+                    now.transform.SetParent(targetParent, worldPositionStays: false);
+
                 now.transform.localPosition = Vector3.zero;
                 now.transform.localRotation = Quaternion.identity;
             }
@@ -213,6 +222,16 @@ public sealed class WeaponInventory : MonoBehaviour
         foreach (var w in GetInventory())
             if (w && w.Definition && w.Definition.Id == defId) return true;
         return false;
+    }
+    
+    private void EnsureMounted(Weapon w, Transform mount)
+    {
+        if (!w) return;
+        var target = mount ? mount : transform;
+        if (w.transform.parent != target)
+            w.transform.SetParent(target, false);
+        w.transform.localPosition = Vector3.zero;
+        w.transform.localRotation = Quaternion.identity;
     }
 
     private bool IsValid(int i) => i >= 0 && i < inventory.Count && inventory[i] != null;
