@@ -5,12 +5,15 @@ public class WeaponUpgradePickup : MonoBehaviour
 {
     public static event System.Action<Weapon, int> OnWeaponUpgraded;
     [SerializeField] private WeaponUpgradeItemDefinition upgradeItem;
+    [SerializeField] private MonoBehaviour toastServiceSource; // assign ToastManager
+    private IToastService toast;
 
     private void Awake()
     {
         var col = GetComponent<Collider2D>();
         col.isTrigger = true;
         tag = "Item";
+        toast = toastServiceSource as IToastService;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -22,6 +25,7 @@ public class WeaponUpgradePickup : MonoBehaviour
         if (!bag) return;
 
         bag.Add(upgradeItem, 1);
+        toast?.Show("Weapon upgrade!");
         Destroy(gameObject);
     }
     

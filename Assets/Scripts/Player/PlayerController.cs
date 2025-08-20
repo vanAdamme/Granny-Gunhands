@@ -11,10 +11,6 @@ public class PlayerController : Target, IPlayerContext
     [SerializeField] private Animator animator;
     public Collider2D col;
 
-    [Header("Input")]
-    [SerializeField] private MonoBehaviour inputServiceSource; // drag InputService here in Inspector
-    private IInputService input; // resolved in Awake
-
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 6f;
     public Vector2 playerMoveDirection;
@@ -32,6 +28,8 @@ public class PlayerController : Target, IPlayerContext
     [Tooltip("0 = permanent")]
     [SerializeField] private float invulnerabilityDuration = 0.5f;
     private float invulnerabilityTimer;
+
+    private IInputService input; // resolved in Awake
 
     // ===== IPlayerContext implementation =====
     public float MoveSpeed
@@ -81,7 +79,7 @@ public class PlayerController : Target, IPlayerContext
         Instance = this;
 
         // Resolve input
-        input = inputServiceSource as IInputService;
+        input = InputService.Instance as IInputService;
         if (input == null)
         {
             input = FindFirstObjectByType<InputService>(); // Unity 6+ safe API
@@ -183,24 +181,18 @@ public class PlayerController : Target, IPlayerContext
     }
 
     // ---------- Input wiring ----------
-    private void OnEnable()
+    void OnEnable()
     {
-        if (input != null)
-        {
-            input.CycleLeft  += OnCycleLeft;
-            input.CycleRight += OnCycleRight;
-            input.Special    += OnSpecial;
-        }
+        if (input == null) return;
+        input.CycleLeft  += OnCycleLeft;
+        input.CycleRight += OnCycleRight;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
-        if (input != null)
-        {
-            input.CycleLeft  -= OnCycleLeft;
-            input.CycleRight -= OnCycleRight;
-            input.Special    -= OnSpecial;
-        }
+        if (input == null) return;
+        input.CycleLeft  -= OnCycleLeft;
+        input.CycleRight -= OnCycleRight;
     }
 
     private void OnCycleLeft()  => weaponInventory?.Cycle(Hand.Left, +1);
