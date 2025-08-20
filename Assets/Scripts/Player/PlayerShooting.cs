@@ -3,33 +3,47 @@ using System;
 
 public class PlayerShooting : MonoBehaviour
 {
-    [SerializeField] private MonoBehaviour inputServiceSource; // drag InputService here
+    [Header("Dependencies")]
+    [SerializeField] private MonoBehaviour inputServiceSource;   // drag InputService here (implements IInputService)
+    [SerializeField] private WeaponInventory inventory;          // prefer wiring in Inspector
+    [SerializeField] private Camera aimCamera;                   // cache, don’t use Camera.main every frame
+
     private IInputService input;
 
-    [SerializeField] private WeaponInventory inventory;
-
+    // Fire state (held)
     private bool fireLeftHeld;
     private bool fireRightHeld;
 
-    // cache delegates so we can unsubscribe safely
+    // Keep last non-zero aim to avoid snapping to +X when input is momentarily zero
+    private Vector2 lastAimDir = Vector2.right;
+
+    // Cached delegates so we can unsubscribe safely
     private Action onFLStart, onFLCancel, onFRStart, onFRCancel;
 
     void Awake()
     {
-        input = inputServiceSource as IInputService;
-        if (input == null) input = FindFirstObjectByType<InputService>(); // Unity 6+
+        // Input: prefer serialized reference; fallback to singleton or scene search
+        input = inputServiceSource as IInputService
+             ?? InputService.Instance as IInputService
+             ?? FindFirstObjectByType<InputService>(); // Unity 6+
+
+        // Inventory: prefer local; fallback up the hierarchy; final fallback global
+        if (!inventory) inventory = GetComponentInParent<WeaponInventory>();
         if (!inventory) inventory = FindFirstObjectByType<WeaponInventory>();
+
+        // Cache a camera (don’t tag-scan every Update)
+        if (!aimCamera) aimCamera = Camera.main;
+
+        // Prepare delegates once
+        onFLStart  = () => fireLeftHeld  = true;
+        onFLCancel = () => fireLeftHeld  = false;
+        onFRStart  = () => fireRightHeld = true;
+        onFRCancel = () => fireRightHeld = false;
     }
 
     void OnEnable()
     {
         if (input == null) return;
-
-        onFLStart  = () => fireLeftHeld  = true;
-        onFLCancel = () => fireLeftHeld  = false;
-        onFRStart  = () => fireRightHeld = true;
-        onFRCancel = () => fireRightHeld = false;
-
         input.FireLeftStarted   += onFLStart;
         input.FireLeftCanceled  += onFLCancel;
         input.FireRightStarted  += onFRStart;
@@ -39,21 +53,24 @@ public class PlayerShooting : MonoBehaviour
     void OnDisable()
     {
         if (input == null) return;
-        input.FireLeftStarted   -= onFLStart;
-        input.FireLeftCanceled  -= onFLCancel;
-        input.FireRightStarted  -= onFRStart;
-        input.FireRightCanceled -= onFRCancel;
+        if (onFLStart  != null) input.FireLeftStarted   -= onFLStart;
+        if (onFLCancel != null) input.FireLeftCanceled  -= onFLCancel;
+        if (onFRStart  != null) input.FireRightStarted  -= onFRStart;
+        if (onFRCancel != null) input.FireRightCanceled -= onFRCancel;
     }
 
     void Update()
     {
         if (input == null) return;
 
-        // Compute aim once per frame from mouse or right-stick
-        Vector2 aimDir = input.GetAimDirection(transform.position, Camera.main);
-        if (aimDir.sqrMagnitude < 0.0001f) aimDir = Vector2.right;
+        // Compute aim once per frame from stick or mouse via the service.
+        // Use the player pivot as origin; you could also pass a muzzle if you want exact rays from gun barrels.
+        Vector2 dir = input.GetAimDirection(transform.position, aimCamera);
+        if (dir.sqrMagnitude > 0.0001f)
+            lastAimDir = dir; // persist last meaningful aim
 
-        if (fireLeftHeld)  inventory?.Left?.TryFire(aimDir);
-        if (fireRightHeld) inventory?.Right?.TryFire(aimDir);
+        // Fire while held; weapon cooldowns will gate actual shots.
+        if (fireLeftHeld)  inventory?.Left?.TryFire(lastAimDir);
+        if (fireRightHeld) inventory?.Right?.TryFire(lastAimDir);
     }
 }

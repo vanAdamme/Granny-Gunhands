@@ -50,8 +50,8 @@ public sealed class InputService : MonoBehaviour, IInputService
 
     void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
-        Instance = this;
+        // if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        // Instance = this;
 
         // If on Player prefab, detach so it becomes a root object
         if (transform.parent != null) transform.SetParent(null);
