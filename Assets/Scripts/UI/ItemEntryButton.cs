@@ -17,7 +17,12 @@ public class ItemEntryButton : MonoBehaviour
         def = stack.def;
         this.onUse = onUse;
 
-        if (icon) icon.sprite = stack.def ? stack.def.Icon : null;
+        if (icon)
+        {
+            icon.sprite = stack.def ? stack.def.Icon : null;
+            icon.type = Image.Type.Simple;
+            icon.preserveAspect = true;
+        }
         if (nameText) nameText.text = stack.def ? stack.def.DisplayName : "(null)";
         if (countText) countText.text = stack.def && stack.def.Stackable ? $"×{stack.count}" : "";
         if (useButton)
