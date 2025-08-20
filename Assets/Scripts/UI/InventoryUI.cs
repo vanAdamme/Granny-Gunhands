@@ -9,19 +9,22 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private RaritySettings raritySettings;
 
     [Header("Layout")]
-    [SerializeField] private Transform gridRoot;                  // has GridLayoutGroup
-    [SerializeField] private WeaponItemButton itemButtonPrefab;   // the tile prefab
+    [SerializeField] private Transform gridRoot;
+    [SerializeField] private WeaponItemButton itemButtonPrefab;
     [SerializeField] private Button assignLeftButton;
     [SerializeField] private Button assignRightButton;
 
     [Header("Panel")]
-    [SerializeField] private CanvasGroup panel;                   // for show/hide
-    [SerializeField] public KeyCode toggleKey = KeyCode.Tab;
+    [SerializeField] private CanvasGroup panel;
 
-    [Header("Fields")]
+    [Header("Behaviour")]
     [SerializeField] private bool pauseWhileOpen = true;
     [SerializeField] private bool pauseAudio = true;
     [SerializeField] private bool manageCursor = true;
+
+    [Header("Input")]
+    [SerializeField] private MonoBehaviour inputServiceSource; // drag your InputService here
+    private IInputService input;
 
     float savedTimeScale = 1f;
     CursorLockMode savedLockState;
@@ -29,10 +32,13 @@ public class InventoryUI : MonoBehaviour
 
     private readonly List<WeaponItemButton> items = new();
     private Hand assignTarget = Hand.Left;
+    private void OnToggle() => Toggle();
 
     void Awake()
     {
         if (!inventory) inventory = FindFirstObjectByType<WeaponInventory>();
+        input = inputServiceSource as IInputService;
+        if (input == null) input = FindFirstObjectByType<InputService>();
 
         assignLeftButton?.onClick.AddListener(() => { assignTarget = Hand.Left;  RefreshAssignButtons(); });
         assignRightButton?.onClick.AddListener(() => { assignTarget = Hand.Right; RefreshAssignButtons(); });
@@ -44,20 +50,26 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        // One-time initial state; panel GO stays enabled
+        Show(false);
+    }
+
     void OnEnable()
     {
         Rebuild();
         RefreshAssignButtons();
-        Show(false); // start hidden unless you want it open
+        if (input != null) input.ToggleInventory += OnToggle; // No Show(false) here
     }
 
-    void Update()
+    void OnDisable()
     {
-        if (Input.GetKeyDown(toggleKey))
-            Toggle();
+        if (input != null) input.ToggleInventory -= OnToggle;
     }
 
-    public void Toggle() => Show(panel.alpha <= 0.01f);
+    private void OnToggleInventory() => Toggle();
+    public  void Toggle()             => Show(panel.alpha <= 0.01f);
 
     public void Show(bool show)
     {
@@ -72,6 +84,11 @@ public class InventoryUI : MonoBehaviour
             Rebuild();
             RefreshAssignButtons();
 
+            // ask any child inventory panels (like the items list) to refresh too
+            var panels = GetComponentsInChildren<IInventoryPanel>(true);
+            for (int i = 0; i < panels.Length; i++)
+            panels[i].RefreshPanel();
+
             if (pauseWhileOpen)
             {
                 savedTimeScale = Time.timeScale;
@@ -85,7 +102,9 @@ public class InventoryUI : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
+
             Pause.Set(true, this);
+            input?.EnableUIMap();      // << take over controls for UI
         }
         else
         {
@@ -99,13 +118,14 @@ public class InventoryUI : MonoBehaviour
                 Cursor.lockState = savedLockState;
                 Cursor.visible = savedCursorVisible;
             }
+
             Pause.Set(false, this);
+            input?.EnablePlayerMap();  // << hand controls back to gameplay
         }
     }
 
     private void Rebuild()
     {
-        // clear
         for (int i = 0; i < items.Count; i++)
             if (items[i]) Destroy(items[i].gameObject);
         items.Clear();
@@ -137,7 +157,6 @@ public class InventoryUI : MonoBehaviour
         var left  = inventory ? inventory.Left  : null;
         var right = inventory ? inventory.Right : null;
 
-        // we know each button maps to an index; compare references
         var list = inventory?.GetInventory();
         for (int i = 0; i < items.Count; i++)
         {

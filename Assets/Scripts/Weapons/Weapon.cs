@@ -4,80 +4,92 @@ public abstract class Weapon : MonoBehaviour
 {
     public enum FireMode { SemiAuto, FullAuto }
 
-    [Header("General")]
+    [Header("Visuals")]
     [SerializeField] protected SpriteRenderer spriteRenderer;
-    [SerializeField] protected Transform muzzlePosition;   // make sure this points out of the barrel in +X
-    [SerializeField] protected GameObject muzzleFlashPrefab;
     [SerializeField] public Sprite icon;
-    [SerializeField] public bool autoFlip = true;
 
-    [Header("Firing (shared)")]
-    [SerializeField, Min(0.01f)] protected float cooldownWindow = 0.1f;
-    [SerializeField] private FireMode fireMode = FireMode.FullAuto;
-    public FireMode Mode => fireMode;
-    protected float nextFire;
-    public bool Ready => Time.time >= nextFire;
+    [Header("Aiming")]
+    [SerializeField] protected Transform muzzle;
 
-    public WeaponDefinition Definition { get; private set; }
-    public void SetDefinition(WeaponDefinition def) { Definition = def; if (def && def.Icon) icon = def.Icon; }
+    [Header("Firing")]
+    [SerializeField] protected FireMode fireMode = FireMode.SemiAuto;
+    public virtual float CooldownWindow { get; set; } = 0.15f;
 
-    protected GameObject ownerRoot;
-    public void SetOwner(GameObject root) => ownerRoot = root ? root : gameObject;
+    // Data wiring
+    public WeaponDefinition Definition { get; protected set; }
+    protected int currentLevel = 1;
+    public int Level => currentLevel;
+    protected WeaponDefinition.WeaponLevelData data;
 
-    public Transform Muzzle => muzzlePosition;
+    // cooldown gate
+    protected float nextFireTime;
+
+    // --------- Properties expected elsewhere ----------
+    public virtual Transform Muzzle => muzzle;         // PlayerShooting expects this
+    public virtual FireMode Mode    => fireMode;       // PlayerShooting expects this
 
     protected virtual void Awake()
     {
-        spriteRenderer ??= GetComponentInChildren<SpriteRenderer>();
-        ownerRoot = transform.root.gameObject;
+        if (!spriteRenderer) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    protected virtual void Update()
-    {
-        if (Pause.IsPaused) return;
-        FlipSprite();
-    }
-
-    // Old signature kept for compatibility (ignored param):
-    public bool TryFire(Vector2 _) => TryFireFromMuzzle();
-
-    public bool TryFireFromMuzzle()
-    {
-        if (Time.time < nextFire) return false;
-
-        DoMuzzleFlash();
-
-        // ALWAYS use the muzzle’s facing
-        Vector2 dir = muzzlePosition ? (Vector2)muzzlePosition.right : (Vector2)transform.right;
-
-        Shoot(dir);
-        nextFire = Time.time + cooldownWindow;
-        return true;
-    }
-
-    protected abstract void Shoot(Vector2 dir);
-
-    protected void DoMuzzleFlash()
-    {
-        if (!muzzleFlashPrefab || !muzzlePosition) return;
-        var m = Instantiate(muzzleFlashPrefab, muzzlePosition.position, transform.rotation);
-        Destroy(m, 0.05f);
-    }
-
-    public float CooldownWindow
-    {
-        get => cooldownWindow;
-        set => cooldownWindow = Mathf.Max(0.01f, value);
-    }
+    protected virtual void Update() => FlipSprite();
 
     protected void FlipSprite()
     {
-        if (!autoFlip || !PlayerController.Instance) return;
+        if (PlayerController.Instance == null) return;
         var scale = transform.localScale;
         if (transform.position.x > PlayerController.Instance.transform.position.x)
             scale.y = Mathf.Abs(scale.y);
         else
             scale.y = -Mathf.Abs(scale.y);
         transform.localScale = scale;
+    }
+
+    // Back-compat: some code may still call Fire(); we route to Shoot(muzzle forward)
+    public virtual void Fire()
+    {
+        var dir = muzzle ? (Vector2)muzzle.right : Vector2.right;
+        TryFire(dir);
+    }
+
+    /// <summary>Preferred entry point from input. Enforces cooldown.</summary>
+    public virtual bool TryFire(Vector2 dir)
+    {
+        if (Time.time < nextFireTime) return false;
+        Shoot(dir);
+        nextFireTime = Time.time + Mathf.Max(0.01f, CooldownWindow);
+        return true;
+    }
+
+    /// <summary>Child class actually spawns/launches projectiles.</summary>
+    protected abstract void Shoot(Vector2 dir);
+
+    // ----- Data binding / upgrades -----
+    public virtual void SetDefinition(WeaponDefinition def) => SetDefinition(def, 1);
+
+    public virtual void SetDefinition(WeaponDefinition def, int level)
+    {
+        if (!def) return;
+
+        Definition = def;
+        currentLevel = Mathf.Clamp(level, 1, (def.Levels?.Count ?? 1));
+        data = def.GetLevelData(currentLevel - 1);
+
+        icon = def.Icon;
+        if (data != null)
+        {
+            if (data.spriteOverride && spriteRenderer) spriteRenderer.sprite = data.spriteOverride;
+            CooldownWindow = data.cooldown;
+        }
+    }
+
+    public virtual bool TryUpgrade()
+    {
+        if (!Definition || Definition.Levels == null) return false;
+        int next = currentLevel + 1;
+        if (next > Definition.Levels.Count) return false;
+        SetDefinition(Definition, next);
+        return true;
     }
 }

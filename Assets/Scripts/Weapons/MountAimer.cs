@@ -2,18 +2,28 @@ using UnityEngine;
 
 public class MountAimer : MonoBehaviour
 {
-    Camera cam;
-    void Awake() => cam = Camera.main;
+    [SerializeField] private MonoBehaviour inputServiceSource; // InputService
+    private IInputService input;
+
+    [Tooltip("Optional: the transform to rotate. Defaults to this transform.")]
+    [SerializeField] private Transform pivot;
+
+    [SerializeField] private Camera worldCamera; // default main
+
+    void Awake()
+    {
+        input = inputServiceSource as IInputService;
+        if (input == null) input = FindFirstObjectByType<InputService>();
+        if (!pivot) pivot = transform;
+        if (!worldCamera) worldCamera = Camera.main;
+    }
 
     void LateUpdate()
     {
-        if (Pause.IsPaused || !cam) return;
+        if (input == null) return;
 
-        Vector3 m = cam.ScreenToWorldPoint(Input.mousePosition); m.z = 0;
-        Vector2 dir = (m - transform.position);
-        if (dir.sqrMagnitude < 0.0001f) return;
-
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        var dir = input.GetAimDirection(pivot.position, worldCamera);
+        if (dir.sqrMagnitude > 0.0001f)
+            pivot.right = dir; // align with Weapon.Fire() using muzzle.right
     }
 }

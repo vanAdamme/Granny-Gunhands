@@ -5,28 +5,36 @@ using UnityEngine.Pool;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
 {
-    [Header("Motion")]
-    [SerializeField] private float speed = 18f;
-    [SerializeField] private float lifetime = 5f;
-
-    [Header("Hit Settings")]
-    [SerializeField] private LayerMask targetLayers;    // who we can damage
-    [SerializeField] private LayerMask obstacleLayers;  // walls/environment that stop the shot
-    [SerializeField] private float radius = 0.06f;      // >0 uses CircleCast (safer than thin ray)
-    [SerializeField] private float skin = 0.01f;        // back off from the surface slightly
-    [SerializeField] private float damage = 5f;
-    [SerializeField] private int maxPierces = 0;        // 0 = stop on first target; 2 = pierce two targets, etc.
-    [SerializeField] private bool pierceThroughObstacles = false; // if true, walls don't stop (rare)
-
-    [Header("FX (optional)")]
-    [SerializeField] private GameObject hitVFX;
+    [Header("Defaults (used if weapon doesn't override)")]
+    [SerializeField] private float defaultSpeed = 18f;
+    [SerializeField] private float defaultRange = 12f;
+    [SerializeField] private LayerMask defaultTargetLayers;
+    [SerializeField] private LayerMask defaultObstacleLayers;
+    [SerializeField] private float defaultDamage = 5f;
+    [SerializeField, Min(0f)] private float defaultRadius = 0.06f; // >0 uses CircleCast
+    [SerializeField, Min(0f)] private float skin = 0.01f;          // back off from the surface slightly
+    [SerializeField, Min(0)] private int defaultMaxPierces = 0;    // 0 = stop on first target
+    [SerializeField] private bool defaultPierceThroughObstacles = false;
+    [SerializeField] private GameObject defaultHitVFX;
 
     // Pool hook (set by spawner)
     public IObjectPool<Projectile> ObjectPool { get; set; }
 
+    // Runtime (set by spawner each shot)
     private Rigidbody2D rb;
     private Transform ownerRoot;
     private Vector2 dir;
+
+    private float speed;
+    private float range;
+    private LayerMask targetLayers;
+    private LayerMask obstacleLayers;
+    private float damage;
+    private float radius;
+    private int maxPierces;
+    private bool pierceThroughObstacles;
+    private GameObject hitVFX;
+
     private float despawnAt;
     private readonly HashSet<Collider2D> hitThisStep = new HashSet<Collider2D>();
 
@@ -37,19 +45,61 @@ public class Projectile : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
     }
 
-    /// <summary>Called by spawner immediately after Instantiate/Get.</summary>
+    /// <summary>
+    /// Minimal init: owner/targets/damage/direction. Uses defaults for motion/behaviour until SetRuntime is called.
+    /// </summary>
     public void Init(GameObject owner, LayerMask targets, float dmg, Vector2 direction)
     {
         ownerRoot = owner ? owner.transform.root : null;
         targetLayers = targets;
         damage = dmg;
         dir = direction.sqrMagnitude > 0f ? direction.normalized : Vector2.right;
+
+        // Start with defaults; weapon may override immediately after via SetRuntime()
+        speed = defaultSpeed;
+        range = defaultRange;
+        damage = defaultDamage;
+        obstacleLayers = defaultObstacleLayers;
+        radius = Mathf.Max(0f, defaultRadius);
+        maxPierces = Mathf.Max(0, defaultMaxPierces);
+        pierceThroughObstacles = defaultPierceThroughObstacles;
+        hitVFX = defaultHitVFX;
+
+        // Compute lifetime from (range / speed)
+        float lifetime = Mathf.Max(0.01f, range / Mathf.Max(0.01f, speed));
+        despawnAt = Time.time + lifetime;
+
+        // clear step cache for pooled reuse
+        hitThisStep.Clear();
+    }
+
+    /// <summary>
+    /// Optional runtime override from the weapon definition. Any nullable/optional args not supplied keep current values.
+    /// Recomputes lifetime based on (range / speed).
+    /// </summary>
+    public void SetRuntime(
+        float? speedOverride = null,
+        float? rangeOverride = null,
+        LayerMask? obstacleOverride = null,
+        int? maxPiercesOverride = null,
+        bool? pierceObstaclesOverride = null,
+        float? radiusOverride = null,
+        GameObject vfxOverride = null)
+    {
+        if (speedOverride.HasValue) speed = Mathf.Max(0.01f, speedOverride.Value);
+        if (rangeOverride.HasValue) range = Mathf.Max(0f, rangeOverride.Value);
+        if (obstacleOverride.HasValue) obstacleLayers = obstacleOverride.Value;
+        if (maxPiercesOverride.HasValue) maxPierces = Mathf.Max(0, maxPiercesOverride.Value);
+        if (pierceObstaclesOverride.HasValue) pierceThroughObstacles = pierceObstaclesOverride.Value;
+        if (radiusOverride.HasValue) radius = Mathf.Max(0f, radiusOverride.Value);
+        if (vfxOverride != null) hitVFX = vfxOverride;
+
+        float lifetime = Mathf.Max(0.01f, range / Mathf.Max(0.01f, speed));
         despawnAt = Time.time + lifetime;
     }
 
     private void OnEnable()
     {
-        // in case pooled object was reused
         hitThisStep.Clear();
     }
 
@@ -81,8 +131,6 @@ public class Projectile : MonoBehaviour
 
         hitThisStep.Clear();
         int pierces = 0;
-        bool blocked = false;
-        Vector2 lastImpactPoint = start;
 
         foreach (var hit in hits)
         {
@@ -107,7 +155,6 @@ public class Projectile : MonoBehaviour
                     dmgTarget.TakeDamage(damage);
                     SpawnVFX(hit);
                     pierces++;
-                    lastImpactPoint = hit.point;
 
                     if (pierces > maxPierces) // exceeded allowance → stop at this target
                     {
@@ -121,19 +168,14 @@ public class Projectile : MonoBehaviour
 
             if (isObstacle && !pierceThroughObstacles)
             {
-                blocked = true;
-                lastImpactPoint = hit.point;
                 MoveToImpact(start, hit.distance);
                 Release();
                 return;
             }
         }
 
-        // If we pierced up to allowance and weren't blocked by a wall, keep going
-        if (!blocked)
-        {
-            rb.MovePosition(start + step);
-        }
+        // If not blocked, keep going
+        rb.MovePosition(start + step);
     }
 
     private void MoveToImpact(Vector2 start, float hitDistance)
@@ -151,7 +193,6 @@ public class Projectile : MonoBehaviour
 
     public void Release()
     {
-        // Return to pool if possible; otherwise destroy
         if (ObjectPool != null) ObjectPool.Release(this);
         else Destroy(gameObject);
     }

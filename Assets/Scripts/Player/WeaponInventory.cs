@@ -48,8 +48,13 @@ public sealed class WeaponInventory : MonoBehaviour
         // Optional defaults
         if (inventory.Count > 0)
         {
-            Equip(Hand.Left,  0, true, false);
-            Equip(Hand.Right, Mathf.Min(1, inventory.Count - 1), true, false);
+            Equip(Hand.Left, 0, true, false);
+            if (inventory.Count > 1) Equip(Hand.Right, 1, true, false);
+
+            // Re-assert mounts just in case
+            EnsureMounted(Left,  leftMount);
+            EnsureMounted(Right, rightMount);
+
             OnEquippedChanged?.Invoke(Hand.Left,  Left);
             OnEquippedChanged?.Invoke(Hand.Right, Right);
         }
@@ -99,7 +104,7 @@ public sealed class WeaponInventory : MonoBehaviour
         if (!def) return null;
         if (!allowDuplicates && HasWeapon(def.Id))
         {
-            // TODO: UIController.Instance?.ShowToast($"{def.DisplayName} already owned");
+            UIController.Instance?.ShowToast($"{def.DisplayName} already owned", def.Icon);
             return null;
         }
         var instance = WeaponFactory.Create(def, transform);
@@ -136,18 +141,24 @@ public sealed class WeaponInventory : MonoBehaviour
         int cur = (hand == Hand.Left) ? leftIndex : rightIndex;
         if (cur < 0) cur = 0;
 
+        Weapon other = (hand == Hand.Left) ? Right : Left;
+
         for (int step = 0; step < inventory.Count; step++)
         {
             cur = Mod(cur + direction, inventory.Count);
             if (!IsValid(cur)) continue;
 
+            // Block same index (legacy safety)
             if (!allowSameInBothHands)
             {
                 if (hand == Hand.Left  && cur == rightIndex) continue;
                 if (hand == Hand.Right && cur == leftIndex)  continue;
+
+                // NEW: block same *instance* as the other hand
+                if (other && inventory[cur] == other) continue;
             }
 
-            Equip(hand, cur, true, true);
+            Equip(hand, cur, applyMount: true, raiseEvents: true);
             return;
         }
     }
@@ -156,7 +167,14 @@ public sealed class WeaponInventory : MonoBehaviour
     {
         if (!IsValid(index)) return;
 
-        // Deactivate previous
+        // Do not allow equipping the same *instance* in both hands
+        if (!allowSameInBothHands)
+        {
+            var other = (hand == Hand.Left) ? Right : Left;
+            if (other && inventory[index] == other) return;
+        }
+
+        // Deactivate previous for this hand
         var prev = (hand == Hand.Left) ? Left : Right;
         if (prev) prev.gameObject.SetActive(false);
 
@@ -165,10 +183,13 @@ public sealed class WeaponInventory : MonoBehaviour
         var now = (hand == Hand.Left) ? Left : Right;
         if (now)
         {
-            Transform mount = hand == Hand.Left ? leftMount : rightMount;
+            Transform mount = (hand == Hand.Left) ? leftMount : rightMount;
             if (applyMount)
             {
-                now.transform.SetParent(mount ? mount : transform, false);
+                var targetParent = mount ? mount : transform;
+                if (now.transform.parent != targetParent) // avoid redundant SetParent
+                    now.transform.SetParent(targetParent, worldPositionStays: false);
+
                 now.transform.localPosition = Vector3.zero;
                 now.transform.localRotation = Quaternion.identity;
             }
@@ -201,6 +222,56 @@ public sealed class WeaponInventory : MonoBehaviour
         foreach (var w in GetInventory())
             if (w && w.Definition && w.Definition.Id == defId) return true;
         return false;
+    }
+    
+    public bool UpgradeLowestEquippedOf(
+        WeaponCategory category,
+        int levels,
+        out Weapon upgraded,
+        out int appliedLevels)
+    {
+        upgraded = null;
+        appliedLevels = 0;
+
+        // Pick candidates
+        Weapon left  = Left;
+        Weapon right = Right;
+
+        bool leftOk  = left  && left.Definition  && left.Definition.Category  == category;
+        bool rightOk = right && right.Definition && right.Definition.Category == category;
+
+        if (!leftOk && !rightOk) return false;
+
+        // Choose lower level (tie-break left)
+        var target = leftOk && (!rightOk || left.Level <= right.Level) ? left : right;
+
+        // Apply up to 'levels' upgrades
+        for (int i = 0; i < levels; i++)
+        {
+            if (!target.TryUpgrade()) break;
+            appliedLevels++;
+        }
+
+        if (appliedLevels > 0)
+        {
+            upgraded = target;
+            // Notify UI icons if needed
+            if (target == Left)  OnEquippedChanged?.Invoke(Hand.Left,  target);
+            if (target == Right) OnEquippedChanged?.Invoke(Hand.Right, target);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void EnsureMounted(Weapon w, Transform mount)
+    {
+        if (!w) return;
+        var target = mount ? mount : transform;
+        if (w.transform.parent != target)
+            w.transform.SetParent(target, false);
+        w.transform.localPosition = Vector3.zero;
+        w.transform.localRotation = Quaternion.identity;
     }
 
     private bool IsValid(int i) => i >= 0 && i < inventory.Count && inventory[i] != null;
