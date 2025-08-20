@@ -104,7 +104,7 @@ public sealed class WeaponInventory : MonoBehaviour
         if (!def) return null;
         if (!allowDuplicates && HasWeapon(def.Id))
         {
-            // TODO: UIController.Instance?.ShowToast($"{def.DisplayName} already owned");
+            UIController.Instance?.ShowToast($"{def.DisplayName} already owned", def.Icon);
             return null;
         }
         var instance = WeaponFactory.Create(def, transform);
@@ -224,6 +224,46 @@ public sealed class WeaponInventory : MonoBehaviour
         return false;
     }
     
+    public bool UpgradeLowestEquippedOf(
+        WeaponCategory category,
+        int levels,
+        out Weapon upgraded,
+        out int appliedLevels)
+    {
+        upgraded = null;
+        appliedLevels = 0;
+
+        // Pick candidates
+        Weapon left  = Left;
+        Weapon right = Right;
+
+        bool leftOk  = left  && left.Definition  && left.Definition.Category  == category;
+        bool rightOk = right && right.Definition && right.Definition.Category == category;
+
+        if (!leftOk && !rightOk) return false;
+
+        // Choose lower level (tie-break left)
+        var target = leftOk && (!rightOk || left.Level <= right.Level) ? left : right;
+
+        // Apply up to 'levels' upgrades
+        for (int i = 0; i < levels; i++)
+        {
+            if (!target.TryUpgrade()) break;
+            appliedLevels++;
+        }
+
+        if (appliedLevels > 0)
+        {
+            upgraded = target;
+            // Notify UI icons if needed
+            if (target == Left)  OnEquippedChanged?.Invoke(Hand.Left,  target);
+            if (target == Right) OnEquippedChanged?.Invoke(Hand.Right, target);
+            return true;
+        }
+
+        return false;
+    }
+
     private void EnsureMounted(Weapon w, Transform mount)
     {
         if (!w) return;

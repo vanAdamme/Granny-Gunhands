@@ -18,6 +18,13 @@ public class UIController : MonoBehaviour
     [SerializeField] private Image specialWeaponIcon;
     [SerializeField] private TMP_Text timerText;
 
+    [SerializeField] private MonoBehaviour toastServiceSource; // assign ToastManager in Inspector
+    private IToastService toast;
+
+    // Public convenience API
+    public void ShowToast(string message, Sprite icon = null, float duration = 2.2f) => toast?.Show(message, icon, duration);
+    public void ShowUpgradeToast(string weaponName, int newLevel, Sprite icon = null, float duration = 2.4f) => toast?.ShowUpgrade(weaponName, newLevel, icon, duration);
+
     public GameObject gameOverPanel;
     public GameObject pausePanel;
     public GameObject levelUpPanel;
@@ -25,14 +32,12 @@ public class UIController : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        if (Instance != null && Instance != this) { Destroy(this); return; }
+        Instance = this;
+
+        toast = toastServiceSource as IToastService;
+        if (toast == null && toastServiceSource != null)
+            Debug.LogError("Toast service source does not implement IToastService.");
     }
 
     public void UpdateHealthSlider()

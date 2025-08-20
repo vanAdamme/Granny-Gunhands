@@ -9,13 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7302037368248799417}
-  - component: {fileID: 479070225797101221}
   - component: {fileID: 5979494316605714520}
-  - component: {fileID: 6679456596160645199}
-  - component: {fileID: 6670608776215244453}
+  - component: {fileID: 833406103262682683}
+  - component: {fileID: 5099251553390895862}
   m_Layer: 0
   m_Name: weapon upgrader
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,32 +28,12 @@ Transform:
   m_GameObject: {fileID: 3344195093081944019}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 38.98827, y: -0.938, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &479070225797101221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3344195093081944019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a24756a2c099df448beb6b35cb952c6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allowedCategories: 00000000
-  equippedOnly: 1
-  consumeIfNoMatch: 0
-  upgradeVFX: {fileID: 0}
-  vfxLifetime: 1.5
-  onUpgraded:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!212 &5979494316605714520
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -110,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6679456596160645199
+--- !u!61 &833406103262682683
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,7 +123,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.003863275, y: 0.0025755167}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -154,9 +133,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6574565, y: 0.72699535}
   m_EdgeRadius: 0
---- !u!114 &6670608776215244453
+--- !u!114 &5099251553390895862
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,7 +144,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3344195093081944019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0423fb80f7595424f89605738011a5a3, type: 3}
+  m_Script: {fileID: 11500000, guid: a24756a2c099df448beb6b35cb952c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seconds: 1.2
+  upgradeItem: {fileID: 11400000, guid: 36e7c5f5616b52d459528df9d5a534a7, type: 2}

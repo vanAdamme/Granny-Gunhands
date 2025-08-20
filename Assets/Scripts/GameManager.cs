@@ -8,16 +8,27 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public bool gameActive;
 
+    [Header("Input")]
+    [SerializeField] private MonoBehaviour inputServiceSource;
+    private IInputService input;
+
     void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        if (Instance != null && Instance != this) { Destroy(this); return; }
+        Instance = this;
+
+        input = inputServiceSource as IInputService;
+        if (input == null) input = FindFirstObjectByType<InputService>();
+    }
+
+    void OnEnable()
+    {
+        if (input != null) input.Pause += OnPause;
+    }
+
+    void OnDisable()
+    {
+        if (input != null) input.Pause -= OnPause;
     }
 
     void Start()
@@ -28,17 +39,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (gameActive)
-        {
-            gameTime += Time.deltaTime;
-            // UIController.Instance.UpdateTimer(gameTime);
-            // UIController.Instance.UpdateSpecialWeaponTimer(gameTime);
-
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
-            {
-                Pause();
-            }
-        }
+        if (gameActive) gameTime += Time.deltaTime;
+        // Timer UI if you want
     }
 
     public void GameOver()
@@ -60,22 +62,23 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-    public void Pause()
+    private void OnPause()
     {
-        if (UIController.Instance.levelUpPanel.activeSelf == false)
+        if (!UIController.Instance) return;
+        if (UIController.Instance.levelUpPanel.activeSelf) return;
+
+        bool showing = UIController.Instance.pausePanel.activeSelf;
+        if (!showing)
         {
-            if (UIController.Instance.pausePanel.activeSelf == false && UIController.Instance.gameOverPanel.activeSelf == false)
-            {
-                UIController.Instance.pausePanel.SetActive(true);
-                Time.timeScale = 0f;
-                AudioController.Instance.PlaySound(AudioController.Instance.pause);
-            }
-            else
-            {
-                UIController.Instance.pausePanel.SetActive(false);
-                Time.timeScale = 1f;
-                AudioController.Instance.PlaySound(AudioController.Instance.unpause);
-            }
+            UIController.Instance.pausePanel.SetActive(true);
+            Time.timeScale = 0f;
+            AudioController.Instance.PlaySound(AudioController.Instance.pause);
+        }
+        else
+        {
+            UIController.Instance.pausePanel.SetActive(false);
+            Time.timeScale = 1f;
+            AudioController.Instance.PlaySound(AudioController.Instance.unpause);
         }
     }
 

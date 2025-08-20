@@ -2,18 +2,33 @@ using UnityEngine;
 
 public class SpecialWeaponInput : MonoBehaviour
 {
-    [SerializeField] private SpecialWeaponBase equippedSpecial;
-    [SerializeField] private KeyCode activationKey = KeyCode.Space;
+    [SerializeField] private MonoBehaviour inputServiceSource; // InputService
+    private IInputService input;
 
-    void Update()
+    [Tooltip("Any component that implements ISpecialCharge (e.g., SpecialChargeSimple)")]
+    [SerializeField] private MonoBehaviour specialSource;
+    private ISpecialCharge special;
+
+    void Awake()
     {
-        if (Time.timeScale == 0f || !equippedSpecial) return;
+        input = inputServiceSource as IInputService;
+        if (input == null) input = FindFirstObjectByType<InputService>();
 
-        if (Input.GetKeyDown(activationKey))
+        special = specialSource as ISpecialCharge;
+        if (special == null)
         {
-            equippedSpecial.TryActivate();
+            foreach (var mb in FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
+            {
+                if (mb is ISpecialCharge s) { special = s; break; }
+            }
         }
     }
 
-    public void Equip(SpecialWeaponBase special) => equippedSpecial = special;
+    void OnEnable()  { if (input != null) input.Special += OnSpecial; }
+    void OnDisable() { if (input != null) input.Special -= OnSpecial; }
+
+    private void OnSpecial()
+    {
+        special?.TryActivate();
+    }
 }

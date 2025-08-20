@@ -6,9 +6,7 @@ public class GenericProjectileWeapon : Weapon
     [Header("Data")]
     [SerializeField] private WeaponDefinition definitionAsset;
     [SerializeField, Min(1)] private int startLevel = 1;
-    [SerializeField] private bool aimAtMouse = true;
 
-    private Camera cam;
     private GameObject ownerRoot;
 
     private IObjectPool<Projectile> pool;
@@ -19,28 +17,16 @@ public class GenericProjectileWeapon : Weapon
     protected override void Awake()
     {
         base.Awake();
-        cam = Camera.main;
         ownerRoot = transform.root ? transform.root.gameObject : gameObject;
 
         if (definitionAsset) SetDefinition(definitionAsset, startLevel);
         BuildPoolIfNeeded();
     }
 
-    // PlayerShooting calls TryFire(dir). We only need to implement how to shoot.
+    // PlayerShooting passes in the aim direction → use it, no input polling here.
     protected override void Shoot(Vector2 dir)
     {
-        if (data == null) return;
-
-        // Prefer mouse aim if requested
-        if (aimAtMouse && cam && muzzle)
-        {
-            var m = cam.ScreenToWorldPoint(Input.mousePosition); m.z = 0f;
-            var v = (Vector2)m - (Vector2)muzzle.position;
-            if (v.sqrMagnitude > 0.0001f) dir = v.normalized;
-        }
-
-        if (!data.projectilePrefab)
-            return;
+        if (data == null || !data.projectilePrefab) return;
 
         BuildPoolIfNeeded();
 
@@ -53,17 +39,16 @@ public class GenericProjectileWeapon : Weapon
 
         // Initialise and push runtime settings
         p.Init(ownerRoot, data.targetLayers, data.damage, dir);
-
-		p.SetRuntime(
-			speedOverride: data.projectileSpeed,
-			rangeOverride: data.range,
-			obstacleOverride: data.obstacleLayers,
-			maxPiercesOverride: data.maxPierces,
-			pierceObstaclesOverride: data.pierceThroughObstacles,
-			radiusOverride: null,                        // or expose in level data if you like
-			vfxOverride: data.muzzleFlashPrefab ? null : null // keep projectile's own VFX unless you add a hitVFX to level data
-		);
-		p.ObjectPool = pool;
+        p.SetRuntime(
+            speedOverride: data.projectileSpeed,
+            rangeOverride: data.range,
+            obstacleOverride: data.obstacleLayers,
+            maxPiercesOverride: data.maxPierces,
+            pierceObstaclesOverride: data.pierceThroughObstacles,
+            radiusOverride: null,
+            vfxOverride: null
+        );
+        p.ObjectPool = pool;
 
         if (data.muzzleFlashPrefab && muzzle)
             VFX.Spawn(data.muzzleFlashPrefab, muzzle.position, transform.rotation, 0.1f);
@@ -86,12 +71,5 @@ public class GenericProjectileWeapon : Weapon
             p => { if (p) Destroy(p.gameObject); },
             collectionCheck, defaultCapacity, maxSize
         );
-    }
-
-    private static void SetPrivate(object obj, string field, object value)
-    {
-        var f = obj.GetType().GetField(field,
-            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-        if (f != null) f.SetValue(obj, value);
     }
 }

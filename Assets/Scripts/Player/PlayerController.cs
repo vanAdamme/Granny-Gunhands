@@ -9,8 +9,11 @@ public class PlayerController : Target, IPlayerContext
     [Header("Refs")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
-    [SerializeField] private InputAction playerControls;
     public Collider2D col;
+
+    [Header("Input")]
+    [SerializeField] private MonoBehaviour inputServiceSource; // drag InputService here in Inspector
+    private IInputService input; // resolved in Awake
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 6f;
@@ -67,22 +70,22 @@ public class PlayerController : Target, IPlayerContext
     }
 
     public Transform Transform => transform;
-
     // =========================================
 
     protected override void Awake()
     {
         base.Awake();
-
         col = GetComponent<Collider2D>();
 
-        if (Instance != null && Instance != this)
+        if (Instance != null && Instance != this) { Destroy(this); return; }
+        Instance = this;
+
+        // Resolve input
+        input = inputServiceSource as IInputService;
+        if (input == null)
         {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
+            input = FindFirstObjectByType<InputService>(); // Unity 6+ safe API
+            if (input == null) Debug.LogError("InputService not found in scene.");
         }
     }
 
@@ -115,12 +118,9 @@ public class PlayerController : Target, IPlayerContext
 
     private void Update()
     {
-        // Input
-        float inputX = Input.GetAxisRaw("Horizontal");
-        float inputY = Input.GetAxisRaw("Vertical");
-        playerMoveDirection = playerControls.ReadValue<Vector2>();
+        // Anim from input.Move
+        playerMoveDirection = (input != null) ? input.Move : Vector2.zero;
 
-        // Anim
         if (playerMoveDirection == Vector2.zero)
         {
             animator.SetBool("moving", false);
@@ -128,13 +128,11 @@ public class PlayerController : Target, IPlayerContext
         else if (Time.timeScale != 0f)
         {
             animator.SetBool("moving", true);
-            animator.SetFloat("moveX", inputX);
-            animator.SetFloat("moveY", inputY);
+            animator.SetFloat("moveX", playerMoveDirection.x);
+            animator.SetFloat("moveY", playerMoveDirection.y);
         }
 
-        HandleWeaponSwitching();
-
-        // Invulnerability countdown (maps to Health.IsInvulnerable)
+        // Invulnerability countdown
         if (invulnerabilityTimer > 0f)
         {
             invulnerabilityTimer -= Time.deltaTime;
@@ -184,16 +182,55 @@ public class PlayerController : Target, IPlayerContext
         }
     }
 
-    private void HandleWeaponSwitching()
+    // ---------- Input wiring ----------
+    private void OnEnable()
+    {
+        if (input != null)
+        {
+            input.CycleLeft  += OnCycleLeft;
+            input.CycleRight += OnCycleRight;
+            input.Special    += OnSpecial;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (input != null)
+        {
+            input.CycleLeft  -= OnCycleLeft;
+            input.CycleRight -= OnCycleRight;
+            input.Special    -= OnSpecial;
+        }
+    }
+
+    private void OnCycleLeft()  => weaponInventory?.Cycle(Hand.Left, +1);
+    private void OnCycleRight() => weaponInventory?.Cycle(Hand.Right, +1);
+    private void OnSpecial()    { /* trigger your special ability if you’ve wired one */ }
+    
+    private void OnMovePerformed(InputAction.CallbackContext ctx)
+    {
+        var v = ctx.ReadValue<Vector2>();
+        // Normalise to prevent faster diagonal movement
+        playerMoveDirection = v.sqrMagnitude > 1f ? v.normalized : v;
+    }
+
+    private void OnMoveCanceled(InputAction.CallbackContext _)
+    {
+        playerMoveDirection = Vector2.zero;
+    }
+
+    private void OnCycleLeft(InputAction.CallbackContext _)
     {
         if (!weaponInventory) return;
-
-        if (Input.GetKeyDown(KeyCode.Q))
-            weaponInventory.Cycle(Hand.Left, +1);
-
-        if (Input.GetKeyDown(KeyCode.E))
-            weaponInventory.Cycle(Hand.Right, +1);
+        weaponInventory.Cycle(Hand.Left, +1);
     }
+
+    private void OnCycleRight(InputAction.CallbackContext _)
+    {
+        if (!weaponInventory) return;
+        weaponInventory.Cycle(Hand.Right, +1);
+    }
+    // ---------- end input wiring ----------
 
     public void AddExperience(int amount)
     {
@@ -201,7 +238,6 @@ public class PlayerController : Target, IPlayerContext
         UIController.Instance.UpdateExperienceSlider();
         // if (experience >= playerLevels[currentLevel - 1]) { ... level-up flow ... }
     }
-
 
     public void IncreaseMaxHealth(int value)
     {
@@ -219,7 +255,4 @@ public class PlayerController : Target, IPlayerContext
         UIController.Instance.LevelUpPanelClose();
         AudioController.Instance.PlaySound(AudioController.Instance.selectUpgrade);
     }
-
-    private void OnEnable() => playerControls.Enable();
-    private void OnDisable() => playerControls.Disable();
 }
