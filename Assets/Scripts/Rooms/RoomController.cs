@@ -23,6 +23,7 @@ public class RoomController : MonoBehaviour
 
     public void BeginEncounter()
     {
+
         if (encounterStarted) return;
         encounterStarted = true;
 
@@ -41,8 +42,7 @@ public class RoomController : MonoBehaviour
         }
 
         // If a room has no spawners/enemies, unlock instantly
-        if (activeEnemies.Count == 0)
-            UnlockDoors();
+        if (activeEnemies.Count == 0) UnlockDoors();
     }
 
     private void OnEnemyDied(Health enemy)

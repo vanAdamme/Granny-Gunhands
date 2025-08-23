@@ -1,30 +1,30 @@
 using UnityEngine;
 
-public class Door : MonoBehaviour, ILockable
+public class Door : MonoBehaviour
 {
-    [SerializeField] private Collider2D blocker; // e.g., BoxCollider2D acting as a wall
-    [SerializeField] private Animator animator;
+    [SerializeField] BoxCollider2D blocker;
+    [SerializeField] int blockingLayer = -1;   // e.g. LayerMask.NameToLayer("Walls")
+    [SerializeField] int nonBlockingLayer = -1; // e.g. LayerMask.NameToLayer("Default")
+    [SerializeField] bool startLocked = true;
 
-    public bool IsLocked { get; private set; }
+    int originalLayer;
+
+    void Awake()
+    {
+        if (!blocker) TryGetComponent(out blocker);
+        originalLayer = gameObject.layer;
+        if (startLocked) Lock(); else Unlock();
+    }
 
     public void Lock()
     {
-        IsLocked = true;
         if (blocker) blocker.enabled = true;
-        if (animator) animator.SetBool("open", false);
+        gameObject.layer = blockingLayer >= 0 ? blockingLayer : originalLayer;
     }
 
     public void Unlock()
     {
-        IsLocked = false;
         if (blocker) blocker.enabled = false;
-        if (animator) animator.SetBool("open", true);
+        gameObject.layer = nonBlockingLayer >= 0 ? nonBlockingLayer : originalLayer;
     }
-
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        if (!blocker) TryGetComponent(out blocker);
-    }
-#endif
 }
