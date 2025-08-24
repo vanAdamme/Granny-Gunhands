@@ -10,10 +10,16 @@ public class DoorCarverRunner : MonoBehaviour
     [SerializeField] private string floorsNameContains = "floor";  // e.g., "ground"
     [SerializeField] private string wallsNameContains  = "walls";
 
-    [Header("Door Settings")]
-    [SerializeField] private TileBase floorDoorTile;   // optional fill for doorway cell
+    [Header("Doorway / Carve Settings")]
+    [SerializeField] private TileBase floorDoorTile;   // optional fill for doorway cells
     [SerializeField, Min(1)] private int gapDepth = 1;
-    [SerializeField] private bool widenToTwo = false;
+    [Tooltip("If your walls already have gaps, tick this to only detect & place doors.")]
+    [SerializeField] private bool detectExistingGaps = true;
+
+    [Header("Door Prefab Placement")]
+    [SerializeField] private bool spawnDoors = true;
+    [SerializeField] private Door doorPrefab;          // assign your Door prefab
+    [SerializeField] private Transform doorParent;     // optional
 
     [Header("Timing")]
     [SerializeField] private float timeoutSeconds = 5f;
@@ -25,23 +31,11 @@ public class DoorCarverRunner : MonoBehaviour
 
     private Coroutine routine;
 
-    void OnEnable()
-    {
-        // Auto-arm whenever the component is enabled (works in Edit Mode too)
-        Arm();
-    }
-
-    // When you tweak fields in the inspector in Edit Mode, re-arm once.
-    void OnValidate()
-    {
-        if (!Application.isPlaying) Arm();
-    }
+    void OnEnable() => Arm();
+    void OnValidate() { if (!Application.isPlaying) Arm(); }
 
     [ContextMenu("Run Now")]
-    public void RunNow()
-    {
-        Arm(immediate: true);
-    }
+    public void RunNow() => Arm(immediate: true);
 
     private void Arm(bool immediate = false)
     {
@@ -52,13 +46,11 @@ public class DoorCarverRunner : MonoBehaviour
     private IEnumerator RunWhenReady(bool immediate)
     {
         if (verboseLogs) Debug.Log("[DoorCarverRunner] Polling for generated Grid/Tilemaps...");
-
-        if (!immediate) yield return null; // let inspector/generator actions settle
+        if (!immediate) yield return null; // let generator settle
 
         float t0 = Time.realtimeSinceStartup;
         while (Time.realtimeSinceStartup - t0 < timeoutSeconds)
         {
-            // Search ALL Grids in the scene (Edgar often spawns a sibling/root)
             var grids = FindObjectsByType<Grid>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
             Tilemap floors = null, walls = null;
@@ -81,7 +73,7 @@ public class DoorCarverRunner : MonoBehaviour
                 {
                     // Wait until floors has at least one tile
                     bool hasTiles = false;
-                    for (int i = 0; i < 60; i++) // ~1s worst-case
+                    for (int i = 0; i < 60; i++)
                     {
                         if (CountTilesFast(floors) > 0) { hasTiles = true; break; }
                         yield return null;
@@ -89,7 +81,8 @@ public class DoorCarverRunner : MonoBehaviour
                     if (!hasTiles && verboseLogs)
                         Debug.LogWarning("[DoorCarverRunner] Floor tilemap stayed empty; retrying...");
 
-                    if (delayAfterFound > 0f) yield return new WaitForSecondsRealtime(delayAfterFound);
+                    if (delayAfterFound > 0f)
+                        yield return new WaitForSecondsRealtime(delayAfterFound);
 
                     // Attach a transient DoorCarver and run once
                     var go = new GameObject("DoorCarver (temp)");
@@ -100,7 +93,10 @@ public class DoorCarverRunner : MonoBehaviour
                     carver.walls  = walls;
                     carver.floorDoorTile = floorDoorTile;
                     carver.gapDepth = gapDepth;
-                    carver.widenToTwo = widenToTwo;
+                    carver.detectExistingGaps = detectExistingGaps;
+                    carver.spawnDoors = spawnDoors;
+                    carver.doorPrefab = doorPrefab;
+                    carver.doorParent = doorParent;
 
                     carver.Carve();
                     TryRescanAstar();
@@ -126,7 +122,7 @@ public class DoorCarverRunner : MonoBehaviour
     {
         var b = tm.cellBounds;
         foreach (var p in b.allPositionsWithin)
-            if (tm.HasTile(p)) return 1; // early exit; we only care if it's non-empty
+            if (tm.HasTile(p)) return 1; // we just care if non-empty
         return 0;
     }
 
@@ -144,7 +140,6 @@ public class DoorCarverRunner : MonoBehaviour
             var mb = all[i];
             if (!mb) continue;
 
-            // Only scene objects
             if (mb.gameObject.scene.IsValid() && mb.hideFlags == HideFlags.None)
             {
                 var t = mb.GetType();
@@ -160,15 +155,12 @@ public class DoorCarverRunner : MonoBehaviour
         if (astar != null && astarType != null)
         {
             var scan = astarType.GetMethod("Scan", System.Type.EmptyTypes);
-            if (scan != null)
-            {
-                scan.Invoke(astar, null);
-                if (verboseLogs) Debug.Log("[DoorCarverRunner] A* rescanned after carving.");
-            }
+            if (scan != null) scan.Invoke(astar, null);
+            if (verboseLogs) Debug.Log("[DoorCarverRunner] A* rescanned after carving.");
         }
         else if (verboseLogs)
         {
-            Debug.Log("[DoorCarverRunner] No A* found; skipping rescan (this is fine if you don’t use it).");
+            Debug.Log("[DoorCarverRunner] No A* found; skipping rescan.");
         }
     }
 }
