@@ -50,11 +50,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistortStrength: 0.0454
+    - _DistortStrength: 0.06
     - _EdgeFade: 0
     - _GlowIntensity: 1
-    - _NoiseScale: 2.43
-    - _PulseSpeed: 0.305
+    - _NoiseScale: 2
+    - _PulseSpeed: 0.4
     m_Colors:
     - _BaseColour: {r: 0.29019606, g: 0.054901943, b: 0.054901943, a: 1}
     - _HotColour: {r: 1.8443025, g: 0.121269405, b: 0, a: 1}
