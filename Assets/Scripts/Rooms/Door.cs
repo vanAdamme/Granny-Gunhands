@@ -3,8 +3,8 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     [SerializeField] BoxCollider2D blocker;
-    [SerializeField] int blockingLayer = -1;   // e.g. LayerMask.NameToLayer("Walls")
-    [SerializeField] int nonBlockingLayer = -1; // e.g. LayerMask.NameToLayer("Default")
+    [SerializeField] int blockingLayer = -1;    // e.g. LayerMask.NameToLayer("Walls")
+    [SerializeField] int nonBlockingLayer = -1; // e.g. Default
     [SerializeField] bool startLocked = true;
 
     int originalLayer;

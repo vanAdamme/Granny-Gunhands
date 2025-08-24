@@ -3,20 +3,13 @@ using UnityEngine;
 [AddComponentMenu("Granny/Spawning/Player Spawn Point")]
 public class PlayerSpawnPoint : MonoBehaviour
 {
-    [Tooltip("Higher = chosen first")]
-    public int priority = 0;
-
-    [Tooltip("Optional: Facing direction at spawn (world space). Leave zero to ignore.")]
-    public Vector2 facing;
+    [Tooltip("Higher = chosen first")] public int priority = 0;
+    [Tooltip("Optional facing; leave zero to ignore.")] public Vector2 facing;
 
     [Header("Safety Check")]
-    [Tooltip("Radius to check for overlaps before using this point.")]
     public float safeRadius = 0.25f;
-
-    [Tooltip("Layers considered blocking (walls, obstacles, enemies, etc.).")]
     public LayerMask blockedLayers;
 
-    /// <summary>Can we spawn here without overlapping something?</summary>
     public bool IsSafe()
     {
         if (safeRadius <= 0f) return true;

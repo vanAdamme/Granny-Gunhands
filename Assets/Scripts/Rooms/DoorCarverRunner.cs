@@ -7,19 +7,18 @@ using UnityEngine.Tilemaps;
 public class DoorCarverRunner : MonoBehaviour
 {
     [Header("Search (case-insensitive substring match)")]
-    [SerializeField] private string floorsNameContains = "floor";  // e.g., "ground"
+    [SerializeField] private string floorsNameContains = "floor";
     [SerializeField] private string wallsNameContains  = "walls";
 
     [Header("Doorway / Carve Settings")]
-    [SerializeField] private TileBase floorDoorTile;   // optional fill for doorway cells
+    [SerializeField] private TileBase floorDoorTile;
     [SerializeField, Min(1)] private int gapDepth = 1;
-    [Tooltip("If your walls already have gaps, tick this to only detect & place doors.")]
     [SerializeField] private bool detectExistingGaps = true;
 
     [Header("Door Prefab Placement")]
     [SerializeField] private bool spawnDoors = true;
-    [SerializeField] private Door doorPrefab;          // assign your Door prefab
-    [SerializeField] private Transform doorParent;     // optional
+    [SerializeField] private Door doorPrefab;
+    [SerializeField] private Transform doorParent;
 
     [Header("Timing")]
     [SerializeField] private float timeoutSeconds = 5f;
@@ -34,8 +33,7 @@ public class DoorCarverRunner : MonoBehaviour
     void OnEnable() => Arm();
     void OnValidate() { if (!Application.isPlaying) Arm(); }
 
-    [ContextMenu("Run Now")]
-    public void RunNow() => Arm(immediate: true);
+    [ContextMenu("Run Now")] public void RunNow() => Arm(immediate: true);
 
     private void Arm(bool immediate = false)
     {
@@ -46,7 +44,7 @@ public class DoorCarverRunner : MonoBehaviour
     private IEnumerator RunWhenReady(bool immediate)
     {
         if (verboseLogs) Debug.Log("[DoorCarverRunner] Polling for generated Grid/Tilemaps...");
-        if (!immediate) yield return null; // let generator settle
+        if (!immediate) yield return null;
 
         float t0 = Time.realtimeSinceStartup;
         while (Time.realtimeSinceStartup - t0 < timeoutSeconds)
@@ -78,13 +76,10 @@ public class DoorCarverRunner : MonoBehaviour
                         if (CountTilesFast(floors) > 0) { hasTiles = true; break; }
                         yield return null;
                     }
-                    if (!hasTiles && verboseLogs)
-                        Debug.LogWarning("[DoorCarverRunner] Floor tilemap stayed empty; retrying...");
+                    if (!hasTiles && verboseLogs) Debug.LogWarning("[DoorCarverRunner] Floor tilemap stayed empty; retrying...");
 
-                    if (delayAfterFound > 0f)
-                        yield return new WaitForSecondsRealtime(delayAfterFound);
+                    if (delayAfterFound > 0f) yield return new WaitForSecondsRealtime(delayAfterFound);
 
-                    // Attach a transient DoorCarver and run once
                     var go = new GameObject("DoorCarver (temp)");
                     go.transform.SetParent(grids[g].transform, false);
 
@@ -111,7 +106,6 @@ public class DoorCarverRunner : MonoBehaviour
                     yield break;
                 }
             }
-
             yield return null;
         }
 
@@ -122,7 +116,7 @@ public class DoorCarverRunner : MonoBehaviour
     {
         var b = tm.cellBounds;
         foreach (var p in b.allPositionsWithin)
-            if (tm.HasTile(p)) return 1; // we just care if non-empty
+            if (tm.HasTile(p)) return 1;
         return 0;
     }
 
@@ -130,25 +124,16 @@ public class DoorCarverRunner : MonoBehaviour
     {
         if (!rescanAstar) return;
 
-        // Find any scene AstarPath via reflection (no compile-time dependency)
-        MonoBehaviour astar = null;
-        System.Type astarType = null;
-
+        MonoBehaviour astar = null; System.Type astarType = null;
         var all = Resources.FindObjectsOfTypeAll<MonoBehaviour>();
         for (int i = 0; i < all.Length; i++)
         {
             var mb = all[i];
             if (!mb) continue;
-
             if (mb.gameObject.scene.IsValid() && mb.hideFlags == HideFlags.None)
             {
                 var t = mb.GetType();
-                if (t != null && t.FullName == "Pathfinding.AstarPath")
-                {
-                    astar = mb;
-                    astarType = t;
-                    break;
-                }
+                if (t != null && t.FullName == "Pathfinding.AstarPath") { astar = mb; astarType = t; break; }
             }
         }
 
@@ -158,9 +143,6 @@ public class DoorCarverRunner : MonoBehaviour
             if (scan != null) scan.Invoke(astar, null);
             if (verboseLogs) Debug.Log("[DoorCarverRunner] A* rescanned after carving.");
         }
-        else if (verboseLogs)
-        {
-            Debug.Log("[DoorCarverRunner] No A* found; skipping rescan.");
-        }
+        else if (verboseLogs) Debug.Log("[DoorCarverRunner] No A* found; skipping rescan.");
     }
 }

@@ -6,22 +6,18 @@ using UnityEngine;
 public class RoomEntryPortal : MonoBehaviour
 {
     [Header("Room")]
-    [SerializeField] private RoomController room;               // Room root GO
-    [SerializeField] private PlayerSpawnPoint explicitSpawn;    // Optional: force a specific spawn
+    [SerializeField] private RoomController room;
+    [SerializeField] private PlayerSpawnPoint explicitSpawn;
 
     [Header("Player Filter")]
     [SerializeField] private LayerMask playerLayers;
 
     [Header("Behaviour")]
-    [Tooltip("Pick highest-priority safe point under Room if no explicit spawn set.")]
     [SerializeField] private bool autoPickSpawnInRoom = true;
 
     private bool triggered;
 
-    void Reset()
-    {
-        GetComponent<Collider2D>().isTrigger = true;
-    }
+    void Reset() => GetComponent<Collider2D>().isTrigger = true;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -30,19 +26,11 @@ public class RoomEntryPortal : MonoBehaviour
         int layer = other.attachedRigidbody ? other.attachedRigidbody.gameObject.layer : other.gameObject.layer;
         if ((playerLayers.value & (1 << layer)) == 0) return;
 
-        var playerSpawner = FindFirstObjectByType<PlayerSpawner>();
-        if (playerSpawner == null)
-        {
-            Debug.LogWarning("[RoomEntryPortal] No PlayerSpawner found in scene.");
-            return;
-        }
+        var spawner = FindFirstObjectByType<PlayerSpawner>();
+        if (spawner == null) { Debug.LogWarning("[RoomEntryPortal] No PlayerSpawner found."); return; }
 
-        var spawn = explicitSpawn;
-        if (!spawn && autoPickSpawnInRoom)
-            spawn = GetBestSpawnInRoom();
-
-        if (spawn)
-            playerSpawner.ForceMoveTo(spawn);
+        var spawn = explicitSpawn ? explicitSpawn : (autoPickSpawnInRoom ? GetBestSpawnInRoom() : null);
+        if (spawn) spawner.ForceMoveTo(spawn);
 
         triggered = true;
         room.BeginEncounter();
@@ -51,10 +39,9 @@ public class RoomEntryPortal : MonoBehaviour
     private PlayerSpawnPoint GetBestSpawnInRoom()
     {
         if (!room) return null;
-        var points = room.GetComponentsInChildren<PlayerSpawnPoint>(includeInactive: false);
+        var points = room.GetComponentsInChildren<PlayerSpawnPoint>(false);
         if (points == null || points.Length == 0) return null;
 
-        // Prefer safe → highest priority → first
         var ordered = points.OrderByDescending(p => p.priority).ToArray();
         var safe = ordered.FirstOrDefault(p => p.IsSafe());
         return safe ? safe : ordered.FirstOrDefault();
