@@ -14,6 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   From: {fileID: -2702159731461742012}
   To: {fileID: -5647917665930690465}
+--- !u!114 &-6011040665170877325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8074dc491ddc34f4e83332d9eae76980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Position: {x: 336, y: 208}
+  Name: Room
+  IndividualRoomTemplates: []
+  RoomTemplateSets: []
 --- !u!114 &-5647917665930690465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +90,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   From: {fileID: 3555299576357563858}
   To: {fileID: -1478582476253175527}
+--- !u!114 &-1782596460659264236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f692f83df7c1b5468af64edd22287dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  From: {fileID: -1478582476253175527}
+  To: {fileID: -6011040665170877325}
 --- !u!114 &-1478582476253175527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +136,7 @@ MonoBehaviour:
   - {fileID: -2410664012926409834}
   - {fileID: -4270633989969613250}
   - {fileID: -7234773358027673927}
+  - {fileID: -1782596460659264236}
   CorridorIndividualRoomTemplates:
   - {fileID: 8008787229069088193, guid: ef1f1cc47181a8445b42f0dff3d86ece, type: 3}
   - {fileID: 8008787229069088193, guid: 272837eb97e955c4eb5d3b80bce76b03, type: 3}
@@ -120,8 +151,9 @@ MonoBehaviour:
   - {fileID: -1478582476253175527}
   - {fileID: -5647917665930690465}
   - {fileID: -2702159731461742012}
+  - {fileID: -6011040665170877325}
   EditorData:
-    PanOffset: {x: -43.44806, y: 39.362385}
+    PanOffset: {x: 14.059982, y: 103.36327}
     Zoom: 1.0781101
   RoomType: Edgar.Unity.Room
   ConnectionType: Edgar.Unity.Connection
