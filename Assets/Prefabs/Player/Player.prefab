@@ -415,9 +415,9 @@ Transform:
   m_GameObject: {fileID: 5772804147001409611}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.87, y: 5.33, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1218447492369989876}
   - {fileID: 5696763802556327522}
@@ -588,7 +588,6 @@ MonoBehaviour:
   rb: {fileID: 8485461231750116400}
   animator: {fileID: 5829817166711742306}
   col: {fileID: 2631500668665169111}
-  inputServiceSource: {fileID: 0}
   moveSpeed: 8
   playerMoveDirection: {x: 0, y: 0}
   experience: 0
@@ -687,6 +686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputServiceSource: {fileID: 0}
   inventory: {fileID: 5549995066449582158}
+  aimCamera: {fileID: 0}
 --- !u!1 &6202198162406223626
 GameObject:
   m_ObjectHideFlags: 0

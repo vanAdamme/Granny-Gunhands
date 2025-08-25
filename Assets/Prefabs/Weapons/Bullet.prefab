@@ -184,17 +184,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29bb8202d2e91cd4b91e9b7b786ebaab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 18
-  lifetime: 5
-  targetLayers:
+  defaultSpeed: 18
+  defaultRange: 12
+  defaultTargetLayers:
     serializedVersion: 2
-    m_Bits: 0
-  obstacleLayers:
+    m_Bits: 4608
+  defaultObstacleLayers:
     serializedVersion: 2
-    m_Bits: 0
-  radius: 0.06
+    m_Bits: 8
+  defaultDamage: 1
+  defaultRadius: 0.06
   skin: 0.01
-  damage: 5
-  maxPierces: 0
-  pierceThroughObstacles: 0
-  hitVFX: {fileID: 0}
+  defaultMaxPierces: 0
+  defaultPierceThroughObstacles: 0
+  defaultHitVFX: {fileID: 0}
