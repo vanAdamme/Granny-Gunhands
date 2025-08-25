@@ -14,10 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorsNameContains: floor
   wallsNameContains: walls
+  outlineNameContains: outline
   detectOnly: 0
-  clearSecondWallIfPresent: 1
+  maxWallThickness: 1
   floorDoorTile: {fileID: 0}
-  spawnDoorPrefabs: 0
-  verticalDoorPrefab: {fileID: 9007877434916582197, guid: 11a78245eda6dd84e96848de5e431fe6, type: 3}
-  horizontalDoorPrefab: {fileID: 5366970119043678437, guid: 1588015ec99336141a44d7a78a49dbca, type: 3}
-  doorParentOverride: {fileID: 0}
