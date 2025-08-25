@@ -22,6 +22,6 @@ public class LootOnDeath : MonoBehaviour
     private void HandleDeath()
     {
         if (!lootTable) return;
-        lootTable.TrySpawnDrop(transform.position); // rolls + spawns pickups (weapons, powerups, prefabs)
+        lootTable.TrySpawnDrop(transform.position);
     }
 }

@@ -16,7 +16,8 @@ GameObject:
   - component: {fileID: 210815947144066632}
   - component: {fileID: 3812511643566257658}
   - component: {fileID: -7421162129874876073}
-  m_Layer: 0
+  - component: {fileID: 4229456436476034187}
+  m_Layer: 9
   m_Name: Barrel
   m_TagString: Target
   m_Icon: {fileID: 0}
@@ -32,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 3856915283025910027}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.6724, y: -1.4143617, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -123,7 +124,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -142,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9019f6c5b75d7546a6706ef5089a793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 1
+  m_MaxHealth: 10
   m_CurrentHealth: 0
   damageNumberPrefab: {fileID: 2556215940150367559, guid: 3665fc2192b950245823ff3a982f8f0a, type: 3}
   damageFlash: {fileID: -7421162129874876073}
@@ -171,10 +172,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93938f5a05e62304aae7e5f3891b951c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  definition: {fileID: 11400000, guid: d796f82db0bc15147b761d4003dbdb32, type: 2}
+  definition: {fileID: 11400000, guid: dfe7b433e8708ca44b39871413fab128, type: 2}
   health: {fileID: 4566864652163299246}
   spriteRenderer: {fileID: 264694419636597715}
   setHealthFromDefinition: 1
+  thresholdMode: 0
+  logDebug: 1
+  previewHealthRatio: 1
 --- !u!114 &3812511643566257658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,3 +213,28 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4229456436476034187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856915283025910027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9915cbe721281cc4bb8a2f2b99d31293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 4566864652163299246}
+  debrisPrefabs:
+  - {fileID: 4307658229903141588, guid: c0ca7322f648e254eb29ffcf94178028, type: 3}
+  minPieces: 3
+  maxPieces: 6
+  speedRange: {x: 2, y: 6}
+  torqueRange: {x: -90, y: 90}
+  upwardBias: 0.25
+  pieceLifetime: 3
+  inheritSpriteTint: 1
+  matchSortingLayer: 1
+  vfxBurst: {fileID: 0}
+  vfxLifetime: 1.2

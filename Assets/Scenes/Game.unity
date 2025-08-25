@@ -2615,8 +2615,7 @@ MonoBehaviour:
     DisableRoomTemplatesRenderers: 1
     DisableRoomTemplatesColliders: 1
     AnalyzeLevelStructure: 1
-  CustomPostProcessTasks:
-  - {fileID: 11400000, guid: f44ea3d89d6e87f45b4992287c44e5ad, type: 2}
+  CustomPostProcessTasks: []
   OtherConfig:
     UseRandomSeed: 1
     RandomGeneratorSeed: 0
@@ -4771,7 +4770,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 634602838}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6919,7 +6918,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 678514852}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.45444915
+  m_Size: 0.53177965
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

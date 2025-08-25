@@ -8,12 +8,12 @@ public class BreakableDefinition : ScriptableObject
     [System.Serializable]
     public struct Stage
     {
-        [Tooltip("When currentHealth/maxHealth <= threshold, this stage becomes active.")]
+        [Tooltip("When current/max <= threshold, this sprite becomes active.")]
         [Range(0f,1f)] public float threshold;
         public Sprite sprite;
     }
 
-    [Header("Damage Stages (sorted high→low threshold recommended)")]
+    [Header("Damage Stages (sort high→low recommended)")]
     public Stage[] stages;
 
     [Header("Feedback (optional)")]

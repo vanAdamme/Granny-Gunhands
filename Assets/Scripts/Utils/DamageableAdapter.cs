@@ -10,7 +10,7 @@ public class DamageableAdapter : MonoBehaviour, IDamageable
     public void TakeDamage(float amount)
     {
         if (!health) health = GetComponent<Health>();
-        if (!health) return; // Safe no-op if non-destructible config
+        if (!health) return; // if you forgot to add Health, just no‑op
         health.TakeDamage(amount);
     }
 }
