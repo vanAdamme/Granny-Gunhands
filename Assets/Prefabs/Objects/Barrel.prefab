@@ -11,9 +11,13 @@ GameObject:
   - component: {fileID: 8982307761073899762}
   - component: {fileID: 264694419636597715}
   - component: {fileID: 7294152726060774650}
-  - component: {fileID: -7936029299827509390}
+  - component: {fileID: 4566864652163299246}
+  - component: {fileID: 2852797747355777742}
+  - component: {fileID: 210815947144066632}
+  - component: {fileID: 3812511643566257658}
+  - component: {fileID: -7421162129874876073}
   m_Layer: 0
-  m_Name: ExplodingBarrel
+  m_Name: Barrel
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +80,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3316830328168fb429181707dbc4d976, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -126,7 +130,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0032787323, y: -0.18687004}
   m_Size: {x: 1.2590752, y: 1.6262599}
   m_Direction: 0
---- !u!114 &-7936029299827509390
+--- !u!114 &4566864652163299246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,15 +139,73 @@ MonoBehaviour:
   m_GameObject: {fileID: 3856915283025910027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a8e45b7afbf6824cb54f50b830f6133, type: 3}
+  m_Script: {fileID: 11500000, guid: b9019f6c5b75d7546a6706ef5089a793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 15
+  m_MaxHealth: 1
   m_CurrentHealth: 0
-  m_ResetOnStart: 1
-  m_DamageMultiplier: 1
-  sprites:
-  - {fileID: 21300000, guid: 3316830328168fb429181707dbc4d976, type: 3}
-  - {fileID: 21300000, guid: 68e21def11d3ff24e884bada0d986f1f, type: 3}
-  - {fileID: 21300000, guid: 31c1f30dec1ec6d4984391f94dacb4ce, type: 3}
-  - {fileID: 21300000, guid: fe38d763f0a8fb44c8574dd2f0baf660, type: 3}
+  damageNumberPrefab: {fileID: 2556215940150367559, guid: 3665fc2192b950245823ff3a982f8f0a, type: 3}
+  damageFlash: {fileID: -7421162129874876073}
+--- !u!114 &2852797747355777742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856915283025910027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b355b53adf3e147b6960a177763a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 4566864652163299246}
+--- !u!114 &210815947144066632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856915283025910027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93938f5a05e62304aae7e5f3891b951c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  definition: {fileID: 11400000, guid: d796f82db0bc15147b761d4003dbdb32, type: 2}
+  health: {fileID: 4566864652163299246}
+  spriteRenderer: {fileID: 264694419636597715}
+  setHealthFromDefinition: 1
+--- !u!114 &3812511643566257658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856915283025910027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ed7cae90d59b0478668f6ee8f4d142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 4566864652163299246}
+  lootTable: {fileID: 11400000, guid: c70fab3c90e33734ea452f6c2084d796, type: 2}
+--- !u!114 &-7421162129874876073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856915283025910027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 897803d5f4cffab4d8747f8ab26319bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColour: {r: 1, g: 1, b: 1, a: 1}
+  flashTime: 0.25
+  flashSpeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
