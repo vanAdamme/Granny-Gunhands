@@ -4769,8 +4769,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 634602839}
   m_HandleRect: {fileID: 634602838}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.9999999
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6917,8 +6917,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 678514853}
   m_HandleRect: {fileID: 678514852}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.4523305
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -26422,6 +26422,7 @@ GameObject:
   - component: {fileID: 1304645261}
   - component: {fileID: 1304645262}
   - component: {fileID: 1304645264}
+  - component: {fileID: 1304645263}
   m_Layer: 5
   m_Name: ItemsGrid
   m_TagString: Untagged
@@ -26447,7 +26448,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1304645261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26462,6 +26463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridRoot: {fileID: 1304645260}
   itemButtonPrefab: {fileID: 5595256019564043532, guid: f61d7caa55b92fc4bbcf0b83995cf962, type: 3}
+  sectionHeaderPrefab: {fileID: 0}
   verboseLogs: 0
 --- !u!114 &1304645262
 MonoBehaviour:
@@ -26485,8 +26487,20 @@ MonoBehaviour:
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 0, y: 0}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Constraint: 1
+  m_ConstraintCount: 4
+--- !u!114 &1304645263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304645259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4776d4f82e1d1b4baa607235874e9b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1304645264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26503,7 +26517,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 240
+  m_PreferredHeight: 0
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -26517,6 +26531,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1369121797}
   - component: {fileID: 1369121798}
+  - component: {fileID: 1369121800}
   - component: {fileID: 1369121799}
   m_Layer: 5
   m_Name: WeaponsGrid
@@ -26577,6 +26592,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1369121796}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4776d4f82e1d1b4baa607235874e9b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1369121800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369121796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -26584,7 +26611,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 220
+  m_PreferredHeight: 0
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -34971,7 +34998,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 12
+  m_Spacing: 8
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1

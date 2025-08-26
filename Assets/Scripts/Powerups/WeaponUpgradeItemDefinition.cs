@@ -7,22 +7,8 @@ public class WeaponUpgradeItemDefinition : InventoryItemDefinition
     public WeaponCategory category = WeaponCategory.Pistol;
     [Min(1)] public int levels = 1;
     [Tooltip("Only consider currently equipped weapons of this category.")]
-    public bool equippedOnly = true; // (kept for future expansion)
+    public bool equippedOnly = true;
 
-    public override bool TryUse(GameObject user)
-    {
-        if (!user) return false;
-        var ctx = user.GetComponentInChildren<MonoBehaviour>() as IPlayerContext;
-        if (ctx == null) return false;
-
-        var inv = user.GetComponentInChildren<WeaponInventory>();
-        if (!inv) return false;
-
-        if (inv.UpgradeLowestEquippedOf(category, levels, out var upgraded, out var applied) && applied > 0)
-        {
-            WeaponUpgradePickup.RaiseUpgraded(upgraded, applied);
-            return true;
-        }
-        return false;
-    }
+    public override bool CanUse(GameObject user) => false;
+    public override bool TryUse(GameObject user) => false;
 }

@@ -1,30 +1,59 @@
+using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class WeaponItemButton : MonoBehaviour
+public class WeaponItemButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Wiring")]
     [SerializeField] private Button button;
     [SerializeField] private Image iconImage;
-    [SerializeField] private Image background;     // tint by rarity
-    [SerializeField] private TMP_Text label;       // optional
-    [SerializeField] private GameObject leftBadge; // small "L" indicator
-    [SerializeField] private GameObject rightBadge;// small "R" indicator
+    [SerializeField] private Image background;        // tint by rarity
+    [SerializeField] private TMP_Text label;          // optional
+    [SerializeField] private GameObject leftBadge;    // small "L"
+    [SerializeField] private GameObject rightBadge;   // small "R"
+
+    [Header("Drag & Drop Feedback")]
+    [SerializeField] private Image dropHighlight;     // thin overlay image on this row
+    [SerializeField] private Color validDropTint   = new Color(0f, 1f, 0f, 0.25f);
+    [SerializeField] private Color invalidDropTint = new Color(1f, 0f, 0f, 0.25f);
+    [SerializeField, Min(0f)] private float flashDuration = 0.18f;
+
+    [Header("Rules")]
+    [SerializeField] private bool strictCategoryMatch = true; // enforce upgrade.category == weapon.category
 
     private int myIndex;
     private System.Action<int> onClick;
+    private Weapon myWeapon;
+    private RaritySettings rarityRef;
 
     public void Bind(Weapon w, int index, RaritySettings rar, System.Action<int> onClickHandler)
     {
         myIndex = index;
         onClick = onClickHandler;
+        myWeapon = w;
+        rarityRef = rar;
 
-        iconImage.preserveAspect = true;
-        iconImage.sprite = w && w.Definition ? w.Definition.Icon : null;
+        if (iconImage)
+        {
+            iconImage.preserveAspect = true;
 
-        if (iconImage) iconImage.sprite = w ? w.icon : null;
-        if (label)     label.text = w && w.Definition ? w.Definition.DisplayName : (w ? w.name : "—");
+            // Prefer the icon on the definition, fall back to weapon.icon
+            Sprite s = null;
+            if (w)
+            {
+                if (w.Definition && w.Definition.Icon) s = w.Definition.Icon;
+                else if (w.icon)                       s = w.icon;
+            }
+
+            iconImage.sprite   = s;
+            iconImage.enabled  = s != null;
+            iconImage.color    = Color.white; // ensure alpha is 1
+        }
+
+        if (label)
+            label.text = w && w.Definition ? w.Definition.DisplayName : (w ? w.name : "—");
 
         if (background && rar && w && w.Definition)
             background.color = rar.Get(w.Definition.Rarity).colour;
@@ -34,28 +63,141 @@ public class WeaponItemButton : MonoBehaviour
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => onClick?.Invoke(myIndex));
         }
+
+        if (dropHighlight) dropHighlight.enabled = false;
     }
 
-    public void RefreshEquipped(Weapon left, Weapon right)
-    {
-        bool isLeft  = left  && left  == GetWeapon();
-        bool isRight = right && right == GetWeapon();
-
-        if (leftBadge)  leftBadge.SetActive(isLeft);
-        if (rightBadge) rightBadge.SetActive(isRight);
-    }
-
-    private Weapon GetWeapon()
-    {
-        // If you want to be ultra-robust, you can store a direct Weapon ref on Bind.
-        // For now, we fetch from the icon's component hierarchy (iconImage lives under a button that won't be re-used across different weapons during the panel's life).
-        return null; // not used; we’ll wire properly from InventoryUI when refreshing.
-    }
-
-    // Helper so InventoryUI can drive badges without hacks
     public void SetEquipped(bool isLeft, bool isRight)
     {
         if (leftBadge)  leftBadge.SetActive(isLeft);
         if (rightBadge) rightBadge.SetActive(isRight);
+    }
+
+    // ---------- Drag & Drop ----------
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!dropHighlight) return;
+
+        var entry = GetDraggedEntry(eventData);
+        if (!entry) return;
+
+        var upgrade = entry.Definition as WeaponUpgradeItemDefinition;
+        if (!upgrade) return;
+
+        bool valid = IsValidUpgradeForThisWeapon(upgrade, out var reason);
+        dropHighlight.color = valid ? validDropTint : invalidDropTint;
+        dropHighlight.enabled = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (dropHighlight) dropHighlight.enabled = false;
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (dropHighlight) dropHighlight.enabled = false;
+
+        var entry   = GetDraggedEntry(eventData);
+        var upgrade = entry ? entry.Definition as WeaponUpgradeItemDefinition : null;
+
+        if (!entry || !upgrade || entry.SourceInventory == null || myWeapon == null)
+            return;
+
+        if (!IsValidUpgradeForThisWeapon(upgrade, out var reason))
+        {
+            // Friendly nudge
+            UIController.Instance?.ShowToast(reason);
+            Flash(invalidDropTint);
+            return;
+        }
+
+        // Apply upgrade to this specific weapon.
+        // Adjust this to your real per-weapon upgrade API.
+        var gpw = myWeapon as GenericProjectileWeapon;
+        if (gpw != null && gpw.TryUpgrade())
+        {
+            entry.SourceInventory.Remove(upgrade, 1);
+            UIController.Instance?.ShowToast($"Upgraded {myWeapon.Definition.DisplayName}", myWeapon.icon);
+            Flash(validDropTint);
+            return;
+        }
+
+        // If you have another upgrade path (e.g., myWeapon.ApplyUpgrade(int levels)), call it here.
+        UIController.Instance?.ShowToast("That weapon doesn't support upgrades (yet).");
+        Flash(invalidDropTint);
+    }
+
+    // ---------- Helpers ----------
+    private static ItemEntryButton GetDraggedEntry(PointerEventData e)
+    {
+        if (e == null || !e.pointerDrag) return null;
+        // pointerDrag may be a child under the row; climb to parent
+        return e.pointerDrag.GetComponentInParent<ItemEntryButton>();
+    }
+
+    private bool IsValidUpgradeForThisWeapon(WeaponUpgradeItemDefinition upgrade, out string reason)
+    {
+        reason = string.Empty;
+
+        if (!strictCategoryMatch) return true;
+
+        if (!TryGetWeaponCategory(myWeapon, out var weaponCat))
+        {
+            reason = "Weapon has no category set.";
+            return false;
+        }
+
+        if (weaponCat != upgrade.category)
+        {
+            reason = $"Requires {upgrade.category} weapon.";
+            return false;
+        }
+
+        return true;
+    }
+
+    private static bool TryGetWeaponCategory(Weapon weapon, out WeaponCategory cat)
+    {
+        cat = default;
+        if (!weapon || !weapon.Definition) return false;
+
+        var def = weapon.Definition;
+        var t = def.GetType();
+
+        // Look for a public property "Category"
+        var p = t.GetProperty("Category", BindingFlags.Instance | BindingFlags.Public);
+        if (p != null && p.PropertyType == typeof(WeaponCategory))
+        {
+            cat = (WeaponCategory)p.GetValue(def, null);
+            return true;
+        }
+
+        // Or a public field "category"
+        var f = t.GetField("category", BindingFlags.Instance | BindingFlags.Public);
+        if (f != null && f.FieldType == typeof(WeaponCategory))
+        {
+            cat = (WeaponCategory)f.GetValue(def);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void Flash(Color tint)
+    {
+        if (!dropHighlight) return;
+        StopAllCoroutines();
+        StartCoroutine(FlashRoutine(tint));
+    }
+
+    private System.Collections.IEnumerator FlashRoutine(Color tint)
+    {
+        dropHighlight.enabled = true;
+        var prev = dropHighlight.color;
+        dropHighlight.color = tint;
+        yield return new WaitForSecondsRealtime(Mathf.Max(0.06f, flashDuration));
+        dropHighlight.color = prev;
+        dropHighlight.enabled = false;
     }
 }
