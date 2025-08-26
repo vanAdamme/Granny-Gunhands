@@ -21,10 +21,10 @@ public class WeaponUpgradePickup : MonoBehaviour
         if (!upgradeItem) return;
 
         var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
-        var bag  = root.GetComponentInChildren<ItemInventory>();
-        if (!bag) return;
+        var ctx  = root.GetComponentInChildren<MonoBehaviour>() as IPlayerContext;
+        if (ctx?.ItemInventory == null) return;
 
-        bag.Add(upgradeItem, 1);
+        ctx.ItemInventory.Add(upgradeItem, 1);
         toast?.Show("Weapon upgrade!");
         Destroy(gameObject);
     }

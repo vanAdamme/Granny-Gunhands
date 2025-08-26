@@ -16,7 +16,6 @@ public class BreakableView : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;  // optional; auto-find
     [SerializeField] private bool setHealthFromDefinition = true;
     [SerializeField] private ThresholdMode thresholdMode = ThresholdMode.AtOrBelow;
-    [SerializeField] private bool logDebug = false;
 
 #if UNITY_EDITOR
     [Header("Editor Preview")]
@@ -116,11 +115,7 @@ public class BreakableView : MonoBehaviour
         // If no stage matched, keep current if set; otherwise fallback to initial
         if (!chosen) chosen = spriteRenderer.sprite ? spriteRenderer.sprite : initialSprite;
 
-        if (spriteRenderer.sprite != chosen)
-        {
-            spriteRenderer.sprite = chosen;
-            if (logDebug) Debug.Log($"[BreakableView] ratio={ratio:0.00} → sprite: {(chosen ? chosen.name : "NULL")}", this);
-        }
+        if (spriteRenderer.sprite != chosen) spriteRenderer.sprite = chosen;
     }
 
     private Sprite PickStageSprite(float ratio)

@@ -12,15 +12,16 @@ public class WeaponUpgradeItemDefinition : InventoryItemDefinition
     public override bool TryUse(GameObject user)
     {
         if (!user) return false;
+        var ctx = user.GetComponentInChildren<MonoBehaviour>() as IPlayerContext;
+        if (ctx == null) return false;
 
         var inv = user.GetComponentInChildren<WeaponInventory>();
         if (!inv) return false;
 
-        // Use the overload that reports what actually upgraded
         if (inv.UpgradeLowestEquippedOf(category, levels, out var upgraded, out var applied) && applied > 0)
         {
-            WeaponUpgradePickup.RaiseUpgraded(upgraded, applied); // fires your toast listener
-            return true; // consume one item
+            WeaponUpgradePickup.RaiseUpgraded(upgraded, applied);
+            return true;
         }
         return false;
     }

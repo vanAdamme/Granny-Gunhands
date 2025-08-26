@@ -24,6 +24,10 @@ public class PlayerController : Target, IPlayerContext
     [Header("Weapons")]
     [SerializeField] private WeaponInventory weaponInventory;
 
+    [Header("Inventory")]
+    [Tooltip("This must be the SAME ItemInventory instance your Inventory UI uses.")]
+    [SerializeField] private ItemInventory itemInventory;
+
     [Header("Damage / Invulnerability")]
     [Tooltip("0 = permanent")]
     [SerializeField] private float invulnerabilityDuration = 0.5f;
@@ -61,6 +65,7 @@ public class PlayerController : Target, IPlayerContext
         w = weaponInventory ? weaponInventory.GetWeapon(hand) : null;
         return w != null;
     }
+
     public bool TryGetActiveWeapon<T>(Hand hand, out T w) where T : Weapon
     {
         w = weaponInventory ? weaponInventory.GetWeapon(hand) as T : null;
@@ -68,6 +73,9 @@ public class PlayerController : Target, IPlayerContext
     }
 
     public Transform Transform => transform;
+
+    // NEW: expose the inventory to everything (pickups, UI, item usage)
+    public ItemInventory ItemInventory => itemInventory;
     // =========================================
 
     protected override void Awake()
@@ -85,6 +93,14 @@ public class PlayerController : Target, IPlayerContext
             input = FindFirstObjectByType<InputService>(); // Unity 6+ safe API
             if (input == null) Debug.LogError("InputService not found in scene.");
         }
+
+        // Sanity: warn if inventory isn't wired
+        if (!itemInventory)
+        {
+            itemInventory = GetComponentInChildren<ItemInventory>();
+            if (!itemInventory)
+                Debug.LogError("[PlayerController] ItemInventory is not assigned. Drag the SAME instance the UI uses.");
+        }
     }
 
     private void Start()
@@ -93,7 +109,6 @@ public class PlayerController : Target, IPlayerContext
         for (int i = playerLevels.Count; i < maxLevel; i++)
             playerLevels.Add(Mathf.CeilToInt(playerLevels[playerLevels.Count - 1] * 1.1f + 15));
 
-        // Health is initialised in Health.Awake() → CurrentHealth = MaxHealth
         UIController.Instance.UpdateHealthSlider();
         UIController.Instance.UpdateExperienceSlider();
 
@@ -195,33 +210,11 @@ public class PlayerController : Target, IPlayerContext
         input.CycleRight -= OnCycleRight;
     }
 
-    private void OnCycleLeft()  => weaponInventory?.Cycle(Hand.Left, +1);
+    private void OnCycleLeft()  => weaponInventory?.Cycle(Hand.Left,  +1);
     private void OnCycleRight() => weaponInventory?.Cycle(Hand.Right, +1);
-    private void OnSpecial()    { /* trigger your special ability if you’ve wired one */ }
-    
-    private void OnMovePerformed(InputAction.CallbackContext ctx)
-    {
-        var v = ctx.ReadValue<Vector2>();
-        // Normalise to prevent faster diagonal movement
-        playerMoveDirection = v.sqrMagnitude > 1f ? v.normalized : v;
-    }
+    private void OnSpecial()    { /* trigger your special when wired */ }
 
-    private void OnMoveCanceled(InputAction.CallbackContext _)
-    {
-        playerMoveDirection = Vector2.zero;
-    }
-
-    private void OnCycleLeft(InputAction.CallbackContext _)
-    {
-        if (!weaponInventory) return;
-        weaponInventory.Cycle(Hand.Left, +1);
-    }
-
-    private void OnCycleRight(InputAction.CallbackContext _)
-    {
-        if (!weaponInventory) return;
-        weaponInventory.Cycle(Hand.Right, +1);
-    }
+    // NOTE: removed the InputAction.CallbackContext overloads to avoid delegate mismatches
     // ---------- end input wiring ----------
 
     public void AddExperience(int amount)
