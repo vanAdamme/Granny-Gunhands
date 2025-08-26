@@ -21,12 +21,10 @@ public class PlayerController : Target, IPlayerContext
     public int maxLevel;
     public List<int> playerLevels;
 
-    [Header("Weapons")]
-    [SerializeField] private WeaponInventory weaponInventory;
-
-    [Header("Inventory")]
+    [Header("Inventories")]
     [Tooltip("This must be the SAME ItemInventory instance your Inventory UI uses.")]
     [SerializeField] private ItemInventory itemInventory;
+    [SerializeField] private WeaponInventory weaponInventory;
 
     [Header("Damage / Invulnerability")]
     [Tooltip("0 = permanent")]

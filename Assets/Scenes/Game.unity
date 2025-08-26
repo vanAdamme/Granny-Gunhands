@@ -4770,7 +4770,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 634602838}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6918,7 +6918,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 678514852}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.53177965
+  m_Size: 0.4523305
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -26460,8 +26460,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006bb187c7ef2ea41875982a8053f506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInventory: {fileID: 0}
-  weaponInventory: {fileID: 0}
   gridRoot: {fileID: 1304645260}
   itemButtonPrefab: {fileID: 5595256019564043532, guid: f61d7caa55b92fc4bbcf0b83995cf962, type: 3}
   verboseLogs: 0
