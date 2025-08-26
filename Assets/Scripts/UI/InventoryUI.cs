@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,17 +38,10 @@ public class InventoryUI : MonoBehaviour
     void Awake()
     {
         if (!inventory) inventory = FindFirstObjectByType<WeaponInventory>();
-        input = inputServiceSource as IInputService;
-        if (input == null) input = FindFirstObjectByType<InputService>();
+        input = inputServiceSource as IInputService ?? FindFirstObjectByType<InputService>();
 
         assignLeftButton?.onClick.AddListener(() => { assignTarget = Hand.Left;  RefreshAssignButtons(); });
         assignRightButton?.onClick.AddListener(() => { assignTarget = Hand.Right; RefreshAssignButtons(); });
-
-        if (inventory != null)
-        {
-            inventory.OnEquippedChanged += (_, __) => RefreshEquippedBadges();
-            inventory.InventoryChanged   += Rebuild;
-        }
     }
 
     void Start()
@@ -58,14 +52,19 @@ public class InventoryUI : MonoBehaviour
 
     void OnEnable()
     {
-        Rebuild();
+        StartCoroutine(BindWhenAvailable());
         RefreshAssignButtons();
-        if (input != null) input.ToggleInventory += OnToggle; // No Show(false) here
+        if (input != null) input.ToggleInventory += OnToggle;
     }
 
     void OnDisable()
     {
         if (input != null) input.ToggleInventory -= OnToggle;
+        if (inventory != null)
+        {
+            inventory.OnEquippedChanged -= OnEquippedChanged;
+            inventory.InventoryChanged  -= Rebuild;
+        }
     }
 
     private void OnToggleInventory() => Toggle();
@@ -172,5 +171,40 @@ public class InventoryUI : MonoBehaviour
         if (!assignLeftButton || !assignRightButton) return;
         assignLeftButton.interactable  = assignTarget != Hand.Left;
         assignRightButton.interactable = assignTarget != Hand.Right;
+    }
+
+    private IEnumerator BindWhenAvailable()
+    {
+        while (inventory == null)
+        {
+            TryBindInventory();
+            if (inventory == null) yield return null; // wait a frame
+        }
+
+        // subscribe once
+        inventory.OnEquippedChanged += OnEquippedChanged;
+        inventory.InventoryChanged  += Rebuild;
+
+        Rebuild();
+        RefreshEquippedBadges();
+    }
+
+    private void TryBindInventory()
+    {
+        if (inventory) return;
+
+        // Prefer the player's WeaponInventory (same instance the game uses)
+        var player = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
+        if (player)
+            inventory = player.GetComponentInChildren<WeaponInventory>(true);
+
+        // Last resort: scene-wide search including inactive
+        if (!inventory)
+            inventory = FindFirstObjectByType<WeaponInventory>(FindObjectsInactive.Include);
+    }
+
+    private void OnEquippedChanged(Hand hand, Weapon weapon)
+    {
+        RefreshEquippedBadges();
     }
 }

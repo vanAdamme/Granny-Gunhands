@@ -45,24 +45,29 @@ public class InventoryItemsUI : MonoBehaviour, IInventoryPanel
 
     private void TryResolveContextAndInventories()
     {
+        // 1) Find a player context (prefer PlayerController)
         if (ctx == null)
         {
-            var player = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
-            ctx = player as IPlayerContext;
+            ctx = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include) as IPlayerContext;
             if (ctx == null)
             {
-                var any = FindFirstObjectByType<MonoBehaviour>(FindObjectsInactive.Include);
-                if (any is IPlayerContext asCtx) ctx = asCtx;
+                // Fallback: scan for any MonoBehaviour that implements IPlayerContext
+                var all = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                for (int i = 0; i < all.Length && ctx == null; i++)
+                    if (all[i] is IPlayerContext asCtx) ctx = asCtx;
             }
         }
 
+        // 2) Bind the SAME ItemInventory the player exposes
         if (ctx != null && itemInventory == null)
         {
-            itemInventory = (ctx as Component)?.GetComponentInChildren<ItemInventory>();
+            itemInventory = ctx.ItemInventory 
+                            ?? (ctx as Component)?.GetComponentInChildren<ItemInventory>(); // last resort
             if (verboseLogs && itemInventory != null)
                 Debug.Log($"[InventoryItemsUI] Bound ItemInventory (instance {itemInventory.GetInstanceID()})");
         }
 
+        // 3) Cache weapon inventory for CanUse/TryUse userGO
         if (weaponInventory == null && ctx is Component c)
             weaponInventory = c.GetComponentInChildren<WeaponInventory>();
 
@@ -144,13 +149,16 @@ public class InventoryItemsUI : MonoBehaviour, IInventoryPanel
             spawned.Add(row);
         }
 
-        if (gridRoot is RectTransform rt)
-        {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
-            var parent = rt.parent as RectTransform;           // Content
-            if (parent) LayoutRebuilder.ForceRebuildLayoutImmediate(parent);
-            Canvas.ForceUpdateCanvases();
-        }
+    if (gridRoot is RectTransform rt)
+    {
+        var auto = rt.GetComponent<GridAutoHeight>();
+        if (auto) auto.Recalc();
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
+        var parent = rt.parent as RectTransform;   // Content
+        if (parent) LayoutRebuilder.ForceRebuildLayoutImmediate(parent);
+        Canvas.ForceUpdateCanvases();
+    }
     }
 
     private void UseItemNoop(ItemDefinition _) { /* intentional: upgrades are drag-only */ }

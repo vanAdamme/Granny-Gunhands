@@ -132,13 +132,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa1f8a6762725441a39023f71a87d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
-  icon: {fileID: 0}
+  spriteRenderer: {fileID: 6182135459627479886}
+  icon: {fileID: -1198099712212326842, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
   muzzle: {fileID: 94833920180434995}
   fireMode: 1
   definitionAsset: {fileID: 11400000, guid: 95adee8733bbf8947a8b36840ffffc75, type: 2}
   startLevel: 1
-  aimAtMouse: 1
   collectionCheck: 1
   defaultCapacity: 64
   maxSize: 256

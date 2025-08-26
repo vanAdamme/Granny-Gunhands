@@ -1,11 +1,21 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class GenericProjectileWeapon : Weapon
+public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
 {
     [Header("Data")]
     [SerializeField] private WeaponDefinition definitionAsset;
     [SerializeField, Min(1)] private int startLevel = 1;
+
+    [Header("Upgrades")]
+    [SerializeField, Min(1)] private int maxLevel = 5;
+    [SerializeField] private float damagePerLevel = 2f;
+    [SerializeField] private float projectileSpeedPerLevel = 0.5f;
+    [SerializeField] private float rangePerLevel = 0f;
+    [SerializeField] private int   piercesPerLevel = 0;
+
+    // Track current level locally for upgrades
+    [SerializeField, Min(1)] private int level = 1;
 
     private GameObject ownerRoot;
 
@@ -19,7 +29,12 @@ public class GenericProjectileWeapon : Weapon
         base.Awake();
         ownerRoot = transform.root ? transform.root.gameObject : gameObject;
 
+        // Initialise from definition & startLevel as you already do
         if (definitionAsset) SetDefinition(definitionAsset, startLevel);
+
+        // Sync upgrade tracking with startLevel on first run
+        if (level < startLevel) level = startLevel;
+
         BuildPoolIfNeeded();
     }
 
@@ -71,5 +86,43 @@ public class GenericProjectileWeapon : Weapon
             p => { if (p) Destroy(p.gameObject); },
             collectionCheck, defaultCapacity, maxSize
         );
+    }
+
+    // ===== IUpgradableWeapon =====
+
+    public bool TryPreviewUpgrade(int levels, out UpgradeDelta delta, out string reason)
+    {
+        delta = default; reason = "";
+
+        int newLevel = Mathf.Min(maxLevel, level + Mathf.Max(0, levels));
+        int applied = newLevel - level;
+        if (applied <= 0) { reason = "Already max level."; return false; }
+
+        // Compute per-level gains into a friendly delta
+        delta.damage          = applied * damagePerLevel;
+        delta.projectileSpeed = applied * projectileSpeedPerLevel;
+        delta.range           = applied * rangePerLevel;
+        delta.pierces         = applied * piercesPerLevel;
+
+        return !delta.IsEmpty;
+    }
+
+    public bool TryApplyUpgrade(int levels, out int appliedLevels, out string reason)
+    {
+        appliedLevels = 0;
+        if (!TryPreviewUpgrade(levels, out var d, out reason)) return false;
+
+        int newLevel = Mathf.Min(maxLevel, level + Mathf.Max(0, levels));
+        appliedLevels = newLevel - level;
+        level = newLevel;
+
+        // Commit the previewed changes into live runtime data used by Shoot()
+        // 'data' is the runtime config you already read in Shoot()
+        data.damage          += d.damage;
+        data.projectileSpeed += d.projectileSpeed;
+        data.range           += d.range;
+        data.maxPierces      += d.pierces;
+
+        return appliedLevels > 0;
     }
 }

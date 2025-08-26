@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class WeaponItemButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class WeaponItemButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
     [Header("Wiring")]
     [SerializeField] private Button button;
@@ -74,7 +74,7 @@ public class WeaponItemButton : MonoBehaviour, IDropHandler, IPointerEnterHandle
     }
 
     // ---------- Drag & Drop ----------
-    public void OnPointerEnter(PointerEventData eventData)
+   public void OnPointerEnter(PointerEventData eventData)
     {
         if (!dropHighlight) return;
 
@@ -87,45 +87,66 @@ public class WeaponItemButton : MonoBehaviour, IDropHandler, IPointerEnterHandle
         bool valid = IsValidUpgradeForThisWeapon(upgrade, out var reason);
         dropHighlight.color = valid ? validDropTint : invalidDropTint;
         dropHighlight.enabled = true;
+
+        // Show preview tooltip
+        if (valid && UpgradeTooltipController.Instance)
+        {
+            if (upgrade.TryPreviewFor(myWeapon, out var delta, out var note) && !delta.IsEmpty)
+            {
+                var body = delta.ToMultiline();
+                if (!string.IsNullOrEmpty(note)) body += $"\n{note}";
+                UpgradeTooltipController.Instance.Show(eventData.position, $"Apply to {myWeapon.Definition.DisplayName}", body);
+            }
+            else
+            {
+                UpgradeTooltipController.Instance.Show(eventData.position, $"Apply to {myWeapon.Definition.DisplayName}", "Will upgrade.");
+            }
+        }
+        else if (!valid && UpgradeTooltipController.Instance)
+        {
+            UpgradeTooltipController.Instance.Show(eventData.position, "Can't apply", reason);
+        }
+    }
+
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        UpgradeTooltipController.Instance?.Follow(eventData.position);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (dropHighlight) dropHighlight.enabled = false;
+        UpgradeTooltipController.Instance?.Hide();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
         if (dropHighlight) dropHighlight.enabled = false;
+        UpgradeTooltipController.Instance?.Hide();
 
-        var entry   = GetDraggedEntry(eventData);
+        var entry = GetDraggedEntry(eventData);
         var upgrade = entry ? entry.Definition as WeaponUpgradeItemDefinition : null;
-
         if (!entry || !upgrade || entry.SourceInventory == null || myWeapon == null)
             return;
 
         if (!IsValidUpgradeForThisWeapon(upgrade, out var reason))
         {
-            // Friendly nudge
             UIController.Instance?.ShowToast(reason);
             Flash(invalidDropTint);
             return;
         }
 
-        // Apply upgrade to this specific weapon.
-        // Adjust this to your real per-weapon upgrade API.
-        var gpw = myWeapon as GenericProjectileWeapon;
-        if (gpw != null && gpw.TryUpgrade())
+        if (upgrade.TryApplyTo(myWeapon, out var applied, out var applyReason) && applied > 0)
         {
             entry.SourceInventory.Remove(upgrade, 1);
             UIController.Instance?.ShowToast($"Upgraded {myWeapon.Definition.DisplayName}", myWeapon.icon);
             Flash(validDropTint);
-            return;
         }
-
-        // If you have another upgrade path (e.g., myWeapon.ApplyUpgrade(int levels)), call it here.
-        UIController.Instance?.ShowToast("That weapon doesn't support upgrades (yet).");
-        Flash(invalidDropTint);
+        else
+        {
+            UIController.Instance?.ShowToast(string.IsNullOrEmpty(applyReason) ? "No upgrade applied." : applyReason);
+            Flash(invalidDropTint);
+        }
     }
 
     // ---------- Helpers ----------

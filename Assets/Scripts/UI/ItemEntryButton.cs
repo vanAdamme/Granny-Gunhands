@@ -3,8 +3,10 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-[RequireComponent(typeof(CanvasGroup))] // <- guarantees it exists
-public class ItemEntryButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+// Guarantees we can toggle blocksRaycasts safely
+[RequireComponent(typeof(CanvasGroup))]
+public class ItemEntryButton : MonoBehaviour,
+    IBeginDragHandler, IDragHandler, IEndDragHandler, IInitializePotentialDragHandler
 {
     [Header("UI")]
     [SerializeField] private Image icon;
@@ -18,20 +20,19 @@ public class ItemEntryButton : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private System.Action<ItemDefinition> onUse;
 
     // Drag visuals
-    private Canvas rootCanvas;
-    private RectTransform dragGhost;
-    private Image dragGhostImage;
-    private CanvasGroup selfCanvasGroup;
+    private Canvas rootCanvas;              // top-most canvas
+    private RectTransform dragGhost;        // ghost rect
+    private Image dragGhostImage;           // ghost image
+    private CanvasGroup selfCanvasGroup;    // to disable raycast during drag
 
     public ItemDefinition Definition => def;
     public ItemInventory SourceInventory => sourceInventory;
 
     void Awake()
     {
-        // Cache the CanvasGroup the moment we exist
         selfCanvasGroup = GetComponent<CanvasGroup>();
-        // Find the nearest canvas (even if disabled)
-        rootCanvas = GetComponentInParent<Canvas>(includeInactive: true);
+        var localCanvas = GetComponentInParent<Canvas>(includeInactive: true);
+        rootCanvas = localCanvas ? localCanvas.rootCanvas : null;
     }
 
     // New signature passes source inventory + canUse
@@ -46,6 +47,8 @@ public class ItemEntryButton : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             icon.sprite = def ? def.Icon : null;
             icon.type = Image.Type.Simple;
             icon.preserveAspect = true;
+            icon.enabled = icon.sprite != null;
+            icon.color = Color.white; // ensure alpha is 1
         }
         if (nameText)  nameText.text  = def ? def.DisplayName : "(null)";
         if (countText) countText.text = def && def.Stackable ? $"×{stack.count}" : "";
@@ -57,28 +60,49 @@ public class ItemEntryButton : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             useButton.interactable = canUse;
         }
 
-        // Safety nets if this row was instantiated under a different canvas at runtime
         if (!selfCanvasGroup) selfCanvasGroup = GetComponent<CanvasGroup>();
-        if (!rootCanvas)      rootCanvas      = GetComponentInParent<Canvas>(includeInactive: true);
+        if (!rootCanvas)
+        {
+            var localCanvas = GetComponentInParent<Canvas>(includeInactive: true);
+            rootCanvas = localCanvas ? localCanvas.rootCanvas : null;
+        }
+    }
+
+    // This helps beat ScrollRect’s drag threshold stealing
+    public void OnInitializePotentialDrag(PointerEventData eventData)
+    {
+        eventData.useDragThreshold = false;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (!def || sourceInventory == null) return;
 
-        // Double-safety: if somehow missing, add one now
         if (!selfCanvasGroup) selfCanvasGroup = gameObject.AddComponent<CanvasGroup>();
         selfCanvasGroup.blocksRaycasts = false; // allow drops to receive raycasts
 
-        if (!rootCanvas) rootCanvas = GetComponentInParent<Canvas>(includeInactive: true);
-        if (!rootCanvas) return; // no canvas? nothing to draw the ghost into
+        if (!rootCanvas)
+        {
+            var localCanvas = GetComponentInParent<Canvas>(includeInactive: true);
+            rootCanvas = localCanvas ? localCanvas.rootCanvas : null;
+        }
+        if (!rootCanvas) return; // no canvas, no ghost
 
-        // Create a ghost sprite that follows the cursor
-        dragGhost = new GameObject("DragGhost", typeof(RectTransform), typeof(CanvasGroup), typeof(Image)).GetComponent<RectTransform>();
+        // Create a ghost under the ROOT canvas so it isn't clipped by masks/viewport
+        dragGhost = new GameObject("DragGhost", typeof(RectTransform), typeof(CanvasGroup), typeof(Image))
+            .GetComponent<RectTransform>();
         dragGhost.SetParent(rootCanvas.transform, worldPositionStays: false);
+        dragGhost.anchorMin = dragGhost.anchorMax = new Vector2(0.5f, 0.5f); // centered anchors
         dragGhost.pivot = new Vector2(0.5f, 0.5f);
+        dragGhost.SetAsLastSibling();
 
-        var size = (icon && icon.sprite) ? icon.sprite.rect.size : new Vector2(64, 64);
+        // Size: mirror the visible icon if present; fallback to 64x64
+        Vector2 size = new Vector2(64, 64);
+        if (icon && icon.sprite)
+        {
+            var iconRT = icon.rectTransform;
+            size = iconRT ? iconRT.rect.size : size;
+        }
         dragGhost.sizeDelta = size;
 
         dragGhostImage = dragGhost.GetComponent<Image>();
@@ -87,17 +111,38 @@ public class ItemEntryButton : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         dragGhostImage.sprite = icon ? icon.sprite : null;
         dragGhostImage.color = new Color(1f, 1f, 1f, 0.9f);
 
-        dragGhost.position = eventData.position;
+        // Initial placement (screen -> local anchoredPosition)
+        dragGhost.anchoredPosition = ScreenToCanvasLocal(eventData.position);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (dragGhost) dragGhost.position = eventData.position;
+        if (!dragGhost) return;
+        dragGhost.anchoredPosition = ScreenToCanvasLocal(eventData.position);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         if (selfCanvasGroup) selfCanvasGroup.blocksRaycasts = true;
         if (dragGhost) Destroy(dragGhost.gameObject);
+        UpgradeTooltipController.Instance?.Hide();
+    }
+
+    // Convert screen-space mouse/touch to canvas local space
+    private Vector2 ScreenToCanvasLocal(Vector2 screenPos)
+    {
+        if (!rootCanvas) return screenPos;
+
+        RectTransform canvasRT = rootCanvas.transform as RectTransform;
+        Camera cam = null;
+        if (rootCanvas.renderMode == RenderMode.ScreenSpaceCamera ||
+            rootCanvas.renderMode == RenderMode.WorldSpace)
+        {
+            cam = rootCanvas.worldCamera;
+        }
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRT, screenPos, cam, out var localPoint);
+        return localPoint;
     }
 }

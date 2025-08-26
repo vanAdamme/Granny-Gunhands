@@ -30,7 +30,6 @@ public sealed class ItemInventory : MonoBehaviour
         {
             for (int i = 0; i < amount; i++) items.Add(new Stack(def, 1));
         }
-            Debug.Log($"[ItemInventory {GetInstanceID()}] +{amount} {def.name}");
         InventoryChanged?.Invoke();
     }
 
