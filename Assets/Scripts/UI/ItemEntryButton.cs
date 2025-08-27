@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-// Guarantees we can toggle blocksRaycasts safely
 [RequireComponent(typeof(CanvasGroup))]
 public class ItemEntryButton : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler, IInitializePotentialDragHandler
@@ -14,16 +13,24 @@ public class ItemEntryButton : MonoBehaviour,
     [SerializeField] private TMP_Text countText;
     [SerializeField] private Button useButton;
 
-    // Data for this row
+    // Data
     private ItemDefinition def;
     private ItemInventory sourceInventory;
     private System.Action<ItemDefinition> onUse;
 
-    // Drag visuals
-    private Canvas rootCanvas;              // top-most canvas
-    private RectTransform dragGhost;        // ghost rect
-    private Image dragGhostImage;           // ghost image
-    private CanvasGroup selfCanvasGroup;    // to disable raycast during drag
+    // Drag
+    private Canvas rootCanvas;
+    private RectTransform dragGhost;
+    private Image dragGhostImage;
+    private CanvasGroup selfCanvasGroup;
+    public static bool IsDragging { get; private set; }
+
+    // Internal coroutine runner (one per app)
+    private static Runner runner;
+    private class Runner : MonoBehaviour { }
+
+    // Optional: ensure only one ghost exists globally
+    private static RectTransform activeGhost;
 
     public ItemDefinition Definition => def;
     public ItemInventory SourceInventory => sourceInventory;
@@ -35,7 +42,6 @@ public class ItemEntryButton : MonoBehaviour,
         rootCanvas = localCanvas ? localCanvas.rootCanvas : null;
     }
 
-    // New signature passes source inventory + canUse
     public void Bind(ItemInventory.Stack stack, ItemInventory srcInventory, bool canUse, System.Action<ItemDefinition> onUse)
     {
         def = stack.def;
@@ -48,7 +54,7 @@ public class ItemEntryButton : MonoBehaviour,
             icon.type = Image.Type.Simple;
             icon.preserveAspect = true;
             icon.enabled = icon.sprite != null;
-            icon.color = Color.white; // ensure alpha is 1
+            icon.color = Color.white;
         }
         if (nameText)  nameText.text  = def ? def.DisplayName : "(null)";
         if (countText) countText.text = def && def.Stackable ? $"×{stack.count}" : "";
@@ -63,46 +69,46 @@ public class ItemEntryButton : MonoBehaviour,
         if (!selfCanvasGroup) selfCanvasGroup = GetComponent<CanvasGroup>();
         if (!rootCanvas)
         {
-            var localCanvas = GetComponentInParent<Canvas>(includeInactive: true);
-            rootCanvas = localCanvas ? localCanvas.rootCanvas : null;
+            var lc = GetComponentInParent<Canvas>(includeInactive: true);
+            rootCanvas = lc ? lc.rootCanvas : null;
         }
     }
 
-    // This helps beat ScrollRect’s drag threshold stealing
     public void OnInitializePotentialDrag(PointerEventData eventData)
     {
         eventData.useDragThreshold = false;
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+   public void OnBeginDrag(PointerEventData eventData)
     {
         if (!def || sourceInventory == null) return;
 
+        IsDragging = true;
+
         if (!selfCanvasGroup) selfCanvasGroup = gameObject.AddComponent<CanvasGroup>();
-        selfCanvasGroup.blocksRaycasts = false; // allow drops to receive raycasts
+        selfCanvasGroup.blocksRaycasts = false;
 
         if (!rootCanvas)
         {
-            var localCanvas = GetComponentInParent<Canvas>(includeInactive: true);
-            rootCanvas = localCanvas ? localCanvas.rootCanvas : null;
+            var lc = GetComponentInParent<Canvas>(includeInactive: true);
+            rootCanvas = lc ? lc.rootCanvas : null;
         }
-        if (!rootCanvas) return; // no canvas, no ghost
+        if (!rootCanvas) return;
 
-        // Create a ghost under the ROOT canvas so it isn't clipped by masks/viewport
-        dragGhost = new GameObject("DragGhost", typeof(RectTransform), typeof(CanvasGroup), typeof(Image))
-            .GetComponent<RectTransform>();
-        dragGhost.SetParent(rootCanvas.transform, worldPositionStays: false);
-        dragGhost.anchorMin = dragGhost.anchorMax = new Vector2(0.5f, 0.5f); // centered anchors
+        // Kill any previous ghost
+        if (activeGhost) Destroy(activeGhost.gameObject);
+
+        var go = new GameObject("DragGhost", typeof(RectTransform), typeof(CanvasGroup), typeof(Image));
+        dragGhost = go.GetComponent<RectTransform>();
+        activeGhost = dragGhost;
+
+        dragGhost.SetParent(rootCanvas.transform, false);
+        dragGhost.anchorMin = dragGhost.anchorMax = new Vector2(0.5f, 0.5f);
         dragGhost.pivot = new Vector2(0.5f, 0.5f);
+        dragGhost.localScale = Vector3.one;
         dragGhost.SetAsLastSibling();
 
-        // Size: mirror the visible icon if present; fallback to 64x64
-        Vector2 size = new Vector2(64, 64);
-        if (icon && icon.sprite)
-        {
-            var iconRT = icon.rectTransform;
-            size = iconRT ? iconRT.rect.size : size;
-        }
+        var size = (icon && icon.sprite) ? icon.rectTransform.rect.size : new Vector2(64, 64);
         dragGhost.sizeDelta = size;
 
         dragGhostImage = dragGhost.GetComponent<Image>();
@@ -111,38 +117,86 @@ public class ItemEntryButton : MonoBehaviour,
         dragGhostImage.sprite = icon ? icon.sprite : null;
         dragGhostImage.color = new Color(1f, 1f, 1f, 0.9f);
 
-        // Initial placement (screen -> local anchoredPosition)
         dragGhost.anchoredPosition = ScreenToCanvasLocal(eventData.position);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!dragGhost) return;
-        dragGhost.anchoredPosition = ScreenToCanvasLocal(eventData.position);
+        if (dragGhost) dragGhost.anchoredPosition = ScreenToCanvasLocal(eventData.position);
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData) => CleanupDragArtifacts();
+
+    // Crucial: if the row is destroyed/disabled during a drop, OnEndDrag won't run.
+    // Clean up the ghost here too.
+    void OnDisable() => CleanupDragArtifacts();
+    void OnDestroy() => CleanupDragArtifacts();
+
+    private void CleanupDragArtifacts()
     {
         if (selfCanvasGroup) selfCanvasGroup.blocksRaycasts = true;
-        if (dragGhost) Destroy(dragGhost.gameObject);
+
+        if (dragGhost)
+        {
+            Destroy(dragGhost.gameObject);
+            if (activeGhost == dragGhost) activeGhost = null;
+            dragGhost = null;
+            dragGhostImage = null;
+        }
+
         UpgradeTooltipController.Instance?.Hide();
+        IsDragging = false;
     }
 
-    // Convert screen-space mouse/touch to canvas local space
     private Vector2 ScreenToCanvasLocal(Vector2 screenPos)
     {
         if (!rootCanvas) return screenPos;
-
-        RectTransform canvasRT = rootCanvas.transform as RectTransform;
+        var canvasRT = (RectTransform)rootCanvas.transform;
         Camera cam = null;
         if (rootCanvas.renderMode == RenderMode.ScreenSpaceCamera ||
             rootCanvas.renderMode == RenderMode.WorldSpace)
-        {
             cam = rootCanvas.worldCamera;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRT, screenPos, cam, out var local);
+        return local;
+    }
+
+    private static void EnsureRunner()
+    {
+        if (runner) return;
+        var go = new GameObject("ItemEntryButton_Coroutines");
+        DontDestroyOnLoad(go);
+        runner = go.AddComponent<Runner>();
+    }
+
+    // ---- public static helper for invalid-drop "snap" (here: shrink+fade) ----
+    public static void ShrinkAndDestroyActiveGhost(float duration = 0.12f)
+    {
+        if (!activeGhost) return;
+        EnsureRunner();
+        runner.StartCoroutine(ShrinkRoutine(duration));
+    }
+
+    private static System.Collections.IEnumerator ShrinkRoutine(float duration)
+    {
+        var ghost = activeGhost;
+        if (!ghost) yield break;
+
+        var cg = ghost.GetComponent<CanvasGroup>() ?? ghost.gameObject.AddComponent<CanvasGroup>();
+        Vector3 startScale = ghost.localScale;
+        float startAlpha = cg.alpha;
+        float t = 0f;
+
+        while (t < duration && ghost)
+        {
+            t += Time.unscaledDeltaTime;
+            float k = 1f - Mathf.Clamp01(t / duration);
+            ghost.localScale = startScale * (0.85f + 0.15f * k); // slight shrink
+            cg.alpha = startAlpha * k;
+            yield return null;
         }
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRT, screenPos, cam, out var localPoint);
-        return localPoint;
+        if (ghost) Object.Destroy(ghost.gameObject);
+        if (activeGhost == ghost) activeGhost = null;
     }
 }

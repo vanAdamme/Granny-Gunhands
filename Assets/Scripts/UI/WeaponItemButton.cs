@@ -184,6 +184,7 @@ public class WeaponItemButton : MonoBehaviour,
         {
             UIController.Instance?.ShowToast(string.IsNullOrEmpty(applyReason) ? "No upgrade applied." : applyReason);
             Flash(invalidDropTint);
+            ItemEntryButton.ShrinkAndDestroyActiveGhost(0.12f);
         }
     }
 

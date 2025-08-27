@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8697212587797073427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8074dc491ddc34f4e83332d9eae76980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Position: {x: 656, y: 352}
+  Name: Room
+  IndividualRoomTemplates:
+  - {fileID: 1844355837504882643, guid: fb42168fa3bcfe94483aa471c07e7354, type: 3}
+  RoomTemplateSets: []
 --- !u!114 &-6272400967384755789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,7 +31,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: 512, y: 336}
   Name: Room
-  IndividualRoomTemplates: []
+  IndividualRoomTemplates:
+  - {fileID: 1844355837504882643, guid: fb42168fa3bcfe94483aa471c07e7354, type: 3}
   RoomTemplateSets: []
 --- !u!114 &-1184214679754012502
 MonoBehaviour:
@@ -45,6 +63,7 @@ MonoBehaviour:
   Connections:
   - {fileID: -1184214679754012502}
   - {fileID: 6908260622629483894}
+  - {fileID: 632606054086249647}
   CorridorIndividualRoomTemplates:
   - {fileID: 155655301668133314, guid: b463e4708748ced40ab25e08156c7bd6, type: 3}
   - {fileID: 155655301668133314, guid: 11ee60128ee946943848636f73f744e1, type: 3}
@@ -56,11 +75,26 @@ MonoBehaviour:
   - {fileID: 3379800724900245753}
   - {fileID: -6272400967384755789}
   - {fileID: 3262713462849687909}
+  - {fileID: -8697212587797073427}
   EditorData:
     PanOffset: {x: 0, y: 0}
     Zoom: 1
   RoomType: Edgar.Unity.Room
   ConnectionType: Edgar.Unity.Connection
+--- !u!114 &632606054086249647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f692f83df7c1b5468af64edd22287dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  From: {fileID: -8697212587797073427}
+  To: {fileID: -6272400967384755789}
 --- !u!114 &3262713462849687909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,7 +109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: 560, y: 240}
   Name: Room
-  IndividualRoomTemplates: []
+  IndividualRoomTemplates:
+  - {fileID: 1844355837504882643, guid: fb42168fa3bcfe94483aa471c07e7354, type: 3}
   RoomTemplateSets: []
 --- !u!114 &3379800724900245753
 MonoBehaviour:

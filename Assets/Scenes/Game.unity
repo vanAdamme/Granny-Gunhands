@@ -4998,7 +4998,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 634602839}
   m_HandleRect: {fileID: 634602838}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -8542,7 +8542,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 544, y: -745}
+  m_AnchoredPosition: {x: 544, y: -612}
   m_SizeDelta: {x: 1072, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1199151021
@@ -34031,6 +34031,7 @@ GameObject:
   - component: {fileID: 1850308861}
   - component: {fileID: 1850308860}
   - component: {fileID: 1850308863}
+  - component: {fileID: 1850308864}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -34148,6 +34149,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 1
   m_LayoutPriority: 1
+--- !u!114 &1850308864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850308858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a85f3fa330cd72a419852c066a054128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edgeThickness: 36
+  maxSpeed: 1200
+  viewportOverride: {fileID: 0}
 --- !u!1 &1884523510
 GameObject:
   m_ObjectHideFlags: 0
