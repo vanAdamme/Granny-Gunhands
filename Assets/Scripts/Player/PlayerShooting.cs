@@ -4,41 +4,46 @@ using System;
 public class PlayerShooting : MonoBehaviour
 {
     [Header("Dependencies")]
-    [SerializeField] private MonoBehaviour inputServiceSource;   // drag InputService here (implements IInputService)
-    [SerializeField] private WeaponInventory inventory;          // prefer wiring in Inspector
-    [SerializeField] private Camera aimCamera;                   // cache, don’t use Camera.main every frame
+    [SerializeField] private MonoBehaviour inputServiceSource; // implements IInputService
+    [SerializeField] private WeaponInventory inventory;
+    [SerializeField] private Camera aimCamera;                 // leave null on prefab; will auto-resolve
 
     private IInputService input;
 
-    // Fire state (held)
     private bool fireLeftHeld;
     private bool fireRightHeld;
 
-    // Keep last non-zero aim to avoid snapping to +X when input is momentarily zero
-    private Vector2 lastAimDir = Vector2.right;
-
-    // Cached delegates so we can unsubscribe safely
+    // Cached delegates
     private Action onFLStart, onFLCancel, onFRStart, onFRCancel;
 
     void Awake()
     {
-        // Input: prefer serialized reference; fallback to singleton or scene search
         input = inputServiceSource as IInputService
              ?? InputService.Instance as IInputService
-             ?? FindFirstObjectByType<InputService>(); // Unity 6+
+             ?? FindFirstObjectByType<InputService>(FindObjectsInactive.Include);
 
-        // Inventory: prefer local; fallback up the hierarchy; final fallback global
-        if (!inventory) inventory = GetComponentInParent<WeaponInventory>();
-        if (!inventory) inventory = FindFirstObjectByType<WeaponInventory>();
+        if (!inventory) inventory = GetComponentInParent<WeaponInventory>()
+                           ?? FindFirstObjectByType<WeaponInventory>(FindObjectsInactive.Include);
 
-        // Cache a camera (don’t tag-scan every Update)
         if (!aimCamera) aimCamera = Camera.main;
 
-        // Prepare delegates once
         onFLStart  = () => fireLeftHeld  = true;
         onFLCancel = () => fireLeftHeld  = false;
         onFRStart  = () => fireRightHeld = true;
         onFRCancel = () => fireRightHeld = false;
+    }
+
+    void LateUpdate()
+    {
+        // Keep camera healthy if Cinemachine/scene swaps happen
+        if (!aimCamera || !aimCamera.isActiveAndEnabled)
+        {
+            var main = Camera.main;
+            if (main) aimCamera = main;
+        }
+
+        if (fireLeftHeld)  TryFire(inventory?.Left);
+        if (fireRightHeld) TryFire(inventory?.Right);
     }
 
     void OnEnable()
@@ -59,18 +64,54 @@ public class PlayerShooting : MonoBehaviour
         if (onFRCancel != null) input.FireRightCanceled -= onFRCancel;
     }
 
-    void Update()
+    private void TryFire(Weapon w)
     {
-        if (input == null) return;
+        if (!w) return;
 
-        // Compute aim once per frame from stick or mouse via the service.
-        // Use the player pivot as origin; you could also pass a muzzle if you want exact rays from gun barrels.
-        Vector2 dir = input.GetAimDirection(transform.position, aimCamera);
+        // Prefer aiming from the weapon’s muzzle for correctness
+        var origin = w.Muzzle ? w.Muzzle.position : w.transform.position;
+
+        // 1) Ask the input service for a direction (if it’s correct, great)
+        Vector2 dir = Vector2.zero;
+        if (input != null)
+            dir = input.GetAimDirection(origin, aimCamera);
+
+        // 2) Bullet-proof fallback: compute properly via ray/plane so Z always matches
+        if (dir.sqrMagnitude < 0.0001f)
+            dir = GetMouseAimDirection(origin, aimCamera);
+
         if (dir.sqrMagnitude > 0.0001f)
-            lastAimDir = dir; // persist last meaningful aim
+            w.TryFire(dir);
+    }
 
-        // Fire while held; weapon cooldowns will gate actual shots.
-        if (fireLeftHeld)  inventory?.Left?.TryFire(lastAimDir);
-        if (fireRightHeld) inventory?.Right?.TryFire(lastAimDir);
+    /// <summary>
+    /// Returns a normalized 2D direction from origin to the mouse, intersecting the camera ray
+    /// with the plane at origin.z so we never "aim above" due to wrong Z.
+    /// </summary>
+    private static Vector2 GetMouseAimDirection(Vector3 origin, Camera cam)
+    {
+        if (!cam) return Vector2.right;
+
+        // Orthographic path: ScreenToWorldPoint ignores Z for XY; just clamp Z to origin
+        if (cam.orthographic)
+        {
+            var mp = Input.mousePosition;
+            var world = cam.ScreenToWorldPoint(mp);
+            world.z = origin.z;
+            var v = (Vector2)(world - origin);
+            return v.sqrMagnitude > 0.0001f ? v.normalized : Vector2.right;
+        }
+
+        // Perspective path: intersect a ray with the Z-plane at origin.z
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        var plane = new Plane(Vector3.forward, new Vector3(0f, 0f, origin.z));
+        if (plane.Raycast(ray, out float t))
+        {
+            Vector3 hit = ray.GetPoint(t);
+            var v = (Vector2)(hit - origin);
+            return v.sqrMagnitude > 0.0001f ? v.normalized : Vector2.right;
+        }
+
+        return Vector2.right;
     }
 }

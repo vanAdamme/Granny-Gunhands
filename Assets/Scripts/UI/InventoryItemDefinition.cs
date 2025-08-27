@@ -2,9 +2,10 @@ using UnityEngine;
 
 public abstract class InventoryItemDefinition : ItemDefinition
 {
-    /// <summary>
-    /// Try to use the item with/for the given user GameObject (usually the Player root).
-    /// Return true if the item was consumed.
-    /// </summary>
+    /// Probe-only: should the Use button be enabled for this user?
+    /// Default is optimistic; override in concrete items.
+    public virtual bool CanUse(GameObject user) => true;
+
+    /// Try to use/consume the item for the given user.
     public abstract bool TryUse(GameObject user);
 }

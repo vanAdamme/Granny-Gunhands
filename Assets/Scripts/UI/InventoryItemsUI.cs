@@ -1,94 +1,179 @@
-using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryItemsUI : MonoBehaviour, IInventoryPanel
 {
-    [Header("Refs")]
-    [SerializeField] private ItemInventory itemInventory;          // Player
-    [SerializeField] private WeaponInventory weaponInventory;      // Player
-    [SerializeField] private Transform gridRoot;                   // has GridLayoutGroup
-    [SerializeField] private ItemEntryButton itemButtonPrefab;     // prefab with icon/name/count/use
-
-    [Header("Debug")]
+    [Header("UI")]
+    [SerializeField] private Transform gridRoot;               // GridLayoutGroup parent
+    [SerializeField] private ItemEntryButton itemButtonPrefab; // item row
+    [SerializeField] private TMP_Text sectionHeaderPrefab;     // optional
     [SerializeField] private bool verboseLogs = true;
 
-    private readonly List<ItemEntryButton> buttons = new();
+    // Runtime bindings
+    private IPlayerContext ctx;
+    private ItemInventory itemInventory;
+    private WeaponInventory weaponInventory;
 
-    void Awake()
-    {
-        if (!itemInventory)   itemInventory   = FindFirstObjectByType<ItemInventory>(FindObjectsInactive.Include);
-        if (!weaponInventory) weaponInventory = FindFirstObjectByType<WeaponInventory>(FindObjectsInactive.Include);
-
-        if (itemInventory != null) itemInventory.InventoryChanged += Rebuild;
-        else if (verboseLogs) Debug.LogWarning("[InventoryItemsUI] No ItemInventory found.");
-
-        if (!gridRoot && verboseLogs) Debug.LogWarning("[InventoryItemsUI] gridRoot is not assigned.");
-        if (!itemButtonPrefab && verboseLogs) Debug.LogWarning("[InventoryItemsUI] itemButtonPrefab is not assigned.");
-    }
+    private readonly List<Object> spawned = new();
 
     void OnEnable()
     {
-        // If the panel GO stays enabled (recommended), this still runs once at boot.
-        Rebuild();
+        StartCoroutine(BindWhenAvailable());
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
         if (itemInventory != null) itemInventory.InventoryChanged -= Rebuild;
     }
 
     public void RefreshPanel() => Rebuild();
 
-    private void Rebuild()
+    private IEnumerator BindWhenAvailable()
     {
-        // Guard rails
-        if (!itemInventory || !gridRoot || !itemButtonPrefab)
+        while (itemInventory == null)
         {
-            if (verboseLogs)
-                Debug.LogWarning("[InventoryItemsUI] Missing refs. Inventory, gridRoot, or prefab not set.");
-            return;
+            TryResolveContextAndInventories();
+            if (itemInventory == null) yield return null;
+        }
+        itemInventory.InventoryChanged += Rebuild;
+        Rebuild();
+    }
+
+    private void TryResolveContextAndInventories()
+    {
+        // 1) Find a player context (prefer PlayerController)
+        if (ctx == null)
+        {
+            ctx = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include) as IPlayerContext;
+            if (ctx == null)
+            {
+                // Fallback: scan for any MonoBehaviour that implements IPlayerContext
+                var all = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                for (int i = 0; i < all.Length && ctx == null; i++)
+                    if (all[i] is IPlayerContext asCtx) ctx = asCtx;
+            }
         }
 
-        // Clear
-        for (int i = 0; i < buttons.Count; i++)
-            if (buttons[i]) Destroy(buttons[i].gameObject);
-        buttons.Clear();
+        // 2) Bind the SAME ItemInventory the player exposes
+        if (ctx != null && itemInventory == null)
+        {
+            itemInventory = ctx.ItemInventory 
+                            ?? (ctx as Component)?.GetComponentInChildren<ItemInventory>(); // last resort
+            if (verboseLogs && itemInventory != null)
+                Debug.Log($"[InventoryItemsUI] Bound ItemInventory (instance {itemInventory.GetInstanceID()})");
+        }
+
+        // 3) Cache weapon inventory for CanUse/TryUse userGO
+        if (weaponInventory == null && ctx is Component c)
+            weaponInventory = c.GetComponentInChildren<WeaponInventory>();
+
+        if (!gridRoot && verboseLogs) Debug.LogWarning("[InventoryItemsUI] gridRoot not set.");
+        if (!itemButtonPrefab && verboseLogs) Debug.LogWarning("[InventoryItemsUI] itemButtonPrefab not set.");
+    }
+
+    private void Clear()
+    {
+        for (int i = 0; i < spawned.Count; i++)
+        {
+            var o = spawned[i] as Component;
+            if (o) Destroy(o.gameObject);
+        }
+        spawned.Clear();
+    }
+
+    private void AddHeader(string title)
+    {
+        if (!sectionHeaderPrefab) return;
+        var h = Instantiate(sectionHeaderPrefab, gridRoot);
+        h.text = title;
+        spawned.Add(h);
+    }
+
+    private void Rebuild()
+    {
+        if (!itemInventory || !gridRoot || !itemButtonPrefab) return;
+        Clear();
 
         var list = itemInventory.GetItems();
         if (verboseLogs) Debug.Log($"[InventoryItemsUI] Rebuild {list.Count} stacks");
 
-        for (int i = 0; i < list.Count; i++)
-        {
-            var stack = list[i];
-            if (!stack.def)
-            {
-                if (verboseLogs) Debug.LogWarning($"[InventoryItemsUI] Null ItemDefinition at index {i}");
-                continue;
-            }
+        // Choose the "user" GO for button gating (only for truly usable items)
+        GameObject userGO = weaponInventory ? weaponInventory.gameObject : (ctx as Component)?.gameObject;
+        if (!userGO) userGO = itemInventory.gameObject;
 
-            var b = Instantiate(itemButtonPrefab, gridRoot);
-            b.Bind(stack, UseItem);
-            buttons.Add(b);
+        // Partition: upgrades (drag onto weapon) vs direct-use items
+        var upgrades = new List<ItemInventory.Stack>();
+        var useables = new List<ItemInventory.Stack>();
+        var others = new List<ItemInventory.Stack>();
+
+        foreach (var s in list)
+        {
+            if (!s.def) continue;
+            if (s.def is WeaponUpgradeItemDefinition) upgrades.Add(s);
+            else if (s.def is InventoryItemDefinition) useables.Add(s);
+            else others.Add(s);
         }
 
-        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)gridRoot);
+        upgrades = upgrades.OrderBy(s => s.def.DisplayName).ToList();
+        useables = useables.OrderBy(s => s.def.DisplayName).ToList();
+        others = others.OrderBy(s => s.def.DisplayName).ToList();
+
+        if (upgrades.Count > 0) AddHeader("Apply to a Weapon (drag onto a weapon)");
+        foreach (var s in upgrades)
+        {
+            // Disable Use button for upgrades; drag is the interaction
+            var row = Instantiate(itemButtonPrefab, gridRoot);
+            row.Bind(s, itemInventory, /*canUse*/ false, UseItemNoop);
+            spawned.Add(row);
+        }
+
+        if (useables.Count > 0) AddHeader("Useables");
+        foreach (var s in useables)
+        {
+            var usable = (InventoryItemDefinition)s.def;
+            bool canUse = usable.CanUse(userGO);
+            var row = Instantiate(itemButtonPrefab, gridRoot);
+            row.Bind(s, itemInventory, canUse, UseItem);
+            spawned.Add(row);
+        }
+
+        if (others.Count > 0) AddHeader("Other");
+        foreach (var s in others)
+        {
+            var row = Instantiate(itemButtonPrefab, gridRoot);
+            row.Bind(s, itemInventory, /*canUse*/ false, UseItemNoop);
+            spawned.Add(row);
+        }
+
+    if (gridRoot is RectTransform rt)
+    {
+        var auto = rt.GetComponent<GridAutoHeight>();
+        if (auto) auto.Recalc();
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
+        var parent = rt.parent as RectTransform;   // Content
+        if (parent) LayoutRebuilder.ForceRebuildLayoutImmediate(parent);
+        Canvas.ForceUpdateCanvases();
     }
+    }
+
+    private void UseItemNoop(ItemDefinition _) { /* intentional: upgrades are drag-only */ }
 
     private void UseItem(ItemDefinition def)
     {
         if (!def || !itemInventory) return;
 
-        // Choose the object that should "use" the item (usually the player that holds WeaponInventory)
-        var userGO = weaponInventory ? weaponInventory.gameObject : itemInventory.gameObject;
+        GameObject userGO = weaponInventory ? weaponInventory.gameObject : (ctx as Component)?.gameObject;
+        if (!userGO) userGO = itemInventory.gameObject;
 
-        if (def is InventoryItemDefinition usable && userGO)
+        if (def is InventoryItemDefinition usable && usable.TryUse(userGO))
         {
-            if (usable.TryUse(userGO))
-            {
-                itemInventory.Remove(def, 1);
-                Rebuild(); // reflect consumption immediately
-            }
+            itemInventory.Remove(def, 1);
+            Rebuild();
         }
     }
 }

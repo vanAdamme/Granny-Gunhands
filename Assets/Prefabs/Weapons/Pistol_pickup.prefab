@@ -137,5 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f157b72bfa2434c899d292e3470011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 925909700621410200}
+  sortingLayerName: Items
+  sortingOrder: 0
   definition: {fileID: 11400000, guid: 95adee8733bbf8947a8b36840ffffc75, type: 2}
   autoEquipToEmptyHand: 1

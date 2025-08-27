@@ -19,4 +19,5 @@ public interface IPlayerContext
 
     // Misc
     Transform Transform { get; }
+    ItemInventory ItemInventory { get; }
 }
