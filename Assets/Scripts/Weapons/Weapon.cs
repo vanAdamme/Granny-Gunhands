@@ -15,11 +15,10 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected FireMode fireMode = FireMode.SemiAuto;
     public virtual float CooldownWindow { get; set; } = 0.15f;
 
-    // Data wiring
+    // Data wiring (flat definition model)
     public WeaponDefinition Definition { get; protected set; }
     protected int currentLevel = 1;
     public int Level => currentLevel;
-    protected WeaponDefinition.WeaponLevelData data;
 
     // cooldown gate
     protected float nextFireTime;
@@ -46,7 +45,7 @@ public abstract class Weapon : MonoBehaviour
         transform.localScale = scale;
     }
 
-    // Back-compat: some code may still call Fire(); we route to Shoot(muzzle forward)
+    // Back-compat: some code may still call Fire(); route to Shoot(muzzle forward)
     public virtual void Fire()
     {
         var dir = muzzle ? (Vector2)muzzle.right : Vector2.right;
@@ -66,30 +65,30 @@ public abstract class Weapon : MonoBehaviour
     protected abstract void Shoot(Vector2 dir);
 
     // ----- Data binding / upgrades -----
+
     public virtual void SetDefinition(WeaponDefinition def) => SetDefinition(def, 1);
 
     public virtual void SetDefinition(WeaponDefinition def, int level)
     {
         if (!def) return;
 
-        Definition = def;
-        currentLevel = Mathf.Clamp(level, 1, (def.Levels?.Count ?? 1));
-        data = def.GetLevelData(currentLevel - 1);
+        Definition   = def;
+        currentLevel = Mathf.Max(1, level);
 
-        icon = def.Icon;
-        if (data != null)
-        {
-            if (data.spriteOverride && spriteRenderer) spriteRenderer.sprite = data.spriteOverride;
-            CooldownWindow = data.cooldown;
-        }
+        // runtime icon
+        icon = def.GetIconForLevel(currentLevel);
+
+        // base cooldown source
+        CooldownWindow = Mathf.Max(0.01f, def.baseCooldown);
+
+        // If you have per-level sprite overrides later, apply them here to spriteRenderer.
+        // (We removed data-driven 'WeaponLevelData' entirely.)
     }
 
-    public virtual bool TryUpgrade()
-    {
-        if (!Definition || Definition.Levels == null) return false;
-        int next = currentLevel + 1;
-        if (next > Definition.Levels.Count) return false;
-        SetDefinition(Definition, next);
-        return true;
-    }
+    /// <summary>
+    /// Legacy hook used by some systems. With the flat definition model there’s
+    /// no generic base upgrade; specific weapons (e.g., GenericProjectileWeapon)
+    /// should implement IUpgradableWeapon and handle upgrades there.
+    /// </summary>
+    public virtual bool TryUpgrade() => false;
 }

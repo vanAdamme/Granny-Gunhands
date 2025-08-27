@@ -12,61 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e7fadd51dfdd74981252f9089909c2, type: 3}
   m_Name: Pistol_Def
   m_EditorClassIdentifier: 
-  id: 0794731c-3672-4dee-8a6a-0bb303a1b3f7
-  displayName: Pistol
-  icon: {fileID: -1198099712212326842, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
-  rarity: 0
+  Id: 01b56ec8467e4f09ba677bc0b8d47f25
+  DisplayName: Pistol
   category: 0
-  prefab: {fileID: 4138980111198988156, guid: ec42b4ee26d17c447829c77cd2ba37b3, type: 3}
-  levels:
-  - level: 1
-    cooldown: 0.15
-    damage: 1
-    range: 8
-    projectileSpeed: 12
-    targetLayers:
-      serializedVersion: 2
-      m_Bits: 512
-    obstacleLayers:
-      serializedVersion: 2
-      m_Bits: 8
-    maxPierces: 0
-    pierceThroughObstacles: 0
-    spriteOverride: {fileID: 0}
-    muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
-    projectilePrefab: {fileID: 4307658229903141588, guid: e2fcb6b40a2b3a74eaecae217791c233, type: 3}
-    grenadePrefab: {fileID: 0}
-  - level: 2
-    cooldown: 0.15
-    damage: 1
-    range: 10
-    projectileSpeed: 12
-    targetLayers:
-      serializedVersion: 2
-      m_Bits: 512
-    obstacleLayers:
-      serializedVersion: 2
-      m_Bits: 8
-    maxPierces: 0
-    pierceThroughObstacles: 0
-    spriteOverride: {fileID: -1230275211637329022, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
-    muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
-    projectilePrefab: {fileID: 4307658229903141588, guid: e2fcb6b40a2b3a74eaecae217791c233, type: 3}
-    grenadePrefab: {fileID: 0}
-  - level: 3
-    cooldown: 0.15
-    damage: 2
-    range: 8
-    projectileSpeed: 10
-    targetLayers:
-      serializedVersion: 2
-      m_Bits: 512
-    obstacleLayers:
-      serializedVersion: 2
-      m_Bits: 8
-    maxPierces: 0
-    pierceThroughObstacles: 0
-    spriteOverride: {fileID: 3256892852131339308, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
-    muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}
-    projectilePrefab: {fileID: 4307658229903141588, guid: e2fcb6b40a2b3a74eaecae217791c233, type: 3}
-    grenadePrefab: {fileID: 0}
+  Rarity: 0
+  Prefab: {fileID: 4138980111198988156, guid: ec42b4ee26d17c447829c77cd2ba37b3, type: 3}
+  baseCooldown: 0.15
+  Icon: {fileID: -1198099712212326842, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
+  LevelIcons:
+  - {fileID: -1198099712212326842, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
+  - {fileID: 3256892852131339308, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
+  - {fileID: -1230275211637329022, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
+  projectilePrefab: {fileID: 4307658229903141588, guid: e2fcb6b40a2b3a74eaecae217791c233, type: 3}
+  damage: 1
+  projectileSpeed: 12
+  range: 10
+  maxPierces: 0
+  pierceThroughObstacles: 0
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 4608
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  muzzleFlashPrefab: {fileID: 5688308098156678417, guid: b49bbee5571edb14e8e5be5f0be6bfd9, type: 3}

@@ -138,6 +138,12 @@ MonoBehaviour:
   fireMode: 1
   definitionAsset: {fileID: 11400000, guid: 95adee8733bbf8947a8b36840ffffc75, type: 2}
   startLevel: 1
+  maxLevel: 5
+  damagePerLevel: 2
+  projectileSpeedPerLevel: 0.5
+  rangePerLevel: 2
+  piercesPerLevel: 0
+  level: 1
   collectionCheck: 1
   defaultCapacity: 64
   maxSize: 256
