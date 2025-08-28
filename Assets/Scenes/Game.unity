@@ -180,7 +180,7 @@ MonoBehaviour:
   unwalkableNodeDebugSize: 0.3
   logPathResults: 4
   maxNearestNodeDistance: 100
-  scanOnStartup: 1
+  scanOnStartup: 0
   fullGetNearestSearch: 0
   prioritizeGraphs: 0
   prioritizeGraphsLimit: 1
@@ -237,7 +237,7 @@ MonoBehaviour:
     seed: 0
     pivotPointRoot: {fileID: 0}
     spreadOutCount: 1
-  showGraphs: 0
+  showGraphs: 1
 --- !u!1 &28749941
 GameObject:
   m_ObjectHideFlags: 0
@@ -2443,7 +2443,8 @@ MonoBehaviour:
     DisableRoomTemplatesRenderers: 1
     DisableRoomTemplatesColliders: 1
     AnalyzeLevelStructure: 1
-  CustomPostProcessTasks: []
+  CustomPostProcessTasks:
+  - {fileID: 11400000, guid: 5295fe152ec1a074280f95988e0bb70b, type: 2}
   OtherConfig:
     UseRandomSeed: 1
     RandomGeneratorSeed: 0
