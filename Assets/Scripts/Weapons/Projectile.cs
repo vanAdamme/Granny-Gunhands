@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
@@ -13,14 +12,14 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float defaultDamage = 5f;
     [SerializeField, Min(0f)] private float defaultRadius = 0.06f; // >0 uses CircleCast
     [SerializeField, Min(0f)] private float skin = 0.01f;          // back off from the surface slightly
-    [SerializeField, Min(0)] private int defaultMaxPierces = 0;    // 0 = stop on first target
+    [SerializeField, Min(0)]  private int defaultMaxPierces = 0;   // 0 = stop on first target
     [SerializeField] private bool defaultPierceThroughObstacles = false;
     [SerializeField] private GameObject defaultHitVFX;
 
-    // Pool hook (set by spawner)
-    public IObjectPool<Projectile> ObjectPool { get; set; }
+    [Header("Services (optional)")]
+    [SerializeField] private UnityPoolService poolService; // optional; will auto-find
 
-    // Runtime (set by spawner each shot)
+    // Runtime
     private Rigidbody2D rb;
     private Transform ownerRoot;
     private Vector2 dir;
@@ -38,28 +37,29 @@ public class Projectile : MonoBehaviour
     private float despawnAt;
     private readonly HashSet<Collider2D> hitThisStep = new HashSet<Collider2D>();
 
-    private void Awake()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+        if (!poolService) poolService = FindFirstObjectByType<UnityPoolService>();
+        // Ensure pooled return helper exists if you're using pooling
+        if (!GetComponent<PooledObject>()) gameObject.AddComponent<PooledObject>();
     }
 
-    /// <summary>
-    /// Minimal init: owner/targets/damage/direction. Uses defaults for motion/behaviour until SetRuntime is called.
-    /// </summary>
+    // Called by spawner immediately after Spawn()
     public void Init(GameObject owner, LayerMask targets, float dmg, Vector2 direction)
     {
         ownerRoot = owner ? owner.transform.root : null;
-        targetLayers = targets;
-        damage = dmg;
         dir = direction.sqrMagnitude > 0f ? direction.normalized : Vector2.right;
 
-        // Start with defaults; weapon may override immediately after via SetRuntime()
-        speed = defaultSpeed;
-        range = defaultRange;
-        damage = defaultDamage;
+        // Start from defaults
+        speed = Mathf.Max(0.01f, defaultSpeed);
+        range = Mathf.Max(0f, defaultRange);
+        targetLayers = targets.value != 0 ? targets : defaultTargetLayers;
         obstacleLayers = defaultObstacleLayers;
+        damage = dmg > 0f ? dmg : defaultDamage;
         radius = Mathf.Max(0f, defaultRadius);
         maxPierces = Mathf.Max(0, defaultMaxPierces);
         pierceThroughObstacles = defaultPierceThroughObstacles;
@@ -69,14 +69,14 @@ public class Projectile : MonoBehaviour
         float lifetime = Mathf.Max(0.01f, range / Mathf.Max(0.01f, speed));
         despawnAt = Time.time + lifetime;
 
-        // clear step cache for pooled reuse
         hitThisStep.Clear();
+
+        // Optional: wire your Damager if you use one in the project
+        var damager = GetComponent<Damager>();
+        if (damager) damager.Configure(ownerRoot ? ownerRoot.gameObject : null, targetLayers, damage);
     }
 
-    /// <summary>
-    /// Optional runtime override from the weapon definition. Any nullable/optional args not supplied keep current values.
-    /// Recomputes lifetime based on (range / speed).
-    /// </summary>
+    /// Optional runtime overrides from a weapon definition.
     public void SetRuntime(
         float? speedOverride = null,
         float? rangeOverride = null,
@@ -98,12 +98,17 @@ public class Projectile : MonoBehaviour
         despawnAt = Time.time + lifetime;
     }
 
-    private void OnEnable()
+    // Message sent by UnityPoolService when this is taken from the pool
+    void OnSpawnedFromPool()
     {
         hitThisStep.Clear();
+        rb.linearVelocity = Vector2.zero;
+
+        var trail = GetComponent<TrailRenderer>();
+        if (trail) trail.Clear();
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if (Time.time >= despawnAt) { Release(); return; }
         if (dir.sqrMagnitude < 0.0001f) { Release(); return; }
@@ -115,7 +120,6 @@ public class Projectile : MonoBehaviour
 
         int mask = targetLayers | obstacleLayers;
 
-        // Sweep the entire path for this step
         RaycastHit2D[] hits = (radius > 0f)
             ? Physics2D.CircleCastAll(start, radius, dir, dist + skin, mask)
             : Physics2D.RaycastAll(start, dir, dist + skin, mask);
@@ -126,7 +130,6 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        // Sort by distance so we process in travel order
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
         hitThisStep.Clear();
@@ -136,10 +139,7 @@ public class Projectile : MonoBehaviour
         {
             if (!hit.collider) continue;
 
-            // Ignore self/owner (child colliders etc.)
             if (ownerRoot && hit.collider.transform.root == ownerRoot) continue;
-
-            // Avoid double-processing the same collider in this step (possible with CircleCastAll)
             if (hitThisStep.Contains(hit.collider)) continue;
             hitThisStep.Add(hit.collider);
 
@@ -156,13 +156,12 @@ public class Projectile : MonoBehaviour
                     SpawnVFX(hit);
                     pierces++;
 
-                    if (pierces > maxPierces) // exceeded allowance → stop at this target
+                    if (pierces > maxPierces)
                     {
                         MoveToImpact(start, hit.distance);
                         Release();
                         return;
                     }
-                    // else continue to check for further hits within this same step
                 }
             }
 
@@ -174,7 +173,6 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        // If not blocked, keep going
         rb.MovePosition(start + step);
     }
 
@@ -187,13 +185,15 @@ public class Projectile : MonoBehaviour
     private void SpawnVFX(RaycastHit2D hit)
     {
         if (!hitVFX) return;
-        var go = Instantiate(hitVFX, hit.point, Quaternion.FromToRotation(Vector3.right, hit.normal));
-        Destroy(go, 1.5f);
+        var rot = Quaternion.FromToRotation(Vector3.right, hit.normal);
+        if (poolService) poolService.Spawn(hitVFX, hit.point, rot);
+        else Destroy(Instantiate(hitVFX, hit.point, rot), 1.5f);
     }
 
-    public void Release()
+    private void Release()
     {
-        if (ObjectPool != null) ObjectPool.Release(this);
+        var po = GetComponent<PooledObject>();
+        if (po != null) po.Release();
         else Destroy(gameObject);
     }
 }

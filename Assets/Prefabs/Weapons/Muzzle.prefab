@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2455973028087197094}
   - component: {fileID: 2619413147852223550}
+  - component: {fileID: -5547027427862294301}
   m_Layer: 0
   m_Name: Muzzle
   m_TagString: Untagged
@@ -73,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1919248021
-  m_SortingLayer: 3
+  m_SortingLayerID: 470246339
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: -2018968827443427868, guid: fd804a4601d7f3345833914e6f5a16fc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -87,3 +88,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-5547027427862294301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5688308098156678417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3d5e4afaf5377419f542c23433d142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 0.01

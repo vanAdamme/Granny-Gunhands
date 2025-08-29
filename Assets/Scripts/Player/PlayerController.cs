@@ -52,12 +52,6 @@ public class PlayerController : Target, IPlayerContext
         set => base.IsInvulnerable = value;
     }
 
-    public override void Heal(float amount)
-    {
-        base.Heal(amount);
-        UIController.Instance.UpdateHealthSlider();
-    }
-
     public bool TryGetActiveWeapon(Hand hand, out Weapon w)
     {
         w = weaponInventory ? weaponInventory.GetWeapon(hand) : null;
@@ -214,6 +208,12 @@ public class PlayerController : Target, IPlayerContext
 
     // NOTE: removed the InputAction.CallbackContext overloads to avoid delegate mismatches
     // ---------- end input wiring ----------
+
+    public override void Heal(float amount)
+    {
+        base.Heal(amount);
+        UIController.Instance.UpdateHealthSlider();
+    }
 
     public void AddExperience(int amount)
     {

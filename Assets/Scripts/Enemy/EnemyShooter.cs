@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class EnemyShooter : MonoBehaviour
 {
@@ -21,25 +20,21 @@ public class EnemyShooter : MonoBehaviour
     [SerializeField] private LayerMask targetLayers;
     [SerializeField] private LayerMask wallLayers;
 
-    Transform player;
+    [Header("Services")]
+    [SerializeField] private UnityPoolService poolService;
 
-    IObjectPool<Projectile> pool;
-    [SerializeField] bool collectionCheck = true;
-    [SerializeField] int defaultCapacity = 64;
-    [SerializeField] int maxSize = 512;
+    Transform player;
 
     void Awake()
     {
-        pool = new ObjectPool<Projectile>(
-            Create, OnGet, OnRelease, OnDestroyPooled,
-            collectionCheck, defaultCapacity, maxSize);
+        if (!poolService) poolService = FindFirstObjectByType<UnityPoolService>(); // Unity 6-safe
+        if (!aimRoot) aimRoot = transform;
+        if (targetLayers.value == 0) targetLayers = LayerMask.GetMask("Player");
     }
 
     void Start()
     {
-        player = PlayerController.Instance?.transform;
-        if (!aimRoot) aimRoot = transform;
-        if (targetLayers.value == 0) targetLayers = LayerMask.GetMask("Player");
+        player = PlayerController.Instance ? PlayerController.Instance.transform : null;
     }
 
     void LateUpdate()
@@ -74,27 +69,33 @@ public class EnemyShooter : MonoBehaviour
 
     void Fire(Vector3 spawnPos, Vector2 dir)
     {
-        var p = pool.Get();
-        p.transform.SetPositionAndRotation(spawnPos,
-            muzzle ? muzzle.rotation : Quaternion.AngleAxis(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, Vector3.forward));
+        if (!projectilePrefab)
+            return;
 
-        // configure hit + damage
-        var dmg = p.GetComponent<Damager>();
-        if (dmg) dmg.Configure(gameObject, targetLayers, projectileDamage);
+        Quaternion rot = Quaternion.AngleAxis(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, Vector3.forward);
 
-        // initialise projectile
+        GameObject go = poolService
+            ? poolService.Spawn(projectilePrefab.gameObject, spawnPos, rot)
+            : Instantiate(projectilePrefab.gameObject, spawnPos, rot);
+
+        var p = go.GetComponent<Projectile>();
+        if (!p) p = go.AddComponent<Projectile>();
+
+        // Initialise projectile (Damager config is handled inside Projectile.Init as well)
         p.Init(gameObject, targetLayers, projectileDamage, dir);
         p.SetRuntime(
             speedOverride: projectileSpeed,
             rangeOverride: range,
             obstacleOverride: wallLayers
         );
-        p.ObjectPool = pool;
     }
 
-    // Pool hooks
-    Projectile Create() => Instantiate(projectilePrefab);
-    void OnGet(Projectile p) => p.gameObject.SetActive(true);
-    void OnRelease(Projectile p) => p.gameObject.SetActive(false);
-    void OnDestroyPooled(Projectile p) { if (p) Destroy(p.gameObject); }
+#if UNITY_EDITOR
+    void OnDrawGizmosSelected()
+    {
+        if (!muzzle) return;
+        UnityEditor.Handles.color = new Color(1f, 0.4f, 0.1f, 0.5f);
+        UnityEditor.Handles.DrawSolidDisc(muzzle.position, Vector3.forward, 0.05f);
+    }
+#endif
 }

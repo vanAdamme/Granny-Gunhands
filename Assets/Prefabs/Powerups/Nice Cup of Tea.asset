@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 461cece210a0162449754ded599fa2c0, type: 3}
-  m_Name: Nice Cup of Tea Definition
+  m_Name: Nice Cup of Tea
   m_EditorClassIdentifier: 
-  displayName: Nice Cup of Tea
+  displayName: Nice cup of tea
   icon: {fileID: 638614168610754204, guid: 62f433defc0aa4540b2e1da264914ffd, type: 3}
-  description: A nice cup of tea. This'll hit the spot.
-  durationSeconds: 0
+  description: 
+  durationSeconds: 10
   stacking: 0
-  pickupVFXPrefab: {fileID: 3655094787856938160, guid: 4e94f46721874094e9cb9ead3b1af530, type: 3}
-  pickupVFXAttach: 2
-  pickupAnchorName: Head
+  pickupVFXPrefab: {fileID: 0}
+  pickupVFXAttach: 0
+  pickupAnchorName: 
   pickupVFXLifetime: 0
   durationVFXPrefab: {fileID: 0}
   durationVFXAttach: 0
   durationAnchorName: 
-  durationVFXClampToBuff: 0
+  durationVFXClampToBuff: 1
   durationVFXUnparentOnEnd: 1
   effects: []
   oneShotEffects:

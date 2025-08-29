@@ -23,9 +23,8 @@ public abstract class Weapon : MonoBehaviour
     // cooldown gate
     protected float nextFireTime;
 
-    // --------- Properties expected elsewhere ----------
-    public virtual Transform Muzzle => muzzle;         // PlayerShooting expects this
-    public virtual FireMode Mode    => fireMode;       // PlayerShooting expects this
+    public virtual Transform Muzzle => muzzle;
+    public virtual FireMode Mode    => fireMode;
 
     protected virtual void Awake()
     {
@@ -45,14 +44,12 @@ public abstract class Weapon : MonoBehaviour
         transform.localScale = scale;
     }
 
-    // Back-compat: some code may still call Fire(); route to Shoot(muzzle forward)
     public virtual void Fire()
     {
         var dir = muzzle ? (Vector2)muzzle.right : Vector2.right;
         TryFire(dir);
     }
 
-    /// <summary>Preferred entry point from input. Enforces cooldown.</summary>
     public virtual bool TryFire(Vector2 dir)
     {
         if (Time.time < nextFireTime) return false;
@@ -61,10 +58,7 @@ public abstract class Weapon : MonoBehaviour
         return true;
     }
 
-    /// <summary>Child class actually spawns/launches projectiles.</summary>
     protected abstract void Shoot(Vector2 dir);
-
-    // ----- Data binding / upgrades -----
 
     public virtual void SetDefinition(WeaponDefinition def) => SetDefinition(def, 1);
 
@@ -75,20 +69,9 @@ public abstract class Weapon : MonoBehaviour
         Definition   = def;
         currentLevel = Mathf.Max(1, level);
 
-        // runtime icon
         icon = def.GetIconForLevel(currentLevel);
-
-        // base cooldown source
         CooldownWindow = Mathf.Max(0.01f, def.baseCooldown);
-
-        // If you have per-level sprite overrides later, apply them here to spriteRenderer.
-        // (We removed data-driven 'WeaponLevelData' entirely.)
     }
 
-    /// <summary>
-    /// Legacy hook used by some systems. With the flat definition model there’s
-    /// no generic base upgrade; specific weapons (e.g., GenericProjectileWeapon)
-    /// should implement IUpgradableWeapon and handle upgrades there.
-    /// </summary>
     public virtual bool TryUpgrade() => false;
 }

@@ -4691,7 +4691,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 634602839}
   m_HandleRect: {fileID: 634602838}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4745,6 +4745,7 @@ GameObject:
   m_Component:
   - component: {fileID: 718737860}
   - component: {fileID: 718737861}
+  - component: {fileID: 718737862}
   m_Layer: 0
   m_Name: GameSystems
   m_TagString: Untagged
@@ -4779,6 +4780,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55abdd10c58e9874690cb88df17e2b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &718737862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718737859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d06fa7ff6971924fbc8d1a9c8002626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionChecks: 0
+  defaultCapacity: 16
+  maxSize: 256
 --- !u!1 &740600541
 GameObject:
   m_ObjectHideFlags: 0
@@ -6096,6 +6112,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1913941442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &843293032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 843293033}
+  - component: {fileID: 843293034}
+  m_Layer: 0
+  m_Name: Scene Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &843293033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843293032}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1140890938}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &843293034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843293032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84edee4b92664ef42b6b5682491f421d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools: {fileID: 718737862}
+  runOnStart: 1
+  entries: []
+  weaponEntries:
+  - definition: {fileID: 11400000, guid: 95adee8733bbf8947a8b36840ffffc75, type: 2}
+    projectile: 50
+    muzzleFlash: 1
 --- !u!1 &867000721
 GameObject:
   m_ObjectHideFlags: 0
@@ -7740,6 +7807,7 @@ Transform:
   - {fileID: 718737860}
   - {fileID: 1414733345}
   - {fileID: 764330101}
+  - {fileID: 843293033}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1183600882
