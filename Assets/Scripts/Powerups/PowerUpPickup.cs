@@ -10,6 +10,8 @@ public class PowerUpPickup : MonoBehaviour
     [Tooltip("If set and the asset uses CustomParentHint, the effect will be parented to this Transform.")]
     [SerializeField] private Transform vfxParentOverride;
 
+    private bool consumed;
+
     private void Awake()
     {
         var col = GetComponent<Collider2D>();
@@ -19,11 +21,13 @@ public class PowerUpPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (consumed) return;
         var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
         var controller = root.GetComponentInChildren<PowerUpController>();
         if (!controller || !powerUp) return;
 
         // 1) Fire one-shot + start timed effects (controller will spawn duration VFX)
+        consumed = true;
         controller.Apply(powerUp, vfxParentOverride, transform.position);
 
         // 2) Play pickup VFX immediately (short‑lived)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using System;
 
@@ -72,6 +73,9 @@ public class PowerUpController : MonoBehaviour
     public void Apply(PowerUpDefinition def, Transform vfxParentHint = null, Vector3? pickupWorldOrigin = null)
     {
         float now = Time.time;
+// Right before applying OneShot effects
+Debug.Log($"[PowerUpController] Applying {def.name} one-shots: " +
+          string.Join(", ", def.oneShotEffects.Select(e => $"{e.name} ({e.GetType().Name})")));
 
         // 1) One-shots fire immediately
         if (def.oneShotEffects != null)
