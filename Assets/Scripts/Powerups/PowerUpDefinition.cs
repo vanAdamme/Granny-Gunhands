@@ -10,6 +10,8 @@ public class PowerUpDefinition : ScriptableObject
     public string displayName;
     public Sprite icon;
     [TextArea] public string description;
+    [SerializeField] private Rarity rarity = Rarity.Common;
+    public Rarity Rarity => rarity;
 
     [Tooltip("0 or less = permanent")]
     public float durationSeconds = 10f;
@@ -26,6 +28,7 @@ public class PowerUpDefinition : ScriptableObject
     public VFXAttachMode PickupVFXAttach => pickupVFXAttach;
     public string PickupAnchorName => pickupAnchorName;
     public float PickupVFXLifetime => pickupVFXLifetime;
+    public Sprite Icon => icon;
 
     [Header("Duration VFX (optional) — follows buff lifetime")]
     [SerializeField] private GameObject durationVFXPrefab;
@@ -50,4 +53,12 @@ public class PowerUpDefinition : ScriptableObject
 
     // NEW: one‑shot effects (fire instantly and are NOT tracked)
     public List<OneShotEffectBase> oneShotEffects = new();
+
+    // ADD at end of the class (a minimal hook; wire real effects later)
+    public void Apply(IPlayerContext ctx)
+    {
+        // TODO: iterate effects / one-shots; for now this is a safe no-op
+        // foreach (var fx in effects) fx?.Start(ctx, durationSeconds, ...);
+        // foreach (var once in oneShotEffects) once?.Fire(ctx);
+    }
 }

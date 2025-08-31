@@ -15,11 +15,11 @@ public class PowerUpPickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         var ctx = other.GetComponentInParent<IPlayerContext>();
-        if (!ctx) return;
+        if (ctx == null) return;
 
         if (Definition != null)
         {
-            Definition.Apply(ctx); // or raise event / add to inventory
+            Definition.Apply(ctx);
             Destroy(gameObject);
         }
     }

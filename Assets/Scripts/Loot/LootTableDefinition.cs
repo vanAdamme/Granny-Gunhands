@@ -116,6 +116,15 @@ public class LootTableDefinition : ScriptableObject
         }
     }
 
+    // Back-compat shim for older callers
+    public bool TrySpawnDrop(Vector3 where)
+    {
+        TrySpawnLoot(where, null);
+        // TrySpawnLoot is void; return true means "attempted". Change to
+        // a bool return in future if you want certainty.
+        return true;
+    }
+
     private static bool Roll(float p) => p > 0f && UnityEngine.Random.value <= p;
 
     private static int PickWeightedIndex(int[] weights, int total)

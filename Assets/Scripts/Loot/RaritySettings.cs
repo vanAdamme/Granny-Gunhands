@@ -18,6 +18,13 @@ public class RaritySettings : ScriptableObject
 
     [SerializeField] private List<Style> styles = new();
 
+    public Style Get(Rarity r)
+    {
+        int i = styles.FindIndex(s => s.rarity == r);
+        return (i >= 0) ? styles[i]
+                        : new Style { rarity = r, colour = Color.white, defaultDropChance = 1f, defaultWeight = 1 };
+    }
+
     public float GetDefaultDropChance(Rarity r)
     {
         var s = styles.Find(x => x.rarity == r);
