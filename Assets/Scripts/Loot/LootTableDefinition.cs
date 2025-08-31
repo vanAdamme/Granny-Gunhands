@@ -1,108 +1,132 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Loot/Loot Table")]
+[CreateAssetMenu(menuName = "Loot/Loot Table Definition")]
 public class LootTableDefinition : ScriptableObject
 {
-    [System.Serializable]
+    [Header("Config")]
+    [SerializeField] private RaritySettings raritySettings;
+
+    [Serializable]
     public class Entry
     {
         [Header("Pick ONE payload")]
         public WeaponDefinition weaponDef;
         public PowerUpDefinition powerUpDef;
-        public GameObject prefab;
+        public GameObject prefab; // any arbitrary prefab
 
         [Header("Overrides (0 = use rarity defaults)")]
-        [Range(0f,1f)] public float dropChanceOverride;
-        [Min(0)] public int weightOverride;
+        [Range(0f, 1f)] public float dropChanceOverride; // per-entry chance; 0 => use rarity default
+        public int weightOverride;                        // selection weight; 0 => use rarity default
+
+        public bool HasWeapon => weaponDef != null;
+        public bool HasPowerUp => powerUpDef != null;
+        public bool HasPrefab => prefab != null;
+
+        public Rarity GetRarity()
+        {
+            if (HasWeapon) return weaponDef.Rarity;
+            if (HasPowerUp) return powerUpDef.Rarity;
+            // for raw prefab entries, treat as Common by default (or add a field)
+            return Rarity.Common;
+        }
     }
 
-    [Header("Config")]
-    [SerializeField] private RaritySettings raritySettings;
-    [SerializeField] private List<Entry> entries = new();
-    [SerializeField, Range(0f,1f)] private float overallDropChance = 1f; // roll to drop anything at all
+    [SerializeField] private List<Entry> entries = new List<Entry>();
+
+    [Header("Overall Drop Chance")]
+    [Tooltip("Multiply against entry chance (from rarity or override).")]
+    [Range(0f, 1f)] public float overallDropChance = 0.5f;
+
+    [Header("Pickup Prefabs (used when a Definition is chosen)")]
     [SerializeField] private WeaponPickup weaponPickupPrefab;
     [SerializeField] private PowerUpPickup powerUpPickupPrefab;
-    [SerializeField] private Vector2 spawnJitter = new(0.25f, 0.25f);
 
-    public bool TrySpawnDrop(Vector3 worldPos)
+    [Header("Spawn")]
+    [SerializeField] private Vector2 spawnJitter = new Vector2(0.25f, 0.25f);
+
+    public void TrySpawnLoot(Vector3 where, Transform parent = null)
     {
-        if (Random.value > overallDropChance) return false;
+        if (entries == null || entries.Count == 0) return;
 
-        var candidates = new List<(Entry e, float weight)>();
-        float total = 0f;
+        // 1) Global drop roll
+        if (!Roll(overallDropChance)) return;
 
-        foreach (var e in entries)
+        // 2) Build weight list using rarity settings (with overrides)
+        int total = 0;
+        var weights = new int[entries.Count];
+
+        for (int i = 0; i < entries.Count; i++)
         {
-            if (e == null) continue;
+            var e = entries[i];
+            int w = e.weightOverride > 0
+                ? e.weightOverride
+                : raritySettings.GetDefaultWeight(e.GetRarity());
+            weights[i] = Mathf.Max(0, w);
+            total += weights[i];
+        }
 
-            float chance, weight;
+        if (total <= 0) return;
 
-            if (e.weaponDef)
+        // 3) Pick one entry by weight
+        int pick = PickWeightedIndex(weights, total);
+        var entry = entries[pick];
+
+        // 4) Entry-level chance (rarity default or override)
+        float chance = entry.dropChanceOverride > 0f
+            ? entry.dropChanceOverride
+            : raritySettings.GetDefaultDropChance(entry.GetRarity());
+
+        if (!Roll(chance)) return;
+
+        // 5) Spawn the right thing
+        Vector3 pos = where + (Vector3)new Vector2(UnityEngine.Random.Range(-spawnJitter.x, spawnJitter.x),
+                                                   UnityEngine.Random.Range(-spawnJitter.y, spawnJitter.y));
+
+        if (entry.HasWeapon)
+        {
+            if (!weaponPickupPrefab)
             {
-                var st = raritySettings ? raritySettings.Get(e.weaponDef.Rarity) : default;
-                chance = e.dropChanceOverride > 0f ? e.dropChanceOverride : st.defaultDropChance;
-                weight = e.weightOverride > 0 ? e.weightOverride : Mathf.Max(1, st.defaultWeight);
+                Debug.LogWarning("[LootTable] WeaponPickup Prefab not set.");
+                return;
             }
-            else
+
+            var pickup = Instantiate(weaponPickupPrefab, pos, Quaternion.identity, parent);
+            pickup.SetDefinition(entry.weaponDef); // make sure WeaponPickup exposes SetDefinition(WeaponDefinition)
+        }
+        else if (entry.HasPowerUp)
+        {
+            if (!powerUpPickupPrefab)
             {
-                // Non-weapon entries: honour manual overrides only
-                chance = e.dropChanceOverride;
-                weight = Mathf.Max(1, e.weightOverride);
+                Debug.LogWarning("[LootTable] PowerUpPickup Prefab not set.");
+                return;
             }
 
-            if (chance <= 0f || weight <= 0f) continue;
-            if (Random.value > chance) continue;
-
-            candidates.Add((e, weight));
-            total += weight;
+            var pickup = Instantiate(powerUpPickupPrefab, pos, Quaternion.identity, parent);
+            pickup.SetDefinition(entry.powerUpDef); // see PowerUpPickup below
         }
-
-        if (candidates.Count == 0) return false;
-
-        float r = Random.value * total;
-        foreach (var c in candidates)
+        else if (entry.HasPrefab)
         {
-            if ((r -= c.weight) > 0f) continue;
-            Spawn(c.e, worldPos + new Vector3(
-                Random.Range(-spawnJitter.x, spawnJitter.x),
-                Random.Range(-spawnJitter.y, spawnJitter.y), 0));
-            return true;
+            Instantiate(entry.prefab, pos, Quaternion.identity, parent);
         }
-        return false;
+        else
+        {
+            // nothing selected; silent no-op
+        }
     }
 
-    private void Spawn(Entry e, Vector3 p)
+    private static bool Roll(float p) => p > 0f && UnityEngine.Random.value <= p;
+
+    private static int PickWeightedIndex(int[] weights, int total)
     {
-        if (e.weaponDef && weaponPickupPrefab)
+        int r = UnityEngine.Random.Range(0, total);
+        int c = 0;
+        for (int i = 0; i < weights.Length; i++)
         {
-            var pick = Instantiate(weaponPickupPrefab, p, Quaternion.identity);
-            pick.Init(e.weaponDef);
-            return;
+            c += weights[i];
+            if (r < c) return i;
         }
-        if (e.powerUpDef && powerUpPickupPrefab)
-        {
-            var pick = Instantiate(powerUpPickupPrefab, p, Quaternion.identity);
-            pick.Init(e.powerUpDef);
-            return; 
-        }
-        if (e.prefab) Instantiate(e.prefab, p, Quaternion.identity);
+        return weights.Length - 1;
     }
-
-    #if UNITY_EDITOR
-    void OnValidate()
-    {
-        foreach (var e in entries)
-        {
-            if (e == null) continue;
-            int count = (e.weaponDef ? 1 : 0) + (e.powerUpDef ? 1 : 0) + (e.prefab ? 1 : 0);
-            if (count > 1)
-                Debug.LogWarning($"[LootTable] Entry has multiple payloads; only one will be used.", this);
-            if (!weaponPickupPrefab && e.weaponDef)
-                Debug.LogWarning($"[LootTable] Weapon entry but Weapon Pickup Prefab is not assigned.", this);
-            if (!powerUpPickupPrefab && e.powerUpDef)
-                Debug.LogWarning($"[LootTable] PowerUp entry but PowerUp Pickup Prefab is not assigned.", this);
-        }
-    }
-    #endif
 }

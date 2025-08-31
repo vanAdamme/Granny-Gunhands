@@ -1,17 +1,19 @@
 using UnityEngine;
 using Pathfinding;
-using System;
 
 public class Enemy : Target
 {
     [Header("Enemy Settings")]
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private int experienceOnDeath = 1;
-    [SerializeField] private LootTableDefinition lootTable;
 
     [Header("Contact Damage")]
     [SerializeField] private Damager contactDamager;   // on the same GameObject as Enemy
     [SerializeField] private float contactDamage = 1f;
+
+    [Header("Loot")]
+    [SerializeField] private LootTableDefinition lootTable;
+    [SerializeField] private Transform lootParent;
 
     private Transform player;
     private AIPath path;
@@ -19,10 +21,10 @@ public class Enemy : Target
     private void Start()
     {
         player = PlayerController.Instance?.transform;
+
         path = GetComponent<AIPath>();
         if (path) path.maxSpeed = moveSpeed;
 
-        // Prefer Damager on the base object. Fall back to child search only if missing.
         if (!contactDamager)
             contactDamager = GetComponent<Damager>() ?? GetComponentInChildren<Damager>(true);
 
@@ -46,16 +48,20 @@ public class Enemy : Target
     protected override void Die()
     {
         EnemyEvents.RaiseEnemyKilled();
-
-        // Spawn loot
-        if (lootTable) lootTable.TrySpawnDrop(transform.position);
-
-        base.Die(); // Sets m_IsDead, deactivates object
+        DropLoot();
         PlayerController.Instance?.AddExperience(experienceOnDeath);
+        base.Die(); // Sets m_IsDead, deactivates object
+    }
+
+    private void DropLoot()
+    {
+        if (!lootTable) return;
+        lootTable.TrySpawnLoot(transform.position, lootParent);
+        // If you migrate to the newer LootTableDefinition, change to:
+        // if (lootTable) lootTable.TrySpawnDrop(transform.position);
     }
 
 #if UNITY_EDITOR
-    // Helpful in the editor to auto-wire on prefab changes
     private void OnValidate()
     {
         if (!contactDamager)

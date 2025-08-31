@@ -3,33 +3,19 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class ItemPickup : MonoBehaviour
 {
-    [SerializeField] private InventoryItemDefinition item;
-    [SerializeField] private int amount = 1;
+    public InventoryItemDefinition Definition { get; private set; }
 
-    [Header("FX (optional)")]
-    [SerializeField] private GameObject vfxOnPickup;
-    [SerializeField] private float vfxLifetime = 1.5f;
-
-    private void Awake()
-    {
-        var c = GetComponent<Collider2D>();
-        c.isTrigger = true;
-        // Tag this something like "Pickup" (NOT "Item") to avoid PlayerController auto-destroy.
-    }
+    public void SetDefinition(InventoryItemDefinition def) => Definition = def;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        var inv = other.GetComponent<ItemInventory>();
+        var inv = other.GetComponentInParent<ItemInventory>();
         if (!inv) return;
 
-        inv.Add(item, amount);
-
-        if (vfxOnPickup)
+        if (Definition != null)
         {
-            var fx = Instantiate(vfxOnPickup, transform.position, Quaternion.identity);
-            if (vfxLifetime > 0) Destroy(fx, vfxLifetime);
+            inv.Add(Definition, 1);
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
     }
 }

@@ -1,25 +1,38 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Rarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
+public enum Rarity { Common, Uncommon, Rare, Epic, Legendary, Mythic } // adjust to your list
 
 [CreateAssetMenu(menuName = "Loot/Rarity Settings")]
 public class RaritySettings : ScriptableObject
 {
-    [System.Serializable]
-    public struct Style
+    [Serializable]
+    public class Style
     {
         public Rarity rarity;
-        public Color  colour;              // UI tint
-        [Range(0f,1f)] public float defaultDropChance;
-        [Min(0)] public int defaultWeight; // relative weight among qualifiers
+        public Color colour;
+        [Range(0f,1f)] public float defaultDropChance = 1f;
+        public int defaultWeight = 1;
     }
 
     [SerializeField] private List<Style> styles = new();
 
-    public Style Get(Rarity r)
+    public float GetDefaultDropChance(Rarity r)
     {
-        int i = styles.FindIndex(s => s.rarity == r);
-        return (i >= 0) ? styles[i] : new Style { rarity=r, colour=Color.white, defaultDropChance=1f, defaultWeight=1 };
+        var s = styles.Find(x => x.rarity == r);
+        return s != null ? s.defaultDropChance : 1f;
+    }
+
+    public int GetDefaultWeight(Rarity r)
+    {
+        var s = styles.Find(x => x.rarity == r);
+        return s != null ? s.defaultWeight : 1;
+    }
+
+    public Color GetColour(Rarity r)
+    {
+        var s = styles.Find(x => x.rarity == r);
+        return s != null ? s.colour : Color.white;
     }
 }
