@@ -14,22 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raritySettings: {fileID: 11400000, guid: 16a6e4ba997e725418b17128a623c9d3, type: 2}
   entries:
+  - weaponDef: {fileID: 0}
+    powerUpDef: {fileID: 11400000, guid: c31a0c712f25b0740be42220ede405ef, type: 2}
+    prefab: {fileID: 0}
+    dropChanceOverride: 0
+    weightOverride: 0
+  - weaponDef: {fileID: 0}
+    powerUpDef: {fileID: 11400000, guid: d33b8a320acea08419170bbd9882662b, type: 2}
+    prefab: {fileID: 0}
+    dropChanceOverride: 0
+    weightOverride: 0
   - weaponDef: {fileID: 11400000, guid: ef342f91b593a8d46914ea136f8e929c, type: 2}
     powerUpDef: {fileID: 0}
     prefab: {fileID: 0}
     dropChanceOverride: 0
     weightOverride: 0
-  - weaponDef: {fileID: 11400000, guid: 95adee8733bbf8947a8b36840ffffc75, type: 2}
-    powerUpDef: {fileID: 0}
-    prefab: {fileID: 0}
-    dropChanceOverride: 0
-    weightOverride: 0
-  - weaponDef: {fileID: 11400000, guid: 28a270ba1b406804bbbd1f85aa6a8b44, type: 2}
-    powerUpDef: {fileID: 0}
-    prefab: {fileID: 0}
-    dropChanceOverride: 0
-    weightOverride: 0
-  overallDropChance: 1
+  overallDropChance: 0.486
   weaponPickupPrefab: {fileID: -2376700922227354871, guid: 39ab352b6cc316c46a95eca7d1ae81a4, type: 3}
-  powerUpPickupPrefab: {fileID: 0}
+  powerUpPickupPrefab: {fileID: -8423786333439279373, guid: 7fc24647480ecdd4988e21b765102501, type: 3}
   spawnJitter: {x: 0.25, y: 0.25}
