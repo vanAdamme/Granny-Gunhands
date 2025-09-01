@@ -50,20 +50,26 @@ public class WeaponUpgradeItemDefinition : InventoryItemDefinition
         if (!IsCategoryMatch(weapon, out reason)) return false;
 
         if (weapon is IUpgradableWeapon up)
-            return up.TryApplyUpgrade(levels, out appliedLevels, out reason);
+        {
+            var ok = up.TryApplyUpgrade(levels, out appliedLevels, out reason);
+            if (ok && appliedLevels > 0) UpgradeEvents.RaiseApplied(weapon, appliedLevels);
+            return ok;
+        }
 
         // Fallback: TryUpgrade(int, out int)
         var mTry = weapon.GetType().GetMethod(
             "TryUpgrade",
-            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic,
             null,
             new[] { typeof(int), typeof(int).MakeByRefType() },
             null);
+
         if (mTry != null)
         {
             object[] args = { levels, 0 };
             bool ok = (bool)mTry.Invoke(weapon, args);
             appliedLevels = (int)args[1];
+            if (ok && appliedLevels > 0) UpgradeEvents.RaiseApplied(weapon, appliedLevels);
             if (!ok || appliedLevels <= 0) reason = "No upgrade applied.";
             return ok && appliedLevels > 0;
         }
@@ -71,14 +77,16 @@ public class WeaponUpgradeItemDefinition : InventoryItemDefinition
         // Fallback: ApplyUpgrade(int)
         var mApply = weapon.GetType().GetMethod(
             "ApplyUpgrade",
-            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic,
             null,
             new[] { typeof(int) },
             null);
+
         if (mApply != null)
         {
             mApply.Invoke(weapon, new object[] { levels });
             appliedLevels = levels;
+            UpgradeEvents.RaiseApplied(weapon, appliedLevels);
             return true;
         }
 

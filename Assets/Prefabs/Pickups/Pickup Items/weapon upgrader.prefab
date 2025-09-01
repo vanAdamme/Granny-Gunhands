@@ -147,5 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24756a2c099df448beb6b35cb952c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeItem: {fileID: 11400000, guid: 36e7c5f5616b52d459528df9d5a534a7, type: 2}
+  spriteRenderer: {fileID: 5979494316605714520}
   toastServiceSource: {fileID: 9088840777072865735, guid: 436747962036e3c4bb71966c9e75717e, type: 3}
+  toastTemplate: 
+  hideSpriteOnConsume: 1
+  disableColliderOnConsume: 1
+  upgradeItem: {fileID: 11400000, guid: 36e7c5f5616b52d459528df9d5a534a7, type: 2}

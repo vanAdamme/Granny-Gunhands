@@ -2,33 +2,24 @@ using UnityEngine;
 
 public class UpgradeToastListener : MonoBehaviour
 {
-    private UIController ui;
+    [SerializeField] private MonoBehaviour toastServiceSource;  // IToastService
+    [TextArea] [SerializeField] private string appliedTemplate = "{name} +{levels} level{s}"; // NEW
+    private IToastService toast;
 
-    private void Awake()
+    private void Awake() => toast = toastServiceSource as IToastService;
+    private void OnEnable()  => UpgradeEvents.OnApplied += Handle;
+    private void OnDisable() => UpgradeEvents.OnApplied -= Handle;
+
+    private void Handle(Weapon weapon, int appliedLevels)
     {
-        ui = UIController.Instance ?? FindFirstObjectByType<UIController>(); // Unity 6-safe
-    }
+        if (toast == null || weapon == null) return;
+        var name = weapon.Definition ? weapon.Definition.DisplayName : weapon.name;
 
-    private void OnEnable()
-    {
-        WeaponUpgradePickup.OnWeaponUpgraded += Handle;
-    }
+        string msg = appliedTemplate
+            .Replace("{name}",   name)
+            .Replace("{levels}", appliedLevels.ToString())
+            .Replace("{s}",      appliedLevels == 1 ? "" : "s");
 
-    private void OnDisable()
-    {
-        WeaponUpgradePickup.OnWeaponUpgraded -= Handle;
-    }
-
-    private void Handle(Weapon weapon, int newLevel)
-    {
-        if (!ui) return;
-
-        string name = weapon && weapon.Definition
-            ? weapon.Definition.DisplayName
-            : weapon ? weapon.name : "Weapon";
-
-        var icon = weapon ? weapon.icon : null;
-
-        ui.ShowUpgradeToast(name, newLevel, icon);
+        toast.Show(msg);
     }
 }

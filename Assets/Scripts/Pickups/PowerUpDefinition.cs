@@ -7,9 +7,14 @@ public enum VFXAttachMode { PlayerRoot, PickupOrigin, NamedAnchorOnCollector, Cu
 [CreateAssetMenu(menuName = "Powerups/PowerUp Definition")]
 public class PowerUpDefinition : ScriptableObject
 {
-    public string displayName;
-    public Sprite icon;
+    [SerializeField] private string displayName;   // NEW: inspector-friendly name
+    public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? name : displayName;
+
+    [SerializeField] private Sprite icon;
+    public Sprite Icon => icon;
+
     [TextArea] public string description;
+
     [SerializeField] private Rarity rarity = Rarity.Common;
     public Rarity Rarity => rarity;
 
@@ -20,7 +25,7 @@ public class PowerUpDefinition : ScriptableObject
     [Header("Pickup Feedback (optional)")]
     [SerializeField] private GameObject pickupVFXPrefab;
     [SerializeField] private VFXAttachMode pickupVFXAttach = VFXAttachMode.PlayerRoot;
-    [SerializeField] private string pickupAnchorName = "";     // used if NamedAnchorOnCollector
+    [SerializeField] private string pickupAnchorName = "";
     [Tooltip("Seconds. <= 0 = auto (use animation/particle length)")]
     [SerializeField] private float pickupVFXLifetime = 0f;
 
@@ -28,18 +33,14 @@ public class PowerUpDefinition : ScriptableObject
     public VFXAttachMode PickupVFXAttach => pickupVFXAttach;
     public string PickupAnchorName => pickupAnchorName;
     public float PickupVFXLifetime => pickupVFXLifetime;
-    public Sprite Icon => icon;
 
     [Header("Duration VFX (optional) — follows buff lifetime")]
     [SerializeField] private GameObject durationVFXPrefab;
     [SerializeField] private VFXAttachMode durationVFXAttach = VFXAttachMode.PlayerRoot;
-    [SerializeField] private string durationAnchorName = "";   // used if NamedAnchorOnCollector
+    [SerializeField] private string durationAnchorName = "";
 
     [Header("Duration VFX Options")]
-    [Tooltip("If true, destroy duration VFX when the buff ends. If false, let the VFX finish naturally.")]
     [SerializeField] private bool durationVFXClampToBuff = true;
-
-    [Tooltip("If not clamped, unparent on buff end so it stops following the player.")]
     [SerializeField] private bool durationVFXUnparentOnEnd = true;
 
     public GameObject DurationVFXPrefab => durationVFXPrefab;
@@ -48,17 +49,9 @@ public class PowerUpDefinition : ScriptableObject
     public bool DurationVFXClampToBuff => durationVFXClampToBuff;
     public bool DurationVFXUnparentOnEnd => durationVFXUnparentOnEnd;
 
-    // Timed/permanent effects (use IPowerUpEffect via PowerUpEffectBase)
     public List<PowerUpEffectBase> effects = new();
-
-    // NEW: one‑shot effects (fire instantly and are NOT tracked)
     public List<OneShotEffectBase> oneShotEffects = new();
 
-    // ADD at end of the class (a minimal hook; wire real effects later)
-    public void Apply(IPlayerContext ctx)
-    {
-        // TODO: iterate effects / one-shots; for now this is a safe no-op
-        // foreach (var fx in effects) fx?.Start(ctx, durationSeconds, ...);
-        // foreach (var once in oneShotEffects) once?.Fire(ctx);
-    }
+    // Optional: still present if something elsewhere calls it (no-op by default)
+    public void Apply(IPlayerContext ctx) { /* intentionally empty; controller handles effects */ }
 }

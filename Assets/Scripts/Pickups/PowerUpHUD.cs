@@ -39,7 +39,7 @@ public class PowerUpHUD : MonoBehaviour
     {
         current = def;
         remaining = rem;
-        iconImage.sprite = def.icon;
+        iconImage.sprite = def ? def.Icon : null;
         iconImage.enabled = true;
         timerText.enabled = def.durationSeconds > 0f;
         timerText.text = def.durationSeconds > 0f ? $"{rem:0.0}s" : "";

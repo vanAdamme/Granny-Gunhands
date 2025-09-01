@@ -7,7 +7,7 @@ public class PowerUpBar : MonoBehaviour
 
     private PowerUpController controller;
     private readonly List<PowerUpController.ActiveInfo> snapshot = new();
-    private readonly Dictionary<int, PowerUpIcon> byId = new(); // instanceId -> icon
+    private readonly Dictionary<int, PowerUpIcon> byId = new();
     private readonly Stack<PowerUpIcon> pool = new();
 
     private void Start()
@@ -20,7 +20,6 @@ public class PowerUpBar : MonoBehaviour
     {
         controller.BuildSnapshot(snapshot);
 
-        // Mark all as unseen
         var seen = HashSetCache.Get();
         try
         {
@@ -31,12 +30,11 @@ public class PowerUpBar : MonoBehaviour
                 {
                     icon = GetIcon();
                     byId[info.id] = icon;
-                    icon.SetData(info.definition.icon, info.definition.displayName);
+                    icon.SetData(info.definition.Icon, info.definition.DisplayName); // CHANGED
                 }
                 icon.SetTime(info.remaining);
             }
 
-            // Return any icons that are no longer active
             var toRemove = ListCache<int>.Get();
             try
             {
@@ -68,7 +66,7 @@ public class PowerUpBar : MonoBehaviour
         pool.Push(icon);
     }
 
-    // tiny helpers to avoid GC; you can skip these if you prefer simplicity
+    // caches unchanged...
     private static class HashSetCache
     {
         private static readonly Stack<HashSet<int>> cache = new();
