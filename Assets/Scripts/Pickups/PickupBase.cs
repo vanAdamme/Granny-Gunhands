@@ -25,7 +25,13 @@ public abstract class PickupBase : MonoBehaviour
         col2d = GetComponent<Collider2D>();
         if (col2d) col2d.isTrigger = true;
 
-        toast = toastServiceSource as IToastService;
+        toast = toastServiceSource as IToastService
+            ?? UIController.Instance as IToastService
+            ?? FindFirstObjectByType<UIController>() as IToastService;
+
+        if (toast == null)
+            Debug.LogWarning($"[{name}] No IToastService available; toasts will be suppressed.");
+
         tag = "Item";
         SyncVisual();
     }

@@ -2,5 +2,6 @@ using UnityEngine;
 
 public abstract class OneShotEffectBase : ScriptableObject
 {
-    public abstract void ApplyOnce(IPlayerContext player);
+    /// Return true if something meaningful happened (e.g., HP increased).
+    public abstract bool ApplyOnce(IPlayerContext player);
 }

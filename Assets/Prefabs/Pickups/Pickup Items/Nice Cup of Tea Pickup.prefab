@@ -139,6 +139,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7477910863764835083}
   toastServiceSource: {fileID: 9088840777072865735, guid: 436747962036e3c4bb71966c9e75717e, type: 3}
+  toastTemplate: 'Mmmm ... A nice cup of tea!
+
+    +{amount} HP'
   hideSpriteOnConsume: 1
   disableColliderOnConsume: 1
   definition: {fileID: 11400000, guid: c31a0c712f25b0740be42220ede405ef, type: 2}

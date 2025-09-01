@@ -3,13 +3,19 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Powerups/One‑Shot/Auto Heal")]
 public class AutoHealEffect : OneShotEffectBase
 {
-    [Min(1f)] public int healAmount;
+    [SerializeField] private float amount = 20f;
 
-    public override void ApplyOnce(IPlayerContext player)
+    public override bool ApplyOnce(IPlayerContext ctx)
     {
-        if (player == null) return;
-        if (player is PlayerController pc && pc.CurrentHealth >= pc.MaxHealth) return;
-        player.Heal(healAmount);
-        UIController.Instance?.ShowToast($"+{healAmount} HP", null, 1.2f);
+        var mono = ctx as MonoBehaviour;
+        var player = mono ? mono.GetComponentInParent<PlayerController>() : null;
+        if (!player) return false;
+
+        // Assume Target exposes CurrentHealth and MaxHealth; if not, adapt to your API.
+        float before = player.CurrentHealth;
+        if (before >= player.MaxHealth) return false; // nothing to do
+
+        player.Heal(amount);
+        return player.CurrentHealth > before;         // true only if HP actually increased
     }
 }

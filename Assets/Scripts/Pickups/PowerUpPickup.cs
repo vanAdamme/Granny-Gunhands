@@ -12,16 +12,20 @@ public class PowerUpPickup : PickupBase
     {
         if (consumed || !definition) return;
 
-        var root       = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
-        var controller = root.GetComponentInChildren<PowerUpController>();
+        var controller = other.GetComponentInParent<PowerUpController>();
         if (!controller) return;
 
-        controller.Apply(definition, vfxParentHint: root, pickupWorldOrigin: transform.position);
-
-        // toast: falls back to DisplayName if no template is set
-        var name = definition.DisplayName;
-        ShowToastTemplate(name, ("name", name));
-
-        StartCoroutine(Consume());
+        bool didAnything = controller.Apply(definition, vfxParentHint: null, pickupWorldOrigin: transform.position);
+        if (didAnything)
+        {
+            var n = definition.DisplayName;
+            ShowToastTemplate(n, ("name", n));     // uses the Inspector template if set, else falls back to n
+            StartCoroutine(Consume());
+        }
+        else
+        {
+            ShowToast("HP is already full");       // explain why it didn’t disappear
+            // do NOT consume
+        }
     }
 }

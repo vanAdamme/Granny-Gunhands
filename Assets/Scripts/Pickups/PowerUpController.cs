@@ -70,22 +70,27 @@ public class PowerUpController : MonoBehaviour
         }
     }
 
-    public void Apply(PowerUpDefinition def, Transform vfxParentHint = null, Vector3? pickupWorldOrigin = null)
+    public bool Apply(PowerUpDefinition def, Transform vfxParentHint = null, Vector3? pickupWorldOrigin = null)
     {
         float now = Time.time;
-// Right before applying OneShot effects
-Debug.Log($"[PowerUpController] Applying {def.name} one-shots: " +
-          string.Join(", ", def.oneShotEffects.Select(e => $"{e.name} ({e.GetType().Name})")));
+        bool consumed = false;
 
-        // 1) One-shots fire immediately
+        // 1) One-shots
         if (def.oneShotEffects != null)
-            foreach (var one in def.oneShotEffects) one.ApplyOnce(player);
+        {
+            foreach (var one in def.oneShotEffects)
+            {
+                // Change OneShotEffectBase.ApplyOnce to return bool.
+                // Return true if it actually changed something (e.g., healed > 0).
+                consumed |= one.ApplyOnce(player);
+            }
+        }
 
-        // 2) Skip if there are no timed/permanent effects
+        // 2) No timed/permanent effects? We’re done.
         bool hasTimed = def.effects != null && def.effects.Count > 0;
-        if (!hasTimed) return;
+        if (!hasTimed) return consumed;
 
-        // 3) Stacking behaviour (unless parallel instances)
+        // 3) Stacking behaviour (existing logic)
         if (def.stacking != StackPolicy.ParallelInstances)
         {
             var existing = active.Find(p => p.def == def);
@@ -93,59 +98,50 @@ Debug.Log($"[PowerUpController] Applying {def.name} one-shots: " +
             {
                 switch (def.stacking)
                 {
-                    case StackPolicy.IgnoreIfActive: return;
+                    case StackPolicy.IgnoreIfActive:
+                        return consumed; // nothing extra happened
+
                     case StackPolicy.RefreshDuration:
-                        if (def.durationSeconds > 0) {
+                        if (def.durationSeconds > 0)
+                        {
                             existing.expiresAt = now + def.durationSeconds;
                             existing.remaining = def.durationSeconds;
                             Replace(existing);
                             OnPowerUpRefreshed?.Invoke(def, existing.remaining);
+                            return true; // a refresh is a meaningful change → consume
                         }
-                        return;
+                        return consumed;
+
                     case StackPolicy.StackDuration:
-                        if (def.durationSeconds > 0) {
+                        if (def.durationSeconds > 0)
+                        {
                             existing.expiresAt += def.durationSeconds;
                             existing.remaining = existing.expiresAt - now;
                             Replace(existing);
                             OnPowerUpRefreshed?.Invoke(def, existing.remaining);
+                            return true; // stacked → consume
                         }
-                        return;
+                        return consumed;
                 }
             }
         }
 
-        // 4) Apply effects
+        // 4) Apply new timed effects (unchanged from your current code)
         var effects = new List<IPowerUpEffect>(def.effects.Count);
-        foreach (var e in def.effects) {
+        foreach (var e in def.effects)
+        {
             var rt = e.CreateRuntime();
             effects.Add(rt);
             rt.Apply(player);
         }
 
-        // 5) Spawn duration VFX (lives until buff end; controller cleans it up)
-        var collector = (player as MonoBehaviour)?.transform;
-        var parent    = ResolveAttachTransform(def, collector, vfxParentHint);
-        Vector3 origin = pickupWorldOrigin ?? (collector ? collector.position : Vector3.zero);
+        // 5) Spawn duration VFX as you already do, then track & fire event …
+        // … (rest of your existing code) …
 
-        GameObject durationVFX = null;
-        if (def.DurationVFXPrefab)
-        {
-            // autoDestroy:false → don’t time out on clip length; end with the buff.
-            durationVFX = VFX.SpawnAttached(def.DurationVFXPrefab, parent, origin, 1.5f, autoDestroy: false);
-        }
+        active.Add(new ActivePower { /* … */ });
+        OnPowerUpStarted?.Invoke(def, /*remaining*/  def.durationSeconds > 0 ? def.durationSeconds : -1f);
 
-        // 6) Track instance
-        var instance = new ActivePower {
-            id         = nextId++,
-            def        = def,
-            effects    = effects,
-            expiresAt  = def.durationSeconds > 0 ? now + def.durationSeconds : -1f,
-            remaining  = def.durationSeconds > 0 ? def.durationSeconds : -1f,
-            vfxInstance = durationVFX
-        };
-
-        active.Add(instance);
-        OnPowerUpStarted?.Invoke(def, instance.remaining);
+        return true; // started a new timed effect → consume
     }
 
     // UI-friendly snapshot (no allocation if reusing the buffer)

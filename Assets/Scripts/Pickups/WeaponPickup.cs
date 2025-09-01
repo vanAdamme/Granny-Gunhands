@@ -16,9 +16,7 @@ public class WeaponPickup : PickupBase
         if (consumed || !definition) return;
 
         var inv = other.GetComponentInParent<WeaponInventory>();
-        if (!inv) return;
-
-        if (inv.AddWeapon(definition, autoEquipToEmptyHand))
+        if (inv && inv.AddWeapon(definition, autoEquipToEmptyHand))
         {
             ShowToastTemplate(definition.DisplayName, ("name", definition.DisplayName));
             StartCoroutine(Consume());
