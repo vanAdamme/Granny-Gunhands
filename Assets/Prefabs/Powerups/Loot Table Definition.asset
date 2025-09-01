@@ -29,7 +29,7 @@ MonoBehaviour:
     prefab: {fileID: 0}
     dropChanceOverride: 0
     weightOverride: 0
-  overallDropChance: 0.486
+  overallDropChance: 1
   weaponPickupPrefab: {fileID: -2376700922227354871, guid: 39ab352b6cc316c46a95eca7d1ae81a4, type: 3}
   powerUpPickupPrefab: {fileID: -8423786333439279373, guid: 7fc24647480ecdd4988e21b765102501, type: 3}
-  spawnJitter: {x: 0.25, y: 0.25}
+  spawnJitter: {x: 0, y: 0}

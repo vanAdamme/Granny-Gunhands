@@ -93,7 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50659e83fcca32408b60c133d0d0c44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUp: {fileID: 11400000, guid: d33b8a320acea08419170bbd9882662b, type: 2}
+  spriteRenderer: {fileID: -3529382193265674295}
+  definition: {fileID: 11400000, guid: d33b8a320acea08419170bbd9882662b, type: 2}
 --- !u!212 &-3529382193265674295
 SpriteRenderer:
   m_ObjectHideFlags: 0

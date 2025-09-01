@@ -211,6 +211,7 @@ public class PlayerController : Target, IPlayerContext
 
     public override void Heal(float amount)
     {
+        Debug.Log($"[PlayerController] Heal({amount}) before={CurrentHealth}");
         base.Heal(amount);
         UIController.Instance.UpdateHealthSlider();
     }

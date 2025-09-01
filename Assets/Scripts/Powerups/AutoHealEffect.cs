@@ -9,7 +9,6 @@ public class AutoHealEffect : OneShotEffectBase
     {
         if (player == null) return;
         if (player is PlayerController pc && pc.CurrentHealth >= pc.MaxHealth) return;
-
         player.Heal(healAmount);
         UIController.Instance?.ShowToast($"+{healAmount} HP", null, 1.2f);
     }
