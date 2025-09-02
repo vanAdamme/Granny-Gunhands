@@ -50,7 +50,15 @@ public class WeaponUpgradeItemDefinition : InventoryItemDefinition
 
         // Fallback to legacy level-based upgrades
         if (weapon is IUpgradableWeapon up)
-            return up.TryApplyUpgrade(levels, out appliedLevels, out reason);
+        {
+            int applied;
+            if (up.TryApplyUpgrade(1, out applied, out reason) && applied > 0)
+            {
+                UpgradeEvents.RaiseApplied(weapon, applied);   // keeps your existing toast/UI in sync
+                return true;
+            }
+            return false;
+        }
 
         reason = "Weapon does not support upgrades.";
         return false;

@@ -14,6 +14,7 @@ public class LootTableDefinition : ScriptableObject
         [Header("Pick ONE payload")]
         public WeaponDefinition weaponDef;
         public PowerUpDefinition powerUpDef;
+        public WeaponUpgradeItemDefinition upgradeItemDef;
         public GameObject prefab; // any arbitrary prefab
 
         [Header("Overrides (0 = use rarity defaults)")]
@@ -42,6 +43,7 @@ public class LootTableDefinition : ScriptableObject
     [Header("Pickup Prefabs (used when a Definition is chosen)")]
     [SerializeField] private WeaponPickup weaponPickupPrefab;
     [SerializeField] private PowerUpPickup powerUpPickupPrefab;
+    [SerializeField] private WeaponUpgradePickup upgradePickupPrefab;
 
     [Header("Spawn")]
     [SerializeField] private Vector2 spawnJitter = new Vector2(0.25f, 0.25f);
@@ -105,6 +107,17 @@ public class LootTableDefinition : ScriptableObject
 
             var pickup = Instantiate(powerUpPickupPrefab, pos, Quaternion.identity, parent);
             pickup.SetDefinition(entry.powerUpDef); // see PowerUpPickup below
+        }
+        else if (entry.upgradeItemDef)
+        {
+            if (!upgradePickupPrefab)
+            {
+                Debug.LogError("[LootTable] Upgrade Pickup Prefab not assigned.");
+                return;
+            }
+            var p = Instantiate(upgradePickupPrefab, pos, Quaternion.identity, parent);
+            p.SetDefinition(entry.upgradeItemDef);
+            return;
         }
         else if (entry.HasPrefab)
         {

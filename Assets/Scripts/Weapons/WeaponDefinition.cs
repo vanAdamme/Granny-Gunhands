@@ -25,6 +25,9 @@ public class WeaponDefinition : ScriptableObject
     [Tooltip("Fallback/base icon (also used when LevelIcons slot is empty).")]
     public Sprite Icon;
 
+    [Header("Level Stats (optional)")]
+    [SerializeField] private WeaponLevelStats[] levelStats;     // size = number of tiers you want
+
     [Tooltip("[0] = Level 1, [1] = Level 2, ... Missing/null entries fall back to Icon.")]
     public Sprite[] LevelIcons;
 
@@ -70,6 +73,34 @@ public class WeaponDefinition : ScriptableObject
         return Icon;
     }
 
+    // Returns a stat block for a given level (1-based). If you ask for a level
+    // beyond what you defined, you get the last defined level.
+    public WeaponLevelStats GetStatsForLevel(int level)
+    {
+        if (!HasLevelStats)
+        {
+            // fall back to the definition’s base fields as “level 1”
+            return new WeaponLevelStats {
+                damage                 = damage,
+                projectileSpeed        = projectileSpeed,
+                range                  = range,
+                maxPierces             = maxPierces,
+                pierceThroughObstacles = pierceThroughObstacles,
+                cooldown               = Mathf.Max(0.01f, baseCooldown),
+            };
+        }
+
+        int idx = Mathf.Clamp(level - 1, 0, levelStats.Length - 1);
+        var s = levelStats[idx];
+
+        // safety: if any level forgot to set cooldown, use baseCooldown
+        if (s.cooldown <= 0f) s.cooldown = Mathf.Max(0.01f, baseCooldown);
+        return s;
+    }
+
     // Preferred by reflection/property lookups
     public WeaponCategory Category => category;
+
+    public bool HasLevelStats => levelStats != null && levelStats.Length > 0;
+    public int  LevelStatsCount => HasLevelStats ? levelStats.Length : 0;
 }

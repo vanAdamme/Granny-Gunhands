@@ -16,15 +16,24 @@ MonoBehaviour:
   entries:
   - weaponDef: {fileID: 0}
     powerUpDef: {fileID: 11400000, guid: c31a0c712f25b0740be42220ede405ef, type: 2}
+    upgradeItemDef: {fileID: 0}
     prefab: {fileID: 0}
     dropChanceOverride: 0
     weightOverride: 0
   - weaponDef: {fileID: 11400000, guid: ef342f91b593a8d46914ea136f8e929c, type: 2}
     powerUpDef: {fileID: 0}
+    upgradeItemDef: {fileID: 0}
+    prefab: {fileID: 0}
+    dropChanceOverride: 0
+    weightOverride: 0
+  - weaponDef: {fileID: 0}
+    powerUpDef: {fileID: 0}
+    upgradeItemDef: {fileID: 11400000, guid: 36e7c5f5616b52d459528df9d5a534a7, type: 2}
     prefab: {fileID: 0}
     dropChanceOverride: 0
     weightOverride: 0
   overallDropChance: 1
   weaponPickupPrefab: {fileID: -2376700922227354871, guid: 39ab352b6cc316c46a95eca7d1ae81a4, type: 3}
   powerUpPickupPrefab: {fileID: -8423786333439279373, guid: 7fc24647480ecdd4988e21b765102501, type: 3}
+  upgradePickupPrefab: {fileID: -7958382271102547567, guid: 356fac697d298154986c325e03c6df4d, type: 3}
   spawnJitter: {x: 0, y: 0}

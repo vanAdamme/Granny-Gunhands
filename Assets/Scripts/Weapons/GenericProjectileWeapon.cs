@@ -1,7 +1,6 @@
-// GenericProjectileWeapon.cs
 using UnityEngine;
 
-public class GenericProjectileWeapon : Weapon, IUpgradableWeaponV2
+public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
 {
     [Header("Definition & Startup")]
     [SerializeField] private WeaponDefinition definitionAsset;
@@ -28,15 +27,8 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeaponV2
 
     public override void SetDefinition(WeaponDefinition def, int level)
     {
-        base.SetDefinition(def, level);          // sets Definition + CooldownWindow from def.baseCooldown :contentReference[oaicite:2]{index=2}
-        // Copy base stats from the definition (single source of truth) :contentReference[oaicite:3]{index=3}
-        stats.damage                 = def.damage;
-        stats.projectileSpeed        = def.projectileSpeed;
-        stats.range                  = def.range;
-        stats.maxPierces             = def.maxPierces;
-        stats.pierceThroughObstacles = def.pierceThroughObstacles;
-        stats.cooldown               = Mathf.Max(0.01f, def.baseCooldown);
-        CooldownWindow               = stats.cooldown;   // keep Weapon’s cooldown in sync
+        base.SetDefinition(def, level);  // sets Definition, currentLevel, icon, base cooldown
+        ApplyLevelStats();               // pull level-appropriate stats
     }
 
     protected override void Shoot(Vector2 dir)
@@ -71,42 +63,61 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeaponV2
         }
     }
 
-    public bool TryApplyUpgrade(WeaponUpgradeDelta d, out string reason)
+    private int ClampLevel(int desired)
     {
+        // Cap by number of level icons if present, else allow any 1..N
+        int min = 1;
+        if (Definition && Definition.LevelIcons != null && Definition.LevelIcons.Length > 0)
+            return Mathf.Clamp(desired, min, Definition.LevelIcons.Length);
+        return Mathf.Max(min, desired);
+    }
+
+    private void RefreshIcon()
+    {
+        Sprite s = Definition ? Definition.GetIconForLevel(Level) : null;
+        icon = s;
+        if (spriteRenderer) spriteRenderer.sprite = s;
+    }
+
+    // ---- IUpgradableWeapon (level bump) ----
+    public bool TryPreviewUpgrade(int levels, out UpgradeDelta delta, out string reason)
+    {
+        delta = default;     // no auto stat deltas; level decides stats
         reason = "";
-        if (d.IsEmpty) { reason = "Empty upgrade."; return false; }
+        return levels > 0;
+    }
 
-        var before = stats;
+    public bool TryApplyUpgrade(int levels, out int appliedLevels, out string reason)
+    {
+        appliedLevels = 0;
+        if (!TryPreviewUpgrade(levels, out _, out reason)) return false;
 
-        if (d.setDamage.HasValue)            stats.damage = d.setDamage.Value;
-        if (d.addDamage.HasValue)            stats.damage += d.addDamage.Value;
+        currentLevel += levels;          // bump level (uncapped by default)
+        appliedLevels = levels;
 
-        if (d.setProjectileSpeed.HasValue)   stats.projectileSpeed = d.setProjectileSpeed.Value;
-        if (d.addProjectileSpeed.HasValue)   stats.projectileSpeed += d.addProjectileSpeed.Value;
+        // update stats & visuals for the new level
+        ApplyLevelStats();
 
-        if (d.setRange.HasValue)             stats.range = d.setRange.Value;
-        if (d.addRange.HasValue)             stats.range += d.addRange.Value;
+        var sprite = Definition ? Definition.GetIconForLevel(Level) : null;
+        icon = sprite;
+        if (spriteRenderer) spriteRenderer.sprite = sprite;
 
-        if (d.setMaxPierces.HasValue)        stats.maxPierces = Mathf.Max(0, d.setMaxPierces.Value);
-        if (d.addMaxPierces.HasValue)        stats.maxPierces = Mathf.Max(0, stats.maxPierces + d.addMaxPierces.Value);
+        return true;
+    }
 
-        if (d.setPierceThroughObstacles.HasValue) stats.pierceThroughObstacles = d.setPierceThroughObstacles.Value;
+    private void ApplyLevelStats()
+    {
+        if (!Definition) return;
+        var s = Definition.GetStatsForLevel(Level);
 
-        if (d.setCooldown.HasValue)          stats.cooldown = Mathf.Max(0.01f, d.setCooldown.Value);
-        if (d.addCooldown.HasValue)          stats.cooldown = Mathf.Max(0.01f, stats.cooldown + d.addCooldown.Value);
+        stats.damage                 = s.damage;
+        stats.projectileSpeed        = s.projectileSpeed;
+        stats.range                  = s.range;
+        stats.maxPierces             = s.maxPierces;
+        stats.pierceThroughObstacles = s.pierceThroughObstacles;
+        stats.cooldown               = s.cooldown;
 
         CooldownWindow = stats.cooldown;
-
-        bool changed =
-            before.damage != stats.damage ||
-            before.projectileSpeed != stats.projectileSpeed ||
-            before.range != stats.range ||
-            before.maxPierces != stats.maxPierces ||
-            before.pierceThroughObstacles != stats.pierceThroughObstacles ||
-            before.cooldown != stats.cooldown;
-
-        if (!changed) reason = "No effective change.";
-        return changed;
     }
 
     private void UpdateRuntimeIcon()

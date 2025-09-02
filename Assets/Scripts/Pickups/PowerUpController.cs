@@ -8,7 +8,7 @@ public class PowerUpController : MonoBehaviour
 {
     private IPlayerContext player;
     private readonly List<ActivePower> active = new();
-    private static int nextId = 1;
+    // private static int nextId = 1;
 
     // Keep existing events if you like
     public event Action<PowerUpDefinition, float> OnPowerUpStarted;
