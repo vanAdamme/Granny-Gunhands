@@ -4,14 +4,18 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
 {
     [Header("Definition & Startup")]
     [SerializeField] private WeaponDefinition definitionAsset;
-    [SerializeField, Min(1)] private int startLevel = 1;   // purely visual if you use level icons
+    [SerializeField, Min(1)] private int startLevel = 1;   // visual only (for Level Icons)
 
     [Header("Pooling")]
-    [SerializeField] private UnityPoolService poolService; // optional; can be left null
+    [SerializeField] private UnityPoolService poolService; // optional
 
     private GameObject ownerRoot;
+
     [SerializeField] private WeaponRuntimeStats stats;     // runtime copy
     public WeaponRuntimeStats CurrentStats => stats;
+
+    // UI hooks: WeaponItemButton listens to this
+    public event System.Action<Sprite> IconChanged;
 
     protected override void Awake()
     {
@@ -26,7 +30,8 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
     public override void SetDefinition(WeaponDefinition def, int level)
     {
         base.SetDefinition(def, level);         // sets Definition, currentLevel, icon, base cooldown
-        // copy base stats from the SO into our runtime block
+
+        // copy base stats from the SO into our runtime block (single source of truth)
         stats.damage                 = def.damage;
         stats.projectileSpeed        = def.projectileSpeed;
         stats.range                  = def.range;
@@ -34,6 +39,8 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
         stats.pierceThroughObstacles = def.pierceThroughObstacles;
         stats.cooldown               = Mathf.Max(0.01f, def.baseCooldown);
         CooldownWindow               = stats.cooldown;
+
+        RefreshIcon();                          // notify UI
     }
 
     protected override void Shoot(Vector2 dir)
@@ -44,7 +51,7 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
         Vector3 pos = muzzle ? muzzle.position : transform.position;
         GameObject go = poolService
             ? poolService.Spawn(def.projectilePrefab, pos, Quaternion.identity)
-            : Object.Instantiate(def.projectilePrefab, pos, Quaternion.identity);
+            : Instantiate(def.projectilePrefab, pos, Quaternion.identity);
 
         go.transform.right = dir;
 
@@ -52,13 +59,13 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
         proj.Init(ownerRoot, def.targetLayers, stats.damage, dir);
 
         proj.SetRuntime(
-            speedOverride:             stats.projectileSpeed,
-            rangeOverride:             stats.range,
-            obstacleOverride:          def.obstacleLayers,
-            maxPiercesOverride:        stats.maxPierces,
-            pierceObstaclesOverride:   stats.pierceThroughObstacles,
-            radiusOverride:            null,
-            vfxOverride:               null
+            speedOverride:           stats.projectileSpeed,
+            rangeOverride:           stats.range,
+            obstacleOverride:        def.obstacleLayers,
+            maxPiercesOverride:      stats.maxPierces,
+            pierceObstaclesOverride: stats.pierceThroughObstacles,
+            radiusOverride:          null,
+            vfxOverride:             null
         );
 
         if (def.muzzleFlashPrefab && muzzle)
@@ -68,6 +75,7 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
         }
     }
 
+    // ---- Manual upgrade API (single interface) ----
     public bool TryApplyUpgrade(WeaponUpgradeDelta d, out string reason)
     {
         reason = "";
@@ -103,14 +111,14 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
             before.cooldown               != stats.cooldown;
 
         if (!changed) { reason = "No effective change."; return false; }
-
         return true;
     }
 
     private void RefreshIcon()
     {
-        Sprite s = Definition ? Definition.GetIconForLevel(Level) : null; // safe even if you don't use level icons
+        Sprite s = Definition ? Definition.GetIconForLevel(Level) : null; // safe if you don't use level icons
         icon = s;
         if (spriteRenderer) spriteRenderer.sprite = s;
+        IconChanged?.Invoke(s);  // notify UI
     }
 }
