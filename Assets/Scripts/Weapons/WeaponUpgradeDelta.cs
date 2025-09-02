@@ -1,50 +1,43 @@
-using UnityEngine;
+using System;
 using System.Text;
 
-[System.Serializable]
+[Serializable]
 public struct WeaponUpgradeDelta
 {
-    public float? setDamage,            addDamage;
-    public float? setProjectileSpeed,   addProjectileSpeed;
-    public float? setRange,             addRange;
-    public int?   setMaxPierces,        addMaxPierces;
-    public bool?  setPierceThroughObstacles;
-    public float? setCooldown,          addCooldown;
+    public OptFloat setDamage,          addDamage;
+    public OptFloat setProjectileSpeed, addProjectileSpeed;
+    public OptFloat setRange,           addRange;
+    public OptInt   setMaxPierces,      addMaxPierces;
+    public OptBool  setPierceThroughObstacles;
+    public OptFloat setCooldown,        addCooldown;
 
     public bool IsEmpty =>
-        setDamage == null && addDamage == null &&
-        setProjectileSpeed == null && addProjectileSpeed == null &&
-        setRange == null && addRange == null &&
-        setMaxPierces == null && addMaxPierces == null &&
-        setPierceThroughObstacles == null &&
-        setCooldown == null && addCooldown == null;
+        !setDamage.enabled && !addDamage.enabled &&
+        !setProjectileSpeed.enabled && !addProjectileSpeed.enabled &&
+        !setRange.enabled && !addRange.enabled &&
+        !setMaxPierces.enabled && !addMaxPierces.enabled &&
+        !setPierceThroughObstacles.enabled &&
+        !setCooldown.enabled && !addCooldown.enabled;
 
-    // Used by WeaponItemButton tooltip
+    // Used by UI for tooltip/preview
     public string ToMultiline()
     {
         var sb = new StringBuilder();
-
-        void Line(string name, float? set, float? add)
-        {
-            if (set.HasValue) sb.AppendLine($"{name}: = {set.Value}");
-            if (add.HasValue) sb.AppendLine($"{name}: {(add.Value >= 0 ? "+" : "")}{add.Value}");
+        void F(string n, OptFloat s, OptFloat a) {
+            if (s.enabled) sb.AppendLine($"{n}: = {s.value}");
+            if (a.enabled) sb.AppendLine($"{n}: {(a.value>=0?"+":"")}{a.value}");
         }
-
-        void LineInt(string name, int? set, int? add)
-        {
-            if (set.HasValue) sb.AppendLine($"{name}: = {set.Value}");
-            if (add.HasValue) sb.AppendLine($"{name}: {(add.Value >= 0 ? "+" : "")}{add.Value}");
+        void I(string n, OptInt s, OptInt a) {
+            if (s.enabled) sb.AppendLine($"{n}: = {s.value}");
+            if (a.enabled) sb.AppendLine($"{n}: {(a.value>=0?"+":"")}{a.value}");
         }
-
-        if (setPierceThroughObstacles.HasValue)
-            sb.AppendLine($"Pierce Obstacles: = {(setPierceThroughObstacles.Value ? "On" : "Off")}");
-
-        Line("Damage",             setDamage,          addDamage);
-        Line("Proj Speed",         setProjectileSpeed, addProjectileSpeed);
-        Line("Range",              setRange,           addRange);
-        LineInt("Max Pierces",     setMaxPierces,      addMaxPierces);
-        Line("Cooldown",           setCooldown,        addCooldown);
-
+        if (setPierceThroughObstacles.enabled)
+            sb.AppendLine($"Pierce Obstacles: = {(setPierceThroughObstacles.value ? "On" : "Off")}");
+        F("Damage",        setDamage,          addDamage);
+        F("Proj Speed",    setProjectileSpeed, addProjectileSpeed);
+        F("Range",         setRange,           addRange);
+        I("Max Pierces",   setMaxPierces,      addMaxPierces);
+        F("Cooldown",      setCooldown,        addCooldown);
         return sb.ToString().TrimEnd();
     }
 }

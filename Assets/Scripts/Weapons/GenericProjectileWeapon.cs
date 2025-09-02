@@ -83,22 +83,22 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
 
         var before = stats;
 
-        if (d.setDamage.HasValue)                 stats.damage = d.setDamage.Value;
-        if (d.addDamage.HasValue)                 stats.damage += d.addDamage.Value;
+        if (d.setDamage.enabled)                 stats.damage = d.setDamage.value;
+        if (d.addDamage.enabled)                 stats.damage += d.addDamage.value;
 
-        if (d.setProjectileSpeed.HasValue)        stats.projectileSpeed = d.setProjectileSpeed.Value;
-        if (d.addProjectileSpeed.HasValue)        stats.projectileSpeed += d.addProjectileSpeed.Value;
+        if (d.setProjectileSpeed.enabled)        stats.projectileSpeed = d.setProjectileSpeed.value;
+        if (d.addProjectileSpeed.enabled)        stats.projectileSpeed += d.addProjectileSpeed.value;
 
-        if (d.setRange.HasValue)                  stats.range = d.setRange.Value;
-        if (d.addRange.HasValue)                  stats.range += d.addRange.Value;
+        if (d.setRange.enabled)                  stats.range = d.setRange.value;
+        if (d.addRange.enabled)                  stats.range += d.addRange.value;
 
-        if (d.setMaxPierces.HasValue)             stats.maxPierces = Mathf.Max(0, d.setMaxPierces.Value);
-        if (d.addMaxPierces.HasValue)             stats.maxPierces = Mathf.Max(0, stats.maxPierces + d.addMaxPierces.Value);
+        if (d.setMaxPierces.enabled)             stats.maxPierces = Mathf.Max(0, d.setMaxPierces.value);
+        if (d.addMaxPierces.enabled)             stats.maxPierces = Mathf.Max(0, stats.maxPierces + d.addMaxPierces.value);
 
-        if (d.setPierceThroughObstacles.HasValue) stats.pierceThroughObstacles = d.setPierceThroughObstacles.Value;
+        if (d.setPierceThroughObstacles.enabled) stats.pierceThroughObstacles = d.setPierceThroughObstacles.value;
 
-        if (d.setCooldown.HasValue)               stats.cooldown = Mathf.Max(0.01f, d.setCooldown.Value);
-        if (d.addCooldown.HasValue)               stats.cooldown = Mathf.Max(0.01f, stats.cooldown + d.addCooldown.Value);
+        if (d.setCooldown.enabled)               stats.cooldown = Mathf.Max(0.01f, d.setCooldown.value);
+        if (d.addCooldown.enabled)               stats.cooldown = Mathf.Max(0.01f, stats.cooldown + d.addCooldown.value);
 
         CooldownWindow = stats.cooldown;
 
