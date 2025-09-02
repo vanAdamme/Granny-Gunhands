@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Powerups/One‑Shot/Auto Heal")]
 public class AutoHealEffect : OneShotEffectBase
 {
-    [SerializeField] private float amount = 20f;
+    [SerializeField] private int amount = 1;
 
     public override bool ApplyOnce(IPlayerContext ctx)
     {

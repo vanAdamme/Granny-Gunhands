@@ -1,9 +1,8 @@
-// WeaponPickup.cs
 using UnityEngine;
 
 public class WeaponPickup : PickupBase
 {
-    [SerializeField] private WeaponDefinition definition;
+    [SerializeField] private WeaponDefinition definition;           // scene-placed or set by LootTable
     [SerializeField] private bool autoEquipToEmptyHand = true;
 
     public void SetDefinition(WeaponDefinition def) { definition = def; SyncVisual(); }
@@ -15,11 +14,22 @@ public class WeaponPickup : PickupBase
     {
         if (consumed || !definition) return;
 
-        var inv = other.GetComponentInParent<WeaponInventory>();
-        if (inv && inv.AddWeapon(definition, autoEquipToEmptyHand))
+        // Mirror the root/child handling used in PowerUpPickup
+        var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
+        var inv  = root.GetComponentInChildren<WeaponInventory>();
+        if (!inv) return;
+
+        var added = inv.AddWeapon(definition, autoEquipToEmptyHand);
+        if (added != null)                   // AddWeapon returns the Weapon instance on success
         {
-            ShowToastTemplate(definition.DisplayName, ("name", definition.DisplayName));
+            ShowToast(definition.DisplayName);
             StartCoroutine(Consume());
         }
+#if UNITY_EDITOR
+        else
+        {
+            Debug.Log($"[WeaponPickup] '{definition.DisplayName}' not added (maybe already owned?).", this);
+        }
+#endif
     }
 }

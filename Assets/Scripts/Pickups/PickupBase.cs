@@ -8,7 +8,7 @@ public abstract class PickupBase : MonoBehaviour
     [SerializeField] protected SpriteRenderer spriteRenderer;
 
     [Header("Feedback (optional)")]
-    [SerializeField] private MonoBehaviour toastServiceSource;   // IToastService
+    [SerializeField] private MonoBehaviour toastServiceSource;   // drag ToastManager here if you want
     [Tooltip("Use tokens like {name}, {amount}, {levels}. Leave blank to use a sensible default.")]
     [TextArea] [SerializeField] private string toastTemplate = "";
 
@@ -25,13 +25,7 @@ public abstract class PickupBase : MonoBehaviour
         col2d = GetComponent<Collider2D>();
         if (col2d) col2d.isTrigger = true;
 
-        toast = toastServiceSource as IToastService
-            ?? UIController.Instance as IToastService
-            ?? FindFirstObjectByType<UIController>() as IToastService;
-
-        if (toast == null)
-            Debug.LogWarning($"[{name}] No IToastService available; toasts will be suppressed.");
-
+        TryResolveToast();               // may be null now (HUD not spawned yet) – that’s OK
         tag = "Item";
         SyncVisual();
     }
@@ -46,10 +40,29 @@ public abstract class PickupBase : MonoBehaviour
         if (spriteRenderer && icon) spriteRenderer.sprite = icon;
     }
 
+    // CENTRAL: resolves lazily; call this right before showing a toast
+    private void TryResolveToast()
+    {
+        if (toast != null) return;
+
+        if (toastServiceSource is IToastService svc) { toast = svc; return; }
+
+        // Try to find a ToastManager in the scene (even if inactive)
+        var manager = FindFirstObjectByType<ToastManager>(FindObjectsInactive.Include);
+        if (manager) { toast = manager; return; }
+
+        // Last-ditch: scan for any component that implements IToastService
+        foreach (var mb in FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (mb is IToastService found) { toast = found; return; }
+        }
+    }
+
     protected void ShowToast(string message)
     {
-        if (!string.IsNullOrWhiteSpace(message))
-            toast?.Show(message);
+        if (string.IsNullOrWhiteSpace(message)) return;
+        TryResolveToast();
+        toast?.Show(message);
     }
 
     protected void ShowToastTemplate(string fallback, params (string key, object value)[] tokens)
@@ -57,24 +70,18 @@ public abstract class PickupBase : MonoBehaviour
         string msg = string.IsNullOrWhiteSpace(toastTemplate) ? fallback : toastTemplate;
 
         if (tokens != null)
-        {
             foreach (var (key, value) in tokens)
                 msg = msg.Replace("{" + key + "}", value?.ToString() ?? "");
-        }
 
-        // simple plural helper for {s}
         msg = msg.Replace("{s}", NeedsPlural(tokens) ? "s" : "");
-
         ShowToast(msg);
     }
 
     private static bool NeedsPlural((string key, object value)[] tokens)
     {
         foreach (var (k, v) in tokens)
-        {
             if ((k == "amount" || k == "levels") && int.TryParse(v?.ToString(), out int n))
                 return n != 1;
-        }
         return false;
     }
 

@@ -26766,6 +26766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03401fbac1e42848b01212d376d27b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toastServiceSource: {fileID: 0}
+  appliedTemplate: '{name} +{levels} level{s}'
 --- !u!1 &1414733342
 GameObject:
   m_ObjectHideFlags: 0

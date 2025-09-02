@@ -1920,7 +1920,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4540411707509837, guid: fe2ba9d7936eb2044bcd76d288513435, type: 3}
   count: 3
-  radius: 0
+  radius: 2.3
+  maxAttemptsPerEnemy: 20
+  floorTilemap: {fileID: 6526519034462450408}
+  cellClearance: 0
 --- !u!1 &5499711858130131809
 GameObject:
   m_ObjectHideFlags: 0
