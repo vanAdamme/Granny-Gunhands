@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7273833970948221847}
   - component: {fileID: 3238422256308819956}
   - component: {fileID: 5089121553697726881}
+  - component: {fileID: 7510978941241805139}
   m_Layer: 0
   m_Name: Pentagram
   m_TagString: Untagged
@@ -79,7 +80,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: a05e0b9face32bd4eb3e970671a67eee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -248,3 +249,25 @@ MonoBehaviour:
   onTick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7510978941241805139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3229248051958147765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7671f751830c7544b5a7fe49586ac86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateSfx: {fileID: 11400000, guid: ae8ab280c8e619a488c839fd82e511dd, type: 2}
+  triggerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  playOnEnter: 1
+  playOnStay: 1
+  cooldown: 0.25
+  attachToThis: 0
+  playOnlyOnce: 1
+  disableColliderAfterFirstPlay: 0

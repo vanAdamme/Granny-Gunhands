@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6745079049666088462}
   - component: {fileID: -2376700922227354871}
   - component: {fileID: 7477910863764835083}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Weapon Pickup Prefab
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -83,8 +83,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7477910863764835083}
-  sortingLayerName: Items
-  sortingOrder: 0
+  toastServiceSource: {fileID: 0}
+  toastTemplate: 
+  hideSpriteOnConsume: 1
+  disableColliderOnConsume: 1
   definition: {fileID: 0}
   autoEquipToEmptyHand: 1
 --- !u!212 &7477910863764835083
@@ -129,7 +131,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

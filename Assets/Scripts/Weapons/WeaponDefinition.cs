@@ -17,6 +17,10 @@ public class WeaponDefinition : ScriptableObject
     [Tooltip("Prefab that has a Weapon-derived component. Drag the Weapon component from the prefab here.")]
     public Weapon Prefab;
 
+    [Header("Audio")]
+    public SoundEvent FireSfx;
+    public SoundEvent[] LevelFireSfx; // optional per-level override
+
     [Header("Timing")]
     [Tooltip("Base fire cooldown (seconds) used by Weapon.CooldownWindow.")]
     public float baseCooldown = 0.15f;
@@ -96,6 +100,16 @@ public class WeaponDefinition : ScriptableObject
         // safety: if any level forgot to set cooldown, use baseCooldown
         if (s.cooldown <= 0f) s.cooldown = Mathf.Max(0.01f, baseCooldown);
         return s;
+    }
+
+    public SoundEvent GetFireSfxForLevel(int level)
+    {
+        if (LevelFireSfx != null && LevelFireSfx.Length > 0)
+        {
+            int i = Mathf.Clamp(level - 1, 0, LevelFireSfx.Length - 1);
+            if (LevelFireSfx[i]) return LevelFireSfx[i];
+        }
+        return FireSfx;
     }
 
     // Preferred by reflection/property lookups

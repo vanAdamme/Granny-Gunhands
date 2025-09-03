@@ -59,19 +59,25 @@ public class GenericProjectileWeapon : Weapon, IUpgradableWeapon
         proj.Init(ownerRoot, def.targetLayers, stats.damage, dir);
 
         proj.SetRuntime(
-            speedOverride:           stats.projectileSpeed,
-            rangeOverride:           stats.range,
-            obstacleOverride:        def.obstacleLayers,
-            maxPiercesOverride:      stats.maxPierces,
+            speedOverride: stats.projectileSpeed,
+            rangeOverride: stats.range,
+            obstacleOverride: def.obstacleLayers,
+            maxPiercesOverride: stats.maxPierces,
             pierceObstaclesOverride: stats.pierceThroughObstacles,
-            radiusOverride:          null,
-            vfxOverride:             null
+            radiusOverride: null,
+            vfxOverride: null
         );
 
         if (def.muzzleFlashPrefab && muzzle)
         {
             if (poolService) poolService.Spawn(def.muzzleFlashPrefab, muzzle.position, muzzle.rotation);
             else Destroy(Instantiate(def.muzzleFlashPrefab, muzzle.position, muzzle.rotation), 0.15f);
+        }
+
+        var evt = def.GetFireSfxForLevel(Level);
+        if (evt)
+        {
+            AudioServicesProvider.Audio.Play(evt, attachTo: muzzle);
         }
     }
 
