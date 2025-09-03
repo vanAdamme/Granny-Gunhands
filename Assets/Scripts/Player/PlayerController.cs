@@ -230,13 +230,11 @@ public class PlayerController : Target, IPlayerContext
         UIController.Instance.UpdateHealthSlider();
 
         UIController.Instance.LevelUpPanelClose();
-        AudioController.Instance.PlaySound(AudioController.Instance.selectUpgrade);
     }
 
     public void IncreaseMovementSpeed(float multiplier)
     {
         moveSpeed *= multiplier;
         UIController.Instance.LevelUpPanelClose();
-        AudioController.Instance.PlaySound(AudioController.Instance.selectUpgrade);
     }
 }
