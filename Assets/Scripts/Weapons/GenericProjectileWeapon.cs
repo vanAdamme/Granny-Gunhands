@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class GenericProjectileWeapon : Weapon
 {
+    [SerializeField] private WeaponDefinition defaultDefinition;
+
     [Header("Charge Injection")]
     [Tooltip("Usually the SpecialChargeSimple on the player root.")]
     [SerializeField] private MonoBehaviour specialChargeSource; // ISpecialCharge
@@ -23,15 +25,15 @@ public class GenericProjectileWeapon : Weapon
     {
         base.Awake();
 
+        // If this instance wasn’t created via a factory that called SetDefinition(),
+        // fall back to a serialized SO assigned on the prefab.
+        if (!Definition && defaultDefinition)
+            SetDefinition(defaultDefinition, currentLevel);
+
         ownerRoot = transform.root;
 
-        // Resolve charge via serialized ref first; safe fallback using Unity 6 API.
-        charge = specialChargeSource as ISpecialCharge;
-        if (charge == null)
-        {
-            var c = Object.FindFirstObjectByType<SpecialChargeSimple>();
-            if (c) charge = c;
-        }
+        charge = specialChargeSource as ISpecialCharge
+            ?? Object.FindFirstObjectByType<SpecialChargeSimple>();
     }
 
     public override bool TryFire(Vector2 dir) => base.TryFire(dir); // keep base contract (returns bool)  :contentReference[oaicite:1]{index=1}

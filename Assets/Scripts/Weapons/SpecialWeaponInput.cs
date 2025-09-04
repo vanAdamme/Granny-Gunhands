@@ -25,7 +25,10 @@ public class SpecialWeaponInput : MonoBehaviour
     private void OnSpecialPerformed(InputAction.CallbackContext ctx)
     {
         if (equippedSpecial && equippedSpecial.CanActivate)
+        {
             equippedSpecial.Activate();
+            Debug.Log("[SpecialWeaponInput] Special pressed");
+        }
     }
 
     // Optional runtime swap
