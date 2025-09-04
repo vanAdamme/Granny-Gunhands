@@ -2,92 +2,52 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Lightweight projectile that travels with a Rigidbody2D, reports genuine contacts with Targets,
-/// and optionally pierces multiple unique targets. Damage application is deliberately not handled
-/// here to keep responsibilities narrow; your existing damage pipeline can stay as-is.
+/// Lightweight projectile. Counts unique target hits (for specials), respects obstacle layers,
+/// and exposes Init/SetRuntime to match EnemyShooter. Damage is left to your combat pipeline.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Projectile : MonoBehaviour
 {
-    [Header("Motion")]
-    [SerializeField] private float speed = 20f;
-    [SerializeField] private float lifetime = 4f;
-
-    [Header("Hit Rules")]
-    [Tooltip("Layers considered hittable (e.g., Enemies).")]
-    [SerializeField] private LayerMask hitMask;
-    [Tooltip("How many DISTINCT targets this projectile can hit before it despawns. 1 = no pierce.")]
-    [SerializeField] private int maxUniqueHits = 1;
-    [Tooltip("If true, the projectile is destroyed when it first touches anything not in hitMask (e.g., walls).")]
-    [SerializeField] private bool dieOnObstruction = true;
+    [Header("Runtime (injected)")]
+    [SerializeField] private float speed = 12f;
+    [SerializeField] private float timeToLive = 1.0f;
+    [SerializeField] private int   maxUniqueHits = 1;             // 1 = no pierce, 2 = one pierce, etc.
+    [SerializeField] private LayerMask targetMask;
     [SerializeField] private LayerMask obstructionMask;
+    [SerializeField] private bool  pierceThroughObstacles = false;
 
-    [Header("FX")]
+    [Header("FX (optional)")]
     [SerializeField] private GameObject hitVfxPrefab;
-    [SerializeField] private GameObject muzzleTrailPrefab;
-    [SerializeField] private float vfxLifetime = 1.2f;
+    [SerializeField] private float      vfxLifetime = 1.2f;
 
-    // Runtime
     private Rigidbody2D rb;
     private float deathAt;
-    private int uniqueHitsSoFar;
-    private HashSet<int> hitIds; // to avoid double-counting the same collider/root
-    private Transform ownerRoot;
+    private int   uniqueHitsSoFar;
+    private HashSet<int> hitRoots;
+
+    private Transform     ownerRoot;
     private ISpecialCharge ownerCharge;
 
-    // Optional cached components
-    private GameObject spawnedTrail;
-
-    /// <summary>
-    /// Call on spawn/pull to configure the projectile. Direction is normalized internally.
-    /// </summary>
-    public void Initialize(Transform owner, ISpecialCharge charge, Vector2 direction, float initialSpeed = -1f, float timeToLive = -1f, int pierceCount = -1)
-    {
-        ownerRoot = owner ? owner.root : null;
-        ownerCharge = charge;
-
-        if (initialSpeed > 0f) speed = initialSpeed;
-        if (timeToLive > 0f) lifetime = timeToLive;
-        if (pierceCount >= 1) maxUniqueHits = pierceCount;
-
-        rb.velocity = direction.sqrMagnitude > 0.0001f ? direction.normalized * speed : rb.velocity;
-        deathAt = Time.time + lifetime;
-        uniqueHitsSoFar = 0;
-        hitIds?.Clear();
-
-        if (muzzleTrailPrefab != null)
-        {
-            spawnedTrail = Instantiate(muzzleTrailPrefab, transform.position, transform.rotation, transform);
-        }
-    }
+    // Optional bookkeeping if you later want damage here
+    private float damage;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        // Ensure trigger if using trigger logic; leave as collider if you do physics-based hits
         var col = GetComponent<Collider2D>();
-        if (col) col.isTrigger = true;
-
-        hitIds = new HashSet<int>(8);
+        if (col) col.isTrigger = true; // typical top-down bullet behavior
+        hitRoots = new HashSet<int>(8);
     }
 
     private void OnEnable()
     {
-        // Safety for pooled objects
-        deathAt = Time.time + lifetime;
+        deathAt = Time.time + timeToLive;
         uniqueHitsSoFar = 0;
-        hitIds.Clear();
+        hitRoots.Clear();
     }
 
     private void OnDisable()
     {
-        // Clean any trail we may have spawned
-        if (spawnedTrail != null)
-        {
-            Destroy(spawnedTrail);
-            spawnedTrail = null;
-        }
-        // Clear references to avoid memory leaks across pools
         ownerRoot = null;
         ownerCharge = null;
     }
@@ -98,42 +58,108 @@ public class Projectile : MonoBehaviour
             Despawn();
     }
 
+    // ─────────────────────────────────────────────────────────────────────────────
+    // Public API expected by EnemyShooter (and weapons)
+    // ─────────────────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Enemy path: sets owner, masks, base damage, and initial direction/velocity.
+    /// Matches EnemyShooter usage.
+    /// </summary>
+    public void Init(GameObject ownerGO, LayerMask hitLayers, float baseDamage, Vector2 direction)
+    {
+        ownerRoot   = ownerGO ? ownerGO.transform.root : null;
+        targetMask  = hitLayers;
+        damage      = baseDamage;
+
+        var dir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
+        rb.linearVelocity = dir * speed;
+        transform.rotation = Quaternion.FromToRotation(Vector2.right, dir);
+    }
+
+    /// <summary>
+    /// Enemy path: runtime overrides for speed, range→TTL, and obstacle layers.
+    /// Matches EnemyShooter usage.
+    /// </summary>
+    public void SetRuntime(float speedOverride, float rangeOverride, LayerMask obstacleOverride)
+    {
+        if (speedOverride > 0f) speed = speedOverride;
+        if (rangeOverride > 0f)
+        {
+            float ttl = Mathf.Max(0.01f, rangeOverride / Mathf.Max(0.01f, speed));
+            timeToLive = ttl;
+            deathAt = Time.time + timeToLive;
+        }
+        obstructionMask = obstacleOverride;
+    }
+
+    /// <summary>
+    /// Player weapon path: richer initialize that also injects the owner's special charge.
+    /// </summary>
+    public void Initialize(Transform owner,
+                           ISpecialCharge charge,
+                           Vector2 direction,
+                           float setSpeed,
+                           float ttlSeconds,
+                           int   allowedUniqueHits,
+                           LayerMask hitMask,
+                           LayerMask blockMask,
+                           bool  canPierceObstacles)
+    {
+        ownerRoot            = owner ? owner.root : null;
+        ownerCharge          = charge;
+        speed                = setSpeed > 0f ? setSpeed : speed;
+        timeToLive           = ttlSeconds > 0f ? ttlSeconds : timeToLive;
+        deathAt              = Time.time + timeToLive;
+        maxUniqueHits        = Mathf.Max(1, allowedUniqueHits);
+        targetMask           = hitMask;
+        obstructionMask      = blockMask;
+        pierceThroughObstacles = canPierceObstacles;
+
+        var dir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
+        rb.linearVelocity = dir * speed;
+        transform.rotation = Quaternion.FromToRotation(Vector2.right, dir);
+
+        uniqueHitsSoFar = 0;
+        hitRoots.Clear();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────────
+    // Collision & counting
+    // ─────────────────────────────────────────────────────────────────────────────
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Ignore self/owner
-        if (ownerRoot != null && other.transform.root == ownerRoot) return;
+        // ignore self
+        if (ownerRoot && other.transform.root == ownerRoot) return;
 
-        var otherLayer = 1 << other.gameObject.layer;
+        int otherLayerMask = 1 << other.gameObject.layer;
 
-        // If we touched a non-hittable obstruction (e.g., walls), die immediately
-        if (dieOnObstruction && (obstructionMask.value & otherLayer) != 0)
+        // obstruction handling (e.g., walls)
+        if (!pierceThroughObstacles && (obstructionMask.value & otherLayerMask) != 0)
         {
             SpawnHitVfx(other.ClosestPoint(transform.position));
             Despawn();
             return;
         }
 
-        // Not a hittable target? Ignore.
-        if ((hitMask.value & otherLayer) == 0) return;
+        // not a target layer → ignore
+        if ((targetMask.value & otherLayerMask) == 0) return;
 
-        // Try to get a Target (your enemies derive from Target in your project)
-        var target = other.GetComponentInParent<Target>();
-        if (target == null) return; // Not something we count as an enemy
+        // ensure "genuine" first-time hit per-root
+        var root = other.transform.root;
+        int rootId = root.GetInstanceID();
+        if (!hitRoots.Add(rootId)) return;
 
-        // Make sure we only count this collider/root once
-        var id = other.transform.root.GetInstanceID();
-        if (!hitIds.Add(id)) return;
+        // Optional: forward to your damage system here if desired.
 
-        // At this point it's a genuine, first-time hit on a valid target.
-        // 1) Hand off to your existing damage system (if you like—kept optional):
-        // target.TakeDamage?(...);  <-- keep this commented unless you want damage here.
-        // 2) Increment special charge:
+        // Charge special on successful contact
         ownerCharge?.AddHits(1);
 
         uniqueHitsSoFar++;
         SpawnHitVfx(other.ClosestPoint(transform.position));
 
-        if (uniqueHitsSoFar >= Mathf.Max(1, maxUniqueHits))
+        if (uniqueHitsSoFar >= maxUniqueHits)
             Despawn();
     }
 
@@ -146,15 +172,12 @@ public class Projectile : MonoBehaviour
 
     private void Despawn()
     {
-        // If you later switch to pooling, replace with pool.Release(this)
+        // Swap to a pool.Release(this) when you introduce pooling.
         Destroy(gameObject);
     }
 
-    #region Designer Helpers (optional setters)
-    public void SetSpeed(float s) => speed = s;
-    public void SetLifetime(float t) => lifetime = t;
-    public void SetPierce(int n) => maxUniqueHits = Mathf.Max(1, n);
-    public void SetHitMask(LayerMask m) => hitMask = m;
+    // Optional helpers
+    public void SetHitMask(LayerMask m) => targetMask = m;
     public void SetObstructionMask(LayerMask m) => obstructionMask = m;
-    #endregion
+    public void SetPierceObstacles(bool v) => pierceThroughObstacles = v;
 }

@@ -1,151 +1,124 @@
 using UnityEngine;
 
 /// <summary>
-/// Spawns projectiles from one or two muzzles, injecting the owner's ISpecialCharge so hits
-/// can charge specials. Keeps weapon stats separate: WeaponDefinition provides designer data,
-/// WeaponRuntimeStats represents the resolved numbers at runtime (rate, spread, pierce, etc.).
+/// Generic projectile weapon that spawns a projectile prefab from WeaponDefinition
+/// and injects owner + ISpecialCharge so hits can charge specials.
+/// Each instance handles its own cooldown (left/right click independence). 
 /// </summary>
 public class GenericProjectileWeapon : Weapon
 {
-    [Header("Refs")]
-    [Tooltip("Projectile prefab that contains a Projectile component.")]
-    [SerializeField] private Projectile projectilePrefab;
-    [Tooltip("Primary muzzle transform (left hand, etc.).")]
-    [SerializeField] private Transform primaryMuzzle;
-    [Tooltip("Optional secondary muzzle (right hand, dual-wield).")]
-    [SerializeField] private Transform secondaryMuzzle;
-
-    [Header("Stats")]
-    [SerializeField] private WeaponDefinition definition;     // Design-time config (spread, base damage, etc.)
-    [SerializeField] private WeaponRuntimeStats runtimeStats; // Live, modified stats (fire rate, damage, speed...)
-
     [Header("Charge Injection")]
-    [Tooltip("Source that implements ISpecialCharge (usually on the Player root).")]
-    [SerializeField] private MonoBehaviour specialChargeSource; // SpecialChargeSimple
+    [Tooltip("Usually the SpecialChargeSimple on the player root.")]
+    [SerializeField] private MonoBehaviour specialChargeSource; // ISpecialCharge
     private ISpecialCharge charge;
 
-    [Header("Firing")]
+    [Header("Optional dual muzzle setup")]
+    [SerializeField] private Transform secondaryMuzzle;
     [SerializeField] private bool alternateMuzzles = true;
-    [SerializeField] private LayerMask projectileHitMask;
-    [SerializeField] private LayerMask obstructionMask;
-
-    private float nextFireTime;
     private bool usePrimaryNext = true;
+
     private Transform ownerRoot;
 
     protected override void Awake()
     {
         base.Awake();
 
-        if (!projectilePrefab)
-            Debug.LogError($"[{name}] Missing projectilePrefab.", this);
+        ownerRoot = transform.root;
 
-        // Resolve charge via serialized reference or a safe fallback
+        // Resolve charge via serialized ref first; safe fallback using Unity 6 API.
         charge = specialChargeSource as ISpecialCharge;
         if (charge == null)
         {
             var c = Object.FindFirstObjectByType<SpecialChargeSimple>();
-            if (c != null) charge = c;
-        }
-
-        // Cache owner root for self-hit filtering in projectiles
-        ownerRoot = transform.root;
-
-        // If runtime stats aren’t injected elsewhere, create one from definition at runtime
-        if (runtimeStats == null)
-        {
-            runtimeStats = new WeaponRuntimeStats();
-            if (definition != null)
-                runtimeStats.ApplyDefinition(definition);
+            if (c) charge = c;
         }
     }
 
-    private void OnValidate()
+    public override bool TryFire(Vector2 dir) => base.TryFire(dir); // keep base contract (returns bool)  :contentReference[oaicite:1]{index=1}
+
+    protected override void Shoot(Vector2 dir)
     {
-        // Keep layers sane while editing
-        if (projectileHitMask == 0)
+        if (!Definition)
         {
-            // Assuming an "Enemies" layer commonly exists in your project
-            int enemies = LayerMask.NameToLayer("Enemies");
-            if (enemies >= 0) projectileHitMask = (1 << enemies);
+            Debug.LogWarning($"[{name}] No WeaponDefinition assigned.", this);
+            return;
         }
-    }
-
-    /// <summary>
-    /// Called by PlayerShooting / inventory systems to request a shot.
-    /// </summary>
-    public override void TryFire(Vector2 aimDirection)
-    {
-        if (!enabled || projectilePrefab == null) return;
-
-        // Fire-rate gate
-        var t = Time.time;
-        if (t < nextFireTime) return;
-        nextFireTime = t + Mathf.Max(0.01f, runtimeStats.FireInterval);
-
-        // Which muzzle?
-        var muzzle = primaryMuzzle;
-        if (alternateMuzzles && secondaryMuzzle)
+        if (!Definition.projectilePrefab)
         {
-            muzzle = usePrimaryNext ? primaryMuzzle : secondaryMuzzle;
-            usePrimaryNext = !usePrimaryNext;
-        }
-
-        if (!muzzle)
-        {
-            Debug.LogWarning($"[{name}] No muzzle assigned for shot.", this);
+            Debug.LogWarning($"[{name}] Definition '{Definition.DisplayName}' has no projectile prefab.", this);
             return;
         }
 
-        // Spread
-        var dir = aimDirection.sqrMagnitude > 0.0001f ? aimDirection.normalized : muzzle.right;
-        var spreadRad = runtimeStats.GetRandomSpreadRadians();
-        dir = Rotate(dir, spreadRad).normalized;
-
-        SpawnProjectile(muzzle.position, dir);
-        PlayMuzzleFx(muzzle);
-        OnFired?.Invoke(this);
-    }
-
-    private void SpawnProjectile(Vector3 position, Vector2 direction)
-    {
-        // Instantiate (pool later as needed)
-        var proj = Instantiate(projectilePrefab, position, Quaternion.FromToRotation(Vector2.right, direction));
-
-        // Configure masks
-        proj.SetHitMask(projectileHitMask);
-        proj.SetObstructionMask(obstructionMask);
-
-        // Configure runtime values
-        proj.SetSpeed(runtimeStats.ProjectileSpeed);
-        proj.SetLifetime(runtimeStats.ProjectileLifetime);
-        proj.SetPierce(Mathf.Max(1, runtimeStats.PierceCount));
-
-        // Inject owner + special charge
-        proj.Initialize(ownerRoot, charge, direction, runtimeStats.ProjectileSpeed, runtimeStats.ProjectileLifetime, runtimeStats.PierceCount);
-    }
-
-    private void PlayMuzzleFx(Transform muzzle)
-    {
-        if (definition == null) return;
-        if (definition.muzzleVFXPrefab)
+        // choose muzzle
+        Transform muzz = muzzle;
+        if (alternateMuzzles && secondaryMuzzle)
         {
-            var vfx = Instantiate(definition.muzzleVFXPrefab, muzzle.position, muzzle.rotation);
-            Destroy(vfx, 1.5f);
+            muzz = usePrimaryNext ? muzzle : secondaryMuzzle;
+            usePrimaryNext = !usePrimaryNext;
         }
-        if (definition.muzzleSFX)
+        if (!muzz)
         {
-            // Route to your audio service if present. Kept optional to avoid coupling.
-            var audio = Object.FindFirstObjectByType<AudioService>();
-            audio?.PlayOneShot(definition.muzzleSFX, muzzle.position);
+            Debug.LogWarning($"[{name}] No muzzle assigned.", this);
+            return;
         }
+
+        // per-level stats from definition
+        var stats = Definition.GetStatsForLevel(Level); // cooldown, speed, range, maxPierces, etc.  :contentReference[oaicite:2]{index=2}
+
+        // derive TTL from range/speed
+        float speed = Mathf.Max(0.01f, stats.projectileSpeed);
+        float ttl   = Mathf.Max(0.01f, stats.range / speed);
+
+        // Instantiate projectile (pool later).
+        var go = Instantiate(Definition.projectilePrefab, muzz.position,
+                             Quaternion.FromToRotation(Vector2.right, dir.normalized));
+
+        var proj = go.GetComponent<Projectile>();
+        if (!proj)
+        {
+            Debug.LogError($"[{name}] The projectile prefab on '{Definition.DisplayName}' has no Projectile component.", go);
+            Destroy(go);
+            return;
+        }
+
+        // Configure masks from definition
+        var hitMask   = Definition.targetLayers;
+        var blockMask = Definition.obstacleLayers;
+        bool canPierceObstacles = stats.pierceThroughObstacles;
+
+        // Convert "maxPierces" (extra pierces) → allowed unique hits (include first hit)
+        int allowedUniqueHits = Mathf.Max(1, 1 + stats.maxPierces);
+
+        proj.Initialize(ownerRoot,
+                        charge,
+                        dir,
+                        speed,
+                        ttl,
+                        allowedUniqueHits,
+                        hitMask,
+                        blockMask,
+                        canPierceObstacles);
+
+        // VFX (optional)
+        if (Definition.muzzleFlashPrefab)
+        {
+            var fx = Instantiate(Definition.muzzleFlashPrefab, muzz.position, muzz.rotation);
+            Destroy(fx, 1.5f);
+        }
+
+        // SFX: Removed AudioService.PlayOneShot call since your AudioService lacks this API.
+        // If your SoundEvent can play itself, you can uncomment one of these patterns:
+        // Definition.GetFireSfxForLevel(Level)?.PlayAtPosition(muzz.position);
+        // or route through your actual audio layer.
     }
 
-    // Small helper for spread
-    private static Vector2 Rotate(Vector2 v, float rads)
+    public override void SetDefinition(WeaponDefinition def, int level)
     {
-        var s = Mathf.Sin(rads);
-        var c = Mathf.Cos(rads);
-        return new Vector2(c * v.x - s * v.y, s * v.x + c * v.y);
+        base.SetDefinition(def, level);   // sets icon + CooldownWindow from def.baseCooldown  :contentReference[oaicite:3]{index=3}
+        if (!Definition) return;
+
+        // Prefer per-level cooldown when defined (keeps Weapon.CooldownWindow authoritative)
+        var stats = Definition.GetStatsForLevel(Level); // has 'cooldown'  :contentReference[oaicite:4]{index=4}
+        CooldownWindow = Mathf.Max(0.01f, stats.cooldown);
     }
 }

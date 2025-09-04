@@ -1,38 +1,33 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpecialWeaponInput : MonoBehaviour
 {
-    [Header("Refs")]
-    [SerializeField] private MonoBehaviour inputServiceSource; // your InputService
+    [Header("Input")]
+    [Tooltip("Bind this to your 'Special' action in the Input Actions asset.")]
+    [SerializeField] private InputActionReference specialAction;
+
+    [Header("Special")]
     [SerializeField] private SpecialWeaponBase equippedSpecial;
-
-    private IInputService input;
-
-    private void Awake()
-    {
-        input = inputServiceSource as IInputService;
-        if (input == null)
-            input = Object.FindFirstObjectByType<InputService>(); // Unity 6
-    }
 
     private void OnEnable()
     {
-        if (input == null) return;
-        input.SpecialStarted += OnSpecial;
+        if (specialAction && specialAction.action != null)
+            specialAction.action.performed += OnSpecialPerformed;
     }
 
     private void OnDisable()
     {
-        if (input == null) return;
-        input.SpecialStarted -= OnSpecial;
+        if (specialAction && specialAction.action != null)
+            specialAction.action.performed -= OnSpecialPerformed;
     }
 
-    private void OnSpecial()
+    private void OnSpecialPerformed(InputAction.CallbackContext ctx)
     {
         if (equippedSpecial && equippedSpecial.CanActivate)
             equippedSpecial.Activate();
     }
 
-    // Optional: runtime swapping
-    public void SetEquippedSpecial(SpecialWeaponBase special) => equippedSpecial = special;
+    // Optional runtime swap
+    public void SetEquippedSpecial(SpecialWeaponBase s) => equippedSpecial = s;
 }
