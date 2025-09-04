@@ -2,33 +2,37 @@ using UnityEngine;
 
 public class SpecialWeaponInput : MonoBehaviour
 {
-    [SerializeField] private MonoBehaviour inputServiceSource; // InputService
+    [Header("Refs")]
+    [SerializeField] private MonoBehaviour inputServiceSource; // your InputService
+    [SerializeField] private SpecialWeaponBase equippedSpecial;
+
     private IInputService input;
 
-    [Tooltip("Any component that implements ISpecialCharge (e.g., SpecialChargeSimple)")]
-    [SerializeField] private MonoBehaviour specialSource;
-    private ISpecialCharge special;
-
-    void Awake()
+    private void Awake()
     {
         input = inputServiceSource as IInputService;
-        if (input == null) input = FindFirstObjectByType<InputService>();
-
-        special = specialSource as ISpecialCharge;
-        if (special == null)
-        {
-            foreach (var mb in FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
-            {
-                if (mb is ISpecialCharge s) { special = s; break; }
-            }
-        }
+        if (input == null)
+            input = Object.FindFirstObjectByType<InputService>(); // Unity 6
     }
 
-    void OnEnable()  { if (input != null) input.Special += OnSpecial; }
-    void OnDisable() { if (input != null) input.Special -= OnSpecial; }
+    private void OnEnable()
+    {
+        if (input == null) return;
+        input.SpecialStarted += OnSpecial;
+    }
+
+    private void OnDisable()
+    {
+        if (input == null) return;
+        input.SpecialStarted -= OnSpecial;
+    }
 
     private void OnSpecial()
     {
-        special?.TryActivate();
+        if (equippedSpecial && equippedSpecial.CanActivate)
+            equippedSpecial.Activate();
     }
+
+    // Optional: runtime swapping
+    public void SetEquippedSpecial(SpecialWeaponBase special) => equippedSpecial = special;
 }

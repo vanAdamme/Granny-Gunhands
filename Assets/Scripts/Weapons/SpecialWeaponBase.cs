@@ -2,32 +2,32 @@ using UnityEngine;
 
 public abstract class SpecialWeaponBase : MonoBehaviour
 {
-    [Header("Special")]
-    [SerializeField] protected Sprite icon;
-    [SerializeField, Min(0.05f)] protected float cooldown = 0.5f;
-
-    protected SpecialChargeMeter meter;
-    float nextReadyAt;
+    [SerializeField] protected MonoBehaviour chargeSource; // SpecialChargeSimple on player
+    protected ISpecialCharge charge;
 
     protected virtual void Awake()
     {
-        meter = PlayerController.Instance.GetComponent<SpecialChargeMeter>();
-        if (icon) UIController.Instance.UpdateSpecialWeaponIcon(icon); // hooks your UI icon
-    }
-
-    public bool TryActivate()
-    {
-        if (!meter || !meter.IsFull) return false;
-        if (Time.time < nextReadyAt)  return false;
-
-        if (ActivateSpecial())
+        charge = chargeSource as ISpecialCharge;
+        if (charge == null)
         {
-            meter.SpendFull();
-            nextReadyAt = Time.time + cooldown;
-            return true;
+            // fallback – still using the modern API
+            charge = Object.FindFirstObjectByType<SpecialChargeSimple>();
         }
-        return false;
     }
 
-    protected abstract bool ActivateSpecial();
+    public bool CanActivate => charge != null && charge.IsReady && CanActivateInternal();
+
+    /// <summary>Extra checks like cooldown/resource/line-of-sight etc.</summary>
+    protected virtual bool CanActivateInternal() => true;
+
+    /// <summary>Public entry. Only call this if CanActivate is true.</summary>
+    public void Activate()
+    {
+        if (!CanActivate) return;
+        ActivateInternal();
+        charge?.Consume();
+    }
+
+    /// <summary>Your concrete special effect goes here.</summary>
+    protected abstract void ActivateInternal();
 }

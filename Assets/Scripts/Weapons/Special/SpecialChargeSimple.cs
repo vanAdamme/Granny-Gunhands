@@ -1,86 +1,45 @@
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
+using System;
 
-/// Minimal, decoupled charge meter for “kill to charge → press Special to activate”.
 public class SpecialChargeSimple : MonoBehaviour, ISpecialCharge
 {
-    [Header("Charge")]
-    [Min(1)] public int killsRequired = 5;
-    [Min(0)] public int currentKills = 0;
-    [Tooltip("Allow multiple activations to bank up.")]
-    public bool allowStacks = false;
-    [Min(1)] public int maxStacks = 3;
-    private int stackedCharges = 0;
+    [SerializeField, Min(1)] private int requiredHits = 20;
+    [SerializeField] private bool allowOverfill = false;
 
-    [Header("Ability hook")]
-    [Tooltip("Optional: anything implementing ISpecialAbility; Activate() will be called on use.")]
-    [SerializeField] private MonoBehaviour abilitySource;
-    private ISpecialAbility ability;
+    private int current;
 
-    [Header("UI (optional)")]
-    [SerializeField] private Slider slider;          // 0..1 progress
-    [SerializeField] private Image fillImage;        // alternative fill
-    [SerializeField] private UnityEvent onActivated; // SFX/VFX hook
+    public event Action<int,int> Changed;
 
-    void Awake()
+    public int Current => current;
+    public int Required => Mathf.Max(1, requiredHits);
+    public bool IsReady => current >= Required;
+
+    public void AddHits(int hits)
     {
-        ability = abilitySource as ISpecialAbility;
-        UpdateUI();
+        if (hits <= 0) return;
+        var before = current;
+        current += hits;
+        if (!allowOverfill && current > Required) current = Required;
+        if (current != before) Changed?.Invoke(current, Required);
     }
 
-    public void AddCharge(int amount)
+    public void Consume()
     {
-        if (amount <= 0) return;
-
-        currentKills += amount;
-        while (currentKills >= killsRequired)
-        {
-            currentKills -= killsRequired;
-            stackedCharges++;
-
-            if (!allowStacks || stackedCharges >= maxStacks)
-            {
-                // Clamp & carry remainder appropriately
-                stackedCharges = Mathf.Clamp(stackedCharges, 0, maxStacks);
-                if (!allowStacks) currentKills = Mathf.Min(currentKills, killsRequired - 1);
-                break;
-            }
-        }
-        UpdateUI();
+        if (current == 0) return;
+        current = 0;
+        Changed?.Invoke(current, Required);
     }
 
-    public bool TryActivate()
+    public void Reset()
     {
-        if (stackedCharges > 0)
-        {
-            stackedCharges--;
-            onActivated?.Invoke();
-            bool ok = ability?.Activate() ?? true; // If no ability wired, still consume charge
-            UpdateUI();
-            return ok;
-        }
-
-        if (currentKills >= killsRequired)
-        {
-            currentKills -= killsRequired;
-            onActivated?.Invoke();
-            bool ok = ability?.Activate() ?? true;
-            UpdateUI();
-            return ok;
-        }
-
-        return false; // not enough charge
+        current = 0;
+        Changed?.Invoke(current, Required);
     }
 
-    private void UpdateUI()
+    // Optional: expose a setter for designer tweak at runtime
+    public void SetRequired(int hits)
     {
-        float fill = killsRequired > 0 ? Mathf.Clamp01(currentKills / (float)killsRequired) : 0f;
-        if (slider) slider.value = fill;
-        if (fillImage) fillImage.fillAmount = fill;
-        // You can add a text badge for stackedCharges if you like.
+        requiredHits = Mathf.Max(1, hits);
+        Changed?.Invoke(current, Required);
     }
-
-    // Convenience for enemies: call this on kill.
-    public void NotifyKill() => AddCharge(1);
 }

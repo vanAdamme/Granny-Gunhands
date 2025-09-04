@@ -1,4 +1,3 @@
-// CookieBribeSpecial.cs
 using UnityEngine;
 
 public class CookieBribeSpecial : SpecialWeaponBase

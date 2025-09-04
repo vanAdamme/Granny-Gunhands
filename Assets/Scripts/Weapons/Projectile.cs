@@ -1,224 +1,160 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+/// <summary>
+/// Lightweight projectile that travels with a Rigidbody2D, reports genuine contacts with Targets,
+/// and optionally pierces multiple unique targets. Damage application is deliberately not handled
+/// here to keep responsibilities narrow; your existing damage pipeline can stay as-is.
+/// </summary>
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Projectile : MonoBehaviour
 {
-    [Header("Defaults (used if weapon doesn't override)")]
-    [SerializeField] private float     defaultSpeed  = 18f;
-    [SerializeField] private float     defaultRange  = 12f;
-    [SerializeField] private LayerMask defaultTargetLayers;
-    [SerializeField] private LayerMask defaultObstacleLayers;
-    [SerializeField] private float     defaultDamage = 5f;
-    [SerializeField, Min(0f)] private float defaultRadius = 0.06f; // >0 uses CircleCast
-    [SerializeField, Min(0f)] private float skin = 0.01f;          // back off from surface
-    [SerializeField, Min(0)]  private int   defaultMaxPierces = 0; // 0 = stop on first target
-    [SerializeField] private bool  defaultPierceThroughObstacles = false;
-    [SerializeField] private GameObject defaultHitVFX;
+    [Header("Motion")]
+    [SerializeField] private float speed = 20f;
+    [SerializeField] private float lifetime = 4f;
 
-    [Header("Audio (defaults)")]
-    [SerializeField] private SoundEvent defaultTargetHitSfx;   // played when hitting a damageable
-    [SerializeField] private SoundEvent defaultObstacleHitSfx; // played when hitting a wall/obstacle
+    [Header("Hit Rules")]
+    [Tooltip("Layers considered hittable (e.g., Enemies).")]
+    [SerializeField] private LayerMask hitMask;
+    [Tooltip("How many DISTINCT targets this projectile can hit before it despawns. 1 = no pierce.")]
+    [SerializeField] private int maxUniqueHits = 1;
+    [Tooltip("If true, the projectile is destroyed when it first touches anything not in hitMask (e.g., walls).")]
+    [SerializeField] private bool dieOnObstruction = true;
+    [SerializeField] private LayerMask obstructionMask;
 
-    [Header("Services (optional)")]
-    [SerializeField] private UnityPoolService poolService; // optional; will auto-find
+    [Header("FX")]
+    [SerializeField] private GameObject hitVfxPrefab;
+    [SerializeField] private GameObject muzzleTrailPrefab;
+    [SerializeField] private float vfxLifetime = 1.2f;
 
-    // Runtime state
+    // Runtime
     private Rigidbody2D rb;
-    private Transform   ownerRoot;
-    private Vector2     dir;
+    private float deathAt;
+    private int uniqueHitsSoFar;
+    private HashSet<int> hitIds; // to avoid double-counting the same collider/root
+    private Transform ownerRoot;
+    private ISpecialCharge ownerCharge;
 
-    private float     speed;
-    private float     range;
-    private LayerMask targetLayers;
-    private LayerMask obstacleLayers;
-    private float     damage;
-    private float     radius;
-    private int       maxPierces;
-    private bool      pierceThroughObstacles;
-    private GameObject hitVFX;
+    // Optional cached components
+    private GameObject spawnedTrail;
 
-    // Audio runtime overrides (optional)
-    private SoundEvent targetHitSfx;
-    private SoundEvent obstacleHitSfx;
+    /// <summary>
+    /// Call on spawn/pull to configure the projectile. Direction is normalized internally.
+    /// </summary>
+    public void Initialize(Transform owner, ISpecialCharge charge, Vector2 direction, float initialSpeed = -1f, float timeToLive = -1f, int pierceCount = -1)
+    {
+        ownerRoot = owner ? owner.root : null;
+        ownerCharge = charge;
 
-    private float despawnAt;
-    private readonly HashSet<Collider2D> hitThisStep = new HashSet<Collider2D>();
+        if (initialSpeed > 0f) speed = initialSpeed;
+        if (timeToLive > 0f) lifetime = timeToLive;
+        if (pierceCount >= 1) maxUniqueHits = pierceCount;
 
-    void Awake()
+        rb.velocity = direction.sqrMagnitude > 0.0001f ? direction.normalized * speed : rb.velocity;
+        deathAt = Time.time + lifetime;
+        uniqueHitsSoFar = 0;
+        hitIds?.Clear();
+
+        if (muzzleTrailPrefab != null)
+        {
+            spawnedTrail = Instantiate(muzzleTrailPrefab, transform.position, transform.rotation, transform);
+        }
+    }
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.bodyType = RigidbodyType2D.Kinematic;
-        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+        // Ensure trigger if using trigger logic; leave as collider if you do physics-based hits
+        var col = GetComponent<Collider2D>();
+        if (col) col.isTrigger = true;
 
-        // Use the non-obsolete finder as a fallback (Unity 6+)
-        if (!poolService) poolService = FindFirstObjectByType<UnityPoolService>();
-        if (!GetComponent<PooledObject>()) gameObject.AddComponent<PooledObject>(); // ensure pooled return helper
+        hitIds = new HashSet<int>(8);
     }
 
-    /// <summary>Called by the spawner immediately after Spawn()</summary>
-    public void Init(GameObject owner, LayerMask targets, float dmg, Vector2 direction)
+    private void OnEnable()
     {
-        ownerRoot = owner ? owner.transform.root : null;
-        dir = direction.sqrMagnitude > 0f ? direction.normalized : Vector2.right;
-
-        // start from defaults
-        speed      = Mathf.Max(0.01f, defaultSpeed);
-        range      = Mathf.Max(0f,     defaultRange);
-        targetLayers   = (targets.value != 0) ? targets : defaultTargetLayers;
-        obstacleLayers = defaultObstacleLayers;
-        damage     = dmg > 0f ? dmg : defaultDamage;
-        radius     = Mathf.Max(0f, defaultRadius);
-        maxPierces = Mathf.Max(0,  defaultMaxPierces);
-        pierceThroughObstacles = defaultPierceThroughObstacles;
-        hitVFX     = defaultHitVFX;
-
-        // audio defaults
-        targetHitSfx   = defaultTargetHitSfx;
-        obstacleHitSfx = defaultObstacleHitSfx;
-
-        // lifetime from range / speed
-        float lifetime = Mathf.Max(0.01f, range / Mathf.Max(0.01f, speed));
-        despawnAt = Time.time + lifetime;
-
-        hitThisStep.Clear();
-
-        // Optional: configure your Damager if present
-        var damager = GetComponent<Damager>();
-        if (damager) damager.Configure(ownerRoot ? ownerRoot.gameObject : null, targetLayers, damage);
+        // Safety for pooled objects
+        deathAt = Time.time + lifetime;
+        uniqueHitsSoFar = 0;
+        hitIds.Clear();
     }
 
-    /// <summary>Optional runtime overrides from a weapon/definition.</summary>
-    public void SetRuntime(
-        float?     speedOverride   = null,
-        float?     rangeOverride   = null,
-        LayerMask? obstacleOverride = null,
-        int?       maxPiercesOverride = null,
-        bool?      pierceObstaclesOverride = null,
-        float?     radiusOverride  = null,
-        GameObject vfxOverride     = null,
-        SoundEvent targetHitSfxOverride   = null,
-        SoundEvent obstacleHitSfxOverride = null)
+    private void OnDisable()
     {
-        if (speedOverride.HasValue)        speed = Mathf.Max(0.01f, speedOverride.Value);
-        if (rangeOverride.HasValue)        range = Mathf.Max(0f,     rangeOverride.Value);
-        if (obstacleOverride.HasValue)     obstacleLayers = obstacleOverride.Value;
-        if (maxPiercesOverride.HasValue)   maxPierces = Mathf.Max(0, maxPiercesOverride.Value);
-        if (pierceObstaclesOverride.HasValue) pierceThroughObstacles = pierceObstaclesOverride.Value;
-        if (radiusOverride.HasValue)       radius = Mathf.Max(0f,    radiusOverride.Value);
-        if (vfxOverride != null)           hitVFX = vfxOverride;
-
-        if (targetHitSfxOverride)   targetHitSfx   = targetHitSfxOverride;
-        if (obstacleHitSfxOverride) obstacleHitSfx = obstacleHitSfxOverride;
-
-        float lifetime = Mathf.Max(0.01f, range / Mathf.Max(0.01f, speed));
-        despawnAt = Time.time + lifetime;
-    }
-
-    // Message sent by UnityPoolService when this is taken from the pool
-    void OnSpawnedFromPool()
-    {
-        hitThisStep.Clear();
-        rb.linearVelocity = Vector2.zero; // Unity 6 2D API
-        var trail = GetComponent<TrailRenderer>();
-        if (trail) trail.Clear();
-    }
-
-    void FixedUpdate()
-    {
-        if (Time.time >= despawnAt) { Release(); return; }
-        if (dir.sqrMagnitude < 0.0001f) { Release(); return; }
-
-        Vector2 start = rb.position;
-        Vector2 step  = dir * (speed * Time.fixedDeltaTime);
-        float   dist  = step.magnitude;
-        if (dist <= Mathf.Epsilon) return;
-
-        int mask = targetLayers | obstacleLayers;
-
-        RaycastHit2D[] hits = (radius > 0f)
-            ? Physics2D.CircleCastAll(start, radius, dir, dist + skin, mask)
-            : Physics2D.RaycastAll(start,          dir, dist + skin, mask);
-
-        if (hits.Length == 0)
+        // Clean any trail we may have spawned
+        if (spawnedTrail != null)
         {
-            rb.MovePosition(start + step);
+            Destroy(spawnedTrail);
+            spawnedTrail = null;
+        }
+        // Clear references to avoid memory leaks across pools
+        ownerRoot = null;
+        ownerCharge = null;
+    }
+
+    private void Update()
+    {
+        if (Time.time >= deathAt)
+            Despawn();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Ignore self/owner
+        if (ownerRoot != null && other.transform.root == ownerRoot) return;
+
+        var otherLayer = 1 << other.gameObject.layer;
+
+        // If we touched a non-hittable obstruction (e.g., walls), die immediately
+        if (dieOnObstruction && (obstructionMask.value & otherLayer) != 0)
+        {
+            SpawnHitVfx(other.ClosestPoint(transform.position));
+            Despawn();
             return;
         }
 
-        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+        // Not a hittable target? Ignore.
+        if ((hitMask.value & otherLayer) == 0) return;
 
-        hitThisStep.Clear();
-        int pierces = 0;
+        // Try to get a Target (your enemies derive from Target in your project)
+        var target = other.GetComponentInParent<Target>();
+        if (target == null) return; // Not something we count as an enemy
 
-        foreach (var hit in hits)
-        {
-            if (!hit.collider) continue;
+        // Make sure we only count this collider/root once
+        var id = other.transform.root.GetInstanceID();
+        if (!hitIds.Add(id)) return;
 
-            if (ownerRoot && hit.collider.transform.root == ownerRoot) continue;
-            if (hitThisStep.Contains(hit.collider)) continue;
-            hitThisStep.Add(hit.collider);
+        // At this point it's a genuine, first-time hit on a valid target.
+        // 1) Hand off to your existing damage system (if you like—kept optional):
+        // target.TakeDamage?(...);  <-- keep this commented unless you want damage here.
+        // 2) Increment special charge:
+        ownerCharge?.AddHits(1);
 
-            int  layer      = hit.collider.gameObject.layer;
-            bool isTarget   = (targetLayers.value   & (1 << layer)) != 0;
-            bool isObstacle = (obstacleLayers.value & (1 << layer)) != 0;
+        uniqueHitsSoFar++;
+        SpawnHitVfx(other.ClosestPoint(transform.position));
 
-            if (isTarget)
-            {
-                var dmgTarget = hit.collider.GetComponentInParent<IDamageable>();
-                if (dmgTarget != null)
-                {
-                    dmgTarget.TakeDamage(damage);
-                    SpawnVFX(hit);
-                    PlaySfxAt(hit.point, targetHitSfx);
-                    pierces++;
-
-                    if (pierces > maxPierces)
-                    {
-                        MoveToImpact(start, hit.distance);
-                        Release();
-                        return;
-                    }
-                }
-            }
-
-            if (isObstacle && !pierceThroughObstacles)
-            {
-                SpawnVFX(hit);
-                PlaySfxAt(hit.point, obstacleHitSfx ? obstacleHitSfx : targetHitSfx);
-                MoveToImpact(start, hit.distance);
-                Release();
-                return;
-            }
-        }
-
-        rb.MovePosition(start + step);
+        if (uniqueHitsSoFar >= Mathf.Max(1, maxUniqueHits))
+            Despawn();
     }
 
-    private void MoveToImpact(Vector2 start, float hitDistance)
+    private void SpawnHitVfx(Vector2 at)
     {
-        float move = Mathf.Max(0f, hitDistance - skin);
-        rb.MovePosition(start + dir * move);
+        if (!hitVfxPrefab) return;
+        var vfx = Instantiate(hitVfxPrefab, at, Quaternion.identity);
+        Destroy(vfx, vfxLifetime);
     }
 
-    private void SpawnVFX(RaycastHit2D hit)
+    private void Despawn()
     {
-        if (!hitVFX) return;
-        var rot = Quaternion.FromToRotation(Vector3.right, hit.normal);
-        if (poolService) poolService.Spawn(hitVFX, hit.point, rot);
-        else Destroy(Instantiate(hitVFX, hit.point, rot), 1.5f);
+        // If you later switch to pooling, replace with pool.Release(this)
+        Destroy(gameObject);
     }
 
-    private void PlaySfxAt(Vector2 worldPos, SoundEvent evt)
-    {
-        if (!evt) return;
-        AudioServicesProvider.Audio?.Play(evt, worldPos);
-    }
-
-    private void Release()
-    {
-        var po = GetComponent<PooledObject>();
-        if (po != null) po.Release();
-        else Destroy(gameObject);
-    }
+    #region Designer Helpers (optional setters)
+    public void SetSpeed(float s) => speed = s;
+    public void SetLifetime(float t) => lifetime = t;
+    public void SetPierce(int n) => maxUniqueHits = Mathf.Max(1, n);
+    public void SetHitMask(LayerMask m) => hitMask = m;
+    public void SetObstructionMask(LayerMask m) => obstructionMask = m;
+    #endregion
 }

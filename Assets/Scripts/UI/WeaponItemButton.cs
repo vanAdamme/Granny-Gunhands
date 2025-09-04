@@ -4,19 +4,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class WeaponItemButton : MonoBehaviour,
-    IDropHandler, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
+public class WeaponItemButton : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Wiring")]
     [SerializeField] private Button button;
     [SerializeField] private Image iconImage;
-    [SerializeField] private Image background;        // tint via RaritySettings
-    [SerializeField] private TMP_Text label;          // weapon name (optional)
+    [SerializeField] private Image background;        // tint by rarity
+    [SerializeField] private TMP_Text label;          // optional
     [SerializeField] private GameObject leftBadge;    // small "L"
     [SerializeField] private GameObject rightBadge;   // small "R"
 
     [Header("Drag & Drop Feedback")]
-    [SerializeField] private Image dropHighlight;     // overlay tint image on this row
+    [SerializeField] private Image dropHighlight;     // thin overlay image on this row
     [SerializeField] private Color validDropTint   = new Color(0f, 1f, 0f, 0.25f);
     [SerializeField] private Color invalidDropTint = new Color(1f, 0f, 0f, 0.25f);
     [SerializeField, Min(0f)] private float flashDuration = 0.18f;
@@ -24,50 +23,51 @@ public class WeaponItemButton : MonoBehaviour,
     [Header("Rules")]
     [SerializeField] private bool strictCategoryMatch = true; // enforce upgrade.category == weapon.category
 
-    // Runtime
+    [Header("Services (optional)")]
+    [Tooltip("Optional. If set, toasts will be sent here first; otherwise we fallback to UIController.Instance.")]
+    [SerializeField] private MonoBehaviour toastServiceSource; // should implement IToastService
+    private IToastService toast;
+
     private int myIndex;
     private System.Action<int> onClick;
     private Weapon myWeapon;
     private RaritySettings rarityRef;
 
-    // Listen for runtime icon changes (fired by the weapon)
-    private GenericProjectileWeapon subscribedIconSource;
-
-    public void Bind(Weapon weapon, int index, RaritySettings rar, System.Action<int> onClickHandler)
+    void Awake()
     {
-        // Unsubscribe old source
-        if (subscribedIconSource)
-            subscribedIconSource.IconChanged -= OnWeaponIconChanged;
+        toast = toastServiceSource as IToastService; // may be null; we fallback at call site
+        if (dropHighlight) dropHighlight.enabled = false;
+    }
 
-        myIndex    = index;
-        myWeapon   = weapon;
-        rarityRef  = rar;
-        onClick    = onClickHandler;
+    public void Bind(Weapon w, int index, RaritySettings rar, System.Action<int> onClickHandler)
+    {
+        myIndex = index;
+        onClick = onClickHandler;
+        myWeapon = w;
+        rarityRef = rar;
 
         if (iconImage)
         {
             iconImage.preserveAspect = true;
 
-            // Prefer weapon's runtime icon; fall back to definition icon
+            // Prefer the icon on the definition, fall back to weapon.icon
             Sprite s = null;
-            if (weapon)
+            if (w)
             {
-                if (weapon.icon)                      s = weapon.icon;
-                else if (weapon.Definition?.Icon)     s = weapon.Definition.Icon;
+                if (w.Definition && w.Definition.Icon) s = w.Definition.Icon;
+                else if (w.icon)                       s = w.icon;
             }
 
-            iconImage.sprite  = s;
-            iconImage.enabled = s != null;
-            iconImage.color   = Color.white;
+            iconImage.sprite   = s;
+            iconImage.enabled  = s != null;
+            iconImage.color    = Color.white; // ensure alpha is 1
         }
 
         if (label)
-            label.text = weapon && weapon.Definition
-                        ? weapon.Definition.DisplayName
-                        : (weapon ? weapon.name : "—");
+            label.text = w && w.Definition ? w.Definition.DisplayName : (w ? w.name : "—");
 
-        if (background && rar && weapon && weapon.Definition)
-            background.color = rar.Get(weapon.Definition.Rarity).colour;
+        if (background && rar && w && w.Definition)
+            background.color = rar.Get(w.Definition.Rarity).colour;
 
         if (button)
         {
@@ -76,24 +76,6 @@ public class WeaponItemButton : MonoBehaviour,
         }
 
         if (dropHighlight) dropHighlight.enabled = false;
-
-        // Subscribe to runtime icon updates if available
-        subscribedIconSource = weapon as GenericProjectileWeapon;
-        if (subscribedIconSource)
-            subscribedIconSource.IconChanged += OnWeaponIconChanged;
-    }
-
-    private void OnDestroy()
-    {
-        if (subscribedIconSource)
-            subscribedIconSource.IconChanged -= OnWeaponIconChanged;
-    }
-
-    private void OnWeaponIconChanged(Sprite s)
-    {
-        if (!iconImage) return;
-        iconImage.sprite  = s;
-        iconImage.enabled = s != null;
     }
 
     public void SetEquipped(bool isLeft, bool isRight)
@@ -105,56 +87,27 @@ public class WeaponItemButton : MonoBehaviour,
     // ---------- Drag & Drop ----------
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!dropHighlight) return;
+
         var entry = GetDraggedEntry(eventData);
-        if (!entry || !dropHighlight) return;
+        if (!entry) return;
 
         var upgrade = entry.Definition as WeaponUpgradeItemDefinition;
         if (!upgrade) return;
 
-        bool valid = IsValidUpgradeForThisWeapon(upgrade, out var reason);
-        dropHighlight.color   = valid ? validDropTint : invalidDropTint;
+        bool valid = IsValidUpgradeForThisWeapon(upgrade, out _);
+        dropHighlight.color = valid ? validDropTint : invalidDropTint;
         dropHighlight.enabled = true;
-
-        // Tooltip preview
-        if (UpgradeTooltipController.Instance)
-        {
-            if (valid)
-            {
-                if (upgrade.TryPreviewFor(myWeapon, out var delta, out var note) && !delta.IsEmpty)
-                {
-                    var body = delta.ToMultiline();
-                    if (!string.IsNullOrEmpty(note)) body += $"\n{note}";
-                    UpgradeTooltipController.Instance.Show(eventData.position,
-                        $"Apply to {myWeapon.Definition.DisplayName}", body);
-                }
-                else
-                {
-                    UpgradeTooltipController.Instance.Show(eventData.position,
-                        $"Apply to {myWeapon.Definition.DisplayName}", "Will upgrade.");
-                }
-            }
-            else
-            {
-                UpgradeTooltipController.Instance.Show(eventData.position, "Can't apply", reason);
-            }
-        }
-    }
-
-    public void OnPointerMove(PointerEventData eventData)
-    {
-        UpgradeTooltipController.Instance?.Follow(eventData.position);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (dropHighlight) dropHighlight.enabled = false;
-        UpgradeTooltipController.Instance?.Hide();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
         if (dropHighlight) dropHighlight.enabled = false;
-        UpgradeTooltipController.Instance?.Hide();
 
         var entry   = GetDraggedEntry(eventData);
         var upgrade = entry ? entry.Definition as WeaponUpgradeItemDefinition : null;
@@ -164,52 +117,48 @@ public class WeaponItemButton : MonoBehaviour,
 
         if (!IsValidUpgradeForThisWeapon(upgrade, out var reason))
         {
-            UIController.Instance?.ShowToast(reason);
+            ShowToast(reason);
             Flash(invalidDropTint);
             return;
         }
 
-        // Apply via the ScriptableObject (returns true only if something changed)
-        if (upgrade.TryApplyTo(myWeapon, out var applied, out var applyReason) && applied > 0)
+        // Apply upgrade via definition-driven path (weapon implements IUpgradableWeapon).
+        if (upgrade.TryApplyTo(myWeapon, out var levelsApplied, out var applyReason))
         {
-            // Consume one upgrade item
             entry.SourceInventory.Remove(upgrade, 1);
-
-            // UI feedback
-            UIController.Instance?.ShowToast($"Upgraded {myWeapon.Definition.DisplayName}", myWeapon.icon);
-            OnWeaponIconChanged(myWeapon.icon); // ensure immediate refresh
+            var name = myWeapon.Definition ? myWeapon.Definition.DisplayName : myWeapon.name;
+            var icon = (myWeapon.Definition && myWeapon.Definition.Icon) ? myWeapon.Definition.Icon : myWeapon.icon;
+            ShowToast($"Upgraded {name} (+{levelsApplied})", icon);
             Flash(validDropTint);
+            return;
         }
-        else
-        {
-            UIController.Instance?.ShowToast(string.IsNullOrEmpty(applyReason) ? "No upgrade applied." : applyReason);
-            Flash(invalidDropTint);
-            ItemEntryButton.ShrinkAndDestroyActiveGhost(0.12f);
-        }
+
+        // Failed to apply (e.g., already max level)
+        ShowToast(string.IsNullOrEmpty(applyReason) ? "Upgrade could not be applied." : applyReason);
+        Flash(invalidDropTint);
     }
 
     // ---------- Helpers ----------
     private static ItemEntryButton GetDraggedEntry(PointerEventData e)
     {
         if (e == null || !e.pointerDrag) return null;
-        // pointerDrag may be a child; climb to parent row
         return e.pointerDrag.GetComponentInParent<ItemEntryButton>();
     }
 
     private bool IsValidUpgradeForThisWeapon(WeaponUpgradeItemDefinition upgrade, out string reason)
     {
-        reason = "";
+        reason = string.Empty;
+
         if (!strictCategoryMatch) return true;
 
-        if (!myWeapon || !myWeapon.Definition)
+        if (myWeapon == null || myWeapon.Definition == null)
         {
-            reason = "No weapon.";
+            reason = "Weapon not set.";
             return false;
         }
 
-        // Definition exposes both 'Category' (property) and 'category' (field) per our definition file
-        var weaponCat = myWeapon.Definition.Category;
-        if (weaponCat != upgrade.category)
+        // Use definition data directly (no reflection)
+        if (myWeapon.Definition.category != upgrade.category)
         {
             reason = $"Requires {upgrade.category} weapon.";
             return false;
@@ -233,5 +182,12 @@ public class WeaponItemButton : MonoBehaviour,
         yield return new WaitForSecondsRealtime(Mathf.Max(0.06f, flashDuration));
         dropHighlight.color = prev;
         dropHighlight.enabled = false;
+    }
+
+    private void ShowToast(string message, Sprite icon = null, float duration = 2.2f)
+    {
+        // Prefer injected toast service; fallback to UIController singleton if present
+        if (toast != null) { toast.Show(message, icon, duration); return; }
+        UIController.Instance?.ShowToast(message, icon, duration);
     }
 }
