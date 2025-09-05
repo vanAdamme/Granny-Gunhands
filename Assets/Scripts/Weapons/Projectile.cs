@@ -1,224 +1,179 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Projectile : MonoBehaviour
 {
-    [Header("Defaults (used if weapon doesn't override)")]
-    [SerializeField] private float     defaultSpeed  = 18f;
-    [SerializeField] private float     defaultRange  = 12f;
-    [SerializeField] private LayerMask defaultTargetLayers;
-    [SerializeField] private LayerMask defaultObstacleLayers;
-    [SerializeField] private float     defaultDamage = 5f;
-    [SerializeField, Min(0f)] private float defaultRadius = 0.06f; // >0 uses CircleCast
-    [SerializeField, Min(0f)] private float skin = 0.01f;          // back off from surface
-    [SerializeField, Min(0)]  private int   defaultMaxPierces = 0; // 0 = stop on first target
-    [SerializeField] private bool  defaultPierceThroughObstacles = false;
-    [SerializeField] private GameObject defaultHitVFX;
+    [Header("Runtime (injected)")]
+    [SerializeField] private float speed = 12f;
+    [SerializeField] private float timeToLive = 1.0f;
+    [SerializeField] private int   maxUniqueHits = 1;             // 1 = no pierce, 2 = one pierce, etc.
+    [SerializeField] private LayerMask targetMask;
+    [SerializeField] private LayerMask obstructionMask;
+    [SerializeField] private bool  pierceThroughObstacles = false;
 
-    [Header("Audio (defaults)")]
-    [SerializeField] private SoundEvent defaultTargetHitSfx;   // played when hitting a damageable
-    [SerializeField] private SoundEvent defaultObstacleHitSfx; // played when hitting a wall/obstacle
+    [Header("FX (optional)")]
+    [SerializeField] private GameObject hitVfxPrefab;
+    [SerializeField] private float      vfxLifetime = 1.2f;
 
-    [Header("Services (optional)")]
-    [SerializeField] private UnityPoolService poolService; // optional; will auto-find
-
-    // Runtime state
     private Rigidbody2D rb;
-    private Transform   ownerRoot;
-    private Vector2     dir;
+    private float deathAt;
+    private int   uniqueHitsSoFar;
+    private HashSet<int> hitRoots;
 
-    private float     speed;
-    private float     range;
-    private LayerMask targetLayers;
-    private LayerMask obstacleLayers;
-    private float     damage;
-    private float     radius;
-    private int       maxPierces;
-    private bool      pierceThroughObstacles;
-    private GameObject hitVFX;
+    private Transform ownerRoot;
 
-    // Audio runtime overrides (optional)
-    private SoundEvent targetHitSfx;
-    private SoundEvent obstacleHitSfx;
+    // damage + special charge hooks
+    private float damage;
+    private ISpecialCharge charger;
 
-    private float despawnAt;
-    private readonly HashSet<Collider2D> hitThisStep = new HashSet<Collider2D>();
-
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.bodyType = RigidbodyType2D.Kinematic;
-        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-
-        // Use the non-obsolete finder as a fallback (Unity 6+)
-        if (!poolService) poolService = FindFirstObjectByType<UnityPoolService>();
-        if (!GetComponent<PooledObject>()) gameObject.AddComponent<PooledObject>(); // ensure pooled return helper
+        var col = GetComponent<Collider2D>();
+        if (col) col.isTrigger = true;
+        hitRoots = new HashSet<int>(8);
     }
 
-    /// <summary>Called by the spawner immediately after Spawn()</summary>
-    public void Init(GameObject owner, LayerMask targets, float dmg, Vector2 direction)
+    private void OnEnable()
     {
-        ownerRoot = owner ? owner.transform.root : null;
-        dir = direction.sqrMagnitude > 0f ? direction.normalized : Vector2.right;
-
-        // start from defaults
-        speed      = Mathf.Max(0.01f, defaultSpeed);
-        range      = Mathf.Max(0f,     defaultRange);
-        targetLayers   = (targets.value != 0) ? targets : defaultTargetLayers;
-        obstacleLayers = defaultObstacleLayers;
-        damage     = dmg > 0f ? dmg : defaultDamage;
-        radius     = Mathf.Max(0f, defaultRadius);
-        maxPierces = Mathf.Max(0,  defaultMaxPierces);
-        pierceThroughObstacles = defaultPierceThroughObstacles;
-        hitVFX     = defaultHitVFX;
-
-        // audio defaults
-        targetHitSfx   = defaultTargetHitSfx;
-        obstacleHitSfx = defaultObstacleHitSfx;
-
-        // lifetime from range / speed
-        float lifetime = Mathf.Max(0.01f, range / Mathf.Max(0.01f, speed));
-        despawnAt = Time.time + lifetime;
-
-        hitThisStep.Clear();
-
-        // Optional: configure your Damager if present
-        var damager = GetComponent<Damager>();
-        if (damager) damager.Configure(ownerRoot ? ownerRoot.gameObject : null, targetLayers, damage);
+        deathAt = Time.time + timeToLive;
+        uniqueHitsSoFar = 0;
+        hitRoots.Clear();
     }
 
-    /// <summary>Optional runtime overrides from a weapon/definition.</summary>
-    public void SetRuntime(
-        float?     speedOverride   = null,
-        float?     rangeOverride   = null,
-        LayerMask? obstacleOverride = null,
-        int?       maxPiercesOverride = null,
-        bool?      pierceObstaclesOverride = null,
-        float?     radiusOverride  = null,
-        GameObject vfxOverride     = null,
-        SoundEvent targetHitSfxOverride   = null,
-        SoundEvent obstacleHitSfxOverride = null)
+    private void OnDisable()
     {
-        if (speedOverride.HasValue)        speed = Mathf.Max(0.01f, speedOverride.Value);
-        if (rangeOverride.HasValue)        range = Mathf.Max(0f,     rangeOverride.Value);
-        if (obstacleOverride.HasValue)     obstacleLayers = obstacleOverride.Value;
-        if (maxPiercesOverride.HasValue)   maxPierces = Mathf.Max(0, maxPiercesOverride.Value);
-        if (pierceObstaclesOverride.HasValue) pierceThroughObstacles = pierceObstaclesOverride.Value;
-        if (radiusOverride.HasValue)       radius = Mathf.Max(0f,    radiusOverride.Value);
-        if (vfxOverride != null)           hitVFX = vfxOverride;
-
-        if (targetHitSfxOverride)   targetHitSfx   = targetHitSfxOverride;
-        if (obstacleHitSfxOverride) obstacleHitSfx = obstacleHitSfxOverride;
-
-        float lifetime = Mathf.Max(0.01f, range / Mathf.Max(0.01f, speed));
-        despawnAt = Time.time + lifetime;
+        ownerRoot = null;
+        charger = null;
     }
 
-    // Message sent by UnityPoolService when this is taken from the pool
-    void OnSpawnedFromPool()
+    private void Update()
     {
-        hitThisStep.Clear();
-        rb.linearVelocity = Vector2.zero; // Unity 6 2D API
-        var trail = GetComponent<TrailRenderer>();
-        if (trail) trail.Clear();
+        if (Time.time >= deathAt)
+            Despawn();
     }
 
-    void FixedUpdate()
+    // ───────────────── EnemyShooter path ─────────────────
+    public void Init(GameObject ownerGO, LayerMask hitLayers, float baseDamage, Vector2 direction)
     {
-        if (Time.time >= despawnAt) { Release(); return; }
-        if (dir.sqrMagnitude < 0.0001f) { Release(); return; }
+        ownerRoot  = ownerGO ? ownerGO.transform.root : null;
+        targetMask = hitLayers;
+        damage     = baseDamage;
 
-        Vector2 start = rb.position;
-        Vector2 step  = dir * (speed * Time.fixedDeltaTime);
-        float   dist  = step.magnitude;
-        if (dist <= Mathf.Epsilon) return;
+        var dir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
+        rb.linearVelocity = dir * speed;
+        transform.rotation = Quaternion.FromToRotation(Vector2.right, dir);
+    }
 
-        int mask = targetLayers | obstacleLayers;
-
-        RaycastHit2D[] hits = (radius > 0f)
-            ? Physics2D.CircleCastAll(start, radius, dir, dist + skin, mask)
-            : Physics2D.RaycastAll(start,          dir, dist + skin, mask);
-
-        if (hits.Length == 0)
+    public void SetRuntime(float speedOverride, float rangeOverride, LayerMask obstacleOverride)
+    {
+        if (speedOverride > 0f) speed = speedOverride;
+        if (rangeOverride > 0f)
         {
-            rb.MovePosition(start + step);
+            float ttl = Mathf.Max(0.01f, rangeOverride / Mathf.Max(0.01f, speed));
+            timeToLive = ttl;
+            deathAt = Time.time + timeToLive;
+        }
+        obstructionMask = obstacleOverride;
+    }
+
+    // ───────────────── Player weapon path ─────────────────
+    public void Initialize(Transform owner,
+                           ISpecialCharge charge,
+                           Vector2 direction,
+                           float setSpeed,
+                           float ttlSeconds,
+                           int   allowedUniqueHits,
+                           LayerMask hitMask,
+                           LayerMask blockMask,
+                           bool  canPierceObstacles,
+                           float dmg)                    // ← NEW: damage for player bullets
+    {
+        ownerRoot            = owner ? owner.root : null;
+        charger              = charge;
+        speed                = setSpeed > 0f ? setSpeed : speed;
+        timeToLive           = ttlSeconds > 0f ? ttlSeconds : timeToLive;
+        deathAt              = Time.time + timeToLive;
+        maxUniqueHits        = Mathf.Max(1, allowedUniqueHits);
+        targetMask           = hitMask;
+        obstructionMask      = blockMask;
+        pierceThroughObstacles = canPierceObstacles;
+        damage               = Mathf.Max(0f, dmg);
+
+        var dir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
+        rb.linearVelocity = dir * speed;
+        transform.rotation = Quaternion.FromToRotation(Vector2.right, dir);
+
+        uniqueHitsSoFar = 0;
+        hitRoots.Clear();
+    }
+
+    // Optional helper for wiring charge separately
+    public void SetCharger(ISpecialCharge c) => charger = c;
+
+    // ───────────────── Collisions & counting ─────────────────
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // ignore self
+        if (ownerRoot && other.transform.root == ownerRoot) return;
+
+        int otherLayerMask = 1 << other.gameObject.layer;
+
+        // obstruction handling (e.g., walls)
+        if (!pierceThroughObstacles && (obstructionMask.value & otherLayerMask) != 0)
+        {
+            SpawnHitVfx(other.ClosestPoint(transform.position));
+            Despawn();
             return;
         }
 
-        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+        // not a target layer → ignore
+        if ((targetMask.value & otherLayerMask) == 0) return;
 
-        hitThisStep.Clear();
-        int pierces = 0;
+        // ensure first-time hit per-root
+        var root = other.transform.root;
+        int rootId = root.GetInstanceID();
+        if (!hitRoots.Add(rootId)) return;
 
-        foreach (var hit in hits)
+        // Apply damage if possible
+        var dmgTarget = other.GetComponentInParent<IDamageable>();
+
+        if (dmgTarget != null && damage > 0f)
         {
-            if (!hit.collider) continue;
+            dmgTarget.TakeDamage(damage);
 
-            if (ownerRoot && hit.collider.transform.root == ownerRoot) continue;
-            if (hitThisStep.Contains(hit.collider)) continue;
-            hitThisStep.Add(hit.collider);
+            // Ensure charger is set (in case spawner forgot or order-of-operations hiccup)
+            if (charger == null && ownerRoot != null)
+                charger = ownerRoot.GetComponentInChildren<SpecialChargeSimple>(true);
 
-            int  layer      = hit.collider.gameObject.layer;
-            bool isTarget   = (targetLayers.value   & (1 << layer)) != 0;
-            bool isObstacle = (obstacleLayers.value & (1 << layer)) != 0;
+            charger?.AddDamage(damage);   // ← count damage in the shared meter
 
-            if (isTarget)
-            {
-                var dmgTarget = hit.collider.GetComponentInParent<IDamageable>();
-                if (dmgTarget != null)
-                {
-                    dmgTarget.TakeDamage(damage);
-                    SpawnVFX(hit);
-                    PlaySfxAt(hit.point, targetHitSfx);
-                    pierces++;
-
-                    if (pierces > maxPierces)
-                    {
-                        MoveToImpact(start, hit.distance);
-                        Release();
-                        return;
-                    }
-                }
-            }
-
-            if (isObstacle && !pierceThroughObstacles)
-            {
-                SpawnVFX(hit);
-                PlaySfxAt(hit.point, obstacleHitSfx ? obstacleHitSfx : targetHitSfx);
-                MoveToImpact(start, hit.distance);
-                Release();
-                return;
-            }
+            if (ownerRoot && ownerRoot.GetComponent<PlayerController>())
+                PlayerDamageEvents.Report(damage);
         }
 
-        rb.MovePosition(start + step);
+        uniqueHitsSoFar++;
+        SpawnHitVfx(other.ClosestPoint(transform.position));
+
+        if (uniqueHitsSoFar >= maxUniqueHits)
+            Despawn();
     }
 
-    private void MoveToImpact(Vector2 start, float hitDistance)
+    private void SpawnHitVfx(Vector2 at)
     {
-        float move = Mathf.Max(0f, hitDistance - skin);
-        rb.MovePosition(start + dir * move);
+        if (!hitVfxPrefab) return;
+        var vfx = Instantiate(hitVfxPrefab, at, Quaternion.identity);
+        Destroy(vfx, vfxLifetime);
     }
 
-    private void SpawnVFX(RaycastHit2D hit)
+    private void Despawn()
     {
-        if (!hitVFX) return;
-        var rot = Quaternion.FromToRotation(Vector3.right, hit.normal);
-        if (poolService) poolService.Spawn(hitVFX, hit.point, rot);
-        else Destroy(Instantiate(hitVFX, hit.point, rot), 1.5f);
+        Destroy(gameObject); // swap for pool.Release(this) if pooled
     }
 
-    private void PlaySfxAt(Vector2 worldPos, SoundEvent evt)
-    {
-        if (!evt) return;
-        AudioServicesProvider.Audio?.Play(evt, worldPos);
-    }
-
-    private void Release()
-    {
-        var po = GetComponent<PooledObject>();
-        if (po != null) po.Release();
-        else Destroy(gameObject);
-    }
+    // Optional setters
+    public void SetHitMask(LayerMask m) => targetMask = m;
+    public void SetObstructionMask(LayerMask m) => obstructionMask = m;
+    public void SetPierceObstacles(bool v) => pierceThroughObstacles = v;
 }
