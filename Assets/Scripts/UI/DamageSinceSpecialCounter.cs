@@ -1,15 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
-#if TMP_PRESENT
 using TMPro;
-#endif
 
 public class DamageSinceSpecialCounter : MonoBehaviour
 {
-#if TMP_PRESENT
-    [SerializeField] private TMP_Text tmpLabel;
-#endif
-    [SerializeField] private Text uGuiLabel;
+    [SerializeField] private TMP_Text label;
     [SerializeField] private string format = "DMG: {0}";
     [SerializeField, Min(0)] private int decimals = 0;
 
@@ -18,14 +12,19 @@ public class DamageSinceSpecialCounter : MonoBehaviour
     void OnEnable()
     {
         PlayerDamageEvents.DamagedEnemy += OnDamage;
-        SpecialEvents.Fired += ResetCounter;   // ← listen here
+        SpecialEvents.Fired += ResetCounter;
         Refresh();
     }
 
     void OnDisable()
     {
         PlayerDamageEvents.DamagedEnemy -= OnDamage;
-        SpecialEvents.Fired -= ResetCounter;   // ← and unsubscribe
+        SpecialEvents.Fired -= ResetCounter;
+    }
+
+    void Awake()
+    {
+        if (!label) label = GetComponent<TMP_Text>(); // auto-resolve if you drop it on the same GO
     }
 
     void OnDamage(float amount)
@@ -42,10 +41,7 @@ public class DamageSinceSpecialCounter : MonoBehaviour
 
     void Refresh()
     {
-        var text = string.Format(format, System.Math.Round(total, decimals));
-#if TMP_PRESENT
-        if (tmpLabel) tmpLabel.text = text;
-#endif
-        if (uGuiLabel) uGuiLabel.text = text;
+        if (!label) return;
+        label.text = string.Format(format, System.Math.Round(total, decimals));
     }
 }
