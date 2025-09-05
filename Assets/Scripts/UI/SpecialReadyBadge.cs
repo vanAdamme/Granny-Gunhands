@@ -23,7 +23,7 @@ public class SpecialReadyBadge : MonoBehaviour
     [Header("Auto-resolve")]
     [SerializeField] private bool keepResolvingUntilFound = true;
     [SerializeField, Min(0.05f)] private float resolveEvery = 0.5f;
-    [SerializeField] private bool logResolve = false;
+    [SerializeField] private bool logResolve = true;
 
     private ISpecialCharge meter;
     private bool isReady;
@@ -36,12 +36,12 @@ public class SpecialReadyBadge : MonoBehaviour
     {
         baseScale = transform.localScale;
 
-        // Auto-wire child refs if empty
+        // Auto-wire children if empty
         if (!fill)  fill  = GetComponentInChildren<Image>(true);
         if (!label) label = GetComponentInChildren<TMP_Text>(true);
         if (!icon && fill) icon = fill;
 
-        // Ensure fill is actually a radial fill
+        // Ensure fill actually shows as a ring
         if (fill)
         {
             fill.type = Image.Type.Filled;
@@ -49,7 +49,7 @@ public class SpecialReadyBadge : MonoBehaviour
             fill.fillOrigin = (int)Image.Origin360.Top;
         }
 
-        TryResolveRefs(force: true);
+        TryResolveRefs(force:true);
     }
 
     void OnEnable()
@@ -69,7 +69,7 @@ public class SpecialReadyBadge : MonoBehaviour
         // Keep trying to bind until we have both special + meter
         if (keepResolvingUntilFound && (!special || meter == null) && Time.unscaledTime >= nextResolveAt)
         {
-            if (TryResolveRefs(force: false))
+            if (TryResolveRefs(force:false))
                 MaybeSubscribe();
 
             nextResolveAt = Time.unscaledTime + resolveEvery;
@@ -91,23 +91,34 @@ public class SpecialReadyBadge : MonoBehaviour
     {
         bool changed = false;
 
-        // Try to resolve from the Player first (strong anchor)
+        // Strong anchor: the Player
         var player = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
 
+        // 1) SPECIAL — ask SpecialWeaponInput first
         if (special == null || force)
         {
             SpecialWeaponBase found = null;
-            if (player) found = player.GetComponentInChildren<SpecialWeaponBase>(true);
-            if (!found) found = FindFirstObjectByType<SpecialWeaponBase>(FindObjectsInactive.Include);
+
+            SpecialWeaponInput swi = null;
+            if (player) swi = player.GetComponentInChildren<SpecialWeaponInput>(true);
+            if (!swi)   swi = FindFirstObjectByType<SpecialWeaponInput>(FindObjectsInactive.Include);
+
+            if (swi && swi.EquippedSpecial != null)
+                found = swi.EquippedSpecial;
+
+            // Fallbacks if the input isn’t present
+            if (!found && player) found = player.GetComponentInChildren<SpecialWeaponBase>(true);
+            if (!found)           found = FindFirstObjectByType<SpecialWeaponBase>(FindObjectsInactive.Include);
 
             if (found != special)
             {
                 special = found;
                 changed = true;
-                if (logResolve) Debug.Log($"[SpecialReadyBadge] special={(special ? special.name : "null")}");
+                if (logResolve) Debug.Log($"[SpecialReadyBadge] special={(special ? special.name : "null")} cost={(special ? special.Cost : 0f)}");
             }
         }
 
+        // 2) METER
         if (meter == null || force)
         {
             ISpecialCharge found = chargeSource as ISpecialCharge;
@@ -117,19 +128,20 @@ public class SpecialReadyBadge : MonoBehaviour
 
             if (found == null)
             {
-                // Fallback: search any MonoBehaviour that implements ISpecialCharge
+                // Fallback: any MonoBehaviour that implements ISpecialCharge
                 var mbs = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-                foreach (var mb in mbs)
-                {
-                    if (mb is ISpecialCharge c) { found = c; break; }
-                }
+                foreach (var mb in mbs) { if (mb is ISpecialCharge c) { found = c; break; } }
             }
 
             if (!ReferenceEquals(found, meter))
             {
                 meter = found;
                 changed = true;
-                if (logResolve) Debug.Log($"[SpecialReadyBadge] meter={(meter is Component comp ? comp.name : "null")}");
+                if (logResolve)
+                {
+                    var comp = meter as Component;
+                    Debug.Log($"[SpecialReadyBadge] meter={(comp ? comp.name : "null")} current={(meter != null ? meter.Current : 0f)}");
+                }
             }
         }
 
@@ -146,9 +158,7 @@ public class SpecialReadyBadge : MonoBehaviour
         subscribed = true;
 
         if (logResolve)
-        {
-            Debug.Log($"[SpecialReadyBadge] Subscribed. cost={special.Cost}, current={(meter?.Current ?? 0f)}");
-        }
+            Debug.Log($"[SpecialReadyBadge] Subscribed. cost={special.Cost}, current={meter.Current}");
 
         Refresh();
     }
@@ -168,7 +178,7 @@ public class SpecialReadyBadge : MonoBehaviour
     {
         if (meter == null || special == null)
         {
-            SetVisuals(0f, false, 0f, 0f, unresolved: true);
+            SetVisuals(0f, false, 0f, 0f, unresolved:true);
             return;
         }
 
@@ -177,7 +187,7 @@ public class SpecialReadyBadge : MonoBehaviour
         float fill01 = Mathf.Clamp01(cur / req);
         bool ready = cur + EPS >= req;
 
-        SetVisuals(fill01, ready, cur, req, unresolved: false);
+        SetVisuals(fill01, ready, cur, req, unresolved:false);
     }
 
     void SetVisuals(float fill01, bool ready, float cur, float req, bool unresolved)

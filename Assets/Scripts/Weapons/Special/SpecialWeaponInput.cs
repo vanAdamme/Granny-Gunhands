@@ -12,7 +12,8 @@ public class SpecialWeaponInput : MonoBehaviour
 
     [Header("Special")]
     [SerializeField] private SpecialWeaponBase equippedSpecial;
-
+    public SpecialWeaponBase EquippedSpecial => equippedSpecial;
+    
     [SerializeField] private bool logDebug = true;
 
     private bool weEnabledAction;
