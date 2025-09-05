@@ -150,11 +150,11 @@ public class PlayerController : Target, IPlayerContext
         rb.linearVelocity = playerMoveDirection * moveSpeed;
     }
 
-    public override void TakeDamage(float amount)
+    public override void TakeDamage(float amount, GameObject attacker = null)
     {
         if (IsInvulnerable) return;
 
-        base.TakeDamage(amount);
+        base.TakeDamage(amount, attacker);
         UIController.Instance.UpdateHealthSlider();
         SetInvulnerable(true);
     }

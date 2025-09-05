@@ -107,7 +107,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: -7579322072880458250, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -136,13 +136,7 @@ MonoBehaviour:
   icon: {fileID: -7579322072880458250, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
   muzzle: {fileID: 1594121814020586523}
   fireMode: 0
-  definitionAsset: {fileID: 11400000, guid: ef342f91b593a8d46914ea136f8e929c, type: 2}
-  startLevel: 1
-  poolService: {fileID: 0}
-  stats:
-    damage: 0
-    projectileSpeed: 0
-    range: 0
-    maxPierces: 0
-    pierceThroughObstacles: 0
-    cooldown: 0
+  defaultDefinition: {fileID: 11400000, guid: ef342f91b593a8d46914ea136f8e929c, type: 2}
+  specialChargeSource: {fileID: 0}
+  secondaryMuzzle: {fileID: 0}
+  alternateMuzzles: 1

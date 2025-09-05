@@ -1,14 +1,11 @@
 using UnityEngine;
-using UnityEngine.Events;
 using DamageNumbersPro;
 
-/// <summary>
-/// Basic behavior for tracking the health of an object.
-/// </summary>
+/// Basic behaviour for tracking the health of an object.
 public class Health : MonoBehaviour
 {
     [SerializeField, Min(1f)] private float m_MaxHealth = 1f;
-    [SerializeField] float m_CurrentHealth;
+    [SerializeField] private float m_CurrentHealth;
     [SerializeField] private DamageNumber damageNumberPrefab;
     [SerializeField] private DamageFlash damageFlash;
 
@@ -18,7 +15,7 @@ public class Health : MonoBehaviour
     protected bool m_IsDead;
 
     // Properties
-    public float MaxHealth { get => m_MaxHealth; set => m_MaxHealth = value; }
+    public float MaxHealth { get => m_MaxHealth; set => m_MaxHealth = Mathf.Max(1f, value); }
     public float CurrentHealth => m_CurrentHealth;
     public bool IsInvulnerable { get => m_IsInvulnerable; set => m_IsInvulnerable = value; }
 
@@ -28,8 +25,7 @@ public class Health : MonoBehaviour
 
         if (!damageFlash)
         {
-            TryGetComponent(out damageFlash);
-            if (!damageFlash)
+            if (!TryGetComponent(out damageFlash))
                 damageFlash = GetComponentInChildren<DamageFlash>(includeInactive: true);
         }
     }
@@ -40,58 +36,50 @@ public class Health : MonoBehaviour
         if (m_CurrentHealth > m_MaxHealth) m_CurrentHealth = m_MaxHealth;
     }
 
-    // Applies damage to the GameObject.
-    public virtual void TakeDamage(float amount)
+    /// Applies damage to this object.
+    /// Pass the attacker GameObject if you want damage-to-charge, on-hit effects, etc.
+    public virtual void TakeDamage(float amount, GameObject attacker = null)
     {
-        // If already dead, do nothing
-        if (m_IsDead || m_IsInvulnerable)
+        if (m_IsDead || m_IsInvulnerable || amount <= 0f)
             return;
 
-        m_CurrentHealth -= amount;
+        // Clamp and compute actually-applied damage
+        float before  = m_CurrentHealth;
+        m_CurrentHealth = Mathf.Max(0f, m_CurrentHealth - amount);
+        float applied = before - m_CurrentHealth;
+        if (applied <= 0f) return;
 
-        // damage popup
-        if (damageNumberPrefab != null)
+        // Global damage event (lets specials charge off damage dealt)
+        DamageEvents.RaiseDamaged(attacker, this, applied);
+
+        // Visual feedback
+        if (damageNumberPrefab) damageNumberPrefab.Spawn(transform.position, applied);
+        if (damageFlash) damageFlash.CallDamageFlash();
+
+        // Death
+        if (m_CurrentHealth <= 0f)
         {
-            DamageNumber damageNumber = damageNumberPrefab.Spawn(transform.position, amount);
-        }
-        // push enemy back
-        // pushCounter = pushTime;
-
-        // damage flash
-        if (damageFlash != null) damageFlash.CallDamageFlash();
-
-        // Check for death condition.
-        if (m_CurrentHealth <= 0)
-        {
-            m_CurrentHealth = 0;
+            m_CurrentHealth = 0f;
             Die();
         }
     }
 
-    // Heals the GameObject, up to the maximum value and notifies listeners
+    /// Heals the GameObject, up to the maximum value.
     public virtual void Heal(float amount)
     {
-        // Don't heal if already dead
-        if (m_IsDead)
-            return;
-
-        m_CurrentHealth += amount;
-
-        if (m_CurrentHealth > MaxHealth)
-            m_CurrentHealth = MaxHealth;
+        if (m_IsDead || amount <= 0f) return;
+        m_CurrentHealth = Mathf.Min(MaxHealth, m_CurrentHealth + amount);
     }
 
-    // Notify listeners that this object is dead and disable the GameObject to prevent further interaction.
+    /// Notify listeners and disable to prevent further interaction.
     protected virtual void Die()
     {
-        // Only die once
         if (m_IsDead) return;
-
         m_IsDead = true;
-        OnDied?.Invoke(); // <— notify listeners
+        OnDied?.Invoke();
         gameObject.SetActive(false);
     }
 
-    // Compatibility helpers that UI/other systems might still call
+    // Compatibility helper for UI/other systems
     public bool IsHurt() => m_CurrentHealth < MaxHealth;
 }

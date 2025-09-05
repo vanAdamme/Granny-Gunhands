@@ -17,19 +17,22 @@ MonoBehaviour:
   category: 1
   Rarity: 1
   Prefab: {fileID: 5172922710798744017, guid: b32ef6f974af6fd46b0467a0d39c215a, type: 3}
+  FireSfx: {fileID: 0}
+  LevelFireSfx: []
   baseCooldown: 0.15
   Icon: {fileID: -7579322072880458250, guid: ee9dd6e4dddc1fb4fa13234d8a7e125e, type: 3}
+  levelStats: []
   LevelIcons: []
   projectilePrefab: {fileID: 4307658229903141588, guid: 5e270374c322ca3468179f0693c61fa6, type: 3}
-  damage: 10
+  damage: 4
   projectileSpeed: 12
-  range: 10
+  range: 6
   maxPierces: 0
   pierceThroughObstacles: 0
   targetLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4608
   obstacleLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   muzzleFlashPrefab: {fileID: 0}
