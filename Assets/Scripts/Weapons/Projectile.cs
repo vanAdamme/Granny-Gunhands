@@ -138,13 +138,17 @@ public class Projectile : MonoBehaviour
 
         // Apply damage if possible
         var dmgTarget = other.GetComponentInParent<IDamageable>();
+
         if (dmgTarget != null && damage > 0f)
         {
             dmgTarget.TakeDamage(damage);
-            // count charge only when damage is actually applied
-            charger?.AddHits(1);
 
-            // only count player bullets
+            // Ensure charger is set (in case spawner forgot or order-of-operations hiccup)
+            if (charger == null && ownerRoot != null)
+                charger = ownerRoot.GetComponentInChildren<SpecialChargeSimple>(true);
+
+            charger?.AddDamage(damage);   // ← count damage in the shared meter
+
             if (ownerRoot && ownerRoot.GetComponent<PlayerController>())
                 PlayerDamageEvents.Report(damage);
         }

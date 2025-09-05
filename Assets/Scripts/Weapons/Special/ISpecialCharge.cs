@@ -2,24 +2,18 @@ using System;
 
 public interface ISpecialCharge
 {
-    /// <summary>Raised whenever charge changes. Args: current, required.</summary>
-    event Action<int,int> Changed;
+    /// Raised whenever the meter changes. Arg: current damage in the pool.
+    event Action<float> Changed;
 
-    /// <summary>Current accumulated hit count.</summary>
-    int Current { get; }
+    /// Accumulated player damage available to spend.
+    float Current { get; }
 
-    /// <summary>Hits required to activate.</summary>
-    int Required { get; }
+    /// Add damage to the pool (e.g., when a player source deals damage).
+    void AddDamage(float amount);
 
-    /// <summary>True when Current >= Required.</summary>
-    bool IsReady { get; }
+    /// Try to spend 'amount' from the pool. Returns true if successful.
+    bool TryConsume(float amount);
 
-    /// <summary>Add N successful hits toward the charge.</summary>
-    void AddHits(int hits);
-
-    /// <summary>Consume charge to zero (or roll-over if you prefer different behavior).</summary>
-    void Consume();
-
-    /// <summary>Reset charge to zero without activation (e.g., on death/scene).</summary>
+    /// Hard reset to zero (rare: on death/scene load).
     void Reset();
 }

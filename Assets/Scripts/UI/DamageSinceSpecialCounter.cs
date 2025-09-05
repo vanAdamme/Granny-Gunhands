@@ -7,41 +7,29 @@ public class DamageSinceSpecialCounter : MonoBehaviour
     [SerializeField] private string format = "DMG: {0}";
     [SerializeField, Min(0)] private int decimals = 0;
 
-    private float total;
+    ISpecialCharge meter;
+
+    void Awake()
+    {
+        if (!label) label = GetComponent<TMP_Text>();
+        meter = FindFirstObjectByType<SpecialChargeSimple>();
+    }
 
     void OnEnable()
     {
-        PlayerDamageEvents.DamagedEnemy += OnDamage;
-        SpecialEvents.Fired += ResetCounter;
+        if (meter != null) meter.Changed += OnMeterChanged;
         Refresh();
     }
 
     void OnDisable()
     {
-        PlayerDamageEvents.DamagedEnemy -= OnDamage;
-        SpecialEvents.Fired -= ResetCounter;
+        if (meter != null) meter.Changed -= OnMeterChanged;
     }
 
-    void Awake()
-    {
-        if (!label) label = GetComponent<TMP_Text>(); // auto-resolve if you drop it on the same GO
-    }
-
-    void OnDamage(float amount)
-    {
-        total += Mathf.Max(0f, amount);
-        Refresh();
-    }
-
-    public void ResetCounter()
-    {
-        total = 0f;
-        Refresh();
-    }
-
+    void OnMeterChanged(float cur) => Refresh();
     void Refresh()
     {
-        if (!label) return;
-        label.text = string.Format(format, System.Math.Round(total, decimals));
+        if (!label || meter == null) return;
+        label.text = string.Format(format, System.Math.Round(meter.Current, decimals));
     }
 }

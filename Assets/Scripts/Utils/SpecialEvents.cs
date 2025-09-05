@@ -2,11 +2,11 @@ using System;
 
 public static class SpecialEvents
 {
-    /// Raised after a special weapon successfully activates.
-    public static event Action Fired;
+    /// <summary>Raised after a special weapon successfully activates. Arg: cost spent.</summary>
+    public static event Action<float> Fired;
 
-    public static void ReportFired()
+    public static void ReportFired(float cost)
     {
-        Fired?.Invoke();
+        Fired?.Invoke(cost);
     }
 }

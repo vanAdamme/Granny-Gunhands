@@ -3,43 +3,32 @@ using System;
 
 public class SpecialChargeSimple : MonoBehaviour, ISpecialCharge
 {
-    [SerializeField, Min(1)] private int requiredHits = 20;
-    [SerializeField] private bool allowOverfill = false;
+    [SerializeField, Min(0f)] private float current;  // damage pool
 
-    private int current;
+    public event Action<float> Changed;
 
-    public event Action<int,int> Changed;
+    public float Current => current;
 
-    public int Current => current;
-    public int Required => Mathf.Max(1, requiredHits);
-    public bool IsReady => current >= Required;
-
-    public void AddHits(int hits)
+    public void AddDamage(float amount)
     {
-        if (hits <= 0) return;
-        var before = current;
-        current += hits;
-        if (!allowOverfill && current > Required) current = Required;
-        if (current != before) Changed?.Invoke(current, Required);
+        if (amount <= 0f) return;
+        current += amount;
+        Changed?.Invoke(current);
     }
 
-    public void Consume()
+    public bool TryConsume(float amount)
     {
-        if (current == 0) return;
-        current = 0;
-        Changed?.Invoke(current, Required);
+        if (amount <= 0f) return true;
+        if (current + 1e-5f < amount) return false;
+        current -= amount;
+        if (current < 0f) current = 0f;
+        Changed?.Invoke(current);
+        return true;
     }
 
     public void Reset()
     {
-        current = 0;
-        Changed?.Invoke(current, Required);
-    }
-
-    // Optional: expose a setter for designer tweak at runtime
-    public void SetRequired(int hits)
-    {
-        requiredHits = Mathf.Max(1, hits);
-        Changed?.Invoke(current, Required);
+        current = 0f;
+        Changed?.Invoke(current);
     }
 }

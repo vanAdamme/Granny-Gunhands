@@ -8,11 +8,7 @@ public class CookieBribeSpecial : SpecialWeaponBase
     protected override void ActivateInternal()
     {
         if (!decoyPrefab) return;
-
-        var pos = transform.position;
-        var decoy = Instantiate(decoyPrefab, pos, Quaternion.identity);
+        var decoy = Instantiate(decoyPrefab, transform.position, Quaternion.identity);
         Destroy(decoy, duration);
-
-        // SFX/VFX hooks can go here if you have them.
     }
 }

@@ -25,8 +25,10 @@ public class GenericProjectileWeapon : Weapon
 
         ownerRoot = transform.root;
 
+        // Resolve charge with strong preference for the owner's hierarchy
         charge = specialChargeSource as ISpecialCharge
-              ?? Object.FindFirstObjectByType<SpecialChargeSimple>();
+            ?? GetComponentInParent<SpecialChargeSimple>()   // ← anchor to Player
+            ?? Object.FindFirstObjectByType<SpecialChargeSimple>();
     }
 
     public override bool TryFire(Vector2 dir) => base.TryFire(dir);

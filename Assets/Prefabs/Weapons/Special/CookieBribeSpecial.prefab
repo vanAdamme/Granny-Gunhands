@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4a490759a136d45b3904c13bb8f971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargeSource: {fileID: -1281170073215795530}
+  chargeSource: {fileID: 1371682858572363247, guid: 8ef46b3c4917a95438da712afa1ea085, type: 3}
+  requiredDamage: 24
   decoyPrefab: {fileID: 6930988675494509000, guid: fa3e2b48dce4c394eb93a0768e4826cf, type: 3}
   duration: 6
