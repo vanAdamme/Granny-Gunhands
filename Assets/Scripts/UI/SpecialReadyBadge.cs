@@ -1,0 +1,197 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class SpecialReadyBadge : MonoBehaviour
+{
+    [Header("Optional explicit refs (leave empty; we’ll auto-find)")]
+    [SerializeField] private SpecialWeaponBase special;      // equipped special on Player
+    [SerializeField] private MonoBehaviour chargeSource;     // SpecialChargeSimple (ISpecialCharge)
+
+    [Header("UI")]
+    [SerializeField] private Image icon;   // optional background ring
+    [SerializeField] private Image fill;   // set to Filled / Radial 360
+    [SerializeField] private TMP_Text label;
+
+    [Header("Visuals")]
+    [SerializeField] private Color notReadyColor = new Color(1f, 1f, 1f, 0.35f);
+    [SerializeField] private Color readyColor    = Color.white;
+    [SerializeField] private bool  pulseWhenReady = true;
+    [SerializeField, Min(0f)] private float pulseScale = 1.08f;
+    [SerializeField, Min(0f)] private float pulseSpeed = 6f;
+
+    [Header("Auto-resolve")]
+    [SerializeField] private bool keepResolvingUntilFound = true;
+    [SerializeField, Min(0.05f)] private float resolveEvery = 0.5f;
+    [SerializeField] private bool logResolve = false;
+
+    private ISpecialCharge meter;
+    private bool isReady;
+    private bool subscribed;
+    private Vector3 baseScale;
+    private float nextResolveAt;
+    const float EPS = 1e-5f;
+
+    void Awake()
+    {
+        baseScale = transform.localScale;
+
+        // Auto-wire child refs if empty
+        if (!fill)  fill  = GetComponentInChildren<Image>(true);
+        if (!label) label = GetComponentInChildren<TMP_Text>(true);
+        if (!icon && fill) icon = fill;
+
+        // Ensure fill is actually a radial fill
+        if (fill)
+        {
+            fill.type = Image.Type.Filled;
+            fill.fillMethod = Image.FillMethod.Radial360;
+            fill.fillOrigin = (int)Image.Origin360.Top;
+        }
+
+        TryResolveRefs(force: true);
+    }
+
+    void OnEnable()
+    {
+        MaybeSubscribe();
+        Refresh();
+    }
+
+    void OnDisable()
+    {
+        Unsubscribe();
+        transform.localScale = baseScale;
+    }
+
+    void Update()
+    {
+        // Keep trying to bind until we have both special + meter
+        if (keepResolvingUntilFound && (!special || meter == null) && Time.unscaledTime >= nextResolveAt)
+        {
+            if (TryResolveRefs(force: false))
+                MaybeSubscribe();
+
+            nextResolveAt = Time.unscaledTime + resolveEvery;
+        }
+
+        // Pulse when ready
+        if (pulseWhenReady && isReady)
+        {
+            float s = 1f + (pulseScale - 1f) * (0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * pulseSpeed));
+            transform.localScale = baseScale * s;
+        }
+        else
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.unscaledDeltaTime * 12f);
+        }
+    }
+
+    bool TryResolveRefs(bool force)
+    {
+        bool changed = false;
+
+        // Try to resolve from the Player first (strong anchor)
+        var player = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
+
+        if (special == null || force)
+        {
+            SpecialWeaponBase found = null;
+            if (player) found = player.GetComponentInChildren<SpecialWeaponBase>(true);
+            if (!found) found = FindFirstObjectByType<SpecialWeaponBase>(FindObjectsInactive.Include);
+
+            if (found != special)
+            {
+                special = found;
+                changed = true;
+                if (logResolve) Debug.Log($"[SpecialReadyBadge] special={(special ? special.name : "null")}");
+            }
+        }
+
+        if (meter == null || force)
+        {
+            ISpecialCharge found = chargeSource as ISpecialCharge;
+
+            if (found == null && player)
+                found = player.GetComponentInChildren<SpecialChargeSimple>(true);
+
+            if (found == null)
+            {
+                // Fallback: search any MonoBehaviour that implements ISpecialCharge
+                var mbs = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                foreach (var mb in mbs)
+                {
+                    if (mb is ISpecialCharge c) { found = c; break; }
+                }
+            }
+
+            if (!ReferenceEquals(found, meter))
+            {
+                meter = found;
+                changed = true;
+                if (logResolve) Debug.Log($"[SpecialReadyBadge] meter={(meter is Component comp ? comp.name : "null")}");
+            }
+        }
+
+        return changed;
+    }
+
+    void MaybeSubscribe()
+    {
+        if (subscribed) return;
+        if (meter == null || special == null) return;
+
+        meter.Changed += OnMeterChanged;
+        SpecialEvents.Fired += OnSpecialFired;
+        subscribed = true;
+
+        if (logResolve)
+        {
+            Debug.Log($"[SpecialReadyBadge] Subscribed. cost={special.Cost}, current={(meter?.Current ?? 0f)}");
+        }
+
+        Refresh();
+    }
+
+    void Unsubscribe()
+    {
+        if (!subscribed) return;
+        if (meter != null) meter.Changed -= OnMeterChanged;
+        SpecialEvents.Fired -= OnSpecialFired;
+        subscribed = false;
+    }
+
+    void OnMeterChanged(float _) => Refresh();
+    void OnSpecialFired(float _)  => Refresh();
+
+    void Refresh()
+    {
+        if (meter == null || special == null)
+        {
+            SetVisuals(0f, false, 0f, 0f, unresolved: true);
+            return;
+        }
+
+        float cur = Mathf.Max(0f, meter.Current);
+        float req = Mathf.Max(EPS, special.Cost);
+        float fill01 = Mathf.Clamp01(cur / req);
+        bool ready = cur + EPS >= req;
+
+        SetVisuals(fill01, ready, cur, req, unresolved: false);
+    }
+
+    void SetVisuals(float fill01, bool ready, float cur, float req, bool unresolved)
+    {
+        isReady = ready;
+
+        if (fill)  fill.fillAmount = fill01;
+        if (icon)  icon.color      = ready ? readyColor : notReadyColor;
+
+        if (label)
+        {
+            if (unresolved)      label.text = "--";
+            else if (ready)      label.text = "READY";
+            else                 label.text = $"{Mathf.RoundToInt(cur)}/{Mathf.RoundToInt(req)}";
+        }
+    }
+}

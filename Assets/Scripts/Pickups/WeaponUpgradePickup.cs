@@ -15,9 +15,6 @@ public class WeaponUpgradePickup : PickupBase
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-#if UNITY_EDITOR
-        Debug.Log($"[WeaponUpgradePickup] Trigger by '{other.name}' (item={(upgradeItem ? upgradeItem.DisplayName : "NULL")})", this);
-#endif
         if (consumed || !upgradeItem) return;
 
         var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;

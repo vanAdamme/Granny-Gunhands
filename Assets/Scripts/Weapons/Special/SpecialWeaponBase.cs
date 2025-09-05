@@ -9,7 +9,10 @@ public abstract class SpecialWeaponBase : MonoBehaviour
 
     [Header("Special Cost")]
     [Tooltip("Damage required in the shared meter to activate this special.")]
-    [SerializeField, Min(0f)] private float requiredDamage = 50f;
+    [SerializeField, Min(0f)] private float requiredDamage;
+
+    // Expose cost for UI and logic
+    public float Cost => RequiredDamage;
     protected virtual float RequiredDamage => requiredDamage;
 
     const float EPS = 1e-5f;
