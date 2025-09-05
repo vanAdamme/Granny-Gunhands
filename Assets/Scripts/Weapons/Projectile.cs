@@ -1,10 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Lightweight projectile. Counts unique target hits (for specials), respects obstacle layers,
-/// and exposes Init/SetRuntime to match EnemyShooter. Damage is left to your combat pipeline.
-/// </summary>
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Projectile : MonoBehaviour
 {
@@ -25,17 +21,17 @@ public class Projectile : MonoBehaviour
     private int   uniqueHitsSoFar;
     private HashSet<int> hitRoots;
 
-    private Transform     ownerRoot;
-    private ISpecialCharge ownerCharge;
+    private Transform ownerRoot;
 
-    // Optional bookkeeping if you later want damage here
+    // damage + special charge hooks
     private float damage;
+    private ISpecialCharge charger;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         var col = GetComponent<Collider2D>();
-        if (col) col.isTrigger = true; // typical top-down bullet behavior
+        if (col) col.isTrigger = true;
         hitRoots = new HashSet<int>(8);
     }
 
@@ -49,7 +45,7 @@ public class Projectile : MonoBehaviour
     private void OnDisable()
     {
         ownerRoot = null;
-        ownerCharge = null;
+        charger = null;
     }
 
     private void Update()
@@ -58,29 +54,18 @@ public class Projectile : MonoBehaviour
             Despawn();
     }
 
-    // ─────────────────────────────────────────────────────────────────────────────
-    // Public API expected by EnemyShooter (and weapons)
-    // ─────────────────────────────────────────────────────────────────────────────
-
-    /// <summary>
-    /// Enemy path: sets owner, masks, base damage, and initial direction/velocity.
-    /// Matches EnemyShooter usage.
-    /// </summary>
+    // ───────────────── EnemyShooter path ─────────────────
     public void Init(GameObject ownerGO, LayerMask hitLayers, float baseDamage, Vector2 direction)
     {
-        ownerRoot   = ownerGO ? ownerGO.transform.root : null;
-        targetMask  = hitLayers;
-        damage      = baseDamage;
+        ownerRoot  = ownerGO ? ownerGO.transform.root : null;
+        targetMask = hitLayers;
+        damage     = baseDamage;
 
         var dir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
         rb.linearVelocity = dir * speed;
         transform.rotation = Quaternion.FromToRotation(Vector2.right, dir);
     }
 
-    /// <summary>
-    /// Enemy path: runtime overrides for speed, range→TTL, and obstacle layers.
-    /// Matches EnemyShooter usage.
-    /// </summary>
     public void SetRuntime(float speedOverride, float rangeOverride, LayerMask obstacleOverride)
     {
         if (speedOverride > 0f) speed = speedOverride;
@@ -93,9 +78,7 @@ public class Projectile : MonoBehaviour
         obstructionMask = obstacleOverride;
     }
 
-    /// <summary>
-    /// Player weapon path: richer initialize that also injects the owner's special charge.
-    /// </summary>
+    // ───────────────── Player weapon path ─────────────────
     public void Initialize(Transform owner,
                            ISpecialCharge charge,
                            Vector2 direction,
@@ -104,10 +87,11 @@ public class Projectile : MonoBehaviour
                            int   allowedUniqueHits,
                            LayerMask hitMask,
                            LayerMask blockMask,
-                           bool  canPierceObstacles)
+                           bool  canPierceObstacles,
+                           float dmg)                    // ← NEW: damage for player bullets
     {
         ownerRoot            = owner ? owner.root : null;
-        ownerCharge          = charge;
+        charger              = charge;
         speed                = setSpeed > 0f ? setSpeed : speed;
         timeToLive           = ttlSeconds > 0f ? ttlSeconds : timeToLive;
         deathAt              = Time.time + timeToLive;
@@ -115,6 +99,7 @@ public class Projectile : MonoBehaviour
         targetMask           = hitMask;
         obstructionMask      = blockMask;
         pierceThroughObstacles = canPierceObstacles;
+        damage               = Mathf.Max(0f, dmg);
 
         var dir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
         rb.linearVelocity = dir * speed;
@@ -124,10 +109,10 @@ public class Projectile : MonoBehaviour
         hitRoots.Clear();
     }
 
-    // ─────────────────────────────────────────────────────────────────────────────
-    // Collision & counting
-    // ─────────────────────────────────────────────────────────────────────────────
+    // Optional helper for wiring charge separately
+    public void SetCharger(ISpecialCharge c) => charger = c;
 
+    // ───────────────── Collisions & counting ─────────────────
     private void OnTriggerEnter2D(Collider2D other)
     {
         // ignore self
@@ -146,15 +131,23 @@ public class Projectile : MonoBehaviour
         // not a target layer → ignore
         if ((targetMask.value & otherLayerMask) == 0) return;
 
-        // ensure "genuine" first-time hit per-root
+        // ensure first-time hit per-root
         var root = other.transform.root;
         int rootId = root.GetInstanceID();
         if (!hitRoots.Add(rootId)) return;
 
-        // Optional: forward to your damage system here if desired.
+        // Apply damage if possible
+        var dmgTarget = other.GetComponentInParent<IDamageable>();
+        if (dmgTarget != null && damage > 0f)
+        {
+            dmgTarget.TakeDamage(damage);
+            // count charge only when damage is actually applied
+            charger?.AddHits(1);
 
-        // Charge special on successful contact
-        ownerCharge?.AddHits(1);
+            // only count player bullets
+            if (ownerRoot && ownerRoot.GetComponent<PlayerController>())
+                PlayerDamageEvents.Report(damage);
+        }
 
         uniqueHitsSoFar++;
         SpawnHitVfx(other.ClosestPoint(transform.position));
@@ -172,11 +165,10 @@ public class Projectile : MonoBehaviour
 
     private void Despawn()
     {
-        // Swap to a pool.Release(this) when you introduce pooling.
-        Destroy(gameObject);
+        Destroy(gameObject); // swap for pool.Release(this) if pooled
     }
 
-    // Optional helpers
+    // Optional setters
     public void SetHitMask(LayerMask m) => targetMask = m;
     public void SetObstructionMask(LayerMask m) => obstructionMask = m;
     public void SetPierceObstacles(bool v) => pierceThroughObstacles = v;

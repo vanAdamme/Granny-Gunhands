@@ -26,6 +26,7 @@ public abstract class SpecialWeaponBase : MonoBehaviour
         if (!CanActivate) return;
         ActivateInternal();
         charge?.Consume();
+        SpecialEvents.ReportFired();
     }
 
     /// <summary>Your concrete special effect goes here.</summary>

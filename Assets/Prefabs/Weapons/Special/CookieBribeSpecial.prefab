@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 799824662350371064}
   - component: {fileID: 8018416953011819301}
   - component: {fileID: -1281170073215795530}
-  - component: {fileID: 103873398821873283}
   m_Layer: 0
   m_Name: CookieBribeSpecial
   m_TagString: Untagged
@@ -104,17 +103,3 @@ MonoBehaviour:
   chargeSource: {fileID: -1281170073215795530}
   decoyPrefab: {fileID: 6930988675494509000, guid: fa3e2b48dce4c394eb93a0768e4826cf, type: 3}
   duration: 6
---- !u!114 &103873398821873283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6930988675494509000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb40294f9f98d98449f5976c0a246b9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  requiredHits: 5
-  allowOverfill: 1

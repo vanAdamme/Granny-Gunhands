@@ -1,0 +1,1523 @@
+fileFormatVersion: 2
+guid: 03a7f5a5e6abf1845be3fdeed4f1825f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6318678285031489824
+    second: autotile_tileset_0
+  - first:
+      213: -7814156547749468790
+    second: autotile_tileset_1
+  - first:
+      213: 7222509984961320956
+    second: autotile_tileset_2
+  - first:
+      213: 6701303863128334601
+    second: autotile_tileset_3
+  - first:
+      213: 7945259994943056140
+    second: autotile_tileset_4
+  - first:
+      213: -743345146488940924
+    second: autotile_tileset_5
+  - first:
+      213: 5092115374719348908
+    second: autotile_tileset_6
+  - first:
+      213: 2752534031673432299
+    second: autotile_tileset_7
+  - first:
+      213: 6445951259994895172
+    second: autotile_tileset_8
+  - first:
+      213: 5987699617257022411
+    second: autotile_tileset_9
+  - first:
+      213: -8544969115720123968
+    second: autotile_tileset_10
+  - first:
+      213: -5301853836167433332
+    second: autotile_tileset_11
+  - first:
+      213: 6767342561088690961
+    second: autotile_tileset_12
+  - first:
+      213: -1922539000564004329
+    second: autotile_tileset_13
+  - first:
+      213: 6083343085079835801
+    second: autotile_tileset_14
+  - first:
+      213: -7489559952139306273
+    second: autotile_tileset_15
+  - first:
+      213: 3688480553854758551
+    second: autotile_tileset_16
+  - first:
+      213: 4215220343472566626
+    second: autotile_tileset_17
+  - first:
+      213: -8961239556002537694
+    second: autotile_tileset_18
+  - first:
+      213: -4655919088096844571
+    second: autotile_tileset_19
+  - first:
+      213: 7952490522299753328
+    second: autotile_tileset_20
+  - first:
+      213: -7897922504731599949
+    second: autotile_tileset_21
+  - first:
+      213: 4729129682547074226
+    second: autotile_tileset_22
+  - first:
+      213: 2926313785523626185
+    second: autotile_tileset_23
+  - first:
+      213: -186450738273480271
+    second: autotile_tileset_24
+  - first:
+      213: 562013848107692480
+    second: autotile_tileset_25
+  - first:
+      213: -5935192775571962765
+    second: autotile_tileset_26
+  - first:
+      213: 3733823023102072569
+    second: autotile_tileset_27
+  - first:
+      213: -6389602651889712675
+    second: autotile_tileset_28
+  - first:
+      213: 962191804029152183
+    second: autotile_tileset_29
+  - first:
+      213: -7006712929734664893
+    second: autotile_tileset_30
+  - first:
+      213: 2989201020067996294
+    second: autotile_tileset_31
+  - first:
+      213: 1870152894596127882
+    second: autotile_tileset_32
+  - first:
+      213: -5038217101156284816
+    second: autotile_tileset_33
+  - first:
+      213: 4191932742824564402
+    second: autotile_tileset_34
+  - first:
+      213: 2539203657558185531
+    second: autotile_tileset_35
+  - first:
+      213: -6630598828949161616
+    second: autotile_tileset_36
+  - first:
+      213: -7524370532247995602
+    second: autotile_tileset_37
+  - first:
+      213: 864779745846581268
+    second: autotile_tileset_38
+  - first:
+      213: -4686334240469463447
+    second: autotile_tileset_39
+  - first:
+      213: -5614124833668423144
+    second: autotile_tileset_40
+  - first:
+      213: -1486727906927444567
+    second: autotile_tileset_41
+  - first:
+      213: -327494859087643703
+    second: autotile_tileset_42
+  - first:
+      213: -1622861348084347206
+    second: autotile_tileset_43
+  - first:
+      213: 7879514083675272720
+    second: autotile_tileset_44
+  - first:
+      213: -6516624103029989841
+    second: autotile_tileset_45
+  - first:
+      213: -4935221419140069780
+    second: autotile_tileset_46
+  - first:
+      213: 2541767482710703661
+    second: autotile_tileset_47
+  - first:
+      213: -6537422086359907300
+    second: autotile_tileset_48
+  - first:
+      213: 1796884934996628636
+    second: autotile_tileset_49
+  - first:
+      213: -5374745993175202994
+    second: autotile_tileset_50
+  - first:
+      213: 9195064574519289864
+    second: autotile_tileset_51
+  - first:
+      213: 2392304086012039017
+    second: autotile_tileset_52
+  - first:
+      213: 7533520378343742539
+    second: autotile_tileset_53
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: autotile_tileset_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 370
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ee39bad39b8f48a0800000000000000
+      internalID: -6318678285031489824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_1
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 370
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a85a910650a8e8390800000000000000
+      internalID: -7814156547749468790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_2
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 370
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf7d45890928b3460800000000000000
+      internalID: 7222509984961320956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_3
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 370
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 901a7b5cb50dffc50800000000000000
+      internalID: 6701303863128334601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_4
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 370
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c09e3be9edb334e60800000000000000
+      internalID: 7945259994943056140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_5
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 370
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4861406178b1fa5f0800000000000000
+      internalID: -743345146488940924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_6
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 370
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca0b37144f3daa640800000000000000
+      internalID: 5092115374719348908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_7
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 370
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be891164e17f23620800000000000000
+      internalID: 2752534031673432299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_8
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 370
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4433a73d48e947950800000000000000
+      internalID: 6445951259994895172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 296
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc3e854e315981350800000000000000
+      internalID: 5987699617257022411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_10
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 296
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c971d8ccdb2a6980800000000000000
+      internalID: -8544969115720123968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_11
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 296
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c83b234c6080c66b0800000000000000
+      internalID: -5301853836167433332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_12
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 296
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11bd213543e6aed50800000000000000
+      internalID: 6767342561088690961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_13
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 296
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71a4c8c07f4c155e0800000000000000
+      internalID: -1922539000564004329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_14
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 296
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99433011e406c6450800000000000000
+      internalID: 6083343085079835801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_15
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 296
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdabeb8a7ecbf0890800000000000000
+      internalID: -7489559952139306273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_16
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 296
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79ee275758d103330800000000000000
+      internalID: 3688480553854758551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_17
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 296
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 261bea6b1987f7a30800000000000000
+      internalID: 4215220343472566626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 222
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22f1a4d3a1843a380800000000000000
+      internalID: -8961239556002537694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_19
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 222
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e4e60be14ad26fb0800000000000000
+      internalID: -4655919088096844571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_20
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 222
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0736655fefbec5e60800000000000000
+      internalID: 7952490522299753328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_21
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 222
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bbd8e1b351f46290800000000000000
+      internalID: -7897922504731599949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_22
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 222
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b469f8e36e31a140800000000000000
+      internalID: 4729129682547074226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_23
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 222
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c0e67732ea5c9820800000000000000
+      internalID: 2926313785523626185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_24
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 222
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b199199a08996df0800000000000000
+      internalID: -186450738273480271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_25
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 222
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c13f4ffd9cacc700800000000000000
+      internalID: 562013848107692480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_26
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 222
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 374819add95f1ada0800000000000000
+      internalID: -5935192775571962765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 148
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f69c22c14431d330800000000000000
+      internalID: 3733823023102072569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_28
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 148
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd1483edd329357a0800000000000000
+      internalID: -6389602651889712675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_29
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 148
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bb23fc09546a5d00800000000000000
+      internalID: 962191804029152183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_30
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 148
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34d570ca6b723ce90800000000000000
+      internalID: -7006712929734664893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_31
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 148
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68263638d76cb7920800000000000000
+      internalID: 2989201020067996294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_32
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 148
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8c121e262e14f910800000000000000
+      internalID: 1870152894596127882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_33
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 148
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07608487d38a41ab0800000000000000
+      internalID: -5038217101156284816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_34
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 148
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b6136aae9cbc2a30800000000000000
+      internalID: 4191932742824564402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_35
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 148
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b36d025f5401d3320800000000000000
+      internalID: 2539203657558185531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 74
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0793d58de716bf3a0800000000000000
+      internalID: -6630598828949161616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_37
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 74
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2bf0f2edd0149790800000000000000
+      internalID: -7524370532247995602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_38
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 74
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4185328d890500c00800000000000000
+      internalID: 864779745846581268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_39
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 74
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96e411a66dbc6feb0800000000000000
+      internalID: -4686334240469463447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_40
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 74
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 812ae7c653f9612b0800000000000000
+      internalID: -5614124833668423144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_41
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 74
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9adfded78d41e5be0800000000000000
+      internalID: -1486727906927444567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_42
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 74
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cb705a2921847bf0800000000000000
+      internalID: -327494859087643703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_43
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 74
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abe88b3c3307a79e0800000000000000
+      internalID: -1622861348084347206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_44
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 74
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 016f628cf48a95d60800000000000000
+      internalID: 7879514083675272720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2e1624a7ec4095a0800000000000000
+      internalID: -6516624103029989841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_46
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c66c1486442928bb0800000000000000
+      internalID: -4935221419140069780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_47
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2e3c940f0c264320800000000000000
+      internalID: 2541767482710703661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_48
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1489bbcf396645a0800000000000000
+      internalID: -6537422086359907300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_49
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9499bcf351dfe810800000000000000
+      internalID: 1796884934996628636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_50
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4386deeef01965b0800000000000000
+      internalID: -5374745993175202994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_51
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8082003538e6b9f70800000000000000
+      internalID: 9195064574519289864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_52
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96f867924eb233120800000000000000
+      internalID: 2392304086012039017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: autotile_tileset_53
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4c585baed07c8860800000000000000
+      internalID: 7533520378343742539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 3e0af64e93422824ab87548fb01ec8b4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":10.0,"y":10.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      autotile_tileset_0: -6318678285031489824
+      autotile_tileset_1: -7814156547749468790
+      autotile_tileset_10: -8544969115720123968
+      autotile_tileset_11: -5301853836167433332
+      autotile_tileset_12: 6767342561088690961
+      autotile_tileset_13: -1922539000564004329
+      autotile_tileset_14: 6083343085079835801
+      autotile_tileset_15: -7489559952139306273
+      autotile_tileset_16: 3688480553854758551
+      autotile_tileset_17: 4215220343472566626
+      autotile_tileset_18: -8961239556002537694
+      autotile_tileset_19: -4655919088096844571
+      autotile_tileset_2: 7222509984961320956
+      autotile_tileset_20: 7952490522299753328
+      autotile_tileset_21: -7897922504731599949
+      autotile_tileset_22: 4729129682547074226
+      autotile_tileset_23: 2926313785523626185
+      autotile_tileset_24: -186450738273480271
+      autotile_tileset_25: 562013848107692480
+      autotile_tileset_26: -5935192775571962765
+      autotile_tileset_27: 3733823023102072569
+      autotile_tileset_28: -6389602651889712675
+      autotile_tileset_29: 962191804029152183
+      autotile_tileset_3: 6701303863128334601
+      autotile_tileset_30: -7006712929734664893
+      autotile_tileset_31: 2989201020067996294
+      autotile_tileset_32: 1870152894596127882
+      autotile_tileset_33: -5038217101156284816
+      autotile_tileset_34: 4191932742824564402
+      autotile_tileset_35: 2539203657558185531
+      autotile_tileset_36: -6630598828949161616
+      autotile_tileset_37: -7524370532247995602
+      autotile_tileset_38: 864779745846581268
+      autotile_tileset_39: -4686334240469463447
+      autotile_tileset_4: 7945259994943056140
+      autotile_tileset_40: -5614124833668423144
+      autotile_tileset_41: -1486727906927444567
+      autotile_tileset_42: -327494859087643703
+      autotile_tileset_43: -1622861348084347206
+      autotile_tileset_44: 7879514083675272720
+      autotile_tileset_45: -6516624103029989841
+      autotile_tileset_46: -4935221419140069780
+      autotile_tileset_47: 2541767482710703661
+      autotile_tileset_48: -6537422086359907300
+      autotile_tileset_49: 1796884934996628636
+      autotile_tileset_5: -743345146488940924
+      autotile_tileset_50: -5374745993175202994
+      autotile_tileset_51: 9195064574519289864
+      autotile_tileset_52: 2392304086012039017
+      autotile_tileset_53: 7533520378343742539
+      autotile_tileset_6: 5092115374719348908
+      autotile_tileset_7: 2752534031673432299
+      autotile_tileset_8: 6445951259994895172
+      autotile_tileset_9: 5987699617257022411
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

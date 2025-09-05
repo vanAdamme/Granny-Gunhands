@@ -1,16 +1,11 @@
 using UnityEngine;
 
-/// <summary>
-/// Generic projectile weapon that spawns a projectile prefab from WeaponDefinition
-/// and injects owner + ISpecialCharge so hits can charge specials.
-/// Each instance handles its own cooldown (left/right click independence). 
-/// </summary>
 public class GenericProjectileWeapon : Weapon
 {
     [SerializeField] private WeaponDefinition defaultDefinition;
 
     [Header("Charge Injection")]
-    [Tooltip("Usually the SpecialChargeSimple on the player root.")]
+    [Tooltip("Drag the player's SpecialChargeSimple here.")]
     [SerializeField] private MonoBehaviour specialChargeSource; // ISpecialCharge
     private ISpecialCharge charge;
 
@@ -25,18 +20,16 @@ public class GenericProjectileWeapon : Weapon
     {
         base.Awake();
 
-        // If this instance wasn’t created via a factory that called SetDefinition(),
-        // fall back to a serialized SO assigned on the prefab.
         if (!Definition && defaultDefinition)
             SetDefinition(defaultDefinition, currentLevel);
 
         ownerRoot = transform.root;
 
         charge = specialChargeSource as ISpecialCharge
-            ?? Object.FindFirstObjectByType<SpecialChargeSimple>();
+              ?? Object.FindFirstObjectByType<SpecialChargeSimple>();
     }
 
-    public override bool TryFire(Vector2 dir) => base.TryFire(dir); // keep base contract (returns bool)  :contentReference[oaicite:1]{index=1}
+    public override bool TryFire(Vector2 dir) => base.TryFire(dir);
 
     protected override void Shoot(Vector2 dir)
     {
@@ -64,14 +57,13 @@ public class GenericProjectileWeapon : Weapon
             return;
         }
 
-        // per-level stats from definition
-        var stats = Definition.GetStatsForLevel(Level); // cooldown, speed, range, maxPierces, etc.  :contentReference[oaicite:2]{index=2}
+        var stats = Definition.GetStatsForLevel(Level);
 
         // derive TTL from range/speed
         float speed = Mathf.Max(0.01f, stats.projectileSpeed);
-        float ttl   = Mathf.Max(0.01f, stats.range / speed);
+        float ttl   = Mathf.Max(0.01f, stats.range / Mathf.Max(0.01f, speed));
 
-        // Instantiate projectile (pool later).
+        // spawn projectile
         var go = Instantiate(Definition.projectilePrefab, muzz.position,
                              Quaternion.FromToRotation(Vector2.right, dir.normalized));
 
@@ -83,14 +75,13 @@ public class GenericProjectileWeapon : Weapon
             return;
         }
 
-        // Configure masks from definition
+        // configure masks
         var hitMask   = Definition.targetLayers;
         var blockMask = Definition.obstacleLayers;
         bool canPierceObstacles = stats.pierceThroughObstacles;
+        int allowedUniqueHits   = Mathf.Max(1, 1 + stats.maxPierces);
 
-        // Convert "maxPierces" (extra pierces) → allowed unique hits (include first hit)
-        int allowedUniqueHits = Mathf.Max(1, 1 + stats.maxPierces);
-
+        // inject player charge + damage for DAMAGE-BASED charging
         proj.Initialize(ownerRoot,
                         charge,
                         dir,
@@ -99,28 +90,23 @@ public class GenericProjectileWeapon : Weapon
                         allowedUniqueHits,
                         hitMask,
                         blockMask,
-                        canPierceObstacles);
+                        canPierceObstacles,
+                        dmg: stats.damage); // ← pass damage so projectile can actually deal it
 
-        // VFX (optional)
+        // optional VFX
         if (Definition.muzzleFlashPrefab)
         {
             var fx = Instantiate(Definition.muzzleFlashPrefab, muzz.position, muzz.rotation);
             Destroy(fx, 1.5f);
         }
-
-        // SFX: Removed AudioService.PlayOneShot call since your AudioService lacks this API.
-        // If your SoundEvent can play itself, you can uncomment one of these patterns:
-        // Definition.GetFireSfxForLevel(Level)?.PlayAtPosition(muzz.position);
-        // or route through your actual audio layer.
     }
 
     public override void SetDefinition(WeaponDefinition def, int level)
     {
-        base.SetDefinition(def, level);   // sets icon + CooldownWindow from def.baseCooldown  :contentReference[oaicite:3]{index=3}
+        base.SetDefinition(def, level);
         if (!Definition) return;
 
-        // Prefer per-level cooldown when defined (keeps Weapon.CooldownWindow authoritative)
-        var stats = Definition.GetStatsForLevel(Level); // has 'cooldown'  :contentReference[oaicite:4]{index=4}
+        var stats = Definition.GetStatsForLevel(Level);
         CooldownWindow = Mathf.Max(0.01f, stats.cooldown);
     }
 }
