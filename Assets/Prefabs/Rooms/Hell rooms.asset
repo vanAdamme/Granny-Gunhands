@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0feb0fe3ca387448cff6947dd58ed6, type: 3}
+  m_Name: Hell rooms
+  m_EditorClassIdentifier: 
+  RoomTemplates:
+  - {fileID: 645271859340970680, guid: b7f5fe4239e79b542a888bcb93350f30, type: 3}
+  - {fileID: 645271859340970680, guid: 75f1dd49cf40ef14c8928766605ac4ba, type: 3}
+  - {fileID: 1185026287106476456, guid: 2efd9b744f2a80b468b3d8c2973d1bd6, type: 3}
