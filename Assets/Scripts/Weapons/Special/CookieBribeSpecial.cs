@@ -18,11 +18,15 @@ public class CookieBribeSpecial : SpecialWeaponBase
     /// </summary>
     protected override void ActivateInternal()
     {
-        // Spawn at the player if present; otherwise at this object.
-        Vector2 spawnPos;
-        var player = GetComponentInParent<PlayerController>();
-        if (player != null) spawnPos = player.transform.position;
-        else                spawnPos = transform.position;
+        // Prefer the actual player singleton; do NOT trust our own transform.
+        var player = PlayerController.Instance 
+                    ?? FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
+
+        Vector3 spawnPos = player ? player.transform.position : transform.position;
+
+        // Optional: small forward offset so the cookie isn’t inside the player collider
+        // (comment out if you don’t want it)
+        spawnPos += new Vector3(0.25f, 0f, 0f);
 
         Activate(spawnPos);
     }
@@ -42,45 +46,7 @@ public class CookieBribeSpecial : SpecialWeaponBase
         var decoy = Instantiate(decoyPrefab, worldPos, Quaternion.identity);
         decoy.SetLifetime(decoyLifetime);
 
-        BribeNearbyEnemies(decoy.transform);
         return true;
-    }
-
-    private void BribeNearbyEnemies(Transform cookie)
-    {
-        // Collider-free, layer-free scan: look for all active AIPath agents, then filter by distance.
-        var aiAgents = FindObjectsByType<Pathfinding.AIPath>(FindObjectsSortMode.None);
-        int count = 0;
-
-        // Square the radius to avoid a bunch of sqrts in a loop
-        float r2 = bribeRadius * bribeRadius;
-        Vector3 cpos = cookie.position;
-
-        for (int i = 0; i < aiAgents.Length; i++)
-        {
-            var ai = aiAgents[i];
-            if (!ai || !ai.isActiveAndEnabled) continue;
-
-            // Distance check
-            var d2 = (ai.transform.position - cpos).sqrMagnitude;
-            if (d2 > r2) continue;
-
-            // Host = the transform that actually holds AIPath/IAstarAI
-            var host = ai.transform;
-            var bribed = host.GetComponent<BribedAI>();
-            if (!bribed) bribed = host.gameObject.AddComponent<BribedAI>();
-
-            bribed.ApplyBribe(cookie, bribeDuration);
-            count++;
-
-#if UNITY_EDITOR
-    Debug.Log($"[CookieBribeSpecial] Applied bribe to '{host.name}' via AIPath (dist^2={d2:F2})");
-#endif
-        }
-
-#if UNITY_EDITOR
-    Debug.Log($"[CookieBribeSpecial] Bribed {count} enemies within {bribeRadius} units (AIPath scan).");
-#endif
     }
 
 #if UNITY_EDITOR
