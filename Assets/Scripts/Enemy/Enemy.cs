@@ -11,12 +11,18 @@ public class Enemy : Target
     [SerializeField] private Damager contactDamager;   // on the same GameObject as Enemy
     [SerializeField] private float contactDamage = 1f;
 
+    private Transform targetOverride;
+    private Object targetOverrideOwner;
+
     [Header("Loot")]
     [SerializeField] private LootTableDefinition lootTable;
     [SerializeField] private Transform lootParent;
 
     public Transform player;
     public AIPath path;
+
+    private void OnEnable()  => EnemyRegistry.Add(this);
+    private void OnDisable() => EnemyRegistry.Remove(this);
 
     private void Start()
     {
@@ -41,8 +47,25 @@ public class Enemy : Target
 
     private void Update()
     {
-        if (player && path)
-            path.destination = player.position;
+        if (!path) return;
+
+        Transform t = targetOverride ? targetOverride : player;
+        if (t) path.destination = t.position;
+    }
+
+    public void SetTargetOverride(Transform newTarget, Object owner)
+    {
+        targetOverride = newTarget;
+        targetOverrideOwner = owner;
+    }
+
+    public void ClearTargetOverride(Object owner)
+    {
+        if (owner == targetOverrideOwner)
+        {
+            targetOverride = null;
+            targetOverrideOwner = null;
+        }
     }
 
     protected override void Die()

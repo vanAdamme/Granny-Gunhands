@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 799824662350371064}
   - component: {fileID: 8018416953011819301}
   - component: {fileID: -1281170073215795530}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CookieBribeSpecial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,9 +74,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1649621695
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1534890537144334665, guid: 62f433defc0aa4540b2e1da264914ffd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -104,8 +104,3 @@ MonoBehaviour:
   requiredDamage: 12
   decoyPrefab: {fileID: 8176924277203425196, guid: fa3e2b48dce4c394eb93a0768e4826cf, type: 3}
   decoyLifetime: 6
-  bribeDuration: 6
-  bribeRadius: 10
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 4608

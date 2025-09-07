@@ -1,118 +1,87 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
 
-[RequireComponent(typeof(CircleCollider2D))]
 public class CookieBribeDecoy : MonoBehaviour
 {
     [Header("Lifetime & Aura")]
-    [SerializeField] private float lifetime = 6f;
-    [SerializeField] private float auraRadius = 6f;
-    [SerializeField] private LayerMask enemyLayers = ~0;
+    [SerializeField] private float lifetime    = 6f;
+    [SerializeField] private float auraRadius  = 8f;
+    [SerializeField] private float refreshRate = 0.25f; // how often we recompute who’s in range
 
-    [Header("Repathing")]
-    [Tooltip("Occasionally force a path search so A* reacts quickly to the moving cookie.")]
-    [SerializeField] private float searchInterval = 0.35f;
-
-    [Header("VFX (optional)")]
+    [Header("Optional VFX")]
     [SerializeField] private GameObject spawnVFX;
-    [SerializeField] private GameObject auraVFX;
     [SerializeField] private GameObject endVFX;
 
-    private readonly HashSet<AIPath> influenced = new HashSet<AIPath>();
+    private readonly HashSet<Enemy> influenced = new HashSet<Enemy>();
     private float despawnAt;
-    private float nextSearchAt;
+    private float nextRefreshAt;
 
     void Awake()
     {
-        var col = GetComponent<CircleCollider2D>();
-        col.isTrigger = true;
-        col.radius = auraRadius;
-
-        if (spawnVFX) VFX.Spawn(spawnVFX, transform.position, Quaternion.identity, 1.5f);
-        if (auraVFX)  VFX.SpawnAttached(auraVFX, transform, transform.position, 1.5f, autoDestroy:false);
-
-        despawnAt = Time.time + lifetime;
-        nextSearchAt = 0f;
+        if (spawnVFX) VFX.Spawn(spawnVFX, transform.position, Quaternion.identity, 1.0f);
+        despawnAt     = Time.time + lifetime;
+        nextRefreshAt = 0f;
     }
 
     void Update()
     {
         if (Time.time >= despawnAt)
         {
-            if (endVFX) VFX.Spawn(endVFX, transform.position, Quaternion.identity, 1.2f);
+            if (endVFX) VFX.Spawn(endVFX, transform.position, Quaternion.identity, 1.0f);
+            ReleaseAll();
             Destroy(gameObject);
+            return;
         }
-    }
 
-    // IMPORTANT: write after Enemy.Update() so the cookie wins the target race
-    void LateUpdate()
-    {
-        if (influenced.Count == 0) return;
-
-        bool doSearch = Time.time >= nextSearchAt;
-        if (doSearch) nextSearchAt = Time.time + searchInterval;
-
-        // Clean up dead refs while we go
-        var toRemove = ListPool<AIPath>.Claim();   // or use a small local list if you don't have a pool util
-
-        foreach (var ai in influenced)
+        if (Time.time >= nextRefreshAt)
         {
-            if (!ai || !ai.isActiveAndEnabled)
-            {
-                toRemove.Add(ai);
-                continue;
-            }
+            nextRefreshAt = Time.time + refreshRate;
+            RefreshInfluence();
+        }
+    }
 
-            ai.destination = transform.position;
-            if (doSearch && !ai.pathPending) ai.SearchPath();
+    void OnDisable() => ReleaseAll();
+
+    private void RefreshInfluence()
+    {
+        // Build the current set of enemies within the aura.
+        var current = new HashSet<Enemy>();
+        float r2 = auraRadius * auraRadius;
+        Vector3 c = transform.position;
+
+        // Iterate the registry (O(N_enemies), no allocations apart from this small set)
+        foreach (var e in EnemyRegistry.All)
+        {
+            if (!e || !e.isActiveAndEnabled) continue;
+
+            // distance filter
+            if ((e.transform.position - c).sqrMagnitude > r2) continue;
+
+            current.Add(e);
+
+            // Newly influenced? Point them at the cookie.
+            if (!influenced.Contains(e))
+                e.SetTargetOverride(transform, this);
         }
 
-        // remove null/disabled entries
-        for (int i = 0; i < toRemove.Count; i++) influenced.Remove(toRemove[i]);
-        ListPool<AIPath>.Release(toRemove);
+        // Remove those that left the aura
+        foreach (var e in influenced)
+        {
+            if (!current.Contains(e))
+                e.ClearTargetOverride(this);
+        }
+
+        // Swap sets (keep our tracking in sync)
+        influenced.Clear();
+        foreach (var e in current) influenced.Add(e);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void ReleaseAll()
     {
-        TryAdd(other);
-    }
+        foreach (var e in influenced)
+            if (e) e.ClearTargetOverride(this);
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        // Cheap re-add is fine; HashSet ignores duplicates
-        TryAdd(other);
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
-        if (!root) return;
-
-        if (!IsOnEnemyLayer(root.gameObject)) return;
-
-        var ai = root.GetComponent<AIPath>() ?? root.GetComponentInChildren<AIPath>(true);
-        if (ai) influenced.Remove(ai);
-    }
-
-    private void TryAdd(Collider2D other)
-    {
-        var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
-        if (!root) return;
-
-        if (!IsOnEnemyLayer(root.gameObject)) return;
-        if (!root.GetComponent<Enemy>()) return;   // only influence real enemies
-
-        var ai = root.GetComponent<AIPath>() ?? root.GetComponentInChildren<AIPath>(true);
-        if (ai) influenced.Add(ai);
-    }
-
-    private bool IsOnEnemyLayer(GameObject go) => (enemyLayers.value & (1 << go.layer)) != 0;
-
-    public void SetLifetime(float seconds)
-    {
-        lifetime = Mathf.Max(0.05f, seconds);
-        despawnAt = Time.time + lifetime;   // refresh the countdown even if Awake already ran
+        influenced.Clear();
     }
 
 #if UNITY_EDITOR
@@ -122,12 +91,4 @@ public class CookieBribeDecoy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, auraRadius);
     }
 #endif
-}
-
-// Minimal, no-alloc helper; swap to your pooling util or remove if undesired.
-static class ListPool<T>
-{
-    static readonly Stack<List<T>> pool = new Stack<List<T>>();
-    public static List<T> Claim() => pool.Count > 0 ? pool.Pop() : new List<T>();
-    public static void Release(List<T> list) { list.Clear(); pool.Push(list); }
 }
