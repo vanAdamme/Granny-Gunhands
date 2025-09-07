@@ -2176,7 +2176,7 @@ MonoBehaviour:
     RoomTemplatePrefabMode: 0
   PostProcessConfig:
     InitializeSharedTilemaps: 1
-    TilemapLayersStructure: 1
+    TilemapLayersStructure: 0
     TilemapLayersHandler: {fileID: 0}
     TilemapLayersExample: {fileID: 1844355837504882643, guid: fb42168fa3bcfe94483aa471c07e7354, type: 3}
     TilemapMaterial: {fileID: 0}

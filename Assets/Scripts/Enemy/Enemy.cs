@@ -15,8 +15,8 @@ public class Enemy : Target
     [SerializeField] private LootTableDefinition lootTable;
     [SerializeField] private Transform lootParent;
 
-    private Transform player;
-    private AIPath path;
+    public Transform player;
+    public AIPath path;
 
     private void Start()
     {

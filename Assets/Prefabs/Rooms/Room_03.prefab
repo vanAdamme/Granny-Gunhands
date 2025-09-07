@@ -1994,6 +1994,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2982461569495825316}
+  - {fileID: 6044728786776130575}
+  - {fileID: 3794583769024840693}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7969371181026956975
@@ -6421,3 +6423,127 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!1001 &3540877359954976703
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1880653785774417193}
+    m_Modifications:
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.9418173
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.7711484
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989795060797501316, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_Name
+      value: Vampire (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d397ae228a66f8c489f2482380360565, type: 3}
+--- !u!4 &3794583769024840693 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+  m_PrefabInstance: {fileID: 3540877359954976703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6226675264449419333
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1880653785774417193}
+    m_Modifications:
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.024202
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.7602985
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989795060797501316, guid: d397ae228a66f8c489f2482380360565, type: 3}
+      propertyPath: m_Name
+      value: Vampire
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d397ae228a66f8c489f2482380360565, type: 3}
+--- !u!4 &6044728786776130575 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 399317229321493578, guid: d397ae228a66f8c489f2482380360565, type: 3}
+  m_PrefabInstance: {fileID: 6226675264449419333}
+  m_PrefabAsset: {fileID: 0}
