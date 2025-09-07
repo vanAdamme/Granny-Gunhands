@@ -1,54 +1,94 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D))]
 public class CookieBribeDecoy : MonoBehaviour
 {
     [Header("Lifetime & Aura")]
-    [SerializeField] private float lifetime = 6f;
-    [SerializeField] private float auraRadius = 5f;
-    [SerializeField] private float retargetDuration = 4f;
-    [SerializeField] private LayerMask enemyLayers;
+    [SerializeField] private float lifetime    = 6f;
+    [SerializeField] private float auraRadius  = 8f;
+    [SerializeField] private float refreshRate = 0.25f; // how often we recompute who’s in range
 
-    [Header("VFX (optional)")]
+    [Header("Optional VFX")]
     [SerializeField] private GameObject spawnVFX;
-    [SerializeField] private GameObject auraVFX;
     [SerializeField] private GameObject endVFX;
 
-    float despawnAt;
+    private readonly HashSet<Enemy> influenced = new HashSet<Enemy>();
+    private float despawnAt;
+    private float nextRefreshAt;
 
     void Awake()
     {
-        var col = GetComponent<CircleCollider2D>();
-        col.isTrigger = true;
-        col.radius = auraRadius;
-
-        if (spawnVFX) VFX.Spawn(spawnVFX, transform.position, Quaternion.identity, 1.5f);
-        if (auraVFX)  VFX.SpawnAttached(auraVFX, transform, transform.position, 1.5f, autoDestroy:false);
-
-        despawnAt = Time.time + lifetime;
+        if (spawnVFX) VFX.Spawn(spawnVFX, transform.position, Quaternion.identity, 1.0f);
+        despawnAt     = Time.time + lifetime;
+        nextRefreshAt = 0f;
     }
 
     void Update()
     {
         if (Time.time >= despawnAt)
         {
-            if (endVFX) VFX.Spawn(endVFX, transform.position, Quaternion.identity, 1.2f);
+            if (endVFX) VFX.Spawn(endVFX, transform.position, Quaternion.identity, 1.0f);
+            ReleaseAll();
             Destroy(gameObject);
+            return;
+        }
+
+        if (Time.time >= nextRefreshAt)
+        {
+            nextRefreshAt = Time.time + refreshRate;
+            RefreshInfluence();
         }
     }
 
-    void OnTriggerStay2D(Collider2D other)
+    void OnDisable() => ReleaseAll();
+
+    private void RefreshInfluence()
     {
-        var enemy = other.GetComponentInParent<Enemy>();
-        if (!enemy || !enemy.isActiveAndEnabled) return;
+        // Build the current set of enemies within the aura.
+        var current = new HashSet<Enemy>();
+        float r2 = auraRadius * auraRadius;
+        Vector3 c = transform.position;
 
-        // Layer check on the root
-        var root = other.attachedRigidbody ? other.attachedRigidbody.gameObject : other.transform.root.gameObject;
-        if ((enemyLayers.value & (1 << root.layer)) == 0) return;
+        // Iterate the registry (O(N_enemies), no allocations apart from this small set)
+        foreach (var e in EnemyRegistry.All)
+        {
+            if (!e || !e.isActiveAndEnabled) continue;
 
-        if (!enemy.TryGetComponent<BribedAI>(out var bribed))
-            bribed = enemy.gameObject.AddComponent<BribedAI>();
+            // distance filter
+            if ((e.transform.position - c).sqrMagnitude > r2) continue;
 
-        bribed.Apply(retargetDuration, transform, enemyLayers);
+            current.Add(e);
+
+            // Newly influenced? Point them at the cookie.
+            if (!influenced.Contains(e))
+                e.SetTargetOverride(transform, this);
+        }
+
+        // Remove those that left the aura
+        foreach (var e in influenced)
+        {
+            if (!current.Contains(e))
+                e.ClearTargetOverride(this);
+        }
+
+        // Swap sets (keep our tracking in sync)
+        influenced.Clear();
+        foreach (var e in current) influenced.Add(e);
     }
+
+    void ReleaseAll()
+    {
+        foreach (var e in influenced)
+            if (e) e.ClearTargetOverride(this);
+
+        influenced.Clear();
+    }
+
+#if UNITY_EDITOR
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1f, 0.8f, 0.2f, 0.35f);
+        Gizmos.DrawWireSphere(transform.position, auraRadius);
+    }
+#endif
 }

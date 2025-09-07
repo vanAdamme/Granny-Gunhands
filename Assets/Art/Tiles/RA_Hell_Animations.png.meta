@@ -1,0 +1,975 @@
+fileFormatVersion: 2
+guid: fe354a9b1aa0a45458d4a4a56e7adebe
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7509348527082947516
+    second: RA_Hell_Animations_0
+  - first:
+      213: -1542938682336480558
+    second: RA_Hell_Animations_1
+  - first:
+      213: -5066672523583627572
+    second: RA_Hell_Animations_2
+  - first:
+      213: -4163802708074824694
+    second: RA_Hell_Animations_3
+  - first:
+      213: -7002902027416653231
+    second: RA_Hell_Animations_4
+  - first:
+      213: 3377109365784809605
+    second: RA_Hell_Animations_5
+  - first:
+      213: 3719377360021191819
+    second: RA_Hell_Animations_6
+  - first:
+      213: -8714998225576203105
+    second: RA_Hell_Animations_7
+  - first:
+      213: 645551683905681258
+    second: RA_Hell_Animations_8
+  - first:
+      213: 190649129275208224
+    second: RA_Hell_Animations_9
+  - first:
+      213: 1332728021539350498
+    second: RA_Hell_Animations_10
+  - first:
+      213: 5907049550252071866
+    second: RA_Hell_Animations_11
+  - first:
+      213: -8440942003128784626
+    second: RA_Hell_Animations_12
+  - first:
+      213: 6020992775430305386
+    second: RA_Hell_Animations_13
+  - first:
+      213: 8859599443898707861
+    second: RA_Hell_Animations_14
+  - first:
+      213: 7213750280525263202
+    second: RA_Hell_Animations_15
+  - first:
+      213: -7378856408392781724
+    second: RA_Hell_Animations_16
+  - first:
+      213: 4974387348090927478
+    second: RA_Hell_Animations_17
+  - first:
+      213: -1001831231714348000
+    second: RA_Hell_Animations_18
+  - first:
+      213: 8729740250969318532
+    second: RA_Hell_Animations_19
+  - first:
+      213: -3099736321535497664
+    second: RA_Hell_Animations_20
+  - first:
+      213: 713541882044439343
+    second: RA_Hell_Animations_21
+  - first:
+      213: -8831477456634395664
+    second: RA_Hell_Animations_22
+  - first:
+      213: 225602084835976366
+    second: RA_Hell_Animations_23
+  - first:
+      213: 4335502373930735345
+    second: RA_Hell_Animations_24
+  - first:
+      213: -4353876269260788529
+    second: RA_Hell_Animations_25
+  - first:
+      213: 1218931583043595855
+    second: RA_Hell_Animations_26
+  - first:
+      213: -2297479076025282622
+    second: RA_Hell_Animations_27
+  - first:
+      213: 3486540458565814478
+    second: RA_Hell_Animations_28
+  - first:
+      213: -1011943178306847701
+    second: RA_Hell_Animations_29
+  - first:
+      213: 278349988316276198
+    second: RA_Hell_Animations_30
+  - first:
+      213: -8427561998193246665
+    second: RA_Hell_Animations_31
+  - first:
+      213: -4785585234228384771
+    second: RA_Hell_Animations_32
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: RA_Hell_Animations_0
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 319
+        width: 162
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb3c16bf2b0963860800000000000000
+      internalID: 7509348527082947516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_1
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 319
+        width: 162
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d2ff197171669ae0800000000000000
+      internalID: -1542938682336480558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_2
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 319
+        width: 162
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cced0962f209fa9b0800000000000000
+      internalID: -5066672523583627572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_3
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 319
+        width: 417
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0cf36e6f733736c0800000000000000
+      internalID: -4163802708074824694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_4
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 127
+        width: 417
+        height: 224
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 152b7f285b1b0de90800000000000000
+      internalID: -7002902027416653231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_5
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 127
+        width: 162
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5809f335317edde20800000000000000
+      internalID: 3377109365784809605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_6
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 127
+        width: 162
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8c71b9b002ed9330800000000000000
+      internalID: 3719377360021191819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_7
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 127
+        width: 162
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9cee52b94b1e0780800000000000000
+      internalID: -8714998225576203105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_8
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 63
+        width: 257
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a677a5316d575f800800000000000000
+      internalID: 645551683905681258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_9
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 73
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 022bf2b7f5255a200800000000000000
+      internalID: 190649129275208224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_10
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 73
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e7ef02131dce7210800000000000000
+      internalID: 1332728021539350498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_11
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 73
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abbd761e44e0af150800000000000000
+      internalID: 5907049550252071866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_12
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 73
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e09a5dd58ffbbda80800000000000000
+      internalID: -8440942003128784626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_13
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 73
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6677b6570dde8350800000000000000
+      internalID: 6020992775430305386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_14
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 73
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59fa4d901ce93fa70800000000000000
+      internalID: 8859599443898707861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_15
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 73
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2613519f8a36c1460800000000000000
+      internalID: 7213750280525263202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_16
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 73
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46032210139099990800000000000000
+      internalID: -7378856408392781724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_17
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 73
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 679382a00f2980540800000000000000
+      internalID: 4974387348090927478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_18
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 73
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02436cc7dc7c812f0800000000000000
+      internalID: -1001831231714348000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_19
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 73
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 484a4709184462970800000000000000
+      internalID: 8729740250969318532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_20
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 73
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04a20891d368bf4d0800000000000000
+      internalID: -3099736321535497664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_21
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 73
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2b5f9baf8207e900800000000000000
+      internalID: 713541882044439343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_22
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 73
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f3cf6b5b0a407580800000000000000
+      internalID: -8831477456634395664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_23
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 73
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea46c3f96ef712300800000000000000
+      internalID: 225602084835976366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_24
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 73
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f61109407cca2c30800000000000000
+      internalID: 4335502373930735345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_25
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 33
+        width: 30
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcc25b6d99ce393c0800000000000000
+      internalID: -4353876269260788529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_26
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 33
+        width: 30
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4e61dc01d38ae010800000000000000
+      internalID: 1218931583043595855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_27
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 33
+        width: 30
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cfce92f3f6bd10e0800000000000000
+      internalID: -2297479076025282622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_28
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 33
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec8c7d7131ea26030800000000000000
+      internalID: 3486540458565814478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_29
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 33
+        width: 18
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2cf3247a0bd4f1f0800000000000000
+      internalID: -1011943178306847701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_30
+      rect:
+        serializedVersion: 2
+        x: 935
+        y: 33
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e563d0f6d5ecd300800000000000000
+      internalID: 278349988316276198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_31
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 33
+        width: 18
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73e3c1783094b0b80800000000000000
+      internalID: -8427561998193246665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RA_Hell_Animations_32
+      rect:
+        serializedVersion: 2
+        x: 999
+        y: 33
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfb6677a59f269db0800000000000000
+      internalID: -4785585234228384771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      RA_Hell_Animations_0: 7509348527082947516
+      RA_Hell_Animations_1: -1542938682336480558
+      RA_Hell_Animations_10: 1332728021539350498
+      RA_Hell_Animations_11: 5907049550252071866
+      RA_Hell_Animations_12: -8440942003128784626
+      RA_Hell_Animations_13: 6020992775430305386
+      RA_Hell_Animations_14: 8859599443898707861
+      RA_Hell_Animations_15: 7213750280525263202
+      RA_Hell_Animations_16: -7378856408392781724
+      RA_Hell_Animations_17: 4974387348090927478
+      RA_Hell_Animations_18: -1001831231714348000
+      RA_Hell_Animations_19: 8729740250969318532
+      RA_Hell_Animations_2: -5066672523583627572
+      RA_Hell_Animations_20: -3099736321535497664
+      RA_Hell_Animations_21: 713541882044439343
+      RA_Hell_Animations_22: -8831477456634395664
+      RA_Hell_Animations_23: 225602084835976366
+      RA_Hell_Animations_24: 4335502373930735345
+      RA_Hell_Animations_25: -4353876269260788529
+      RA_Hell_Animations_26: 1218931583043595855
+      RA_Hell_Animations_27: -2297479076025282622
+      RA_Hell_Animations_28: 3486540458565814478
+      RA_Hell_Animations_29: -1011943178306847701
+      RA_Hell_Animations_3: -4163802708074824694
+      RA_Hell_Animations_30: 278349988316276198
+      RA_Hell_Animations_31: -8427561998193246665
+      RA_Hell_Animations_32: -4785585234228384771
+      RA_Hell_Animations_4: -7002902027416653231
+      RA_Hell_Animations_5: 3377109365784809605
+      RA_Hell_Animations_6: 3719377360021191819
+      RA_Hell_Animations_7: -8714998225576203105
+      RA_Hell_Animations_8: 645551683905681258
+      RA_Hell_Animations_9: 190649129275208224
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
