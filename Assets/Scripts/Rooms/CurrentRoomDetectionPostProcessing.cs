@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Edgar.Unity;
 
-namespace Edgar.Unity.Examples.CurrentRoomDetection
+namespace Rooms
 {
     [CreateAssetMenu(menuName = "Rooms/Post-processing", fileName = "CurrentRoomDetectionPostProcessing")]
 

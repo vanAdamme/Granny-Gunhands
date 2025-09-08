@@ -1,7 +1,7 @@
 using UnityEngine;
 using Edgar.Unity;
 
-namespace Edgar.Unity.Examples.CurrentRoomDetection
+namespace Rooms
 {
     [DisallowMultipleComponent]
     public class RoomEncounterOnEnter : MonoBehaviour

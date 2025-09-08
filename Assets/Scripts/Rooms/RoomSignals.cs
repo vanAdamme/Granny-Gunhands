@@ -2,7 +2,7 @@ using System;
 using Edgar.Unity; // for RoomInstanceGrid2D
 using UnityEngine;
 
-namespace Edgar.Unity.Examples.CurrentRoomDetection
+namespace Rooms
 {
     /// <summary>Global events for room entry/exit.</summary>
     public static class RoomSignals

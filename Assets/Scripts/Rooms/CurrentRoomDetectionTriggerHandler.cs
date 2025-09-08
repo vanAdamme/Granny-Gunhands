@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Edgar.Unity.Examples.CurrentRoomDetection
+namespace Rooms
 {
     #region codeBlock:2d_currentRoomDetection_triggerHandler
 
