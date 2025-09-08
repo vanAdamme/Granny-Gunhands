@@ -13,10 +13,4 @@ public class DamageableAdapter : MonoBehaviour, IDamageable
         if (!health) return; // if you forgot to add Health, just no-op
         health.TakeDamage(amount, attacker);
     }
-
-    // Optional legacy shim: if some old code still calls without attacker, keep this too.
-    public void TakeDamage(float amount)
-    {
-        TakeDamage(amount, null);
-    }
 }
