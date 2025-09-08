@@ -1,0 +1,33 @@
+﻿using UnityEngine;
+
+namespace Rooms
+{
+    /// Lives on the Floor trigger. Notifies the room manager of enter/leave.
+    [DisallowMultipleComponent]
+    public class CurrentRoomDetectionTriggerHandler : MonoBehaviour
+    {
+        private CurrentRoomDetectionRoomManager roomManager;
+
+        void Awake()
+        {
+            // Robust lookup instead of parent.parent
+            roomManager = GetComponentInParent<CurrentRoomDetectionRoomManager>();
+            if (!roomManager)
+                Debug.LogWarning("[TriggerHandler] No CurrentRoomDetectionRoomManager found in parents.");
+        }
+
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            var root = other.attachedRigidbody ? other.attachedRigidbody.gameObject : other.gameObject;
+            if (!root.CompareTag("Player")) return;
+            roomManager?.OnRoomEnter(root);
+        }
+
+        void OnTriggerExit2D(Collider2D other)
+        {
+            var root = other.attachedRigidbody ? other.attachedRigidbody.gameObject : other.gameObject;
+            if (!root.CompareTag("Player")) return;
+            roomManager?.OnRoomLeave(root);
+        }
+    }
+}

@@ -2183,11 +2183,11 @@ MonoBehaviour:
     CopyTilesToSharedTilemaps: 1
     CenterGrid: 1
     DisableRoomTemplatesRenderers: 1
-    DisableRoomTemplatesColliders: 1
+    DisableRoomTemplatesColliders: 0
     AnalyzeLevelStructure: 1
   CustomPostProcessTasks:
+  - {fileID: 11400000, guid: fdc1edb1fd3152940a9b42e0c7b2f0cb, type: 2}
   - {fileID: 11400000, guid: 5295fe152ec1a074280f95988e0bb70b, type: 2}
-  - {fileID: 11400000, guid: 13cf64a1f0fcd5345ab5e693e376d4d9, type: 2}
   OtherConfig:
     UseRandomSeed: 1
     RandomGeneratorSeed: 0

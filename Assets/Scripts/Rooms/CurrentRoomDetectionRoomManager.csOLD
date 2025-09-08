@@ -1,0 +1,22 @@
+﻿using UnityEngine;
+using Edgar.Unity;
+
+namespace Rooms
+{
+    public class CurrentRoomDetectionRoomManager : MonoBehaviour
+    {
+        public RoomInstanceGrid2D RoomInstance;
+
+        public void OnRoomEnter(GameObject player)
+        {
+            // optional: Debug.Log($"Room enter {RoomInstance.Room.GetDisplayName()}");
+            RoomSignals.RaiseEntered(RoomInstance, player);
+        }
+
+        public void OnRoomLeave(GameObject player)
+        {
+            // optional: Debug.Log($"Room leave {RoomInstance.Room.GetDisplayName()}");
+            RoomSignals.RaiseExited(RoomInstance, player);
+        }
+    }
+}

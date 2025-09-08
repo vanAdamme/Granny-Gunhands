@@ -1,0 +1,66 @@
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+using Edgar.Unity;
+using Rooms;
+
+[CreateAssetMenu(menuName = "Rooms/Room Detection Post-processing", fileName = "RoomDetectionPostProcessing")]
+public class RoomDetectionPostProcessing : DungeonGeneratorPostProcessingGrid2D
+{
+    [SerializeField] private string floorTilemapName = "Floor";
+
+    public override void Run(DungeonGeneratorLevelGrid2D level)
+    {
+            Debug.Log($"[RoomDetectionPostProcessing] Wiring {level.RoomInstances.Count} rooms");
+        foreach (var roomInstance in level.RoomInstances)
+        {
+            var root = roomInstance.RoomTemplateInstance;
+
+            // 1) Find Floor
+            var floorTM = RoomTemplateUtilsGrid2D.GetTilemaps(root)
+                .SingleOrDefault(x => x && x.name == floorTilemapName);
+
+            if (!floorTM)
+            {
+                Debug.LogWarning($"[RoomDetectionPostProcessing] Missing '{floorTilemapName}' under '{root.name}'.");
+                continue;
+            }
+
+            var floorGO = floorTM.gameObject;
+            EnsureFloorTrigger(floorGO);
+
+            // 2) Ensure our Rooms manager (announces via RoomSignals)
+            var mgr = root.GetComponent<CurrentRoomDetectionRoomManager>() 
+                   ?? root.AddComponent<CurrentRoomDetectionRoomManager>();
+            mgr.RoomInstance = roomInstance;
+
+            // 3) Ensure our trigger handler on Floor
+            if (!floorGO.GetComponent<CurrentRoomDetectionTriggerHandler>())
+                floorGO.AddComponent<CurrentRoomDetectionTriggerHandler>();
+
+            // 4) Optional: auto-start encounters on entry
+            if (!root.GetComponent<RoomEncounterOnEnter>())
+                root.AddComponent<RoomEncounterOnEnter>();
+
+            Debug.Log($"[RoomDetectionPostProcessing] + Added trigger to Floor under '{root.name}'");
+        }
+    }
+
+    private static void EnsureFloorTrigger(GameObject floor)
+    {
+        var tmc = floor.GetComponent<TilemapCollider2D>() ?? floor.AddComponent<TilemapCollider2D>();
+        #if UNITY_2023_2_OR_NEWER
+        tmc.compositeOperation = Collider2D.CompositeOperation.Merge;
+        #else
+        tmc.usedByComposite = true;
+        #endif
+
+        var rb = floor.GetComponent<Rigidbody2D>() ?? floor.AddComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Static;
+
+        var cc = floor.GetComponent<CompositeCollider2D>() ?? floor.AddComponent<CompositeCollider2D>();
+        cc.geometryType = CompositeCollider2D.GeometryType.Polygons;
+        cc.generationType = CompositeCollider2D.GenerationType.Manual;
+        cc.isTrigger = true;
+    }
+}

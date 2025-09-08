@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 348022631491792981}
   - component: {fileID: 6224442471229072452}
   - component: {fileID: 666049394347043788}
-  - component: {fileID: 4036973070890883675}
+  - component: {fileID: 2137479182433504235}
   m_Layer: 0
   m_Name: Room_01
   m_TagString: Untagged
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doors: []
   spawnPoints: []
---- !u!114 &4036973070890883675
+--- !u!114 &2137479182433504235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,11 +109,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 645271859340970680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b2ab17abdeeaa6469a2ae86bb2898f0, type: 3}
+  m_Script: {fileID: 11500000, guid: c60ace5b5c8f16a4d83708f4d60e7337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   room: {fileID: 666049394347043788}
-  startOnEnter: 1
   onlyOnce: 1
 --- !u!1 &917770080913480891
 GameObject:

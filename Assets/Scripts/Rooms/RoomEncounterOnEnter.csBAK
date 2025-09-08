@@ -1,0 +1,33 @@
+using UnityEngine;
+using Edgar.Unity;
+
+namespace Rooms
+{
+    [DisallowMultipleComponent]
+    public class RoomEncounterOnEnter : MonoBehaviour
+    {
+        [SerializeField] private RoomController room;
+        [SerializeField] private bool onlyOnce = true;
+        private bool fired;
+        private CurrentRoomDetectionRoomManager manager;
+
+        void Awake()
+        {
+            if (!room) room = GetComponent<RoomController>() ?? GetComponentInChildren<RoomController>(true);
+            manager = GetComponent<CurrentRoomDetectionRoomManager>();
+            if (!manager) Debug.LogWarning("[RoomEncounterOnEnter] Missing CurrentRoomDetectionRoomManager.");
+        }
+
+        void OnEnable()  => RoomSignals.RoomEntered += OnRoomEntered;
+        void OnDisable() => RoomSignals.RoomEntered -= OnRoomEntered;
+
+        private void OnRoomEntered(RoomInstanceGrid2D entered, GameObject player)
+        {
+            if (!manager || manager.RoomInstance != entered) return;
+            if (onlyOnce && fired) return;
+
+            fired = true;
+            room?.BeginEncounter();
+        }
+    }
+}
