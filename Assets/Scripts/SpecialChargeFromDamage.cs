@@ -1,11 +1,12 @@
 using UnityEngine;
 
-/// Attach this to the Player (or a Systems object).
-/// Listens for global damage events and pumps charge into an ISpecialCharge.
+/// Attach this to the Player (or a central Systems/Managers object).
+/// Listens for global damage events and feeds charge into an ISpecialCharge
+/// when the PLAYER is the attacker (kills do NOT grant charge—only damage).
 public sealed class SpecialChargeFromDamage : MonoBehaviour
 {
     [Header("Wiring")]
-    [Tooltip("Optional. Assign a component that implements ISpecialCharge. If left null, we'll scan scene objects at startup.")]
+    [Tooltip("Optional. Assign a component that implements ISpecialCharge. If left null, we'll scan the scene at startup.")]
     [SerializeField] private MonoBehaviour specialChargeSource; // must implement ISpecialCharge
     private ISpecialCharge charge;
 
@@ -15,11 +16,11 @@ public sealed class SpecialChargeFromDamage : MonoBehaviour
 
     void Awake()
     {
-        // Prefer explicit DI
+        // Prefer explicit DI via the Inspector
         charge = specialChargeSource as ISpecialCharge;
         if (charge != null) return;
 
-        // Fallback: scan all behaviours once and take the first implementing ISpecialCharge (Unity 6 API)
+        // Fallback: scan scene behaviours once and take the first implementing ISpecialCharge
 #if UNITY_6000_0_OR_NEWER
         var all = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 #else
@@ -41,10 +42,10 @@ public sealed class SpecialChargeFromDamage : MonoBehaviour
     {
         if (charge == null || amount <= 0f || chargePerDamage <= 0f) return;
 
-        // Only award when *we* dealt the damage
-        var player = PlayerController.Instance ? PlayerController.Instance.gameObject : null; // uses your singleton
+        // Only award when the PLAYER dealt the damage (not on kills, not on incoming hits)
+        var player = PlayerController.Instance ? PlayerController.Instance.gameObject : null;
         if (player == null || attacker != player) return;
 
-        charge.AddDamage(amount * chargePerDamage); // ISpecialCharge API uses float AddDamage(...)
+        charge.AddDamage(amount * chargePerDamage);
     }
 }

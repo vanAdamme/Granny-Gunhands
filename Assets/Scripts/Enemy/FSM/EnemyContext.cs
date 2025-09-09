@@ -16,13 +16,12 @@ public sealed class EnemyContext : MonoBehaviour, IEnemyContext
     [SerializeField] private float attackRange = 1.25f;
     [SerializeField] private float repathInterval = 0.25f;
 
-    [Header("Animator Params (optional)")]
-    [SerializeField] private string moveXParam = "moveX";
-    [SerializeField] private string moveYParam = "moveY";
-    [SerializeField] private bool useLookAtParams = true;
+    [Header("Facing (Sprite Flip Only)")]
+    [SerializeField] private SpriteRenderer sprite;      // optional; auto-resolves if left empty
+    [SerializeField] private bool flipByScale = true;    // true = scale.x flip; false = SpriteRenderer.flipX
+    [SerializeField] private bool defaultFacingRight = true;
 
-    private int moveXHash, moveYHash;
-    private bool hasMoveX, hasMoveY;
+    private float baseScaleX = 1f;
 
     public Transform Transform => transform;
     public float AttackRange => attackRange;
@@ -53,10 +52,8 @@ public sealed class EnemyContext : MonoBehaviour, IEnemyContext
         if (!fsm) fsm = GetComponent<EnemyStateMachine>();
         if (!animator) animator = GetComponentInChildren<Animator>();
 
-        moveXHash = Animator.StringToHash(moveXParam);
-        moveYHash = Animator.StringToHash(moveYParam);
-        hasMoveX  = useLookAtParams && HasParam(animator, moveXHash);
-        hasMoveY  = useLookAtParams && HasParam(animator, moveYHash);
+        if (!sprite) sprite = GetComponentInChildren<SpriteRenderer>(includeInactive: true);
+        baseScaleX = Mathf.Abs(transform.localScale.x);
 
         if (TargetProvider == null) Debug.LogError($"{name}: targetProvider must implement ITargetProvider");
         if (Movement == null)       Debug.LogError($"{name}: movementSource must implement IMovementStrategy");
@@ -65,16 +62,33 @@ public sealed class EnemyContext : MonoBehaviour, IEnemyContext
 
     public void SetHurtLock(float seconds) => hurtUnlockAt = Time.time + Mathf.Max(0, seconds);
 
-    public void PlayAnim(string trigger) { if (animator) animator.SetTrigger(trigger); }
+    public void PlayAnim(string trigger)
+    {
+        if (!animator) return;
+        if (HasTrigger(animator, trigger))
+            animator.SetTrigger(trigger);
+        // else: silently ignore (avoids spam when a trigger isn't present)
+    }
 
     public void LookAt(Vector2 worldPoint)
     {
-        if (!animator || !useLookAtParams) return;
-
-        var dir = ((Vector2)worldPoint - (Vector2)transform.position).normalized;
-
-        if (hasMoveX) animator.SetFloat(moveXHash, dir.x);
-        if (hasMoveY) animator.SetFloat(moveYHash, dir.y);
+        // Sprite-flip only; no animator parameters
+        var dx = worldPoint.x - transform.position.x;
+        if (flipByScale)
+        {
+            var s = transform.localScale;
+            // If default faces right, positive X means scale +baseScaleX; else invert
+            var dir = dx >= 0f ? 1f : -1f;
+            if (!defaultFacingRight) dir = -dir;
+            s.x = baseScaleX * dir;
+            transform.localScale = s;
+        }
+        else if (sprite)
+        {
+            // flipX = true usually means "face left" – invert if your art is opposite
+            var faceLeft = dx < 0f;
+            sprite.flipX = defaultFacingRight ? faceLeft : !faceLeft;
+        }
     }
 
     public void OnDeath()
@@ -88,6 +102,15 @@ public sealed class EnemyContext : MonoBehaviour, IEnemyContext
         if (!a) return false;
         foreach (var p in a.parameters)
             if (p.nameHash == hash) return true;
+        return false;
+    }
+
+        static bool HasTrigger(Animator a, string name)
+    {
+        if (!a) return false;
+        foreach (var p in a.parameters)
+            if (p.type == AnimatorControllerParameterType.Trigger && p.name == name)
+                return true;
         return false;
     }
 }
