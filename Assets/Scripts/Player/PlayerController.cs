@@ -161,7 +161,8 @@ public class PlayerController : Target, IPlayerContext
 
     protected override void Die()
     {
-        base.Die();
+        base.Die(); // marks dead + raises OnDied
+        gameObject.SetActive(false); // vanish instantly
         GameManager.Instance.GameOver();
     }
 

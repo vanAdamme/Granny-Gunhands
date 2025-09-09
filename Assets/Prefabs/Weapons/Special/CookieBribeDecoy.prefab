@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 799824662350371064}
   - component: {fileID: 8018416953011819301}
   - component: {fileID: -704376928920707143}
-  - component: {fileID: 8754860007401774198}
   - component: {fileID: 8176924277203425196}
+  - component: {fileID: -3839589986663657336}
+  - component: {fileID: 6855012961623436601}
   m_Layer: 6
   m_Name: CookieBribeDecoy
   m_TagString: Untagged
@@ -117,8 +118,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &8754860007401774198
-BoxCollider2D:
+--- !u!114 &8176924277203425196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6930988675494509000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66cd871a3fad64747a229a54ed47c690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 6
+  auraRadius: 12
+  retargetDuration: 4
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  spawnVFX: {fileID: 0}
+  auraVFX: {fileID: 0}
+  endVFX: {fileID: 0}
+--- !u!114 &-3839589986663657336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6930988675494509000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7768772e4fbe57040bf559e7f9ad96f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookie: {fileID: 799824662350371064}
+--- !u!58 &6855012961623436601
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -151,36 +186,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.5625}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.1875, y: 1.125}
-    newSize: {x: 1.1875, y: 1.125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.1875, y: 1.125}
-  m_EdgeRadius: 0
---- !u!114 &8176924277203425196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6930988675494509000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66cd871a3fad64747a229a54ed47c690, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifetime: 6
-  auraRadius: 12
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 4608
-  searchInterval: 0.35
-  spawnVFX: {fileID: 0}
-  auraVFX: {fileID: 0}
-  endVFX: {fileID: 0}
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.5
