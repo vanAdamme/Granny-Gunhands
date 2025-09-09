@@ -404,6 +404,7 @@ GameObject:
   - component: {fileID: 5559107920248886855}
   - component: {fileID: 4851307119282064243}
   - component: {fileID: 4917092794485412119}
+  - component: {fileID: 1084374680607495471}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -709,6 +710,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   specialChargeSource: {fileID: 0}
   chargePerDamage: 1
+--- !u!114 &1084374680607495471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5772804147001409611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5307c69b0d88f0542b3be125fab468f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 3562487844079666664}
 --- !u!1 &6202198162406223626
 GameObject:
   m_ObjectHideFlags: 0
