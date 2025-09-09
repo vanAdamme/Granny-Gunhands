@@ -16,6 +16,14 @@ public sealed class EnemyContext : MonoBehaviour, IEnemyContext
     [SerializeField] private float attackRange = 1.25f;
     [SerializeField] private float repathInterval = 0.25f;
 
+    [Header("Animator Params (optional)")]
+    [SerializeField] private string moveXParam = "moveX";
+    [SerializeField] private string moveYParam = "moveY";
+    [SerializeField] private bool useLookAtParams = true;
+
+    private int moveXHash, moveYHash;
+    private bool hasMoveX, hasMoveY;
+
     public Transform Transform => transform;
     public float AttackRange => attackRange;
     public float RepathInterval => repathInterval;
@@ -45,6 +53,11 @@ public sealed class EnemyContext : MonoBehaviour, IEnemyContext
         if (!fsm) fsm = GetComponent<EnemyStateMachine>();
         if (!animator) animator = GetComponentInChildren<Animator>();
 
+        moveXHash = Animator.StringToHash(moveXParam);
+        moveYHash = Animator.StringToHash(moveYParam);
+        hasMoveX  = useLookAtParams && HasParam(animator, moveXHash);
+        hasMoveY  = useLookAtParams && HasParam(animator, moveYHash);
+
         if (TargetProvider == null) Debug.LogError($"{name}: targetProvider must implement ITargetProvider");
         if (Movement == null)       Debug.LogError($"{name}: movementSource must implement IMovementStrategy");
         if (Attack == null)         Debug.LogError($"{name}: attackSource must implement IAttackStrategy");
@@ -56,15 +69,25 @@ public sealed class EnemyContext : MonoBehaviour, IEnemyContext
 
     public void LookAt(Vector2 worldPoint)
     {
-        if (!animator) return;
+        if (!animator || !useLookAtParams) return;
+
         var dir = ((Vector2)worldPoint - (Vector2)transform.position).normalized;
-        animator.SetFloat("moveX", dir.x);
-        animator.SetFloat("moveY", dir.y);
+
+        if (hasMoveX) animator.SetFloat(moveXHash, dir.x);
+        if (hasMoveY) animator.SetFloat(moveYHash, dir.y);
     }
 
     public void OnDeath()
     {
         _dead = true;
         // Disable hitboxes or physics here if you want; corpse cleanup is handled by Enemy.Die()
+    }
+
+    static bool HasParam(Animator a, int hash)
+    {
+        if (!a) return false;
+        foreach (var p in a.parameters)
+            if (p.nameHash == hash) return true;
+        return false;
     }
 }
