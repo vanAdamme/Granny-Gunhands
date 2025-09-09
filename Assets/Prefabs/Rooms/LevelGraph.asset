@@ -45,12 +45,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Connections:
   - {fileID: -1184214679754012502}
-  CorridorIndividualRoomTemplates:
-  - {fileID: 155655301668133314, guid: b463e4708748ced40ab25e08156c7bd6, type: 3}
-  - {fileID: 155655301668133314, guid: 11ee60128ee946943848636f73f744e1, type: 3}
-  CorridorRoomTemplateSets: []
-  DefaultIndividualRoomTemplates:
-  - {fileID: 645271859340970680, guid: 441d1d2a571ec6a42adf04aef5ed5dad, type: 3}
+  CorridorIndividualRoomTemplates: []
+  CorridorRoomTemplateSets:
+  - {fileID: 11400000, guid: fea23cc2729e2674f982d5923c401853, type: 2}
+  DefaultIndividualRoomTemplates: []
   DefaultRoomTemplateSets:
   - {fileID: 11400000, guid: 3f7917f77358d0941a5a21720a979ffa, type: 2}
   Rooms:
