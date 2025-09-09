@@ -15,10 +15,16 @@ public class Enemy : Target
 
     protected override void Die()
     {
+        if (m_IsDead) return;
+
         EnemyEvents.RaiseEnemyKilled();
         DropLoot();
         PlayerController.Instance?.AddExperience(experienceOnDeath);
-        base.Die(); // Sets m_IsDead, deactivates object
+
+        var anim = GetComponent<Animator>();
+        if (anim) anim.SetTrigger("Die");
+
+        base.Die(); // <- raises OnDied and marks dead; no auto-disable in Health anymore
     }
 
     private void DropLoot()

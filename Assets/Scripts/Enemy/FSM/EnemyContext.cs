@@ -58,8 +58,8 @@ public sealed class EnemyContext : MonoBehaviour, IEnemyContext
     {
         if (!animator) return;
         var dir = ((Vector2)worldPoint - (Vector2)transform.position).normalized;
-        animator.SetFloat("MoveX", dir.x);
-        animator.SetFloat("MoveY", dir.y);
+        animator.SetFloat("moveX", dir.x);
+        animator.SetFloat("moveY", dir.y);
     }
 
     public void OnDeath()

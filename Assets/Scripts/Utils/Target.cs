@@ -9,18 +9,11 @@ public class Target : Health, IDamageable
     [SerializeField] private float m_DamageMultiplier = 1f;
 
     // New correct override: matches Health.TakeDamage(float, GameObject)
-    public override void TakeDamage(float amount, GameObject attacker = null)
+    public override void TakeDamage(float amount, GameObject attacker)
     {
         if (amount <= 0f) return;
         float scaled = amount * m_DamageMultiplier;
         base.TakeDamage(scaled, attacker);
         // additional per-target logic here if needed
-    }
-
-    // Compatibility overload for systems/interfaces that still call TakeDamage(float)
-    // (If your IDamageable already includes the attacker, you can remove this.)
-    public void TakeDamage(float amount)
-    {
-        TakeDamage(amount, null);
     }
 }

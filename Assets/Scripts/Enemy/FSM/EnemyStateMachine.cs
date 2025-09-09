@@ -3,20 +3,34 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class EnemyStateMachine : MonoBehaviour
 {
-    [SerializeField] private MonoBehaviour contextSource; // assign a component that implements IEnemyContext
+    [SerializeField] private MonoBehaviour contextSource; // must implement IEnemyContext
     private IEnemyContext ctx;
 
     private IEnemyState current;
 
-    // States (compose, don’t inherit from MonoBehaviour)
-    private readonly IdleState idle = new();
-    private readonly MoveState moving = new();
-    private readonly AttackState attacking = new();
-    private readonly HurtState hurt = new();
-    private readonly DeadState dead = new();
+    // ===== NEW: base state with Owner =====
+    private abstract class StateBase : IEnemyState
+    {
+        protected EnemyStateMachine Owner;
+        public void SetOwner(EnemyStateMachine owner) => Owner = owner;
 
-    // Cooldowns / timers that states can read via context if you prefer centralising
-    private float timeSinceLastPath;
+        public abstract void OnEnter(IEnemyContext ctx);
+        public abstract void OnExit(IEnemyContext ctx);
+        public abstract void Tick(IEnemyContext ctx, float dt);
+    }
+
+    // Compose states
+    private readonly IdleState idle       = new();
+    private readonly MoveState moving     = new();
+    private readonly AttackState attacking= new();
+    private readonly HurtState hurt       = new();
+    private readonly DeadState dead       = new();
+
+    void Reset()
+    {
+        // makes inspector wiring harder to mess up
+        if (!contextSource) contextSource = GetComponent<EnemyContext>();
+    }
 
     void Awake()
     {
@@ -27,6 +41,13 @@ public class EnemyStateMachine : MonoBehaviour
             enabled = false;
             return;
         }
+
+        // wire owner into states once
+        idle.SetOwner(this);
+        moving.SetOwner(this);
+        attacking.SetOwner(this);
+        hurt.SetOwner(this);
+        dead.SetOwner(this);
     }
 
     void OnEnable()
@@ -36,8 +57,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     void Update()
     {
-        if (current == null) return;
-        current.Tick(ctx, Time.deltaTime);
+        current?.Tick(ctx, Time.deltaTime);
     }
 
     public void ChangeState(IEnemyState next)
@@ -45,10 +65,13 @@ public class EnemyStateMachine : MonoBehaviour
         if (current == next) return;
         current?.OnExit(ctx);
         current = next;
+
+        // ensure Owner is set even if a brand-new state instance appears
+        if (current is StateBase sb) sb.SetOwner(this);
+
         current?.OnEnter(ctx);
     }
 
-    // Public gateways for outside systems (HIT / DEATH hooks)
     public void NotifyHurt(float iFramesSeconds = 0.15f)
     {
         if (!ctx.IsAlive) { ChangeState(dead); return; }
@@ -56,25 +79,23 @@ public class EnemyStateMachine : MonoBehaviour
         ChangeState(hurt);
     }
 
-    public void NotifyDeath()
-    {
-        ChangeState(dead);
-    }
+    public void NotifyDeath() => ChangeState(dead);
 
-    // Simple state types
-    private class IdleState : IEnemyState
+    // ===== States =====
+
+    private class IdleState : StateBase
     {
         float checkTimer;
 
-        public void OnEnter(IEnemyContext ctx)
+        public override void OnEnter(IEnemyContext ctx)
         {
             ctx.PlayAnim("Idle");
             checkTimer = 0f;
         }
 
-        public void OnExit(IEnemyContext ctx) { }
+        public override void OnExit(IEnemyContext ctx) { }
 
-        public void Tick(IEnemyContext ctx, float dt)
+        public override void Tick(IEnemyContext ctx, float dt)
         {
             if (!ctx.IsAlive) return;
 
@@ -84,75 +105,67 @@ public class EnemyStateMachine : MonoBehaviour
                 checkTimer = 0.25f;
                 if (ctx.TargetProvider.TryGetTarget(out var t))
                 {
-                    // Move or attack depending on range
                     var dist = Vector2.Distance(ctx.Transform.position, t.position);
-                    if (dist <= ctx.AttackRange) ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).attacking);
-                    else ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).moving);
+                    if (dist <= ctx.AttackRange) Owner.ChangeState(Owner.attacking);
+                    else                         Owner.ChangeState(Owner.moving);
                 }
             }
         }
     }
 
-    private class MoveState : IEnemyState
+    private class MoveState : StateBase
     {
         float repathTimer;
 
-        public void OnEnter(IEnemyContext ctx)
+        public override void OnEnter(IEnemyContext ctx)
         {
             ctx.PlayAnim("Move");
             repathTimer = 0f;
         }
 
-        public void OnExit(IEnemyContext ctx) { }
+        public override void OnExit(IEnemyContext ctx) { }
 
-        public void Tick(IEnemyContext ctx, float dt)
+        public override void Tick(IEnemyContext ctx, float dt)
         {
             if (!ctx.IsAlive) return;
+
             if (ctx.TargetProvider.TryGetTarget(out var t))
             {
-                // Face the target
                 ctx.LookAt(t.position);
 
-                // Periodically repath (avoids spamming A*)
                 repathTimer -= dt;
                 if (repathTimer <= 0f)
                 {
                     repathTimer = ctx.RepathInterval;
-                    // Movement strategy encapsulates A* details (destination = t.position)
+                    // your strategy may repath internally; this keeps cadence intent clear
                 }
+
                 var stillMoving = ctx.Movement.MoveTowards(ctx, t.position, dt);
 
-                // If in range, swap to attack
                 var dist = Vector2.Distance(ctx.Transform.position, t.position);
-                if (dist <= ctx.AttackRange)
-                    ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).attacking);
-                // If no valid target anymore, go idle
+                if (dist <= ctx.AttackRange) Owner.ChangeState(Owner.attacking);
                 else if (!stillMoving && !ctx.TargetProvider.TryGetTarget(out _))
-                    ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).idle);
+                    Owner.ChangeState(Owner.idle);
             }
             else
             {
-                // No target—idle
-                ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).idle);
+                Owner.ChangeState(Owner.idle);
             }
         }
     }
 
-    private class AttackState : IEnemyState
+    private class AttackState : StateBase
     {
-        public void OnEnter(IEnemyContext ctx)
-        {
-            ctx.PlayAnim("AttackBlend"); // Or set an “isAttacking” bool in Animator
-        }
+        public override void OnEnter(IEnemyContext ctx) => ctx.PlayAnim("AttackBlend");
+        public override void OnExit(IEnemyContext ctx) { }
 
-        public void OnExit(IEnemyContext ctx) { }
-
-        public void Tick(IEnemyContext ctx, float dt)
+        public override void Tick(IEnemyContext ctx, float dt)
         {
             if (!ctx.IsAlive) return;
+
             if (!ctx.TargetProvider.TryGetTarget(out var t))
             {
-                ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).idle);
+                Owner.ChangeState(Owner.idle);
                 return;
             }
 
@@ -161,63 +174,48 @@ public class EnemyStateMachine : MonoBehaviour
 
             if (dist > ctx.AttackRange)
             {
-                ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).moving);
+                Owner.ChangeState(Owner.moving);
                 return;
             }
 
-            // Fire attack via strategy (handles cooldowns)
-            var attacked = ctx.Attack.TryAttack(ctx, t, dt);
-            // Stay in Attack; strategy manages fire-rate. If you prefer “attack -> idle/move” bounce, transition here.
+            ctx.Attack.TryAttack(ctx, t, dt);
         }
     }
 
-    private class HurtState : IEnemyState
+    private class HurtState : StateBase
     {
-        public void OnEnter(IEnemyContext ctx)
+        public override void OnEnter(IEnemyContext ctx) => ctx.PlayAnim("Hurt");
+        public override void OnExit(IEnemyContext ctx) { }
+
+        public override void Tick(IEnemyContext ctx, float dt)
         {
-            ctx.PlayAnim("Hurt");
-        }
-
-        public void OnExit(IEnemyContext ctx) { }
-
-        public void Tick(IEnemyContext ctx, float dt)
-        {
-            if (!ctx.IsAlive)
-            {
-                ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).dead);
-                return;
-            }
-
-            // If still in i-frames/lockout, remain; otherwise choose next intent
+            if (!ctx.IsAlive) { Owner.ChangeState(Owner.dead); return; }
             if (ctx.IsHurtLockedOut) return;
 
             if (ctx.TargetProvider.TryGetTarget(out var t))
             {
                 var dist = Vector2.Distance(ctx.Transform.position, t.position);
-                if (dist <= ctx.AttackRange) ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).attacking);
-                else ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).moving);
+                if (dist <= ctx.AttackRange) Owner.ChangeState(Owner.attacking);
+                else                         Owner.ChangeState(Owner.moving);
             }
             else
             {
-                ((EnemyStateMachine)ctx).ChangeState(((EnemyStateMachine)ctx).idle);
+                Owner.ChangeState(Owner.idle);
             }
         }
     }
 
-    private class DeadState : IEnemyState
+    private class DeadState : StateBase
     {
         bool handled;
-
-        public void OnEnter(IEnemyContext ctx)
+        public override void OnEnter(IEnemyContext ctx)
         {
             if (handled) return;
             handled = true;
             ctx.PlayAnim("Die");
             ctx.OnDeath();
-            // Optional: disable colliders, AI, etc. here via ctx.OnDeath()
         }
-
-        public void OnExit(IEnemyContext ctx) { }
-        public void Tick(IEnemyContext ctx, float dt) { }
+        public override void OnExit(IEnemyContext ctx) { }
+        public override void Tick(IEnemyContext ctx, float dt) { }
     }
 }

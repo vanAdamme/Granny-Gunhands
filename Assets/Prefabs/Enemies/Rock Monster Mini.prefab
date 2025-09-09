@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e57dee7b3aab44fbc397d03a2efe8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contextSource: {fileID: 4043712442327093425}
+  contextSource: {fileID: 7006801886726887758}
 --- !u!114 &7006801886726887758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,9 +63,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fsm: {fileID: 4043712442327093425}
   animator: {fileID: 5087878534804282414}
-  targetProviderSource: {fileID: 4043712442327093425}
-  movementSource: {fileID: 4043712442327093425}
-  attackSource: {fileID: 4043712442327093425}
+  targetProviderSource: {fileID: 1199489653314598095}
+  movementSource: {fileID: 8362005348786747367}
+  attackSource: {fileID: 2544381807600339140}
   attackRange: 1.25
   repathInterval: 0.25
 --- !u!114 &8362005348786747367
@@ -95,7 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6bebf400a64bc45adfb706a2ea85df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 3562487844079666664, guid: 8ef46b3c4917a95438da712afa1ea085, type: 3}
+  explicitPlayer: {fileID: 0}
+  keepResolving: 1
+  resolveEvery: 0.5
 --- !u!114 &2544381807600339140
 MonoBehaviour:
   m_ObjectHideFlags: 0

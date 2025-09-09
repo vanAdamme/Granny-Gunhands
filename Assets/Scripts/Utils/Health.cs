@@ -1,11 +1,15 @@
 using UnityEngine;
+using UnityEngine.Events;
 using DamageNumbersPro;
 
-/// Basic behaviour for tracking the health of an object.
+/// <summary>
+/// Tracks health and death signalling. DOES NOT auto-disable on death anymore.
+/// Subclasses decide when/how to remove the object (e.g., via animation).
+/// </summary>
 public class Health : MonoBehaviour
 {
     [SerializeField, Min(1f)] private float m_MaxHealth = 1f;
-    [SerializeField] private float m_CurrentHealth;
+    [SerializeField] float m_CurrentHealth;
     [SerializeField] private DamageNumber damageNumberPrefab;
     [SerializeField] private DamageFlash damageFlash;
 
@@ -14,8 +18,7 @@ public class Health : MonoBehaviour
     protected bool m_IsInvulnerable;
     protected bool m_IsDead;
 
-    // Properties
-    public float MaxHealth { get => m_MaxHealth; set => m_MaxHealth = Mathf.Max(1f, value); }
+    public float MaxHealth { get => m_MaxHealth; set => m_MaxHealth = value; }
     public float CurrentHealth => m_CurrentHealth;
     public bool IsInvulnerable { get => m_IsInvulnerable; set => m_IsInvulnerable = value; }
 
@@ -25,8 +28,8 @@ public class Health : MonoBehaviour
 
         if (!damageFlash)
         {
-            if (!TryGetComponent(out damageFlash))
-                damageFlash = GetComponentInChildren<DamageFlash>(includeInactive: true);
+            TryGetComponent(out damageFlash);
+            if (!damageFlash) damageFlash = GetComponentInChildren<DamageFlash>(includeInactive: true);
         }
     }
 
@@ -36,27 +39,15 @@ public class Health : MonoBehaviour
         if (m_CurrentHealth > m_MaxHealth) m_CurrentHealth = m_MaxHealth;
     }
 
-    /// Applies damage to this object.
-    /// Pass the attacker GameObject if you want damage-to-charge, on-hit effects, etc.
-    public virtual void TakeDamage(float amount, GameObject attacker = null)
+    public virtual void TakeDamage(float amount, GameObject attacker)
     {
-        if (m_IsDead || m_IsInvulnerable || amount <= 0f)
-            return;
+        if (m_IsDead || m_IsInvulnerable) return;
 
-        // Clamp and compute actually-applied damage
-        float before  = m_CurrentHealth;
-        m_CurrentHealth = Mathf.Max(0f, m_CurrentHealth - amount);
-        float applied = before - m_CurrentHealth;
-        if (applied <= 0f) return;
+        m_CurrentHealth -= amount;
 
-        // Global damage event (lets specials charge off damage dealt)
-        DamageEvents.RaiseDamaged(attacker, this, applied);
-
-        // Visual feedback
-        if (damageNumberPrefab) damageNumberPrefab.Spawn(transform.position, applied);
+        if (damageNumberPrefab) damageNumberPrefab.Spawn(transform.position, amount);
         if (damageFlash) damageFlash.CallDamageFlash();
 
-        // Death
         if (m_CurrentHealth <= 0f)
         {
             m_CurrentHealth = 0f;
@@ -64,22 +55,24 @@ public class Health : MonoBehaviour
         }
     }
 
-    /// Heals the GameObject, up to the maximum value.
     public virtual void Heal(float amount)
     {
-        if (m_IsDead || amount <= 0f) return;
-        m_CurrentHealth = Mathf.Min(MaxHealth, m_CurrentHealth + amount);
+        if (m_IsDead) return;
+        m_CurrentHealth += amount;
+        if (m_CurrentHealth > MaxHealth) m_CurrentHealth = MaxHealth;
     }
 
-    /// Notify listeners and disable to prevent further interaction.
+    /// <summary>
+    /// Marks dead + notifies listeners. DOES NOT disable/destroy the GameObject.
+    /// Subclasses should handle visuals/cleanup.
+    /// </summary>
     protected virtual void Die()
     {
         if (m_IsDead) return;
         m_IsDead = true;
         OnDied?.Invoke();
-        gameObject.SetActive(false);
+        // Intentionally NOT disabling the GameObject anymore.
     }
 
-    // Compatibility helper for UI/other systems
     public bool IsHurt() => m_CurrentHealth < MaxHealth;
 }
