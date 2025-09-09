@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Position: {x: 512, y: 336}
   Name: Room
-  IndividualRoomTemplates:
-  - {fileID: 645271859340970680, guid: b7f5fe4239e79b542a888bcb93350f30, type: 3}
-  RoomTemplateSets: []
+  IndividualRoomTemplates: []
+  RoomTemplateSets:
+  - {fileID: 11400000, guid: 3f7917f77358d0941a5a21720a979ffa, type: 2}
 --- !u!114 &-1184214679754012502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,7 +49,8 @@ MonoBehaviour:
   - {fileID: 155655301668133314, guid: b463e4708748ced40ab25e08156c7bd6, type: 3}
   - {fileID: 155655301668133314, guid: 11ee60128ee946943848636f73f744e1, type: 3}
   CorridorRoomTemplateSets: []
-  DefaultIndividualRoomTemplates: []
+  DefaultIndividualRoomTemplates:
+  - {fileID: 645271859340970680, guid: 441d1d2a571ec6a42adf04aef5ed5dad, type: 3}
   DefaultRoomTemplateSets:
   - {fileID: 11400000, guid: 3f7917f77358d0941a5a21720a979ffa, type: 2}
   Rooms:
@@ -75,5 +76,5 @@ MonoBehaviour:
   Position: {x: 384, y: 400}
   Name: SpawnRoom
   IndividualRoomTemplates:
-  - {fileID: 7017825686702262337, guid: ae70c261bb4ce884b8bda168cb09e8a3, type: 3}
+  - {fileID: 645271859340970680, guid: 441d1d2a571ec6a42adf04aef5ed5dad, type: 3}
   RoomTemplateSets: []

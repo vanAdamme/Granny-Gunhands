@@ -6,93 +6,90 @@ using Edgar.Unity;
 namespace Rooms
 {
     [CreateAssetMenu(menuName = "Rooms/Post-processing", fileName = "CurrentRoomDetectionPostProcessing")]
-
-    #region codeBlock:2d_currentRoomDetection_postProcessing
-
     public class CurrentRoomDetectionPostProcessing : DungeonGeneratorPostProcessingGrid2D
     {
+        [Header("Layers")]
+        public string floorLayerName = "Floor";   // tilemaps painted as walkable floor
+        public string noWalkLayerName = "NoWalk"; // boundary collider layer
+
         public override void Run(DungeonGeneratorLevelGrid2D level)
         {
-            foreach (var roomInstance in level.RoomInstances)
+            foreach (var room in level.RoomInstances)
             {
-                var roomTemplateInstance = roomInstance.RoomTemplateInstance;
+                var rt = room.RoomTemplateInstance;
 
-                // Find floor tilemap layer
-                var tilemaps = RoomTemplateUtilsGrid2D.GetTilemaps(roomTemplateInstance);
-                var floor = tilemaps.Single(x => x.name == "Floor").gameObject;
+                // Collect all tilemaps that are on the Floor layer (supports multiple floor tilemaps)
+                int floorLayer = LayerMask.NameToLayer(floorLayerName);
+                var tilemaps = RoomTemplateUtilsGrid2D.GetTilemaps(rt)
+                              .Where(t => t.gameObject.layer == floorLayer || t.name == "Floor")
+                              .ToList();
 
-                ConfigureNoWalkBoundary(floor);
-                var triggerGO = CreateRoomTrigger(roomTemplateInstance.gameObject, floor.GetComponent<Tilemap>());
+                // 1) Build a solid NoWalk boundary that hugs Floor outline(s)
+                BuildNoWalkBoundary(rt.gameObject, tilemaps);
 
-                // Add the room manager component
-                var roomManager = roomTemplateInstance.AddComponent<CurrentRoomDetectionRoomManager>();
-                roomManager.RoomInstance = roomInstance;
-                triggerGO.AddComponent<CurrentRoomDetectionTriggerHandler>();
-
-                // Add current room detection handler
-                floor.AddComponent<CurrentRoomDetectionTriggerHandler>();
+                // 2) Build a separate trigger for room enter/exit
+                var trigger = CreateRoomTrigger(rt.gameObject, tilemaps.FirstOrDefault());
+                var mgr = rt.AddComponent<CurrentRoomDetectionRoomManager>();
+                mgr.RoomInstance = room;
+                trigger.AddComponent<CurrentRoomDetectionTriggerHandler>();
             }
         }
 
-        private void ConfigureNoWalkBoundary(GameObject floorGO)
+        private void BuildNoWalkBoundary(GameObject rtRoot, System.Collections.Generic.List<Tilemap> floors)
         {
-            // Ensure required components
-            var rb = floorGO.GetComponent<Rigidbody2D>() ?? floorGO.AddComponent<Rigidbody2D>();
+            if (floors.Count == 0) return;
+
+            // Parent that owns the Rigidbody2D + CompositeCollider2D
+            var boundaryGO = new GameObject("FloorBoundary");
+            boundaryGO.transform.SetParent(rtRoot.transform, false);
+            boundaryGO.layer = LayerMask.NameToLayer(noWalkLayerName);
+
+            var rb = boundaryGO.AddComponent<Rigidbody2D>();
             rb.bodyType = RigidbodyType2D.Static;
 
-            var tmc = floorGO.GetComponent<TilemapCollider2D>() ?? floorGO.AddComponent<TilemapCollider2D>();
+            var composite = boundaryGO.AddComponent<CompositeCollider2D>();
+            composite.geometryType = CompositeCollider2D.GeometryType.Outlines; // follow floor edge
+            composite.isTrigger = false;
+            composite.generationType = CompositeCollider2D.GenerationType.Manual;
+
+            // Feed child TilemapCollider2D(s) to the composite via usedByComposite
+            foreach (var floor in floors)
+            {
+                var tmCol = floor.GetComponent<TilemapCollider2D>() ?? floor.gameObject.AddComponent<TilemapCollider2D>();
 #if UNITY_2023_2_OR_NEWER
-    tmc.compositeOperation = Collider2D.CompositeOperation.Merge;
+                tmCol.compositeOperation = Collider2D.CompositeOperation.Merge;
 #else
-    tmc.usedByComposite = true;
+                tmCol.usedByComposite = true;
 #endif
+                // Ensure these colliders attach to the parent's Rigidbody2D
+                // (2D colliders on children attach to closest ancestor Rigidbody2D.)
+                floor.transform.SetParent(boundaryGO.transform, true);
+            }
 
-            var comp = floorGO.GetComponent<CompositeCollider2D>() ?? floorGO.AddComponent<CompositeCollider2D>();
-            comp.geometryType   = CompositeCollider2D.GeometryType.Outlines; // <= follow irregular room edge
-            comp.isTrigger      = false;                                      // <= solid for PlayerFeet only
-            comp.generationType = CompositeCollider2D.GenerationType.Manual;  // (optional) force rebuild
-            comp.GenerateGeometry();
-
-            // Put Floor on the NoWalk layer so only PlayerFeet collides (per your layer matrix)
-            int noWalk = LayerMask.NameToLayer("NoWalk");
-            if (noWalk >= 0) floorGO.layer = noWalk;
+            // Generate the unified edge
+            composite.GenerateGeometry();
         }
 
-        private GameObject CreateRoomTrigger(GameObject parent, Tilemap floor)
+        private GameObject CreateRoomTrigger(GameObject rtRoot, Tilemap anyFloor)
         {
-            var go = new GameObject("RoomTrigger");
-            go.transform.SetParent(parent.transform, false);
+            var triggerGO = new GameObject("RoomTrigger");
+            triggerGO.transform.SetParent(rtRoot.transform, false);
 
-            var rb = go.AddComponent<Rigidbody2D>();
+            var rb = triggerGO.AddComponent<Rigidbody2D>();
             rb.bodyType = RigidbodyType2D.Static;
 
-            var box = go.AddComponent<BoxCollider2D>();
+            var box = triggerGO.AddComponent<BoxCollider2D>();
             box.isTrigger = true;
 
-            // Size to the painted floor area (irregular rooms supported)
-            var b = floor.localBounds;
-            box.offset = (Vector2)b.center;
-            box.size   = (Vector2)b.size;
+            // Size to floor bounds (works for irregular rooms)
+            if (anyFloor != null)
+            {
+                var b = anyFloor.localBounds;
+                box.offset = (Vector2)b.center;
+                box.size   = (Vector2)b.size;
+            }
 
-            return go;
-        }
-
-        private void AddFloorCollider(GameObject floor)
-        {
-            var tilemapCollider2D = floor.AddComponent<TilemapCollider2D>();
-#if UNITY_2023_2_OR_NEWER
-        tilemapCollider2D.compositeOperation = Collider2D.CompositeOperation.Merge;
-#else
-        tilemapCollider2D.usedByComposite = true;
-#endif
-
-            var compositeCollider2d = floor.AddComponent<CompositeCollider2D>();
-            compositeCollider2d.geometryType = CompositeCollider2D.GeometryType.Polygons;
-            compositeCollider2d.isTrigger = true;
-            compositeCollider2d.generationType = CompositeCollider2D.GenerationType.Manual;
-
-            floor.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            return triggerGO;
         }
     }
-    #endregion
 }
