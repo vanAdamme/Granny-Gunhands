@@ -46,6 +46,6 @@ public sealed class SpecialChargeFromDamage : MonoBehaviour
         var player = PlayerController.Instance ? PlayerController.Instance.gameObject : null;
         if (player == null || attacker != player) return;
 
-        charge.AddDamage(amount * chargePerDamage);
+        charge.AddDamage(amount * chargePerDamage); // ISpecialCharge API
     }
 }
