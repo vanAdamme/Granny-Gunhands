@@ -93,6 +93,8 @@ public class PlayerController : Target, IPlayerContext
             if (!itemInventory)
                 Debug.LogError("[PlayerController] ItemInventory is not assigned. Drag the SAME instance the UI uses.");
         }
+
+        GameSystems.Instance?.RegisterPlayer(this);
     }
 
     private void Start()

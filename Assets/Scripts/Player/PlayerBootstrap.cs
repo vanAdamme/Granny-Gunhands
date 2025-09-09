@@ -13,27 +13,39 @@ public sealed class PlayerBootstrap : MonoBehaviour
 
     void OnDestroy() => SceneManager.sceneLoaded -= OnSceneLoaded;
 
-    void EnsurePlayer()
+    private void EnsurePlayer()
     {
-        // If you already have one (e.g., reenter play), don’t spawn another
-        if (PlayerController.Instance != null) return;
+        // If a player already exists (domain reload off, or returning to play), don’t double-spawn.
+        if (GameSystems.GetPlayer() != null) return;
 
         var p = Instantiate(playerPrefab);
-        DontDestroyOnLoad(p.gameObject);       // must be root object
+        DontDestroyOnLoad(p.gameObject); // must be root object
+
+        // PlayerController will self-register with GameSystems in its Awake/OnEnable.
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Find a spawn in the new scene
-        var spawn = FindFirstObjectByType<PlayerSpawnPoint>(FindObjectsInactive.Exclude);
-        if (spawn && PlayerController.Instance)
-        {
-            var t = PlayerController.Instance.transform;
-            t.position = spawn.transform.position;
-            t.rotation = spawn.transform.rotation;
+        var player = GameSystems.GetPlayer();
+        if (!player) return;
 
-            var rb = PlayerController.Instance.GetComponent<Rigidbody2D>();
-            if (rb) { rb.linearVelocity = Vector2.zero; rb.angularVelocity = 0f; }
+        // Prefer an explicit spawn point in the scene
+        var spawn = Object.FindFirstObjectByType<PlayerSpawnPoint>(FindObjectsInactive.Exclude);
+        if (!spawn) return;
+
+        var t = player.transform;
+        t.position = spawn.transform.position;
+        t.rotation = spawn.transform.rotation;
+
+        // Reset movement
+        if (player.TryGetComponent(out Rigidbody2D rb))
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
         }
+
+        // Notify any components interested in spawn placement
+        foreach (var s in player.GetComponentsInChildren<IPlayerSpawnable>(includeInactive: true))
+            s.OnSpawnedAt(t.position, spawn.facing);
     }
 }

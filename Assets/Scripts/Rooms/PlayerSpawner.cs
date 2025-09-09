@@ -17,13 +17,6 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private bool fallbackToUnsafeIfNoneSafe = true;
     [SerializeField] private bool usePriority = true;
 
-    private GameObject cachedPlayer;
-
-    void Awake()
-    {
-        cachedPlayer = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Exclude)?.gameObject;
-    }
-
     void OnEnable()
     {
         TrySpawnOrMove();
@@ -35,15 +28,22 @@ public class PlayerSpawner : MonoBehaviour
 
     public void ForceMoveTo(PlayerSpawnPoint spawn)
     {
-        if (!spawn || cachedPlayer == null) return;
+        var player = GameSystems.GetPlayer();
+        if (!player || !spawn) return;
 
-        cachedPlayer.transform.position = spawn.transform.position;
+        var t = player.transform;
+        t.position = spawn.transform.position;
+
         if (spawn.facing.sqrMagnitude > 0.001f)
         {
             float angle = Mathf.Atan2(spawn.facing.y, spawn.facing.x) * Mathf.Rad2Deg;
-            cachedPlayer.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            t.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
-        AttachCinemachineToPlayer(cachedPlayer.transform);
+
+        AttachCinemachineToPlayer(t);
+
+        foreach (var s in player.GetComponentsInChildren<IPlayerSpawnable>(includeInactive: true))
+            s.OnSpawnedAt(t.position, spawn.facing);
     }
 
     private void TrySpawnOrMove()
@@ -56,27 +56,57 @@ public class PlayerSpawner : MonoBehaviour
         }
 
         var candidates = usePriority ? points.OrderByDescending(p => p.priority).ToArray() : points;
-        var chosen = requireSafePoint
+
+        PlayerSpawnPoint chosen = requireSafePoint
             ? candidates.FirstOrDefault(p => p.IsSafe()) ?? (fallbackToUnsafeIfNoneSafe ? candidates.FirstOrDefault() : null)
             : candidates.FirstOrDefault(p => p.IsSafe()) ?? candidates.FirstOrDefault();
 
         if (!chosen) return;
 
-        if (cachedPlayer != null && moveExistingPlayer)
-            cachedPlayer.transform.position = chosen.transform.position;
+        var player = GameSystems.GetPlayer();
+        Transform t;
+
+        if (player && moveExistingPlayer)
+        {
+            t = player.transform;
+            t.position = chosen.transform.position;
+        }
         else
         {
-            if (!playerPrefab) { Debug.LogError("[PlayerSpawner] No player prefab."); return; }
-            cachedPlayer = Instantiate(playerPrefab, chosen.transform.position, Quaternion.identity);
+            if (!playerPrefab)
+            {
+                Debug.LogError("[PlayerSpawner] No player prefab.");
+                return;
+            }
+            var go = Instantiate(playerPrefab, chosen.transform.position, Quaternion.identity);
+
+            // PlayerController will self-register to GameSystems in its Awake/OnEnable.
+            player = go.GetComponent<PlayerController>();
+            if (!player)
+                player = go.GetComponentInChildren<PlayerController>(true);
+
+            t = go.transform;
         }
 
         if (chosen.facing.sqrMagnitude > 0.001f)
         {
             float angle = Mathf.Atan2(chosen.facing.y, chosen.facing.x) * Mathf.Rad2Deg;
-            cachedPlayer.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            t.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
-        AttachCinemachineToPlayer(cachedPlayer.transform);
+        AttachCinemachineToPlayer(t);
+
+        if (player)
+        {
+            if (player.TryGetComponent(out Rigidbody2D rb))
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+            }
+
+            foreach (var s in player.GetComponentsInChildren<IPlayerSpawnable>(includeInactive: true))
+                s.OnSpawnedAt(t.position, chosen.facing);
+        }
     }
 
     private void AttachCinemachineToPlayer(Transform target)
