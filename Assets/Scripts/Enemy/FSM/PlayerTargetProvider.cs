@@ -31,14 +31,13 @@ public class PlayerTargetProvider : MonoBehaviour, ITargetProvider
 
     public bool TryGetTarget(out Transform t)
     {
-        // Explicit override wins if it’s a valid scene object
+        // Explicit override wins if valid
         if (IsValidSceneObject(explicitPlayer))
         {
             t = explicitPlayer;
             return true;
         }
 
-        // Use cached player from provider
         if (IsValidSceneObject(player))
         {
             t = player;
@@ -51,18 +50,18 @@ public class PlayerTargetProvider : MonoBehaviour, ITargetProvider
         return t != null;
     }
 
-    // ---------- internal ----------
+    // ---------- internals ----------
 
     private void BindProvider()
     {
-        // 1) Serialized source, if it implements IPlayerProvider
+        // 1) Serialized provider if it implements IPlayerProvider
         provider = playerProviderSource as IPlayerProvider;
 
-        // 2) GameSystems singleton (recommended)
+        // 2) GameSystems singleton
         if (provider == null && GameSystems.Instance != null)
             provider = GameSystems.Instance;
 
-        // 3) Fallback: try to find GameSystems in scene (includes disabled/inactive)
+        // 3) Fallback: find GameSystems (includes inactive)
         if (provider == null)
         {
             var gs = Object.FindFirstObjectByType<GameSystems>(FindObjectsInactive.Include);
@@ -89,25 +88,22 @@ public class PlayerTargetProvider : MonoBehaviour, ITargetProvider
 
     private void Resolve(bool force)
     {
-        // Explicit override (scene object) takes precedence
         if (IsValidSceneObject(explicitPlayer))
         {
             player = explicitPlayer;
             return;
         }
 
-        // Ensure we have a provider
         if (provider == null) BindProvider();
 
-        // Ask provider for the current player
-        if (provider != null && provider.Player)
+        var cur = provider?.Player;
+        if (cur)
         {
-            player = provider.Player.transform;
+            player = cur.transform;
             return;
         }
 
-        // As an absolute fallback, do a single find.
-        // NOTE: uses FindFirstObjectByType (Unity 6-safe), not the deprecated API.
+        // Absolute fallback: single scene search (Unity 6-safe)
         var pc = Object.FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
         player = pc ? pc.transform : null;
     }

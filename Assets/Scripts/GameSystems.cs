@@ -16,7 +16,6 @@ public class GameSystems : MonoBehaviour, IPlayerProvider
         if (dontDestroyOnLoad) DontDestroyOnLoad(gameObject);
     }
 
-    // Called by PlayerController when it spawns/despawns
     public void RegisterPlayer(PlayerController player)
     {
         if (Player == player) return;
@@ -31,7 +30,6 @@ public class GameSystems : MonoBehaviour, IPlayerProvider
         PlayerChanged?.Invoke(null);
     }
 
-    // Convenience accessor for consumers that don’t want to store Instance
     public static PlayerController GetPlayer()
     {
         if (!Instance)

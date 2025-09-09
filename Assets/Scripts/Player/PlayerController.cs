@@ -78,13 +78,18 @@ public class PlayerController : Target, IPlayerContext
         if (Instance != null && Instance != this) { Destroy(this); return; }
         Instance = this;
 
-        // Resolve input
-        input = InputService.Instance as IInputService;
+        GameSystems.Instance?.RegisterPlayer(this);
+
+        // Resolve input (prefer the GameSystems host; then singleton; then one-shot find)
+        input =
+            (GameSystems.Instance
+                ? GameSystems.Instance.GetComponentInChildren<InputService>(true) as IInputService
+                : null)
+            ?? InputService.Instance
+            ?? FindFirstObjectByType<InputService>(FindObjectsInactive.Include) as IInputService;
+
         if (input == null)
-        {
-            input = FindFirstObjectByType<InputService>(); // Unity 6+ safe API
-            if (input == null) Debug.LogError("InputService not found in scene.");
-        }
+            Debug.LogError("InputService not found. Ensure GameSystems has an InputService component or one exists in the scene.");
 
         // Sanity: warn if inventory isn't wired
         if (!itemInventory)
@@ -93,8 +98,6 @@ public class PlayerController : Target, IPlayerContext
             if (!itemInventory)
                 Debug.LogError("[PlayerController] ItemInventory is not assigned. Drag the SAME instance the UI uses.");
         }
-
-        GameSystems.Instance?.RegisterPlayer(this);
     }
 
     private void Start()
@@ -200,6 +203,7 @@ public class PlayerController : Target, IPlayerContext
 
     void OnDisable()
     {
+        GameSystems.Instance?.UnregisterPlayer(this);
         if (input == null) return;
         input.CycleLeft  -= OnCycleLeft;
         input.CycleRight -= OnCycleRight;

@@ -18,7 +18,7 @@ namespace Rooms
         /// <param name="player"></param>
         public void OnRoomEnter(GameObject player)
         {
-            Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
+            // Debug.Log($"Room enter. Room name: {RoomInstance.Room.GetDisplayName()}, Room template: {RoomInstance.RoomTemplatePrefab.name}");
             RoomSignals.RaiseEntered(RoomInstance, player); 
             // CurrentRoomDetectionGameManager.Instance.OnRoomEnter(RoomInstance);
         }
@@ -29,7 +29,7 @@ namespace Rooms
         /// <param name="player"></param>
         public void OnRoomLeave(GameObject player)
         {
-            Debug.Log($"Room leave {RoomInstance.Room.GetDisplayName()}");
+            // Debug.Log($"Room leave {RoomInstance.Room.GetDisplayName()}");
             RoomSignals.RaiseExited(RoomInstance, player);
             // if (CurrentRoomDetectionGameManager.Instance)
             // {

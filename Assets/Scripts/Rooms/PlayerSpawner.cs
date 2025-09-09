@@ -55,11 +55,11 @@ public class PlayerSpawner : MonoBehaviour
             return;
         }
 
-        var candidates = usePriority ? points.OrderByDescending(p => p.priority).ToArray() : points;
+        var ordered = usePriority ? points.OrderByDescending(p => p.priority).ToArray() : points;
 
         PlayerSpawnPoint chosen = requireSafePoint
-            ? candidates.FirstOrDefault(p => p.IsSafe()) ?? (fallbackToUnsafeIfNoneSafe ? candidates.FirstOrDefault() : null)
-            : candidates.FirstOrDefault(p => p.IsSafe()) ?? candidates.FirstOrDefault();
+            ? ordered.FirstOrDefault(p => p.IsSafe()) ?? (fallbackToUnsafeIfNoneSafe ? ordered.FirstOrDefault() : null)
+            : ordered.FirstOrDefault(p => p.IsSafe()) ?? ordered.FirstOrDefault();
 
         if (!chosen) return;
 
@@ -73,18 +73,11 @@ public class PlayerSpawner : MonoBehaviour
         }
         else
         {
-            if (!playerPrefab)
-            {
-                Debug.LogError("[PlayerSpawner] No player prefab.");
-                return;
-            }
+            if (!playerPrefab) { Debug.LogError("[PlayerSpawner] No player prefab."); return; }
             var go = Instantiate(playerPrefab, chosen.transform.position, Quaternion.identity);
 
-            // PlayerController will self-register to GameSystems in its Awake/OnEnable.
-            player = go.GetComponent<PlayerController>();
-            if (!player)
-                player = go.GetComponentInChildren<PlayerController>(true);
-
+            // PlayerController registers itself with GameSystems in Awake/OnEnable.
+            player = go.GetComponent<PlayerController>() ?? go.GetComponentInChildren<PlayerController>(true);
             t = go.transform;
         }
 
@@ -134,9 +127,9 @@ public class PlayerSpawner : MonoBehaviour
             if (!mb || !mb.gameObject.scene.IsValid() || mb.hideFlags != HideFlags.None) continue;
 
             var t = mb.GetType();
-            if (t == null) continue;
-            string full = t.FullName;
+            string full = t?.FullName;
 
+            // Cinemachine 3.x camera types
             if (full == "Unity.Cinemachine.CinemachineCamera" || full == "Cinemachine.CinemachineVirtualCamera")
             {
                 var followProp = t.GetProperty("Follow", BindingFlags.Instance | BindingFlags.Public);
@@ -147,6 +140,7 @@ public class PlayerSpawner : MonoBehaviour
                 if (bound) return true;
             }
 
+            // CinemachineCameraManagerBase (bind DefaultTarget)
             if (IsSubclassOfFullName(t, "Unity.Cinemachine.CinemachineCameraManagerBase"))
             {
                 var dtField = t.GetField("DefaultTarget", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
