@@ -35,6 +35,7 @@ Transform:
   m_Children:
   - {fileID: 3093426945916521207}
   - {fileID: 5986133307296419847}
+  - {fileID: 3908467166582166746}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &348022631491792981
@@ -101,6 +102,7 @@ MonoBehaviour:
   doors: []
   spawnPoints:
   - {fileID: 8137687231622721939}
+  - {fileID: 1815747429675732434}
 --- !u!114 &2137479182433504235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,6 +117,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   room: {fileID: 666049394347043788}
   onlyOnce: 1
+--- !u!1 &793106895811030806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3908467166582166746}
+  - component: {fileID: 1815747429675732434}
+  m_Layer: 0
+  m_Name: RoomLogic (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3908467166582166746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793106895811030806}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.37, y: 8.33, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8785565944349061338}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1815747429675732434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793106895811030806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6d6d20c1a0db4498f7ed85abac5cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 4478679186076933369, guid: fdac0691572bc2e428c236f3c77c782d, type: 3}
+  count: 3
+  radius: 0.5
+  maxAttemptsPerEnemy: 20
+  floorTilemap: {fileID: 6526519034462450408}
+  cellClearance: 0
 --- !u!1 &917770080913480891
 GameObject:
   m_ObjectHideFlags: 0
