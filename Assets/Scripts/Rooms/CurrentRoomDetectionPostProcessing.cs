@@ -44,8 +44,8 @@ namespace Rooms
                 var mgr = rt.GetComponent<CurrentRoomDetectionRoomManager>() ?? rt.AddComponent<CurrentRoomDetectionRoomManager>();
                 mgr.RoomInstance = room;
 
-                if (!trigger.GetComponent<CurrentRoomDetectionTriggerHandler>())
-                    trigger.AddComponent<CurrentRoomDetectionTriggerHandler>();
+                if (!trigger.GetComponent<CurrentRoomTriggerToSignals>())
+                    trigger.AddComponent<CurrentRoomTriggerToSignals>();
             }
         }
 

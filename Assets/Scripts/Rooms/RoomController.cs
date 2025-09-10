@@ -20,13 +20,16 @@ public class RoomController : MonoBehaviour
             spawnPoints = GetComponentsInChildren<EnemySpawnPoint>(true).ToList();
     }
 
-    public void BeginEncounter()
-    {
-        if (encounterStarted) return;
-        encounterStarted = true;
+public void BeginEncounter()
+{
+    if (encounterStarted) return;
+    encounterStarted = true;
 
-        foreach (var d in doors) d.Lock();
+    foreach (var d in doors) d.Lock();
 
+    if (spawnPoints == null || spawnPoints.Count == 0)
+        Debug.LogWarning($"[RoomController] No EnemySpawnPoints under {name}", this);
+        
         foreach (var sp in spawnPoints)
         {
             foreach (var enemy in sp.Spawn())
@@ -36,6 +39,7 @@ public class RoomController : MonoBehaviour
                 enemy.OnDied += () => OnEnemyDied(enemy);
             }
         }
+Debug.Log($"[RoomController] Spawned enemies: {activeEnemies.Count}", this);
 
         if (activeEnemies.Count == 0) UnlockDoors();
     }

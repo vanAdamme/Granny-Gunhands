@@ -1,5 +1,5 @@
 using System;
-using Edgar.Unity; // for RoomInstanceGrid2D
+using Edgar.Unity;
 using UnityEngine;
 
 namespace Rooms

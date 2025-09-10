@@ -35,21 +35,19 @@ public class EnemySpawnPoint : MonoBehaviour
 
     public IEnumerable<Health> Spawn()
     {
-        if (!enemyPrefab) yield break;
-
+        if (!enemyPrefab) { Debug.LogWarning($"[EnemySpawnPoint] No enemy prefab on {name}", this); yield break; }
         for (int i = 0; i < count; i++)
         {
-            Vector3 pos = TrySampleValidPosition(out var p)
-                ? (Vector3)p
-                : transform.position; // fallback: guaranteed safe if you placed the marker well
-
+            var pos = TrySampleValidPosition(out var p) ? (Vector3)p : transform.position;
             var h = Instantiate(enemyPrefab, pos, Quaternion.identity);
+            if (!h) Debug.LogError($"[EnemySpawnPoint] Instantiated enemy has no Health: {enemyPrefab}", this);
             yield return h;
         }
     }
 
     private bool TrySampleValidPosition(out Vector2 result)
     {
+        
         // If radius is 0, just validate the marker position once.
         if (radius <= 0f)
         {
@@ -62,6 +60,9 @@ public class EnemySpawnPoint : MonoBehaviour
             Vector2 candidate = (Vector2)transform.position + Random.insideUnitCircle * radius;
             if (IsOnFloor(candidate))
             {
+                // when a position is accepted
+Debug.Log($"[EnemySpawnPoint] Sample OK at {candidate}", this);
+
                 result = candidate;
                 return true;
             }
@@ -74,6 +75,7 @@ public class EnemySpawnPoint : MonoBehaviour
             result = fallback;
             return true;
         }
+Debug.Log("[EnemySpawnPoint] Sampling failed; using marker position", this);
 
         // No valid spot found
         result = default;

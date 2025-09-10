@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doors: []
-  spawnPoints: []
+  spawnPoints:
+  - {fileID: 8137687231622721939}
 --- !u!114 &2137479182433504235
 MonoBehaviour:
   m_ObjectHideFlags: 0
