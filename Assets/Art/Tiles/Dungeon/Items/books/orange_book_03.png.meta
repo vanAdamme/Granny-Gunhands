@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 9594da32f083c0741863dc6fc63b5180
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4047709389888015586
+    second: orange_book_03_0
+  - first:
+      213: 7568315537118374475
+    second: orange_book_03_1
+  - first:
+      213: 98619753683147968
+    second: orange_book_03_2
+  - first:
+      213: -8901973951765432004
+    second: orange_book_03_3
+  - first:
+      213: -814415131481656350
+    second: orange_book_03_4
+  - first:
+      213: 8928786239417160530
+    second: orange_book_03_5
+  - first:
+      213: 3652712797838632007
+    second: orange_book_03_6
+  - first:
+      213: 282934402834786530
+    second: orange_book_03_7
+  - first:
+      213: 4574735164020853102
+    second: orange_book_03_8
+  - first:
+      213: 8924688137566320280
+    second: orange_book_03_9
+  - first:
+      213: -141584917575065627
+    second: orange_book_03_10
+  - first:
+      213: -2841227242738068256
+    second: orange_book_03_11
+  - first:
+      213: -5633194620095883320
+    second: orange_book_03_12
+  - first:
+      213: 7089374456999439612
+    second: orange_book_03_13
+  - first:
+      213: 5258022775438223952
+    second: orange_book_03_14
+  - first:
+      213: 6852182348645946088
+    second: orange_book_03_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: orange_book_03_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1336bd61c5a3d7c0800000000000000
+      internalID: -4047709389888015586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4aa202e1ee080960800000000000000
+      internalID: 7568315537118374475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_2
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ccde1ab42e5e5100800000000000000
+      internalID: 98619753683147968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_3
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c39bd350bd5d57480800000000000000
+      internalID: -8901973951765432004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_4
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3355cb0cd92b4f0800000000000000
+      internalID: -814415131481656350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_5
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2531bdb27cb69eb70800000000000000
+      internalID: 8928786239417160530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_6
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 744e1bdcfea01b230800000000000000
+      internalID: 3652712797838632007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_7
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e864bf175f2de300800000000000000
+      internalID: 282934402834786530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_8
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6983f8c469bc7f30800000000000000
+      internalID: 4574735164020853102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_9
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89678ca739cdadb70800000000000000
+      internalID: 8924688137566320280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_10
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ef9262844df80ef0800000000000000
+      internalID: -141584917575065627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_11
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e45f6e40eee198d0800000000000000
+      internalID: -2841227242738068256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_12
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c71b86c65fd2d1b0800000000000000
+      internalID: -5633194620095883320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_13
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfced2de184826260800000000000000
+      internalID: 7089374456999439612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_14
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05aa8e62bdf38f840800000000000000
+      internalID: 5258022775438223952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: orange_book_03_15
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 3
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e25e3baa87d71f50800000000000000
+      internalID: 6852182348645946088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      orange_book_03_0: -4047709389888015586
+      orange_book_03_1: 7568315537118374475
+      orange_book_03_10: -141584917575065627
+      orange_book_03_11: -2841227242738068256
+      orange_book_03_12: -5633194620095883320
+      orange_book_03_13: 7089374456999439612
+      orange_book_03_14: 5258022775438223952
+      orange_book_03_15: 6852182348645946088
+      orange_book_03_2: 98619753683147968
+      orange_book_03_3: -8901973951765432004
+      orange_book_03_4: -814415131481656350
+      orange_book_03_5: 8928786239417160530
+      orange_book_03_6: 3652712797838632007
+      orange_book_03_7: 282934402834786530
+      orange_book_03_8: 4574735164020853102
+      orange_book_03_9: 8924688137566320280
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

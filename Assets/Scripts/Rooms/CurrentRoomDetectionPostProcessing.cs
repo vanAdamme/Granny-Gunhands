@@ -6,7 +6,7 @@ using Edgar.Unity;
 
 namespace Rooms
 {
-    [CreateAssetMenu(menuName = "Rooms/Post-processing", fileName = "CurrentRoomDetectionPostProcessing")]
+    [CreateAssetMenu(menuName = "Edgar/PostProcess/CurrentRoomDetection", fileName = "CurrentRoomDetectionPostProcessing")]
     public class CurrentRoomDetectionPostProcessing : DungeonGeneratorPostProcessingGrid2D
     {
         [Header("Layers")]
@@ -59,42 +59,59 @@ private CompositeCollider2D BuildGlobalNoWalkBoundary(GameObject levelRoot, stri
 {
     int floorLayer = LayerMask.NameToLayer(floorLayerName);
 
-    // collect ALL Floor tilemaps
-    var floors = levelRoot.GetComponentsInChildren<UnityEngine.Tilemaps.Tilemap>(true)
+    // Collect *only* true floor maps (avoid "Floor decorations")
+    var floors = levelRoot.GetComponentsInChildren<Tilemap>(true)
                   .Where(t => t && (t.gameObject.layer == floorLayer || t.name == "Floor"))
+                  .Where(t => t.name == "Floor")
                   .ToList();
-    if (floors.Count == 0) { Debug.LogWarning("[NoWalk] No Floor tilemaps found."); return null; }
 
-    // >>> mount on the common ancestor (likely "Generated Level/Rooms")
-    var ancestor = FindCommonAncestor(floors.Select(f => f.transform).ToList(), levelRoot.transform);
+    if (floors.Count == 0)
+    {
+        Debug.LogWarning("[NoWalk] No Floor tilemaps found.");
+        return null;
+    }
 
-    // get-or-add RB2D + Composite ON THE ANCESTOR
-    var rb   = ancestor.GetComponent<Rigidbody2D>() ?? ancestor.gameObject.AddComponent<Rigidbody2D>();
+    // Prefer the shared "Tilemaps" container if present (future-proof for Edgar's merge).
+    Transform host =
+        levelRoot.transform.Find("Tilemaps")  // Generated Level/Tilemaps (shared)
+        ?? FindCommonAncestor(floors.Select(f => f.transform).ToList(), levelRoot.transform);
+
+    // Get-or-add RB2D + Composite on the host
+    var rb = host.GetComponent<Rigidbody2D>() ?? host.gameObject.AddComponent<Rigidbody2D>();
     rb.bodyType = RigidbodyType2D.Static;
 
-    var comp = ancestor.GetComponent<CompositeCollider2D>() ?? ancestor.gameObject.AddComponent<CompositeCollider2D>();
+    var comp = host.GetComponent<CompositeCollider2D>() ?? host.gameObject.AddComponent<CompositeCollider2D>();
     comp.geometryType   = CompositeCollider2D.GeometryType.Outlines;
     comp.isTrigger      = false;
     comp.generationType = CompositeCollider2D.GenerationType.Synchronous;
 
-    // put ancestor on NoWalk layer
+    // Put the host on NoWalk so only the intended layers collide
     int noWalk = LayerMask.NameToLayer(noWalkLayerName);
-    if (noWalk >= 0) ancestor.gameObject.layer = noWalk;
+    if (noWalk >= 0) host.gameObject.layer = noWalk;
 
-    // ensure each Floor has a TilemapCollider2D feeding the composite
+    // Ensure *every* floor feeds the composite (and cannot steal it with its own RB/Composite)
     foreach (var floor in floors)
     {
+        var strayRb   = floor.GetComponent<Rigidbody2D>();          if (strayRb)   Object.Destroy(strayRb);
+        var strayComp = floor.GetComponent<CompositeCollider2D>();  if (strayComp) Object.Destroy(strayComp);
+
         var tmc = floor.GetComponent<TilemapCollider2D>() ?? floor.gameObject.AddComponent<TilemapCollider2D>();
-#if UNITY_2023_2_OR_NEWER
+    #if UNITY_2023_2_OR_NEWER
         tmc.compositeOperation = Collider2D.CompositeOperation.Merge;
-#else
+    #else
         tmc.usedByComposite = true;
-#endif
+    #endif
+        // Tiles/RuleTiles must have Collider Type = Grid or Sprite (you already set Sprite).
     }
 
     Physics2D.SyncTransforms();
+
+    if (comp.pathCount == 0)
+        Debug.LogWarning("[NoWalk] Composite has 0 paths. Either the host isn't the final parent yet or a nearer RB2D exists.");
+
     return comp;
 }
+
 
 
 

@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: 0e9756101f3b6d841af5bbfef4e06a8c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3281868957458617447
+    second: Skull_chest_idle_0
+  - first:
+      213: -6875858965230304724
+    second: Skull_chest_idle_1
+  - first:
+      213: -8566394909276140459
+    second: Skull_chest_idle_2
+  - first:
+      213: 3788016902586811729
+    second: Skull_chest_idle_3
+  - first:
+      213: -6807340517259497826
+    second: Skull_chest_idle_4
+  - first:
+      213: -300118377511403969
+    second: Skull_chest_idle_5
+  - first:
+      213: -5140704088767991575
+    second: Skull_chest_idle_6
+  - first:
+      213: 5976639641333954962
+    second: Skull_chest_idle_7
+  - first:
+      213: -293752484846506811
+    second: Skull_chest_idle_8
+  - first:
+      213: -2276645159036365140
+    second: Skull_chest_idle_9
+  - first:
+      213: 171552301539186436
+    second: Skull_chest_idle_10
+  - first:
+      213: -1626078483827692831
+    second: Skull_chest_idle_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Skull_chest_idle_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 17
+        width: 27
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99b2c4f32957472d0800000000000000
+      internalID: -3281868957458617447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_1
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 17
+        width: 27
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2243c373ba0490a0800000000000000
+      internalID: -6875858965230304724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_2
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 17
+        width: 27
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55c81ea773d0e1980800000000000000
+      internalID: -8566394909276140459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_3
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 17
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 155ccd99d4db19430800000000000000
+      internalID: 3788016902586811729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_4
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 17
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9eaf9bcdd77781a0800000000000000
+      internalID: -6807340517259497826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_5
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 17
+        width: 27
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3ebdddfce3c5dbf0800000000000000
+      internalID: -300118377511403969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_6
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 17
+        width: 27
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e0f59d2edc88a8b0800000000000000
+      internalID: -5140704088767991575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_7
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 17
+        width: 27
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2997a34961a41f250800000000000000
+      internalID: 5976639641333954962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_8
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 17
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cce5d0eba16cebf0800000000000000
+      internalID: -293752484846506811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_9
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 17
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca656004a4bb760e0800000000000000
+      internalID: -2276645159036365140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_10
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 17
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 407d4a9c8e9716200800000000000000
+      internalID: 171552301539186436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_chest_idle_11
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 17
+        width: 27
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ea6b8afb320f69e0800000000000000
+      internalID: -1626078483827692831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Skull_chest_idle_0: -3281868957458617447
+      Skull_chest_idle_1: -6875858965230304724
+      Skull_chest_idle_10: 171552301539186436
+      Skull_chest_idle_11: -1626078483827692831
+      Skull_chest_idle_2: -8566394909276140459
+      Skull_chest_idle_3: 3788016902586811729
+      Skull_chest_idle_4: -6807340517259497826
+      Skull_chest_idle_5: -300118377511403969
+      Skull_chest_idle_6: -5140704088767991575
+      Skull_chest_idle_7: 5976639641333954962
+      Skull_chest_idle_8: -293752484846506811
+      Skull_chest_idle_9: -2276645159036365140
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

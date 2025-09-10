@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: 45502a45455ae2649be2d0ff833ececb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6898593783389014728
+    second: Skull_02_0
+  - first:
+      213: -4579836566125976658
+    second: Skull_02_1
+  - first:
+      213: 1356425300313703823
+    second: Skull_02_2
+  - first:
+      213: -7675207716229424415
+    second: Skull_02_3
+  - first:
+      213: -3385853525071893258
+    second: Skull_02_4
+  - first:
+      213: -8903667654237573754
+    second: Skull_02_5
+  - first:
+      213: 8464611896732930012
+    second: Skull_02_6
+  - first:
+      213: -6950722401692900170
+    second: Skull_02_7
+  - first:
+      213: 5570711733515337343
+    second: Skull_02_8
+  - first:
+      213: 8523685835640982625
+    second: Skull_02_9
+  - first:
+      213: 2026228429940376787
+    second: Skull_02_10
+  - first:
+      213: -5932677448681562350
+    second: Skull_02_11
+  - first:
+      213: -3152827047517138742
+    second: Skull_02_12
+  - first:
+      213: 207060829499256685
+    second: Skull_02_13
+  - first:
+      213: 4119319115515153110
+    second: Skull_02_14
+  - first:
+      213: 6866040528169066863
+    second: Skull_02_15
+  - first:
+      213: -6415655019262813755
+    second: Skull_02_16
+  - first:
+      213: -7199106241989763238
+    second: Skull_02_17
+  - first:
+      213: 2016628816222381056
+    second: Skull_02_18
+  - first:
+      213: -5292049736176242110
+    second: Skull_02_19
+  - first:
+      213: 1488472209868954922
+    second: Skull_02_20
+  - first:
+      213: 4991425242092924926
+    second: Skull_02_21
+  - first:
+      213: -883530608163396397
+    second: Skull_02_22
+  - first:
+      213: -321452119913778575
+    second: Skull_02_23
+  - first:
+      213: -1645603360261831473
+    second: Skull_02_24
+  - first:
+      213: 3676762653530574601
+    second: Skull_02_25
+  - first:
+      213: 1019641432716683589
+    second: Skull_02_26
+  - first:
+      213: -1350914199404950213
+    second: Skull_02_27
+  - first:
+      213: 7215371944587779746
+    second: Skull_02_28
+  - first:
+      213: -3811866568642942642
+    second: Skull_02_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Skull_02_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 10
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cace94ee7abcbf50800000000000000
+      internalID: 6898593783389014728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 9
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea367ba78e62170c0800000000000000
+      internalID: -4579836566125976658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_2
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 3
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f850d8dbf9df2d210800000000000000
+      internalID: 1356425300313703823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_3
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 9
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1eadec04f3f2c7590800000000000000
+      internalID: -7675207716229424415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_4
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 10
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fce59078280301d0800000000000000
+      internalID: -3385853525071893258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_5
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 11
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68da80f2171df6480800000000000000
+      internalID: -8903667654237573754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_6
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 12
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdfcf423ca7587570800000000000000
+      internalID: 8464611896732930012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_7
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 11
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b4aeba5dc21a8f90800000000000000
+      internalID: -6950722401692900170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_8
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 10
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7e38468ec42f4d40800000000000000
+      internalID: 5570711733515337343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_9
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 9
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16cc86a6b173a4670800000000000000
+      internalID: 8523685835640982625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_10
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 3
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d4c468850c9e1c10800000000000000
+      internalID: 2026228429940376787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_11
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 9
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21f5d580b45eaada0800000000000000
+      internalID: -5932677448681562350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_12
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 10
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac05f723188ee34d0800000000000000
+      internalID: -3152827047517138742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_13
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 11
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6f63353ab0afd200800000000000000
+      internalID: 207060829499256685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_14
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 12
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dac1c419e2ca2930800000000000000
+      internalID: 4119319115515153110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_15
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 11
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f61e3f68b73194f50800000000000000
+      internalID: 6866040528169066863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_16
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c9536760c307f6a0800000000000000
+      internalID: -6415655019262813755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_17
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5f17e1f303a71c90800000000000000
+      internalID: -7199106241989763238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_18
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00460ca49318cfb10800000000000000
+      internalID: 2016628816222381056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_19
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 242f38dadccde86b0800000000000000
+      internalID: -5292049736176242110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_20
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2d974fa69d18a410800000000000000
+      internalID: 1488472209868954922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_21
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: effeddddfca154540800000000000000
+      internalID: 4991425242092924926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_22
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d46c30d7911db3f0800000000000000
+      internalID: -883530608163396397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_23
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1723e340009f98bf0800000000000000
+      internalID: -321452119913778575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_24
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc4876e6674a929e0800000000000000
+      internalID: -1645603360261831473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_25
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90fcc1f272c760330800000000000000
+      internalID: 3676762653530574601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_26
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54929531b7e762e00800000000000000
+      internalID: 1019641432716683589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_27
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3dcf6e61b6904de0800000000000000
+      internalID: -1350914199404950213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_28
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ae597f0e86222460800000000000000
+      internalID: 7215371944587779746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skull_02_29
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 3
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e49a9dc4d87891bc0800000000000000
+      internalID: -3811866568642942642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Skull_02_0: 6898593783389014728
+      Skull_02_1: -4579836566125976658
+      Skull_02_10: 2026228429940376787
+      Skull_02_11: -5932677448681562350
+      Skull_02_12: -3152827047517138742
+      Skull_02_13: 207060829499256685
+      Skull_02_14: 4119319115515153110
+      Skull_02_15: 6866040528169066863
+      Skull_02_16: -6415655019262813755
+      Skull_02_17: -7199106241989763238
+      Skull_02_18: 2016628816222381056
+      Skull_02_19: -5292049736176242110
+      Skull_02_2: 1356425300313703823
+      Skull_02_20: 1488472209868954922
+      Skull_02_21: 4991425242092924926
+      Skull_02_22: -883530608163396397
+      Skull_02_23: -321452119913778575
+      Skull_02_24: -1645603360261831473
+      Skull_02_25: 3676762653530574601
+      Skull_02_26: 1019641432716683589
+      Skull_02_27: -1350914199404950213
+      Skull_02_28: 7215371944587779746
+      Skull_02_29: -3811866568642942642
+      Skull_02_3: -7675207716229424415
+      Skull_02_4: -3385853525071893258
+      Skull_02_5: -8903667654237573754
+      Skull_02_6: 8464611896732930012
+      Skull_02_7: -6950722401692900170
+      Skull_02_8: 5570711733515337343
+      Skull_02_9: 8523685835640982625
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

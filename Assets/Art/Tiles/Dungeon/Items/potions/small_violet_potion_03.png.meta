@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 9c022e60574d6c64681e34302ae473f8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2967143507796370618
+    second: small_violet_potion_03_0
+  - first:
+      213: -8057810574931578871
+    second: small_violet_potion_03_1
+  - first:
+      213: -1401068180857190390
+    second: small_violet_potion_03_2
+  - first:
+      213: -588713904870317376
+    second: small_violet_potion_03_3
+  - first:
+      213: 2269138988947838503
+    second: small_violet_potion_03_4
+  - first:
+      213: 4814743974739713058
+    second: small_violet_potion_03_5
+  - first:
+      213: -6871108047712400286
+    second: small_violet_potion_03_6
+  - first:
+      213: 6202206103993701838
+    second: small_violet_potion_03_7
+  - first:
+      213: 5289506848927684696
+    second: small_violet_potion_03_8
+  - first:
+      213: 710234831379472434
+    second: small_violet_potion_03_9
+  - first:
+      213: 7751146869040758407
+    second: small_violet_potion_03_10
+  - first:
+      213: -4769453550535804906
+    second: small_violet_potion_03_11
+  - first:
+      213: 2026633193740242345
+    second: small_violet_potion_03_12
+  - first:
+      213: -8750473307338566377
+    second: small_violet_potion_03_13
+  - first:
+      213: 6977021694057238451
+    second: small_violet_potion_03_14
+  - first:
+      213: -3957248041352520028
+    second: small_violet_potion_03_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: small_violet_potion_03_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64bd03443b692d6d0800000000000000
+      internalID: -2967143507796370618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90031d569f7ec2090800000000000000
+      internalID: -8057810574931578871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_2
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0887e5a9e76e8ce0800000000000000
+      internalID: -1401068180857190390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_3
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c22fd992d774d7f0800000000000000
+      internalID: -588713904870317376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_4
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 726993653e99d7f10800000000000000
+      internalID: 2269138988947838503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_5
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22c10daa22861d240800000000000000
+      internalID: 4814743974739713058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_6
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26c46c2a2abe4a0a0800000000000000
+      internalID: -6871108047712400286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_7
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec5dd444799a21650800000000000000
+      internalID: 6202206103993701838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_8
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 858945f347a186940800000000000000
+      internalID: 5289506848927684696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_9
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 230ab7fe0d24bd900800000000000000
+      internalID: 710234831379472434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_10
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78e3e03920b919b60800000000000000
+      internalID: 7751146869040758407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_11
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6187693f34f7fcdb0800000000000000
+      internalID: -4769453550535804906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_12
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ad07e2f62c002c10800000000000000
+      internalID: 2026633193740242345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_13
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7151c8393e2109680800000000000000
+      internalID: -8750473307338566377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_14
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bfc970d34c53d060800000000000000
+      internalID: 6977021694057238451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_violet_potion_03_15
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 4
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ae921f6fd70519c0800000000000000
+      internalID: -3957248041352520028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      small_violet_potion_03_0: -2967143507796370618
+      small_violet_potion_03_1: -8057810574931578871
+      small_violet_potion_03_10: 7751146869040758407
+      small_violet_potion_03_11: -4769453550535804906
+      small_violet_potion_03_12: 2026633193740242345
+      small_violet_potion_03_13: -8750473307338566377
+      small_violet_potion_03_14: 6977021694057238451
+      small_violet_potion_03_15: -3957248041352520028
+      small_violet_potion_03_2: -1401068180857190390
+      small_violet_potion_03_3: -588713904870317376
+      small_violet_potion_03_4: 2269138988947838503
+      small_violet_potion_03_5: 4814743974739713058
+      small_violet_potion_03_6: -6871108047712400286
+      small_violet_potion_03_7: 6202206103993701838
+      small_violet_potion_03_8: 5289506848927684696
+      small_violet_potion_03_9: 710234831379472434
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,455 @@
+fileFormatVersion: 2
+guid: 0efcff8f7fd97b04fa5c82402cbcff15
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6523356743424664415
+    second: Doble_door_side_0
+  - first:
+      213: -5497496693398523364
+    second: Doble_door_side_1
+  - first:
+      213: 3738935243804425211
+    second: Doble_door_side_2
+  - first:
+      213: 6032800429289961290
+    second: Doble_door_side_3
+  - first:
+      213: 3940587803945194232
+    second: Doble_door_side_4
+  - first:
+      213: 184545912459531053
+    second: Doble_door_side_5
+  - first:
+      213: -480765296548694661
+    second: Doble_door_side_6
+  - first:
+      213: -7895527188605220429
+    second: Doble_door_side_7
+  - first:
+      213: -5712056574194915465
+    second: Doble_door_side_8
+  - first:
+      213: -3988203157209105414
+    second: Doble_door_side_9
+  - first:
+      213: 1746783420595674834
+    second: Doble_door_side_10
+  - first:
+      213: 7847858128538895123
+    second: Doble_door_side_11
+  - first:
+      213: -8417068607930116233
+    second: Doble_door_side_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Doble_door_side_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 5
+        width: 13
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ac1605aa916875a0800000000000000
+      internalID: -6523356743424664415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_1
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 6
+        width: 22
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c12b81462e7f4b3b0800000000000000
+      internalID: -5497496693398523364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_2
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 4
+        width: 33
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfbb6256bcd53e330800000000000000
+      internalID: 3738935243804425211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_3
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 65
+        width: 35
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a47f6acf600d8b350800000000000000
+      internalID: 6032800429289961290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_4
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 74
+        width: 34
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f2d364cab7cfa630800000000000000
+      internalID: 3940587803945194232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_5
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 74
+        width: 34
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2396e49783af8200800000000000000
+      internalID: 184545912459531053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_6
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 74
+        width: 34
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7531ee828af359f0800000000000000
+      internalID: -480765296548694661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_7
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 74
+        width: 33
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b94fb0bad37d6290800000000000000
+      internalID: -7895527188605220429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_8
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 0
+        width: 35
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7776d2e3fc2bab0b0800000000000000
+      internalID: -5712056574194915465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_9
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 0
+        width: 34
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afbb572eb5e07a8c0800000000000000
+      internalID: -3988203157209105414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_10
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 0
+        width: 34
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2de95242442dd3810800000000000000
+      internalID: 1746783420595674834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_11
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 0
+        width: 34
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 313093f536139ec60800000000000000
+      internalID: 7847858128538895123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doble_door_side_12
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 0
+        width: 33
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 777db3652b0903b80800000000000000
+      internalID: -8417068607930116233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Doble_door_side_0: -6523356743424664415
+      Doble_door_side_1: -5497496693398523364
+      Doble_door_side_10: 1746783420595674834
+      Doble_door_side_11: 7847858128538895123
+      Doble_door_side_12: -8417068607930116233
+      Doble_door_side_2: 3738935243804425211
+      Doble_door_side_3: 6032800429289961290
+      Doble_door_side_4: 3940587803945194232
+      Doble_door_side_5: 184545912459531053
+      Doble_door_side_6: -480765296548694661
+      Doble_door_side_7: -7895527188605220429
+      Doble_door_side_8: -5712056574194915465
+      Doble_door_side_9: -3988203157209105414
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

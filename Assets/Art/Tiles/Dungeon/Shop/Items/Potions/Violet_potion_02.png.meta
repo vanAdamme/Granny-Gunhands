@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: 1b097d3b32070fa43b1042f395411405
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4969198929124407220
+    second: Violet_potion_02_0
+  - first:
+      213: 1881210032978567929
+    second: Violet_potion_02_1
+  - first:
+      213: -2867271975699269911
+    second: Violet_potion_02_2
+  - first:
+      213: 6579672899689341557
+    second: Violet_potion_02_3
+  - first:
+      213: 6413349723072300059
+    second: Violet_potion_02_4
+  - first:
+      213: -4429867223000858044
+    second: Violet_potion_02_5
+  - first:
+      213: 4276478532063687996
+    second: Violet_potion_02_6
+  - first:
+      213: -118897111074839097
+    second: Violet_potion_02_7
+  - first:
+      213: -1785286698746604688
+    second: Violet_potion_02_8
+  - first:
+      213: 8385944938303899772
+    second: Violet_potion_02_9
+  - first:
+      213: -723937617918539376
+    second: Violet_potion_02_10
+  - first:
+      213: -5294724600573366548
+    second: Violet_potion_02_11
+  - first:
+      213: -2603154504643276022
+    second: Violet_potion_02_12
+  - first:
+      213: 775005207928223361
+    second: Violet_potion_02_13
+  - first:
+      213: 2419471416829063251
+    second: Violet_potion_02_14
+  - first:
+      213: -4602926484597381558
+    second: Violet_potion_02_15
+  - first:
+      213: -2399566306800695059
+    second: Violet_potion_02_16
+  - first:
+      213: -5640310926109906425
+    second: Violet_potion_02_17
+  - first:
+      213: 1839767150956546828
+    second: Violet_potion_02_18
+  - first:
+      213: -4859654139951442372
+    second: Violet_potion_02_19
+  - first:
+      213: 6622781604592242039
+    second: Violet_potion_02_20
+  - first:
+      213: -5877010201862768840
+    second: Violet_potion_02_21
+  - first:
+      213: -5018169768108667609
+    second: Violet_potion_02_22
+  - first:
+      213: 2378155506679700110
+    second: Violet_potion_02_23
+  - first:
+      213: -8183471210024184338
+    second: Violet_potion_02_24
+  - first:
+      213: 507855008831566393
+    second: Violet_potion_02_25
+  - first:
+      213: -6112214192278813072
+    second: Violet_potion_02_26
+  - first:
+      213: 2390879378702293337
+    second: Violet_potion_02_27
+  - first:
+      213: 1642623462816322871
+    second: Violet_potion_02_28
+  - first:
+      213: -8382212942511124944
+    second: Violet_potion_02_29
+  - first:
+      213: -5823894420988364152
+    second: Violet_potion_02_30
+  - first:
+      213: 5901412352337770958
+    second: Violet_potion_02_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Violet_potion_02_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 11
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b736bc191426f440800000000000000
+      internalID: 4969198929124407220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_1
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 10
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f2a693de866b1a10800000000000000
+      internalID: 1881210032978567929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_2
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 9
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e6330e54576538d0800000000000000
+      internalID: -2867271975699269911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_3
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 10
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5726f3444a1bf4b50800000000000000
+      internalID: 6579672899689341557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_4
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 11
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b140310089bc00950800000000000000
+      internalID: 6413349723072300059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_5
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 12
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44243ea2b33f582c0800000000000000
+      internalID: -4429867223000858044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_6
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 13
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c357d31319a195b30800000000000000
+      internalID: 4276478532063687996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_7
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 12
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c5609915b7995ef0800000000000000
+      internalID: -118897111074839097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_8
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 11
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0739af2d4336937e0800000000000000
+      internalID: -1785286698746604688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_9
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 10
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c78c691ad7cd06470800000000000000
+      internalID: 8385944938303899772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_10
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 9
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0994c64729e04f5f0800000000000000
+      internalID: -723937617918539376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_11
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 10
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cee6d47470c5586b0800000000000000
+      internalID: -5294724600573366548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_12
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 11
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a03974725ccbfdbd0800000000000000
+      internalID: -2603154504643276022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_13
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 12
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 186b3a5612f51ca00800000000000000
+      internalID: 775005207928223361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_14
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 13
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 350be484f60b39120800000000000000
+      internalID: 2419471416829063251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_15
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 12
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a46e556efbe1f10c0800000000000000
+      internalID: -4602926484597381558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_16
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de8062c482703bed0800000000000000
+      internalID: -2399566306800695059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_17
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70ae67aa81799b1b0800000000000000
+      internalID: -5640310926109906425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_18
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0b823ee97a288910800000000000000
+      internalID: 1839767150956546828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_19
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3610f8ae4a0f8cb0800000000000000
+      internalID: -4859654139951442372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_20
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77d46b6c7c8d8eb50800000000000000
+      internalID: 6622781604592242039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_21
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8377f90fb5aa07ea0800000000000000
+      internalID: -5877010201862768840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_22
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72d474dee21eb5ab0800000000000000
+      internalID: -5018169768108667609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_23
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8a584455d7e00120800000000000000
+      internalID: 2378155506679700110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_24
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee55fd8da487e6e80800000000000000
+      internalID: -8183471210024184338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_25
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 932fec690734c0700800000000000000
+      internalID: 507855008831566393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_26
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 076ce16739d0d2ba0800000000000000
+      internalID: -6112214192278813072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_27
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9595b54a02c1e2120800000000000000
+      internalID: 2390879378702293337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_28
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73593e02655cbc610800000000000000
+      internalID: 1642623462816322871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_29
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03e41f95db56cab80800000000000000
+      internalID: -8382212942511124944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_30
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88afb9361ee5d2fa0800000000000000
+      internalID: -5823894420988364152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet_potion_02_31
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec9f136744706e150800000000000000
+      internalID: 5901412352337770958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Violet_potion_02_0: 4969198929124407220
+      Violet_potion_02_1: 1881210032978567929
+      Violet_potion_02_10: -723937617918539376
+      Violet_potion_02_11: -5294724600573366548
+      Violet_potion_02_12: -2603154504643276022
+      Violet_potion_02_13: 775005207928223361
+      Violet_potion_02_14: 2419471416829063251
+      Violet_potion_02_15: -4602926484597381558
+      Violet_potion_02_16: -2399566306800695059
+      Violet_potion_02_17: -5640310926109906425
+      Violet_potion_02_18: 1839767150956546828
+      Violet_potion_02_19: -4859654139951442372
+      Violet_potion_02_2: -2867271975699269911
+      Violet_potion_02_20: 6622781604592242039
+      Violet_potion_02_21: -5877010201862768840
+      Violet_potion_02_22: -5018169768108667609
+      Violet_potion_02_23: 2378155506679700110
+      Violet_potion_02_24: -8183471210024184338
+      Violet_potion_02_25: 507855008831566393
+      Violet_potion_02_26: -6112214192278813072
+      Violet_potion_02_27: 2390879378702293337
+      Violet_potion_02_28: 1642623462816322871
+      Violet_potion_02_29: -8382212942511124944
+      Violet_potion_02_3: 6579672899689341557
+      Violet_potion_02_30: -5823894420988364152
+      Violet_potion_02_31: 5901412352337770958
+      Violet_potion_02_4: 6413349723072300059
+      Violet_potion_02_5: -4429867223000858044
+      Violet_potion_02_6: 4276478532063687996
+      Violet_potion_02_7: -118897111074839097
+      Violet_potion_02_8: -1785286698746604688
+      Violet_potion_02_9: 8385944938303899772
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: f13063edecdc82641aab8c7425274746
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6965925222069112742
+    second: Blue_potion_01_0
+  - first:
+      213: 3624112890102696124
+    second: Blue_potion_01_1
+  - first:
+      213: -4785758882679810783
+    second: Blue_potion_01_2
+  - first:
+      213: -5161703721069848708
+    second: Blue_potion_01_3
+  - first:
+      213: -8893781612938712338
+    second: Blue_potion_01_4
+  - first:
+      213: -3213995699366134222
+    second: Blue_potion_01_5
+  - first:
+      213: 2579807263757865882
+    second: Blue_potion_01_6
+  - first:
+      213: 339235223131250524
+    second: Blue_potion_01_7
+  - first:
+      213: -1778793358891686466
+    second: Blue_potion_01_8
+  - first:
+      213: -1131515597764963879
+    second: Blue_potion_01_9
+  - first:
+      213: -3308931460791110823
+    second: Blue_potion_01_10
+  - first:
+      213: 1216962399443125547
+    second: Blue_potion_01_11
+  - first:
+      213: -1357391637856909104
+    second: Blue_potion_01_12
+  - first:
+      213: 6901159341607976329
+    second: Blue_potion_01_13
+  - first:
+      213: 1180166074582887594
+    second: Blue_potion_01_14
+  - first:
+      213: -6901379332919375359
+    second: Blue_potion_01_15
+  - first:
+      213: -3377241444781007019
+    second: Blue_potion_01_16
+  - first:
+      213: 4022926822274812734
+    second: Blue_potion_01_17
+  - first:
+      213: -6733049026140013161
+    second: Blue_potion_01_18
+  - first:
+      213: 3694224846519692270
+    second: Blue_potion_01_19
+  - first:
+      213: 4186636013495271660
+    second: Blue_potion_01_20
+  - first:
+      213: 4247238842766960256
+    second: Blue_potion_01_21
+  - first:
+      213: 3157164274941300638
+    second: Blue_potion_01_22
+  - first:
+      213: -7246665733830246787
+    second: Blue_potion_01_23
+  - first:
+      213: -8553641488062741566
+    second: Blue_potion_01_24
+  - first:
+      213: -7303103465560918313
+    second: Blue_potion_01_25
+  - first:
+      213: 2674828028778052051
+    second: Blue_potion_01_26
+  - first:
+      213: 1758979415479378356
+    second: Blue_potion_01_27
+  - first:
+      213: 5148329679813862998
+    second: Blue_potion_01_28
+  - first:
+      213: -5328860742172311987
+    second: Blue_potion_01_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Blue_potion_01_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 10
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6af0d591510fba060800000000000000
+      internalID: 6965925222069112742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 9
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb84c70e87f6b4230800000000000000
+      internalID: 3624112890102696124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_2
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 4
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1251339f6a1959db0800000000000000
+      internalID: -4785758882679810783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_3
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 9
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c77d1d540d1fd58b0800000000000000
+      internalID: -5161703721069848708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_4
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 10
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eea23ea8eb0f29480800000000000000
+      internalID: -8893781612938712338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_5
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 11
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23ef5ad90f79563d0800000000000000
+      internalID: -3213995699366134222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_6
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 12
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a939249b9015dc320800000000000000
+      internalID: 2579807263757865882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_7
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 11
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5fd90a53a435b400800000000000000
+      internalID: 339235223131250524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_8
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 10
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb5ef625dd47057e0800000000000000
+      internalID: -1778793358891686466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_9
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 9
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d1d7611f8c0c40f0800000000000000
+      internalID: -1131515597764963879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_10
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 4
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9537e6d2e505412d0800000000000000
+      internalID: -3308931460791110823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_11
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 9
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2580d3cad483e010800000000000000
+      internalID: 1216962399443125547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_12
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 10
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d804744f73992de0800000000000000
+      internalID: -1357391637856909104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_13
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 11
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98d79e67bd7d5cf50800000000000000
+      internalID: 6901159341607976329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_14
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 12
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aacea73cacac06010800000000000000
+      internalID: 1180166074582887594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_15
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 11
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10a4e11df006930a0800000000000000
+      internalID: -6901379332919375359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_16
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55fd913acc0a121d0800000000000000
+      internalID: -3377241444781007019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_17
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3bc41761ae44d730800000000000000
+      internalID: 4022926822274812734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_18
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79d72ad75976f82a0800000000000000
+      internalID: -6733049026140013161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_19
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeb6a31dce5844330800000000000000
+      internalID: 3694224846519692270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_20
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce04e34c54be91a30800000000000000
+      internalID: 4186636013495271660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_21
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 086ad53893931fa30800000000000000
+      internalID: 4247238842766960256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_22
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9f0e614e2080db20800000000000000
+      internalID: 3157164274941300638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_23
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7e7d09d8ebae6b90800000000000000
+      internalID: -7246665733830246787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_24
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c30affb26c5b4980800000000000000
+      internalID: -8553641488062741566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_25
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d63151771a26aa90800000000000000
+      internalID: -7303103465560918313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_26
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d9f29a9be5ee1520800000000000000
+      internalID: 2674828028778052051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_27
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b16fda7576296810800000000000000
+      internalID: 1758979415479378356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_28
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 656e7e7119a827740800000000000000
+      internalID: 5148329679813862998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue_potion_01_29
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 4
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4e7b4573651c06b0800000000000000
+      internalID: -5328860742172311987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Blue_potion_01_0: 6965925222069112742
+      Blue_potion_01_1: 3624112890102696124
+      Blue_potion_01_10: -3308931460791110823
+      Blue_potion_01_11: 1216962399443125547
+      Blue_potion_01_12: -1357391637856909104
+      Blue_potion_01_13: 6901159341607976329
+      Blue_potion_01_14: 1180166074582887594
+      Blue_potion_01_15: -6901379332919375359
+      Blue_potion_01_16: -3377241444781007019
+      Blue_potion_01_17: 4022926822274812734
+      Blue_potion_01_18: -6733049026140013161
+      Blue_potion_01_19: 3694224846519692270
+      Blue_potion_01_2: -4785758882679810783
+      Blue_potion_01_20: 4186636013495271660
+      Blue_potion_01_21: 4247238842766960256
+      Blue_potion_01_22: 3157164274941300638
+      Blue_potion_01_23: -7246665733830246787
+      Blue_potion_01_24: -8553641488062741566
+      Blue_potion_01_25: -7303103465560918313
+      Blue_potion_01_26: 2674828028778052051
+      Blue_potion_01_27: 1758979415479378356
+      Blue_potion_01_28: 5148329679813862998
+      Blue_potion_01_29: -5328860742172311987
+      Blue_potion_01_3: -5161703721069848708
+      Blue_potion_01_4: -8893781612938712338
+      Blue_potion_01_5: -3213995699366134222
+      Blue_potion_01_6: 2579807263757865882
+      Blue_potion_01_7: 339235223131250524
+      Blue_potion_01_8: -1778793358891686466
+      Blue_potion_01_9: -1131515597764963879
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

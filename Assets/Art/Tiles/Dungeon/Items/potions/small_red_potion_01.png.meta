@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: c1052dc528f56274b95ecca8f842c63e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4995891596282340863
+    second: small_red_potion_01_0
+  - first:
+      213: 8225667141749109648
+    second: small_red_potion_01_1
+  - first:
+      213: -1092684323124383117
+    second: small_red_potion_01_2
+  - first:
+      213: -2270757954290542062
+    second: small_red_potion_01_3
+  - first:
+      213: -4203908150303792059
+    second: small_red_potion_01_4
+  - first:
+      213: 6413452335973764374
+    second: small_red_potion_01_5
+  - first:
+      213: -5703997109233221491
+    second: small_red_potion_01_6
+  - first:
+      213: -8508322599573632362
+    second: small_red_potion_01_7
+  - first:
+      213: -6009549191398619346
+    second: small_red_potion_01_8
+  - first:
+      213: -1336947634087007011
+    second: small_red_potion_01_9
+  - first:
+      213: -1389260790794473293
+    second: small_red_potion_01_10
+  - first:
+      213: -8607553042086203767
+    second: small_red_potion_01_11
+  - first:
+      213: 5728023416503213783
+    second: small_red_potion_01_12
+  - first:
+      213: -2591579370491500549
+    second: small_red_potion_01_13
+  - first:
+      213: -1619145711106148368
+    second: small_red_potion_01_14
+  - first:
+      213: 2659040259155388748
+    second: small_red_potion_01_15
+  - first:
+      213: 7538829919992271628
+    second: small_red_potion_01_16
+  - first:
+      213: -1323156994161495098
+    second: small_red_potion_01_17
+  - first:
+      213: -1802591090201317417
+    second: small_red_potion_01_18
+  - first:
+      213: -2451812034741988192
+    second: small_red_potion_01_19
+  - first:
+      213: -8181647664193249424
+    second: small_red_potion_01_20
+  - first:
+      213: 7230975229474342129
+    second: small_red_potion_01_21
+  - first:
+      213: -3780865087517663459
+    second: small_red_potion_01_22
+  - first:
+      213: -3601486484413803955
+    second: small_red_potion_01_23
+  - first:
+      213: 7823685092063019475
+    second: small_red_potion_01_24
+  - first:
+      213: -5247676659018615005
+    second: small_red_potion_01_25
+  - first:
+      213: 8358943721986246355
+    second: small_red_potion_01_26
+  - first:
+      213: -8541754690190589253
+    second: small_red_potion_01_27
+  - first:
+      213: 7723096612744358405
+    second: small_red_potion_01_28
+  - first:
+      213: 5076794645457527946
+    second: small_red_potion_01_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: small_red_potion_01_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 11
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10a5b3300170baab0800000000000000
+      internalID: -4995891596282340863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 10
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 093fe881fa0772270800000000000000
+      internalID: 8225667141749109648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_2
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 4
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 372788cb56106d0f0800000000000000
+      internalID: -1092684323124383117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_3
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 10
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21a9e9beba5ac70e0800000000000000
+      internalID: -2270757954290542062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_4
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 11
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 544e5c08fc7b8a5c0800000000000000
+      internalID: -4203908150303792059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_5
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 12
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61d8d9d6be8210950800000000000000
+      internalID: 6413452335973764374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_6
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 13
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d808c48a9d457d0b0800000000000000
+      internalID: -5703997109233221491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_7
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 12
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69a4cf9bcad5ce980800000000000000
+      internalID: -8508322599573632362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_8
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 11
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e270372b9dac99ca0800000000000000
+      internalID: -6009549191398619346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_9
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 10
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddce1f2d535327de0800000000000000
+      internalID: -1336947634087007011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_10
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 4
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b03150ebaa58bce0800000000000000
+      internalID: -1389260790794473293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_11
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 10
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98e6e1dec14db8880800000000000000
+      internalID: -8607553042086203767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_12
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 11
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7de1bcde2f60e7f40800000000000000
+      internalID: 5728023416503213783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_13
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 12
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf7af961b4cd80cd0800000000000000
+      internalID: -2591579370491500549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_14
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 13
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f7bbe9ed83a789e0800000000000000
+      internalID: -1619145711106148368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_15
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 12
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c496b6a070fc6e420800000000000000
+      internalID: 2659040259155388748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_16
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c03d93baedd4f9860800000000000000
+      internalID: 7538829919992271628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_17
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c33ee469b333ade0800000000000000
+      internalID: -1323156994161495098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_18
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7df244934f8ebf6e0800000000000000
+      internalID: -1802591090201317417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_19
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a41d25d1f969fdd0800000000000000
+      internalID: -2451812034741988192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_20
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07f5b523cc2f47e80800000000000000
+      internalID: -8181647664193249424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_21
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f4877ce8a5995460800000000000000
+      internalID: 7230975229474342129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_22
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1f55da1c3ba78bc0800000000000000
+      internalID: -3780865087517663459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_23
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d421529bf13f40ec0800000000000000
+      internalID: -3601486484413803955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_24
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d18feab320539c60800000000000000
+      internalID: 7823685092063019475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_25
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 327361bc1e18c27b0800000000000000
+      internalID: -5247676659018615005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_26
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d6c87e070fe00470800000000000000
+      internalID: 8358943721986246355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_27
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb2c9ac8d57957980800000000000000
+      internalID: -8541754690190589253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_28
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50a66a85373fd2b60800000000000000
+      internalID: 7723096612744358405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_red_potion_01_29
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a84e91005d5647640800000000000000
+      internalID: 5076794645457527946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      small_red_potion_01_0: -4995891596282340863
+      small_red_potion_01_1: 8225667141749109648
+      small_red_potion_01_10: -1389260790794473293
+      small_red_potion_01_11: -8607553042086203767
+      small_red_potion_01_12: 5728023416503213783
+      small_red_potion_01_13: -2591579370491500549
+      small_red_potion_01_14: -1619145711106148368
+      small_red_potion_01_15: 2659040259155388748
+      small_red_potion_01_16: 7538829919992271628
+      small_red_potion_01_17: -1323156994161495098
+      small_red_potion_01_18: -1802591090201317417
+      small_red_potion_01_19: -2451812034741988192
+      small_red_potion_01_2: -1092684323124383117
+      small_red_potion_01_20: -8181647664193249424
+      small_red_potion_01_21: 7230975229474342129
+      small_red_potion_01_22: -3780865087517663459
+      small_red_potion_01_23: -3601486484413803955
+      small_red_potion_01_24: 7823685092063019475
+      small_red_potion_01_25: -5247676659018615005
+      small_red_potion_01_26: 8358943721986246355
+      small_red_potion_01_27: -8541754690190589253
+      small_red_potion_01_28: 7723096612744358405
+      small_red_potion_01_29: 5076794645457527946
+      small_red_potion_01_3: -2270757954290542062
+      small_red_potion_01_4: -4203908150303792059
+      small_red_potion_01_5: 6413452335973764374
+      small_red_potion_01_6: -5703997109233221491
+      small_red_potion_01_7: -8508322599573632362
+      small_red_potion_01_8: -6009549191398619346
+      small_red_potion_01_9: -1336947634087007011
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -2130,7 +2130,7 @@ GameObject:
   - component: {fileID: 427882972}
   - component: {fileID: 427882973}
   m_Layer: 0
-  m_Name: Level Generator
+  m_Name: Edgar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2176,9 +2176,9 @@ MonoBehaviour:
     RoomTemplatePrefabMode: 0
   PostProcessConfig:
     InitializeSharedTilemaps: 1
-    TilemapLayersStructure: 0
+    TilemapLayersStructure: 1
     TilemapLayersHandler: {fileID: 0}
-    TilemapLayersExample: {fileID: 1844355837504882643, guid: fb42168fa3bcfe94483aa471c07e7354, type: 3}
+    TilemapLayersExample: {fileID: 645271859340970680, guid: a96a2bd0b6f72a7469612adc43dd6e80, type: 3}
     TilemapMaterial: {fileID: 0}
     CopyTilesToSharedTilemaps: 1
     CenterGrid: 1

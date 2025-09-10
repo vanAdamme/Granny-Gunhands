@@ -1,0 +1,637 @@
+fileFormatVersion: 2
+guid: ce65364b52d4c8342848afae19740870
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8455489039356774584
+    second: Boxes_Tileset_0
+  - first:
+      213: 3566294937470205723
+    second: Boxes_Tileset_1
+  - first:
+      213: -525901452812287073
+    second: Boxes_Tileset_2
+  - first:
+      213: 8572315628793708244
+    second: Boxes_Tileset_3
+  - first:
+      213: 5701408020097288223
+    second: Boxes_Tileset_4
+  - first:
+      213: -6433848472360780265
+    second: Boxes_Tileset_5
+  - first:
+      213: 2254113621603694369
+    second: Boxes_Tileset_6
+  - first:
+      213: -6820502233826411241
+    second: Boxes_Tileset_7
+  - first:
+      213: 3146339615465594080
+    second: Boxes_Tileset_8
+  - first:
+      213: -2856297626073935052
+    second: Boxes_Tileset_9
+  - first:
+      213: 3303110853183631884
+    second: Boxes_Tileset_10
+  - first:
+      213: 6495542562309452421
+    second: Boxes_Tileset_11
+  - first:
+      213: -3228694255745422154
+    second: Boxes_Tileset_12
+  - first:
+      213: -1698150324480944976
+    second: Boxes_Tileset_13
+  - first:
+      213: 8700941887318609835
+    second: Boxes_Tileset_14
+  - first:
+      213: -5145979021179549875
+    second: Boxes_Tileset_15
+  - first:
+      213: -7342660601195798561
+    second: Boxes_Tileset_16
+  - first:
+      213: 7414809591160971958
+    second: Boxes_Tileset_17
+  - first:
+      213: -1033803832499511794
+    second: Boxes_Tileset_18
+  - first:
+      213: 318405052521231312
+    second: Boxes_Tileset_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Boxes_Tileset_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 225
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b8c1117b7ee75570800000000000000
+      internalID: 8455489039356774584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_1
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 225
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1f7f20c9560e7130800000000000000
+      internalID: 3566294937470205723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_2
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 225
+        width: 36
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f93034e3a6f93b8f0800000000000000
+      internalID: -525901452812287073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_3
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 192
+        width: 54
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4de37c475abf6f670800000000000000
+      internalID: 8572315628793708244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_4
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 207
+        width: 45
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f18467d03687f1f40800000000000000
+      internalID: 5701408020097288223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_5
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 193
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71efe3207e066b6a0800000000000000
+      internalID: -6433848472360780265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_6
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 193
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 127be036568384f10800000000000000
+      internalID: 2254113621603694369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_7
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 193
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71db40bda55b851a0800000000000000
+      internalID: -6820502233826411241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_8
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 143
+        width: 46
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ecd092d53b0aab20800000000000000
+      internalID: 3146339615465594080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_9
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 143
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 433521141746c58d0800000000000000
+      internalID: -2856297626073935052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_10
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 143
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c027fb102d107dd20800000000000000
+      internalID: 3303110853183631884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_11
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 143
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 582b2e9ab8dc42a50800000000000000
+      internalID: 6495542562309452421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_12
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 128
+        width: 46
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bc23f54eaf5133d0800000000000000
+      internalID: -3228694255745422154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_13
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 92
+        width: 44
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b4591ee645fe68e0800000000000000
+      internalID: -1698150324480944976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_14
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 95
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baf41f40c84ffb870800000000000000
+      internalID: 8700941887318609835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_15
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 64
+        width: 63
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d470bf4485fc598b0800000000000000
+      internalID: -5145979021179549875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_16
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 72
+        width: 44
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdfd7771611a91a90800000000000000
+      internalID: -7342660601195798561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_17
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 47
+        width: 34
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b22f4ea902b6e660800000000000000
+      internalID: 7414809591160971958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_18
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 39
+        width: 32
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0edd6444e037a1f0800000000000000
+      internalID: -1033803832499511794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boxes_Tileset_19
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 13
+        width: 58
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d3b73255b33b6400800000000000000
+      internalID: 318405052521231312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Boxes_Tileset_0: 8455489039356774584
+      Boxes_Tileset_1: 3566294937470205723
+      Boxes_Tileset_10: 3303110853183631884
+      Boxes_Tileset_11: 6495542562309452421
+      Boxes_Tileset_12: -3228694255745422154
+      Boxes_Tileset_13: -1698150324480944976
+      Boxes_Tileset_14: 8700941887318609835
+      Boxes_Tileset_15: -5145979021179549875
+      Boxes_Tileset_16: -7342660601195798561
+      Boxes_Tileset_17: 7414809591160971958
+      Boxes_Tileset_18: -1033803832499511794
+      Boxes_Tileset_19: 318405052521231312
+      Boxes_Tileset_2: -525901452812287073
+      Boxes_Tileset_3: 8572315628793708244
+      Boxes_Tileset_4: 5701408020097288223
+      Boxes_Tileset_5: -6433848472360780265
+      Boxes_Tileset_6: 2254113621603694369
+      Boxes_Tileset_7: -6820502233826411241
+      Boxes_Tileset_8: 3146339615465594080
+      Boxes_Tileset_9: -2856297626073935052
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
