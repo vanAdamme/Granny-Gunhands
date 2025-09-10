@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8214073952980531845}
-  - component: {fileID: 5325952420733349080}
+  - component: {fileID: 6925487535606770277}
   m_Layer: 7
   m_Name: Feet collider
   m_TagString: Untagged
@@ -32,8 +32,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3562487844079666664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &5325952420733349080
-BoxCollider2D:
+--- !u!70 &6925487535606770277
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -66,18 +66,9 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.00000025331974, y: 0.17518942}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 2, y: 1.75}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.4448649, y: 0.1726481}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.003129049, y: 0.112681344}
+  m_Size: {x: 0.36773157, y: 0.119411364}
+  m_Direction: 1
 --- !u!1 &2072129140861067041
 GameObject:
   m_ObjectHideFlags: 0
