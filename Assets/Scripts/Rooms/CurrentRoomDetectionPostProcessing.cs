@@ -1,55 +1,104 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Edgar.Unity;
 
 namespace Rooms
 {
-    [CreateAssetMenu(menuName = "Rooms/Post-processing", fileName = "CurrentRoomDetectionPostProcessing")]
-
-    #region codeBlock:2d_currentRoomDetection_postProcessing
-
+    [CreateAssetMenu(menuName = "Edgar/PostProcess/CurrentRoomDetection", fileName = "CurrentRoomDetectionPostProcessing")]
     public class CurrentRoomDetectionPostProcessing : DungeonGeneratorPostProcessingGrid2D
     {
+        [Header("Layers")]
+        public string floorLayerName  = "Floor";
+        public string noWalkLayerName = "NoWalk";
+
+        [Header("Triggers")]
+        [Tooltip("If true and NoWalkBoundary exists, room triggers mirror its outline; otherwise box fallback per room.")]
+        public bool pixelPerfectTriggers = true;
+
         public override void Run(DungeonGeneratorLevelGrid2D level)
         {
-            foreach (var roomInstance in level.RoomInstances)
+            // Option B: do NOT build a global boundary here.
+            var globalComposite = FindChildByName<CompositeCollider2D>(level.RootGameObject.transform, "NoWalkBoundary");
+            if (pixelPerfectTriggers && globalComposite == null)
+                Debug.LogWarning("[RoomDetect] NoWalkBoundary not found — room triggers will use box fallback.");
+
+            foreach (var room in level.RoomInstances)
             {
-                var roomTemplateInstance = roomInstance.RoomTemplateInstance;
+                var rt = room.RoomTemplateInstance;
 
-                // Find floor tilemap layer
-                var tilemaps = RoomTemplateUtilsGrid2D.GetTilemaps(roomTemplateInstance);
-                var floor = tilemaps.Single(x => x.name == "Floor").gameObject;
+                // Any Floor tilemap in this room (only for box fallback sizing)
+                int floorLayer = LayerMask.NameToLayer(floorLayerName);
+                var anyFloor = RoomTemplateUtilsGrid2D.GetTilemaps(rt)
+                               .FirstOrDefault(t => t && (t.gameObject.layer == floorLayer || t.name == "Floor"));
 
-                // Add floor collider
-                AddFloorCollider(floor);
+                var trigger = CreateRoomTrigger(rt.gameObject, anyFloor, globalComposite);
 
-                // Add the room manager component
-                var roomManager = roomTemplateInstance.AddComponent<CurrentRoomDetectionRoomManager>();
-                roomManager.RoomInstance = roomInstance;
+                var mgr = rt.GetComponent<CurrentRoomDetectionRoomManager>() ?? rt.AddComponent<CurrentRoomDetectionRoomManager>();
+                mgr.RoomInstance = room;
 
-                // Add current room detection handler
-                floor.AddComponent<CurrentRoomDetectionTriggerHandler>();
+                if (!trigger.GetComponent<CurrentRoomDetectionTriggerHandler>())
+                    trigger.AddComponent<CurrentRoomDetectionTriggerHandler>();
             }
         }
 
-        private void AddFloorCollider(GameObject floor)
+        private static T FindChildByName<T>(Transform root, string name) where T : Component
         {
-            var tilemapCollider2D = floor.AddComponent<TilemapCollider2D>();
-            #if UNITY_2023_2_OR_NEWER
-            tilemapCollider2D.compositeOperation = Collider2D.CompositeOperation.Merge;
-            #else
-            tilemapCollider2D.usedByComposite = true;
-            #endif
+            var q = new Queue<Transform>();
+            q.Enqueue(root);
+            while (q.Count > 0)
+            {
+                var t = q.Dequeue();
+                if (t.name == name)
+                {
+                    var c = t.GetComponent<T>();
+                    if (c) return c;
+                }
+                for (int i = 0; i < t.childCount; i++) q.Enqueue(t.GetChild(i));
+            }
+            return null;
+        }
 
-            var compositeCollider2d = floor.AddComponent<CompositeCollider2D>();
-            compositeCollider2d.geometryType = CompositeCollider2D.GeometryType.Polygons;
-            compositeCollider2d.isTrigger = true;
-            compositeCollider2d.generationType = CompositeCollider2D.GenerationType.Manual;
+        private GameObject CreateRoomTrigger(GameObject parent, Tilemap anyFloor, CompositeCollider2D globalComposite)
+        {
+            var go = new GameObject("RoomTrigger");
+            go.transform.SetParent(parent.transform, false);
 
-            floor.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            var rb = go.AddComponent<Rigidbody2D>();
+            rb.bodyType = RigidbodyType2D.Static;
+
+            if (pixelPerfectTriggers && globalComposite != null)
+            {
+                var poly = go.AddComponent<PolygonCollider2D>();
+                poly.isTrigger = true;
+
+                int pathCount = globalComposite.pathCount;
+                poly.pathCount = pathCount;
+
+                var buf = new List<Vector2>(256);
+                for (int i = 0; i < pathCount; i++)
+                {
+                    buf.Clear();
+                    buf.Capacity = Mathf.Max(buf.Capacity, globalComposite.GetPathPointCount(i));
+                    globalComposite.GetPath(i, buf);
+                    poly.SetPath(i, buf.ToArray());
+                }
+            }
+            else
+            {
+                var box = go.AddComponent<BoxCollider2D>();
+                box.isTrigger = true;
+
+                if (anyFloor)
+                {
+                    var b = anyFloor.localBounds;
+                    box.offset = (Vector2)b.center;
+                    box.size   = (Vector2)b.size;
+                }
+            }
+
+            return go;
         }
     }
-
-    #endregion
 }

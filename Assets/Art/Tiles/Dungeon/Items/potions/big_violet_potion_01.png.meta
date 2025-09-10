@@ -1,0 +1,689 @@
+fileFormatVersion: 2
+guid: 1acf002ba30598a4bac6079c4fbc1b9d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -244478368059813950
+    second: big_violet_potion_01_0
+  - first:
+      213: -5217204630729636721
+    second: big_violet_potion_01_1
+  - first:
+      213: 745833879341527268
+    second: big_violet_potion_01_2
+  - first:
+      213: 3167937701592998632
+    second: big_violet_potion_01_3
+  - first:
+      213: 7728687271061520192
+    second: big_violet_potion_01_4
+  - first:
+      213: -8541437739649605817
+    second: big_violet_potion_01_5
+  - first:
+      213: 1065010748595589887
+    second: big_violet_potion_01_6
+  - first:
+      213: 8244621755831447998
+    second: big_violet_potion_01_7
+  - first:
+      213: 4974692503829327332
+    second: big_violet_potion_01_8
+  - first:
+      213: -1749062859921433906
+    second: big_violet_potion_01_9
+  - first:
+      213: 741005779285257914
+    second: big_violet_potion_01_10
+  - first:
+      213: -3651905826098612383
+    second: big_violet_potion_01_11
+  - first:
+      213: -2552279205886374039
+    second: big_violet_potion_01_12
+  - first:
+      213: 6778483966230482367
+    second: big_violet_potion_01_13
+  - first:
+      213: 8458201306457979431
+    second: big_violet_potion_01_14
+  - first:
+      213: -1675617931465813119
+    second: big_violet_potion_01_15
+  - first:
+      213: 8898716258599978473
+    second: big_violet_potion_01_16
+  - first:
+      213: 5500001659198225393
+    second: big_violet_potion_01_17
+  - first:
+      213: 6766982113881911397
+    second: big_violet_potion_01_18
+  - first:
+      213: -7807504286355433968
+    second: big_violet_potion_01_19
+  - first:
+      213: -7920204363822202151
+    second: big_violet_potion_01_20
+  - first:
+      213: -6527483930034573338
+    second: big_violet_potion_01_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: big_violet_potion_01_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 3
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cf078438307b9cf0800000000000000
+      internalID: -244478368059813950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_1
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 3
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8446d0c704c897b0800000000000000
+      internalID: -5217204630729636721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_2
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 3
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e07a9f26fbb95a00800000000000000
+      internalID: 745833879341527268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_3
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 3
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e2a40e1e86c6fb20800000000000000
+      internalID: 3167937701592998632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_4
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 3
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04f74bbef10d14b60800000000000000
+      internalID: 7728687271061520192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_5
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 11
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74fd11951a7b67980800000000000000
+      internalID: -8541437739649605817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_6
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 3
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff2530812ada7ce00800000000000000
+      internalID: 1065010748595589887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_7
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 12
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb17ac71ec7ca6270800000000000000
+      internalID: 8244621755831447998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_8
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 3
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4edab85a978a90540800000000000000
+      internalID: 4974692503829327332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_9
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 11
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecadd8888941ab7e0800000000000000
+      internalID: -1749062859921433906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_10
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 3
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abe2fca84d4984a00800000000000000
+      internalID: 741005779285257914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_11
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 3
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1677632fff2d15dc0800000000000000
+      internalID: -3651905826098612383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_12
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 3
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96fc685b59b749cd0800000000000000
+      internalID: -2552279205886374039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_13
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 3
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbd49dad043021e50800000000000000
+      internalID: 6778483966230482367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_14
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 3
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72a3c265641916570800000000000000
+      internalID: 8458201306457979431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_15
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 3
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18394bf7e520fb8e0800000000000000
+      internalID: -1675617931465813119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_16
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 11
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e548de2a479e7b70800000000000000
+      internalID: 8898716258599978473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_17
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 3
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fbb1986e5ee35c40800000000000000
+      internalID: 5500001659198225393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_18
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 12
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5607a5b216629ed50800000000000000
+      internalID: 6766982113881911397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_19
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 3
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 016d17da73c26a390800000000000000
+      internalID: -7807504286355433968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_20
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 11
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d201e91818c51290800000000000000
+      internalID: -7920204363822202151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: big_violet_potion_01_21
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 3
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6efe73123f7b965a0800000000000000
+      internalID: -6527483930034573338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      big_violet_potion_01_0: -244478368059813950
+      big_violet_potion_01_1: -5217204630729636721
+      big_violet_potion_01_10: 741005779285257914
+      big_violet_potion_01_11: -3651905826098612383
+      big_violet_potion_01_12: -2552279205886374039
+      big_violet_potion_01_13: 6778483966230482367
+      big_violet_potion_01_14: 8458201306457979431
+      big_violet_potion_01_15: -1675617931465813119
+      big_violet_potion_01_16: 8898716258599978473
+      big_violet_potion_01_17: 5500001659198225393
+      big_violet_potion_01_18: 6766982113881911397
+      big_violet_potion_01_19: -7807504286355433968
+      big_violet_potion_01_2: 745833879341527268
+      big_violet_potion_01_20: -7920204363822202151
+      big_violet_potion_01_21: -6527483930034573338
+      big_violet_potion_01_3: 3167937701592998632
+      big_violet_potion_01_4: 7728687271061520192
+      big_violet_potion_01_5: -8541437739649605817
+      big_violet_potion_01_6: 1065010748595589887
+      big_violet_potion_01_7: 8244621755831447998
+      big_violet_potion_01_8: 4974692503829327332
+      big_violet_potion_01_9: -1749062859921433906
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa8ec399c31b7941b190fcd5eefa48a, type: 3}
   m_Name: CurrentRoomDetectionPostProcessing
   m_EditorClassIdentifier: 
+  floorLayerName: Floor
+  noWalkLayerName: NoWalk
+  pixelPerfectTriggers: 1

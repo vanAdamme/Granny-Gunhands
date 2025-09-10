@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: 80f6b7d37f8bace44bc40852735dc255
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7986849537603565027
+    second: medium_red_potion_01_0
+  - first:
+      213: -1975396010613548835
+    second: medium_red_potion_01_1
+  - first:
+      213: 1430108328112304246
+    second: medium_red_potion_01_2
+  - first:
+      213: 6670090654419534712
+    second: medium_red_potion_01_3
+  - first:
+      213: 57771912202205818
+    second: medium_red_potion_01_4
+  - first:
+      213: 7463873287167194036
+    second: medium_red_potion_01_5
+  - first:
+      213: 3992852224736463920
+    second: medium_red_potion_01_6
+  - first:
+      213: -1318982054008510688
+    second: medium_red_potion_01_7
+  - first:
+      213: 7787980465772467062
+    second: medium_red_potion_01_8
+  - first:
+      213: -7645412895577510775
+    second: medium_red_potion_01_9
+  - first:
+      213: -2991108209113514939
+    second: medium_red_potion_01_10
+  - first:
+      213: -1995005616430101371
+    second: medium_red_potion_01_11
+  - first:
+      213: 2210660740826637836
+    second: medium_red_potion_01_12
+  - first:
+      213: 630571533429643725
+    second: medium_red_potion_01_13
+  - first:
+      213: 7103349057663527048
+    second: medium_red_potion_01_14
+  - first:
+      213: 8614608522570007597
+    second: medium_red_potion_01_15
+  - first:
+      213: 6755981855870131114
+    second: medium_red_potion_01_16
+  - first:
+      213: 7654001279251059007
+    second: medium_red_potion_01_17
+  - first:
+      213: -5055669477712981693
+    second: medium_red_potion_01_18
+  - first:
+      213: -619833980447752491
+    second: medium_red_potion_01_19
+  - first:
+      213: -4311475926511312021
+    second: medium_red_potion_01_20
+  - first:
+      213: -4066308194010666240
+    second: medium_red_potion_01_21
+  - first:
+      213: 2865714783285134547
+    second: medium_red_potion_01_22
+  - first:
+      213: -7007379666012762106
+    second: medium_red_potion_01_23
+  - first:
+      213: -9184848640659790692
+    second: medium_red_potion_01_24
+  - first:
+      213: 1297590322292621763
+    second: medium_red_potion_01_25
+  - first:
+      213: -7681515725458034767
+    second: medium_red_potion_01_26
+  - first:
+      213: 2096303851260808467
+    second: medium_red_potion_01_27
+  - first:
+      213: 8840426846877554047
+    second: medium_red_potion_01_28
+  - first:
+      213: 2562284616126759377
+    second: medium_red_potion_01_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: medium_red_potion_01_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 11
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1a85a469a2092190800000000000000
+      internalID: -7986849537603565027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 10
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd8d7a06bcbf594e0800000000000000
+      internalID: -1975396010613548835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_2
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 3
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 670367782f3c8d310800000000000000
+      internalID: 1430108328112304246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_3
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 10
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 873445c4c1ce09c50800000000000000
+      internalID: 6670090654419534712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_4
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 11
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7abec08f3f3dc000800000000000000
+      internalID: 57771912202205818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_5
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 12
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b3b02a9531059760800000000000000
+      internalID: 7463873287167194036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_6
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 13
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03c8b0081f5796730800000000000000
+      internalID: 3992852224736463920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_7
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 12
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02725b56fc802bde0800000000000000
+      internalID: -1318982054008510688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_8
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 11
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6739c0c98f6741c60800000000000000
+      internalID: 7787980465772467062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_9
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 10
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98c69e58a7906e590800000000000000
+      internalID: -7645412895577510775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_10
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 3
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54cb80f6ee27d76d0800000000000000
+      internalID: -2991108209113514939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_11
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 10
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58c46cb36f05054e0800000000000000
+      internalID: -1995005616430101371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_12
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 11
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c06afdf2b38ddae10800000000000000
+      internalID: 2210660740826637836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_13
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 12
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc91c8ff77d30c800800000000000000
+      internalID: 630571533429643725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_14
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 13
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 888e3a1355a249260800000000000000
+      internalID: 7103349057663527048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_15
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 12
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2486d22fcc3d8770800000000000000
+      internalID: 8614608522570007597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_16
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aab9f1404b112cd50800000000000000
+      internalID: 6755981855870131114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_17
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3115206c99783a60800000000000000
+      internalID: 7654001279251059007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_18
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34112276567a6d9b0800000000000000
+      internalID: -5055669477712981693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_19
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5def1bf5748e567f0800000000000000
+      internalID: -619833980447752491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_20
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6325aeec7f8a24c0800000000000000
+      internalID: -4311475926511312021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_21
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00bebb4ed329197c0800000000000000
+      internalID: -4066308194010666240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_22
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d4cb45896015c720800000000000000
+      internalID: 2865714783285134547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_23
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60093090259c0ce90800000000000000
+      internalID: -7007379666012762106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_24
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c946eb123dcd88080800000000000000
+      internalID: -9184848640659790692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_25
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c18c30f587f10210800000000000000
+      internalID: 1297590322292621763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_26
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bf2f776526c56590800000000000000
+      internalID: -7681515725458034767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_27
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31d0fabfe31971d10800000000000000
+      internalID: 2096303851260808467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_28
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7596fee0618faa70800000000000000
+      internalID: 8840426846877554047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medium_red_potion_01_29
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 3
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d10fa568401f8320800000000000000
+      internalID: 2562284616126759377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      medium_red_potion_01_0: -7986849537603565027
+      medium_red_potion_01_1: -1975396010613548835
+      medium_red_potion_01_10: -2991108209113514939
+      medium_red_potion_01_11: -1995005616430101371
+      medium_red_potion_01_12: 2210660740826637836
+      medium_red_potion_01_13: 630571533429643725
+      medium_red_potion_01_14: 7103349057663527048
+      medium_red_potion_01_15: 8614608522570007597
+      medium_red_potion_01_16: 6755981855870131114
+      medium_red_potion_01_17: 7654001279251059007
+      medium_red_potion_01_18: -5055669477712981693
+      medium_red_potion_01_19: -619833980447752491
+      medium_red_potion_01_2: 1430108328112304246
+      medium_red_potion_01_20: -4311475926511312021
+      medium_red_potion_01_21: -4066308194010666240
+      medium_red_potion_01_22: 2865714783285134547
+      medium_red_potion_01_23: -7007379666012762106
+      medium_red_potion_01_24: -9184848640659790692
+      medium_red_potion_01_25: 1297590322292621763
+      medium_red_potion_01_26: -7681515725458034767
+      medium_red_potion_01_27: 2096303851260808467
+      medium_red_potion_01_28: 8840426846877554047
+      medium_red_potion_01_29: 2562284616126759377
+      medium_red_potion_01_3: 6670090654419534712
+      medium_red_potion_01_4: 57771912202205818
+      medium_red_potion_01_5: 7463873287167194036
+      medium_red_potion_01_6: 3992852224736463920
+      medium_red_potion_01_7: -1318982054008510688
+      medium_red_potion_01_8: 7787980465772467062
+      medium_red_potion_01_9: -7645412895577510775
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

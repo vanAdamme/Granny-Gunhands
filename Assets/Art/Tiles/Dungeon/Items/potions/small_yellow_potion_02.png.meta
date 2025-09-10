@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: e93357db08fca7d45a3274c8e464dee5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5383821403996880355
+    second: small_yellow_potion_02_0
+  - first:
+      213: 7758739755942599238
+    second: small_yellow_potion_02_1
+  - first:
+      213: -7878109388257021073
+    second: small_yellow_potion_02_2
+  - first:
+      213: -7379621050491130906
+    second: small_yellow_potion_02_3
+  - first:
+      213: -3796342554779220084
+    second: small_yellow_potion_02_4
+  - first:
+      213: 3454699887434846428
+    second: small_yellow_potion_02_5
+  - first:
+      213: 8967907164324428278
+    second: small_yellow_potion_02_6
+  - first:
+      213: -7451935896524641938
+    second: small_yellow_potion_02_7
+  - first:
+      213: -2491094888838753174
+    second: small_yellow_potion_02_8
+  - first:
+      213: 6977621632830427307
+    second: small_yellow_potion_02_9
+  - first:
+      213: 1852226890386301780
+    second: small_yellow_potion_02_10
+  - first:
+      213: -1272272304367693014
+    second: small_yellow_potion_02_11
+  - first:
+      213: -4781216965312017122
+    second: small_yellow_potion_02_12
+  - first:
+      213: -2801397700788675132
+    second: small_yellow_potion_02_13
+  - first:
+      213: 2568427337169201993
+    second: small_yellow_potion_02_14
+  - first:
+      213: 7073906528163030879
+    second: small_yellow_potion_02_15
+  - first:
+      213: -3043882508237227979
+    second: small_yellow_potion_02_16
+  - first:
+      213: 7862619257463078732
+    second: small_yellow_potion_02_17
+  - first:
+      213: -3372530500410303725
+    second: small_yellow_potion_02_18
+  - first:
+      213: -7056698647087621841
+    second: small_yellow_potion_02_19
+  - first:
+      213: -7506264317650229195
+    second: small_yellow_potion_02_20
+  - first:
+      213: 5838594468731803380
+    second: small_yellow_potion_02_21
+  - first:
+      213: -2016474871880851602
+    second: small_yellow_potion_02_22
+  - first:
+      213: -5689161737020749903
+    second: small_yellow_potion_02_23
+  - first:
+      213: 1494133199146145654
+    second: small_yellow_potion_02_24
+  - first:
+      213: -4758135411361334737
+    second: small_yellow_potion_02_25
+  - first:
+      213: 452395705577360886
+    second: small_yellow_potion_02_26
+  - first:
+      213: -7577225295234138461
+    second: small_yellow_potion_02_27
+  - first:
+      213: -864033510943710565
+    second: small_yellow_potion_02_28
+  - first:
+      213: -1523407751326964883
+    second: small_yellow_potion_02_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: small_yellow_potion_02_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 11
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3edf06fca0d27ba40800000000000000
+      internalID: 5383821403996880355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_1
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 10
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64ad8a153b49cab60800000000000000
+      internalID: 7758739755942599238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_2
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 4
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f63354b50455ba290800000000000000
+      internalID: -7878109388257021073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_3
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 10
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6eb2b74e0c1569990800000000000000
+      internalID: -7379621050491130906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_4
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 11
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c878fa07f8ea05bc0800000000000000
+      internalID: -3796342554779220084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_5
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 12
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd0d22c6e3f81ff20800000000000000
+      internalID: 3454699887434846428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_6
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 13
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f9fc3c4d08647c70800000000000000
+      internalID: 8967907164324428278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_7
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 12
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e69aaaeb8c7659890800000000000000
+      internalID: -7451935896524641938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_8
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 11
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6499f0a56add6dd0800000000000000
+      internalID: -2491094888838753174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_9
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 10
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba050f1f7ed75d060800000000000000
+      internalID: 6977621632830427307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_10
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 4
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 453e6e41b8e64b910800000000000000
+      internalID: 1852226890386301780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_11
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 10
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a239898741bf75ee0800000000000000
+      internalID: -1272272304367693014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_12
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 11
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1d81848084b5adb0800000000000000
+      internalID: -4781216965312017122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_13
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 12
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cd15e132af6f19d0800000000000000
+      internalID: -2801397700788675132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_14
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 13
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94b6f571e03e4a320800000000000000
+      internalID: 2568427337169201993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_15
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 12
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f57697912809b2260800000000000000
+      internalID: 7073906528163030879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_16
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 538be766cf4f1c5d0800000000000000
+      internalID: -3043882508237227979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_17
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4f7b358e82ad1d60800000000000000
+      internalID: 7862619257463078732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_18
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31b9fd8d06d5231d0800000000000000
+      internalID: -3372530500410303725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_19
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f29dc5de7f1911e90800000000000000
+      internalID: -7056698647087621841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_20
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 538a44c7f5464d790800000000000000
+      internalID: -7506264317650229195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_21
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f6d1503cbad60150800000000000000
+      internalID: 5838594468731803380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_22
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6f5a0ba9ca0404e0800000000000000
+      internalID: -2016474871880851602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_23
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b7422bea890c01b0800000000000000
+      internalID: -5689161737020749903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_24
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67759367a3a3cb410800000000000000
+      internalID: 1494133199146145654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_25
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2ab9949d05b7fdb0800000000000000
+      internalID: -4758135411361334737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_26
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fdc9d05f7b374600800000000000000
+      internalID: 452395705577360886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_27
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3aef6766db948d690800000000000000
+      internalID: -7577225295234138461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_28
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b92aa2289165204f0800000000000000
+      internalID: -864033510943710565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small_yellow_potion_02_29
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 4
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d636416b8b4cbdae0800000000000000
+      internalID: -1523407751326964883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      small_yellow_potion_02_0: 5383821403996880355
+      small_yellow_potion_02_1: 7758739755942599238
+      small_yellow_potion_02_10: 1852226890386301780
+      small_yellow_potion_02_11: -1272272304367693014
+      small_yellow_potion_02_12: -4781216965312017122
+      small_yellow_potion_02_13: -2801397700788675132
+      small_yellow_potion_02_14: 2568427337169201993
+      small_yellow_potion_02_15: 7073906528163030879
+      small_yellow_potion_02_16: -3043882508237227979
+      small_yellow_potion_02_17: 7862619257463078732
+      small_yellow_potion_02_18: -3372530500410303725
+      small_yellow_potion_02_19: -7056698647087621841
+      small_yellow_potion_02_2: -7878109388257021073
+      small_yellow_potion_02_20: -7506264317650229195
+      small_yellow_potion_02_21: 5838594468731803380
+      small_yellow_potion_02_22: -2016474871880851602
+      small_yellow_potion_02_23: -5689161737020749903
+      small_yellow_potion_02_24: 1494133199146145654
+      small_yellow_potion_02_25: -4758135411361334737
+      small_yellow_potion_02_26: 452395705577360886
+      small_yellow_potion_02_27: -7577225295234138461
+      small_yellow_potion_02_28: -864033510943710565
+      small_yellow_potion_02_29: -1523407751326964883
+      small_yellow_potion_02_3: -7379621050491130906
+      small_yellow_potion_02_4: -3796342554779220084
+      small_yellow_potion_02_5: 3454699887434846428
+      small_yellow_potion_02_6: 8967907164324428278
+      small_yellow_potion_02_7: -7451935896524641938
+      small_yellow_potion_02_8: -2491094888838753174
+      small_yellow_potion_02_9: 6977621632830427307
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
