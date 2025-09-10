@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorTilemapName: Floor
   outputObjectName: NoWalkBoundary
-  noWalkLayer: 0
+  colliderHostName: NoWalkBoundary_ColliderHost
+  noWalkLayer: 13
   edgeRadius: 0.05
-  addTemporaryColliderIfMissing: 1
-  verboseLogging: 1
+  verboseLogging: 0

@@ -407,6 +407,7 @@ MonoBehaviour:
   invalidDropTint: {r: 1, g: 0, b: 0, a: 0.25}
   flashDuration: 0.18
   strictCategoryMatch: 1
+  toastServiceSource: {fileID: 0}
 --- !u!114 &824669437064390671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,8 +490,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pistol
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3541f28d50a74e9448b19ffa3092be4c, type: 2}
-  m_sharedMaterial: {fileID: 9101982513453838865, guid: 3541f28d50a74e9448b19ffa3092be4c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6aa89f426240bdf4bbe6ce110b38dc7e, type: 2}
+  m_sharedMaterial: {fileID: -4884702224436788228, guid: 6aa89f426240bdf4bbe6ce110b38dc7e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -514,7 +515,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 13.4
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
