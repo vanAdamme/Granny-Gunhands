@@ -20,7 +20,13 @@ namespace Rooms
         public override void Run(DungeonGeneratorLevelGrid2D level)
         {
             // Option B: do NOT build a global boundary here.
-            var globalComposite = FindChildByName<CompositeCollider2D>(level.RootGameObject.transform, "NoWalkBoundary");
+            var boundaryRoot = FindChildByName<Transform>(level.RootGameObject.transform, "NoWalkBoundary");
+            CompositeCollider2D globalComposite = null;
+            if (boundaryRoot != null)
+            {
+                globalComposite = boundaryRoot.GetComponentInChildren<CompositeCollider2D>(true);
+            }
+
             if (pixelPerfectTriggers && globalComposite == null)
                 Debug.LogWarning("[RoomDetect] NoWalkBoundary not found — room triggers will use box fallback.");
 

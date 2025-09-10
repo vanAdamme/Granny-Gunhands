@@ -23,7 +23,7 @@ namespace Rooms.PostProcessing
         [Tooltip("Child host under outputObjectName that actually carries Rigidbody/Colliders.")]
         public string colliderHostName = "NoWalkBoundary_ColliderHost";
 
-        [Tooltip("Layer to assign to the produced boundary collider(s). Include this in your pathfinding Collision mask.")]
+        [Tooltip("Layer to assign to the produced boundary collider(s). Include this layer in your pathfinding Collision mask.")]
         public int noWalkLayer = 0; // e.g., LayerMask.NameToLayer("NoWalk")
 
         [Header("Collider Settings")]
@@ -52,15 +52,13 @@ namespace Rooms.PostProcessing
             }
             if (verboseLogging) Debug.Log("[NoWalkBoundary] Found Floor tilemap");
 
-            // 2) Create/clear output GO (container only)
+            // 2) Create/clear output container + dedicated collider host
             var output = GetOrCreateChild(root.transform, outputObjectName);
             output.layer = noWalkLayer;
 
-            // 3) Create/clear a dedicated collider host as a child (so other systems touching the parent can't race us)
             var host = GetOrCreateChild(output.transform, colliderHostName);
             host.layer = noWalkLayer;
 
-            // Hard reset host physics bits
             foreach (var c in host.GetComponents<Collider2D>()) Object.DestroyImmediate(c);
             var existingRb = host.GetComponent<Rigidbody2D>();
             if (existingRb) Object.DestroyImmediate(existingRb);
@@ -77,10 +75,7 @@ namespace Rooms.PostProcessing
 
             if (verboseLogging) Debug.Log("[NoWalkBoundary] Host RB2D + Composite ready");
 
-            // 4) Acquire a SOURCE composite safely:
-            //    Prefer an existing parent Composite (common with "From Example").
-            //    If none, create a temporary Composite on the FLOOR'S PARENT (not on Floor),
-            //    and make the Floor contribute via a TilemapCollider2D.
+            // 3) Acquire a SOURCE composite safely: prefer parent (e.g. Tilemaps). If none, create on parent.
             bool createdParentComposite = false;
             bool createdTilemapCollider = false;
 
@@ -127,22 +122,24 @@ namespace Rooms.PostProcessing
             if (verboseLogging)
                 Debug.Log($"[NoWalkBoundary] Source composite at '{parentForComposite.name}' (paths={sourceComposite.pathCount})");
 
-            // 5) Copy source paths into a Polygon feeding our output Composite
+            // 4) Copy source paths into a Polygon feeding our output Composite
             var poly = host.AddComponent<PolygonCollider2D>();
 #if UNITY_2023_2_OR_NEWER
             poly.compositeOperation = Collider2D.CompositeOperation.Merge;
 #else
             poly.usedByComposite = true;    // Unity 2021/2022 fallback
 #endif
+            if (verboseLogging) Debug.Log("[NoWalkBoundary] PolygonCollider2D added to host");
 
-            CopyCompositePaths(sourceComposite, parentForComposite, poly, host.transform);
+            var copied = CopyCompositePaths(sourceComposite, parentForComposite, poly, host.transform);
+            if (verboseLogging) Debug.Log($"[NoWalkBoundary] Copied {copied.totalPaths} path(s), {copied.totalPoints} points into polygon");
 
-            // 6) Bake geometry
+            // 5) Bake geometry
             compositeOut.GenerateGeometry();
             if (verboseLogging)
                 Debug.Log($"[NoWalkBoundary] Output composite baked (pathCount={compositeOut.pathCount})");
 
-            // 7) Cleanup temporary bits only if we created them here
+            // 6) Cleanup temporary bits only if we created them here
             if (createdTilemapCollider)
             {
                 var tmc = floor.GetComponent<TilemapCollider2D>();
@@ -164,13 +161,16 @@ namespace Rooms.PostProcessing
             if (verboseLogging) Debug.Log("[NoWalkBoundary] Done");
         }
 
-        private static void CopyCompositePaths(CompositeCollider2D src, Transform srcSpace, PolygonCollider2D dstPoly, Transform dstSpace)
+        private static (int totalPaths, int totalPoints) CopyCompositePaths(
+            CompositeCollider2D src, Transform srcSpace,
+            PolygonCollider2D dstPoly, Transform dstSpace)
         {
-            var count = src.pathCount;
-            dstPoly.pathCount = count;
+            int totalPaths = src.pathCount;
+            int totalPoints = 0;
+            dstPoly.pathCount = totalPaths;
 
             var buf = new List<Vector2>(256);
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < totalPaths; i++)
             {
                 buf.Clear();
                 buf.Capacity = Mathf.Max(buf.Capacity, src.GetPathPointCount(i));
@@ -184,7 +184,9 @@ namespace Rooms.PostProcessing
                 }
 
                 dstPoly.SetPath(i, buf);
+                totalPoints += buf.Count;
             }
+            return (totalPaths, totalPoints);
         }
 
         private static GameObject GetOrCreateChild(Transform parent, string name)
