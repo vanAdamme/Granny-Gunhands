@@ -1,14 +1,11 @@
-// NoWalkBoundaryPostProcessing.cs
-// Creates a pixel-perfect "NoWalk" boundary collider following the outer edge of the Floor tilemap.
-// Drop the generated asset into your Edgar PostProcessingConfig (after tilemap layers are created).
+// Bakes a pixel-perfect "NoWalk" CompositeCollider2D around the Floor outline.
+// Put this BEFORE CurrentRoomDetection and your A* rescan step in the post-process list.
 
 #if UNITY_EDITOR || UNITY_2022_1_OR_NEWER
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-// NOTE: These namespaces/types come from Edgar-Unity (Grid2D).
-// Keep them in a #if block so the file still compiles without Edgar present in editor scripts.
 namespace Rooms.PostProcessing
 {
     using Edgar.Unity;
@@ -20,136 +17,173 @@ namespace Rooms.PostProcessing
         [Tooltip("Name of the Tilemap that contains walkable floor tiles.")]
         public string floorTilemapName = "Floor";
 
-        [Tooltip("Name of the GameObject that will be (re)created under the generated level root.")]
+        [Tooltip("Name of the GameObject created under the generated level root.")]
         public string outputObjectName = "NoWalkBoundary";
 
-        [Tooltip("Layer to assign to the produced boundary collider(s). Include this in your A* GridGraph 'Collision' mask.")]
-        public int noWalkLayer = 0; // e.g. LayerMask.NameToLayer("NoWalk")
+        [Tooltip("Child host under outputObjectName that actually carries Rigidbody/Colliders.")]
+        public string colliderHostName = "NoWalkBoundary_ColliderHost";
+
+        [Tooltip("Layer to assign to the produced boundary collider(s). Include this in your pathfinding Collision mask.")]
+        public int noWalkLayer = 0; // e.g., LayerMask.NameToLayer("NoWalk")
 
         [Header("Collider Settings")]
-        [Tooltip("Composite edge thickness in world units. For A* GridGraph this should be >= node size/2 so cells on the boundary become unwalkable.")]
+        [Tooltip("Composite edge thickness in world units. ~nodeSize/2 is a good start for grid pathfinding.")]
         [Min(0f)] public float edgeRadius = 0.05f;
 
-        [Tooltip("If true, the baker will add temporary colliders to the Floor tilemap in order to extract a clean outline.")]
-        public bool addTemporaryColliderIfMissing = true;
-
-        [Tooltip("Optional: recenter the produced GameObject to the Grid origin to avoid FP rounding disparities.")]
-        public bool snapOutputToGrid = true;
+        [Tooltip("Logs each step of the bake for debugging.")]
+        public bool verboseLogging = true;
 
         public override void Run(DungeonGeneratorLevelGrid2D level)
         {
-            var root = level.GameObject;
+            var root = level.RootGameObject;
             if (!root)
             {
-                Debug.LogError("[NoWalkBoundary] Level root not found.");
+                Debug.LogError("[NoWalkBoundary] RootGameObject missing.");
                 return;
             }
+            if (verboseLogging) Debug.Log("[NoWalkBoundary] Start");
 
-            // Find Floor tilemap under the generated root.
+            // 1) Find Floor tilemap (in entire generated subtree)
             var floor = FindChildByName<Tilemap>(root.transform, floorTilemapName);
             if (!floor)
             {
-                Debug.LogError($"[NoWalkBoundary] Could not find Tilemap named '{floorTilemapName}'.");
+                Debug.LogError($"[NoWalkBoundary] Floor Tilemap '{floorTilemapName}' not found under generated level.");
                 return;
             }
+            if (verboseLogging) Debug.Log("[NoWalkBoundary] Found Floor tilemap");
 
-            // Create/clear output GO
+            // 2) Create/clear output GO (container only)
             var output = GetOrCreateChild(root.transform, outputObjectName);
             output.layer = noWalkLayer;
 
-            // Clean previous runs
-            foreach (var c in output.GetComponents<Collider2D>()) Object.DestroyImmediate(c);
-            foreach (Transform child in output.transform) Object.DestroyImmediate(child.gameObject);
+            // 3) Create/clear a dedicated collider host as a child (so other systems touching the parent can't race us)
+            var host = GetOrCreateChild(output.transform, colliderHostName);
+            host.layer = noWalkLayer;
 
-            // Static body + composite that we will feed with polygon paths
-            var rbOut = output.GetComponent<Rigidbody2D>() ?? output.AddComponent<Rigidbody2D>();
-            rbOut.bodyType = Rigidbody2D.Static;
+            // Hard reset host physics bits
+            foreach (var c in host.GetComponents<Collider2D>()) Object.DestroyImmediate(c);
+            var existingRb = host.GetComponent<Rigidbody2D>();
+            if (existingRb) Object.DestroyImmediate(existingRb);
+            if (verboseLogging) Debug.Log("[NoWalkBoundary] Host cleared");
 
-            var compositeOut = output.GetComponent<CompositeCollider2D>() ?? output.AddComponent<CompositeCollider2D>();
-            compositeOut.geometryType = CompositeCollider2D.GeometryType.Outlines;
+            var rbOut = host.AddComponent<Rigidbody2D>();
+            rbOut.bodyType = RigidbodyType2D.Static;
+
+            var compositeOut = host.AddComponent<CompositeCollider2D>();
+            compositeOut.geometryType   = CompositeCollider2D.GeometryType.Outlines;
             compositeOut.generationType = CompositeCollider2D.GenerationType.Manual;
-            compositeOut.edgeRadius = edgeRadius;
+            compositeOut.edgeRadius     = edgeRadius;
             compositeOut.useDelaunayMesh = false;
 
-            // Ensure the Floor has a composite we can read from (temporarily if needed)
-            var (srcComposite, removeAfter) = EnsureCompositeOnTilemap(floor.gameObject, addTemporaryColliderIfMissing);
-            if (srcComposite == null)
+            if (verboseLogging) Debug.Log("[NoWalkBoundary] Host RB2D + Composite ready");
+
+            // 4) Acquire a SOURCE composite safely:
+            //    Prefer an existing parent Composite (common with "From Example").
+            //    If none, create a temporary Composite on the FLOOR'S PARENT (not on Floor),
+            //    and make the Floor contribute via a TilemapCollider2D.
+            bool createdParentComposite = false;
+            bool createdTilemapCollider = false;
+
+            var parentForComposite = floor.transform.parent != null ? floor.transform.parent : root.transform;
+            var sourceComposite = parentForComposite.GetComponent<CompositeCollider2D>();
+            var sourceRb = parentForComposite.GetComponent<Rigidbody2D>();
+
+            if (!sourceComposite)
             {
-                Debug.LogError("[NoWalkBoundary] Could not obtain a CompositeCollider2D for the Floor tilemap.");
-                return;
+                if (verboseLogging) Debug.Log("[NoWalkBoundary] No parent Composite found; creating one on Floor's parent...");
+
+                if (!sourceRb) sourceRb = parentForComposite.gameObject.AddComponent<Rigidbody2D>();
+                sourceRb.bodyType = RigidbodyType2D.Static;
+
+                sourceComposite = parentForComposite.gameObject.AddComponent<CompositeCollider2D>();
+                sourceComposite.geometryType   = CompositeCollider2D.GeometryType.Outlines;
+                sourceComposite.generationType = CompositeCollider2D.GenerationType.Synchronous;
+
+                createdParentComposite = true;
             }
 
-            // Feed paths to a PolygonCollider2D (used by the output composite)
-            var poly = output.AddComponent<PolygonCollider2D>();
-            poly.usedByComposite = true;
-            CopyCompositePaths(srcComposite, floor.transform, poly, output.transform);
-
-            compositeOut.GenerateGeometry();
-
-            // Clean up temporary components on Floor
-            if (removeAfter)
+            var floorTmc = floor.GetComponent<TilemapCollider2D>();
+            if (!floorTmc)
             {
-                var tmCol = floor.GetComponent<TilemapCollider2D>();
-                var rb = floor.GetComponent<Rigidbody2D>();
-                if (tmCol) Object.DestroyImmediate(tmCol);
-                if (srcComposite) Object.DestroyImmediate(srcComposite);
-                if (rb) Object.DestroyImmediate(rb);
+                floorTmc = floor.gameObject.AddComponent<TilemapCollider2D>();
+#if UNITY_2023_2_OR_NEWER
+                floorTmc.compositeOperation = Collider2D.CompositeOperation.Merge;
+#else
+                floorTmc.usedByComposite = true;
+#endif
+                createdTilemapCollider = true;
+            }
+            else
+            {
+#if UNITY_2023_2_OR_NEWER
+                floorTmc.compositeOperation = Collider2D.CompositeOperation.Merge;
+#else
+                floorTmc.usedByComposite = true;
+#endif
+            }
+
+            Physics2D.SyncTransforms();
+
+            if (verboseLogging)
+                Debug.Log($"[NoWalkBoundary] Source composite at '{parentForComposite.name}' (paths={sourceComposite.pathCount})");
+
+            // 5) Copy source paths into a Polygon feeding our output Composite
+            var poly = host.AddComponent<PolygonCollider2D>();
+#if UNITY_2023_2_OR_NEWER
+            poly.compositeOperation = Collider2D.CompositeOperation.Merge;
+#else
+            poly.usedByComposite = true;    // Unity 2021/2022 fallback
+#endif
+
+            CopyCompositePaths(sourceComposite, parentForComposite, poly, host.transform);
+
+            // 6) Bake geometry
+            compositeOut.GenerateGeometry();
+            if (verboseLogging)
+                Debug.Log($"[NoWalkBoundary] Output composite baked (pathCount={compositeOut.pathCount})");
+
+            // 7) Cleanup temporary bits only if we created them here
+            if (createdTilemapCollider)
+            {
+                var tmc = floor.GetComponent<TilemapCollider2D>();
+                if (tmc) Object.DestroyImmediate(tmc);
+            }
+            if (createdParentComposite)
+            {
+                var prb = parentForComposite.GetComponent<Rigidbody2D>();
+                var pcc = parentForComposite.GetComponent<CompositeCollider2D>();
+                if (pcc) Object.DestroyImmediate(pcc);
+                if (prb) Object.DestroyImmediate(prb);
             }
 
 #if ASTARPATH
-            // Rescan A* so AI respects the boundary (only if ASTARPATH scripting define is set).
-            if (AstarPath.active != null)
-            {
-                AstarPath.active.Scan();
-            }
+            // Optional: rescan here if you do not use a separate post-process.
+            if (AstarPath.active != null) AstarPath.active.Scan();
 #endif
 
-            Debug.Log("[NoWalkBoundary] Boundary (CompositeCollider2D) baked.");
-        }
-
-        private static (CompositeCollider2D composite, bool removeAfter) EnsureCompositeOnTilemap(GameObject tilemapGO, bool createIfMissing)
-        {
-            var composite = tilemapGO.GetComponent<CompositeCollider2D>();
-            var removeAfter = false;
-
-            if (!composite && createIfMissing)
-            {
-                var rb = tilemapGO.GetComponent<Rigidbody2D>() ?? tilemapGO.AddComponent<Rigidbody2D>();
-                rb.bodyType = Rigidbody2D.Static;
-
-                var tmCol = tilemapGO.GetComponent<TilemapCollider2D>() ?? tilemapGO.AddComponent<TilemapCollider2D>();
-                tmCol.usedByComposite = true;
-
-                composite = tilemapGO.AddComponent<CompositeCollider2D>();
-                composite.geometryType = CompositeCollider2D.GeometryType.Outlines;
-                composite.generationType = CompositeCollider2D.GenerationType.Synchronous;
-
-                removeAfter = true;
-            }
-
-            return (composite, removeAfter);
+            if (verboseLogging) Debug.Log("[NoWalkBoundary] Done");
         }
 
         private static void CopyCompositePaths(CompositeCollider2D src, Transform srcSpace, PolygonCollider2D dstPoly, Transform dstSpace)
         {
-            var pathCount = src.pathCount;
-            dstPoly.pathCount = pathCount;
+            var count = src.pathCount;
+            dstPoly.pathCount = count;
 
-            var srcPts = new Vector2[0];
-
-            for (int i = 0; i < pathCount; i++)
+            var buf = new List<Vector2>(256);
+            for (int i = 0; i < count; i++)
             {
-                var count = src.GetPathPointCount(i);
-                if (srcPts.Length < count) srcPts = new Vector2[count];
-                src.GetPath(i, srcPts);
+                buf.Clear();
+                buf.Capacity = Mathf.Max(buf.Capacity, src.GetPathPointCount(i));
+                src.GetPath(i, buf);
 
-                var dst = new Vector2[count];
-                for (int p = 0; p < count; p++)
+                // Transform into output space
+                for (int p = 0; p < buf.Count; p++)
                 {
-                    var wp = (Vector2)srcSpace.TransformPoint(srcPts[p]);
-                    dst[p] = (Vector2)dstSpace.InverseTransformPoint(wp);
+                    var wp = (Vector2)srcSpace.TransformPoint(buf[p]);
+                    buf[p] = (Vector2)dstSpace.InverseTransformPoint(wp);
                 }
-                dstPoly.SetPath(i, dst);
+
+                dstPoly.SetPath(i, buf);
             }
         }
 
@@ -168,18 +202,17 @@ namespace Rooms.PostProcessing
 
         private static T FindChildByName<T>(Transform root, string name) where T : Component
         {
-            // Non-deprecated traversal (no FindObjectOfType).
-            var queue = new Queue<Transform>();
-            queue.Enqueue(root);
-            while (queue.Count > 0)
+            var q = new Queue<Transform>();
+            q.Enqueue(root);
+            while (q.Count > 0)
             {
-                var t = queue.Dequeue();
+                var t = q.Dequeue();
                 if (t.name == name)
                 {
-                    var comp = t.GetComponent<T>();
-                    if (comp) return comp;
+                    var c = t.GetComponent<T>();
+                    if (c) return c;
                 }
-                for (int i = 0; i < t.childCount; i++) queue.Enqueue(t.GetChild(i));
+                for (int i = 0; i < t.childCount; i++) q.Enqueue(t.GetChild(i));
             }
             return null;
         }
