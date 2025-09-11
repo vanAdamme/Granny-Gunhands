@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 7096708160447307264}
   - component: {fileID: 6420365253097603999}
   m_Layer: 9
-  m_Name: EnemyTemplate
+  m_Name: Cyclops Mini
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,7 @@ Animator:
   m_GameObject: {fileID: 1458434426318163910}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 99684b617e488be4e8353456a3074e94, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -172,7 +172,7 @@ SpriteRenderer:
   m_SortingLayerID: 1919248021
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -4235925695073614604, guid: 87905ae52580ca941989c47a890400b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -180,7 +180,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
 --- !u!114 &4386980322125764365
@@ -195,13 +195,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b1f83f52d8bac842b8a5eef4a4b3bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 1
+  m_MaxHealth: 10
   m_CurrentHealth: 0
   damageNumberPrefab: {fileID: 0}
   damageFlash: {fileID: 851468478211253564}
   m_DamageMultiplier: 1
-  moveSpeed: 1
-  experienceOnDeath: 1
+  moveSpeed: 2
+  experienceOnDeath: 2
   lootTable: {fileID: 0}
   lootParent: {fileID: 0}
 --- !u!114 &851468478211253564
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 4893845923001296938}
   - component: {fileID: 6755815264712036098}
   - component: {fileID: 7574650290387783369}
-  - component: {fileID: 5087227033765464902}
+  - component: {fileID: 2552548286836468865}
   m_Layer: 0
   m_Name: FSM
   m_TagString: Untagged
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fsm: {fileID: 7932447468505536179}
   animator: {fileID: 3641241029426152840}
-  targetProviderSource: {fileID: 5087227033765464902}
+  targetProviderSource: {fileID: 2552548286836468865}
   movementSource: {fileID: 6755815264712036098}
   attackSource: {fileID: 7574650290387783369}
   attackRange: 1.25
@@ -443,7 +443,7 @@ MonoBehaviour:
     m_Bits: 64
   baseDamage: 1
   cooldown: 0.6
---- !u!114 &5087227033765464902
+--- !u!114 &2552548286836468865
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

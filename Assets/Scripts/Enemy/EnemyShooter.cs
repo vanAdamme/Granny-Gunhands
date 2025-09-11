@@ -10,6 +10,7 @@ public class EnemyShooter : MonoBehaviour
 
     [Header("Fire Control")]
     [SerializeField] private float fireCooldown = 1.2f;
+    [SerializeField] private bool controlledExternally = false; // NEW: when true, FSM drives firing
     float timer;
 
     [Header("Aim/Spawn")]
@@ -37,6 +38,20 @@ public class EnemyShooter : MonoBehaviour
         player = PlayerController.Instance ? PlayerController.Instance.transform : null;
     }
 
+    void Update()
+    {
+        if (controlledExternally) return;
+        if (!player) return;
+        timer -= Time.deltaTime;
+        if (timer <= 0f)
+        {
+            Vector3 spawnPos = muzzle ? muzzle.position : transform.position;
+            Vector2 dir = muzzle ? (Vector2)muzzle.right : (Vector2)transform.right;
+            Fire(spawnPos, dir);
+            timer = fireCooldown;
+        }
+    }
+
     void LateUpdate()
     {
         if (!player || !aimRoot) return;
@@ -51,19 +66,6 @@ public class EnemyShooter : MonoBehaviour
         {
             float angle = Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg;
             aimRoot.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
-    }
-
-    void Update()
-    {
-        if (!player) return;
-        timer -= Time.deltaTime;
-        if (timer <= 0f)
-        {
-            Vector3 spawnPos = muzzle ? muzzle.position : transform.position;
-            Vector2 dir = muzzle ? (Vector2)muzzle.right : (Vector2)transform.right;
-            Fire(spawnPos, dir);
-            timer = fireCooldown;
         }
     }
 
@@ -88,6 +90,20 @@ public class EnemyShooter : MonoBehaviour
             rangeOverride: range,
             obstacleOverride: wallLayers
         );
+    }
+
+    /// <summary>Manual fire invoked by FSM; computes direction from muzzle/aimRoot.</summary>
+    public void FireAt(Vector3 targetWorldPos)
+    {
+        Vector3 spawnPos = muzzle ? muzzle.position : transform.position;
+        Vector2 dir = ((Vector2)(targetWorldPos - spawnPos)).normalized;
+        if (muzzle) dir = muzzle.right;                // If you prefer muzzle-forward, keep this line
+        Fire(spawnPos, dir);
+    }
+
+    public void SetControlledExternally(bool value)
+    {
+        controlledExternally = value;
     }
 
 #if UNITY_EDITOR
