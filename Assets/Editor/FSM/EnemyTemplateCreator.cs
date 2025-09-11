@@ -4,11 +4,10 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>
-/// Creates/Converts an Enemy prefab with this hierarchy:
-/// Enemy (root: physics, visuals, core scripts)
-///  └─ FSM (child: EnemyContext, EnemyStateMachine, BribedAI optional)
-/// Also (optionally) adds A* components if present (AIPath, AIDestinationSetter) without compile-time deps.
-/// Idempotent: re-running only fills missing parts.
+/// Enemy template builder (root + FSM child).
+/// Root: Rigidbody2D, CapsuleCollider2D, Animator, SpriteRenderer, Enemy, EnemyEvents (optional), DamageFlash, (optional) AIPath/AIDestinationSetter
+/// FSM child: EnemyContext, EnemyStateMachine, (optional) BribedAI
+/// Idempotent: re-running only fills missing parts. No compile-time dependency on A* types.
 /// </summary>
 public static class EnemyTemplateCreator
 {
@@ -30,7 +29,7 @@ public static class EnemyTemplateCreator
         Debug.Log($"[EnemyTemplateCreator] Created prefab at: {prefabPath}", saved);
     }
 
-    [MenuItem("GameObject/Enemy/Convert To Enemy (Root + FSM Child)", false, priority = 10)]
+    [MenuItem("GameObject/Granny Gunhands/Convert To Enemy (Root + FSM Child)", false, priority = 10)]
     public static void ConvertSelectionToEnemy()
     {
         var go = Selection.activeGameObject;
@@ -61,68 +60,54 @@ public static class EnemyTemplateCreator
         var col = AddIfMissing<CapsuleCollider2D>(root);
         if (col.size == Vector2.zero) col.size = new Vector2(0.6f, 1.0f);
 
-        // Visuals (child)
-        var sprite = FindOrCreateChild(root.transform, "Sprite");
-        var sr     = AddIfMissing<SpriteRenderer>(sprite);
+        // Animator (root)
+        var animator = AddIfMissing<Animator>(root);
 
-        // Apply consistent sprite renderer settings
+        // SpriteRenderer (root) – avoid Animator auto-adding duplicates
+        var sr = AddIfMissing<SpriteRenderer>(root);
         if (sr)
         {
-            sr.sortingLayerName = "Objects";         // make sure this layer exists in Project Settings
+            sr.sortingLayerName = "Objects";     // ensure this exists in Project Settings
             sr.sortingOrder     = 0;
             sr.spriteSortPoint  = SpriteSortPoint.Pivot;
         }
 
-        // Utility children (optional buckets)
-        FindOrCreateChild(root.transform, "FX");
-        FindOrCreateChild(root.transform, "Sensors");
-
-        // Animator (root)
-        var animator = AddIfMissing<Animator>(root);
-
-        // Core gameplay scripts (root) — by simple names to avoid hard deps
+        // Core gameplay scripts (root) — Enemy already inherits Target/handles health
         AddIfMissingByName(root, "Enemy");
-        AddIfMissingByName(root, "EnemyEvents");
+        AddIfMissingByName(root, "EnemyEvents");   // optional
+        AddIfMissingByName(root, "DamageFlash");   // requested
 
         // Optional A* Pathfinding (root) without compile-time dependency
-        // Tries both unqualified and qualified names.
         var path = AddIfMissingByName(root, "AIPath") ?? AddIfMissingByName(root, "Pathfinding.AIPath");
         var dest = AddIfMissingByName(root, "AIDestinationSetter") ?? AddIfMissingByName(root, "Pathfinding.AIDestinationSetter");
 
-        // If we managed to add AIPath, configure defaults
         if (path)
         {
             var so = new SerializedObject(path);
 
-            // Bump speed if too low
+            // Speed minimum
             var maxSpeedProp = so.FindProperty("maxSpeed");
             if (maxSpeedProp != null && maxSpeedProp.propertyType == SerializedPropertyType.Float)
-            {
                 if (maxSpeedProp.floatValue < 2.5f) maxSpeedProp.floatValue = 2.5f;
-            }
 
-            // Force flags
+            // Enable movement/search flags if they exist
             TrySetBool(so, "canSearch", true);
-            TrySetBool(so, "canMove", true);
+            TrySetBool(so, "canMove",   true);
 
-            // Orientation: set to YAxisForward if the property exists
+            // Orientation: YAxisForward (per your current build index = 1)
             var orientProp = so.FindProperty("orientation");
             if (orientProp != null && orientProp.propertyType == SerializedPropertyType.Enum)
-            {
-                // OrientationMode.YAxisForward is index 1 in current A* builds
                 orientProp.enumValueIndex = 1;
-            }
 
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(path);
         }
 
-        // FSM (child) — always created and used for all brain components
+        // FSM (child) — brain components live here
         var fsmGO = FindOrCreateChild(root.transform, "FSM");
-
-        var ctx   = AddIfMissingByName(fsmGO, "EnemyContext");
-        var sm    = AddIfMissingByName(fsmGO, "EnemyStateMachine");
-        var bribed= AddIfMissingByName(fsmGO, "BribedAI");   // optional
+        var ctx    = AddIfMissingByName(fsmGO, "EnemyContext");
+        var sm     = AddIfMissingByName(fsmGO, "EnemyStateMachine");
+        var bribed = AddIfMissingByName(fsmGO, "BribedAI"); // optional
 
         // Wire EnemyContext <-> EnemyStateMachine if both exist
         WireObjectField(ctx, "fsm", sm);
@@ -166,6 +151,8 @@ public static class EnemyTemplateCreator
                                              Component path, Component dest)
     {
         var monos = root.GetComponentsInChildren<MonoBehaviour>(true);
+        var dmgFlash = GetComponentByName(root, "DamageFlash");
+
         foreach (var mb in monos)
         {
             if (!mb) continue;
@@ -185,6 +172,9 @@ public static class EnemyTemplateCreator
 
             changed |= TryAssignRef(so, "spriteRenderer", sr);
             changed |= TryAssignRef(so, "sr", sr);
+
+            // Damage flash field on Enemy etc.
+            changed |= TryAssignRef(so, "damageFlash", dmgFlash);
 
             // A* convenience names (safe even if components are null)
             changed |= TryAssignRef(so, "path", path);
@@ -298,6 +288,12 @@ public static class EnemyTemplateCreator
                 AssetDatabase.CreateFolder(current, parts[i]);
             current = next;
         }
+    }
+
+    private static Component GetComponentByName(GameObject go, string typeName)
+    {
+        var t = FindTypeAnywhere(typeName);
+        return t != null ? go.GetComponent(t) : null;
     }
 }
 #endif
