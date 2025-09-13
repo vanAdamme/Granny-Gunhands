@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7333780409568604513}
   - component: {fileID: 4043712442327093425}
   - component: {fileID: 7006801886726887758}
-  - component: {fileID: 8362005348786747367}
   - component: {fileID: 1199489653314598095}
-  - component: {fileID: 2544381807600339140}
+  - component: {fileID: 9189212702979915103}
+  - component: {fileID: 2452430959887367104}
   m_Layer: 9
   m_Name: FSM
   m_TagString: Untagged
@@ -64,25 +64,13 @@ MonoBehaviour:
   fsm: {fileID: 4043712442327093425}
   animator: {fileID: 5087878534804282414}
   targetProviderSource: {fileID: 1199489653314598095}
-  movementSource: {fileID: 8362005348786747367}
-  attackSource: {fileID: 2544381807600339140}
+  movementSource: {fileID: 2452430959887367104}
+  attackSource: {fileID: 9189212702979915103}
   attackRange: 1.25
   repathInterval: 0.25
---- !u!114 &8362005348786747367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771231386720069479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f78bfd0378117424893a5aa4cd3aeb57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ai: {fileID: -1359465381732301634}
-  stopDistance: 0.2
-  callSearchPath: 1
+  sprite: {fileID: 7151869608450696487}
+  flipByScale: 1
+  defaultFacingRight: 1
 --- !u!114 &1199489653314598095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,10 +83,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6bebf400a64bc45adfb706a2ea85df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerProviderSource: {fileID: 0}
   explicitPlayer: {fileID: 0}
-  keepResolving: 1
-  resolveEvery: 0.5
---- !u!114 &2544381807600339140
+--- !u!114 &9189212702979915103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,15 +94,71 @@ MonoBehaviour:
   m_GameObject: {fileID: 771231386720069479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0da950ab571052042bc640d8d66ba94a, type: 3}
+  m_Script: {fileID: 11500000, guid: e466378e90f91a8488e55ae56d60a733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damager: {fileID: 837774404801458333}
-  defaultTargetMask:
+  shooter: {fileID: -633672427608513262}
+  fireInterval: 0.35
+  minRange: 0
+  maxRange: 12
+  losMask:
     serializedVersion: 2
-    m_Bits: 64
-  baseDamage: 1
-  cooldown: 0.6
+    m_Bits: 0
+  faceTarget: 1
+  shootAnimTrigger: 
+--- !u!114 &2452430959887367104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771231386720069479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e7e7130c499402448806995beb6001b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ApproachRange: 8
+  IdealMaxRange: 6
+  FleeRange: 2.5
+  MoveSpeed: 3.5
+  StopTolerance: 0.2
+  StrafeInBand: 1
+  StrafeRadius: 0.8
+  StrafeSpeed: 1.2
+  ai: {fileID: 0}
+  callSearchPath: 1
+--- !u!1 &2732463759430836853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6583322869815394305}
+  m_Layer: 9
+  m_Name: temp transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6583322869815394305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732463759430836853}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.005, y: 0.163, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 399317229321493578}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7989795060797501316
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,6 +178,7 @@ GameObject:
   - component: {fileID: -2664356089318358207}
   - component: {fileID: -1359465381732301634}
   - component: {fileID: 7583441660497736614}
+  - component: {fileID: -633672427608513262}
   m_Layer: 9
   m_Name: Rock Monster Mini
   m_TagString: Enemy
@@ -156,6 +200,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7333780409568604513}
+  - {fileID: 6583322869815394305}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7151869608450696487
@@ -230,6 +275,7 @@ MonoBehaviour:
   damageNumberPrefab: {fileID: 2556215940150367559, guid: 3665fc2192b950245823ff3a982f8f0a, type: 3}
   damageFlash: {fileID: 7583441660497736614}
   m_DamageMultiplier: 1
+  contactDamage: 1
   moveSpeed: 1.2
   experienceOnDeath: 2
   lootTable: {fileID: 11400000, guid: c70fab3c90e33734ea452f6c2084d796, type: 2}
@@ -551,3 +597,30 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-633672427608513262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7989795060797501316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f49130f9e18e0c479bdd4eeef749d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 3817507498985466495, guid: ce569a6f26632aa4586d7f4140c923b5, type: 3}
+  projectileSpeed: 8
+  projectileDamage: 1
+  range: 10
+  fireCooldown: 1.2
+  controlledExternally: 0
+  aimRoot: {fileID: 6583322869815394305}
+  muzzle: {fileID: 6583322869815394305}
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  wallLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  poolService: {fileID: 0}
