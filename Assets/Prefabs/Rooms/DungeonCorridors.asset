@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc0feb0fe3ca387448cff6947dd58ed6, type: 3}
-  m_Name: Corridors
+  m_Name: DungeonCorridors
   m_EditorClassIdentifier: 
   RoomTemplates:
-  - {fileID: 645271859340970680, guid: fa38aa86968fcc74e8c3591ee5221c76, type: 3}
-  - {fileID: 645271859340970680, guid: 921b5116ca41fe345950708e0518fa58, type: 3}
+  - {fileID: 645271859340970680, guid: 81f4769ffaf11cc47a063eb7251f862d, type: 3}
+  - {fileID: 645271859340970680, guid: 69b08e8f535f41d4da8b188bed5ca0f6, type: 3}
