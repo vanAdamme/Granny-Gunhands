@@ -17,9 +17,9 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
     _niceName: RunAtPlayerStrategy
   Attack:
-    _assemblyQualifiedName: ContactAttackStrategy, Assembly-CSharp, Version=0.0.0.0,
+    _assemblyQualifiedName: MeleeAttackStrategy, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-    _niceName: ContactAttackStrategy
+    _niceName: MeleeAttackStrategy
   Target:
     _assemblyQualifiedName: PlayerTargetProvider, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null

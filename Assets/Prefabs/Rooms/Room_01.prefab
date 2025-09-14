@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 330695620022555484}
   - component: {fileID: 8679658032663981263}
   - component: {fileID: 4757655743659909022}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Magma
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 12
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -273,7 +273,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -591,10 +591,10 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 615774431, guid: cb24d74ae6a44014fa8720ce2e53c69d, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -1265319666, guid: cb24d74ae6a44014fa8720ce2e53c69d, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -1017063217, guid: cb24d74ae6a44014fa8720ce2e53c69d, type: 3}
   - m_RefCount: 1
@@ -613,8 +613,8 @@ Tilemap:
     m_Data: {fileID: 1276679671, guid: cb24d74ae6a44014fa8720ce2e53c69d, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -682320945, guid: cb24d74ae6a44014fa8720ce2e53c69d, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -1265319666, guid: cb24d74ae6a44014fa8720ce2e53c69d, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 15
     m_Data:

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ContactAttackStrategy : MonoBehaviour, IAttackStrategy
+public class MeleeAttackStrategy : MonoBehaviour, IAttackStrategy
 {
     [SerializeField] private Damager damager;             // your existing hitbox
     [SerializeField] private LayerMask defaultTargetMask; // usually “Player”
@@ -18,7 +18,7 @@ public class ContactAttackStrategy : MonoBehaviour, IAttackStrategy
     void Awake()
     {
         if (!damager) damager = GetComponent<Damager>();
-        if (!damager) { Debug.LogWarning($"{name}: No Damager found for ContactAttackStrategy"); return; }
+        if (!damager) { Debug.LogWarning($"{name}: No Damager found for MeleeAttackStrategy"); return; }
 
         // Initial wiring (BribedAI may reconfigure this at runtime to 'Enemy' and back)
         damager.Configure(gameObject, defaultTargetMask, baseDamage);

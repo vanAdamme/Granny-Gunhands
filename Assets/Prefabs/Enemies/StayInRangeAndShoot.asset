@@ -17,9 +17,9 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
     _niceName: KeepRangeMovementStrategy
   Attack:
-    _assemblyQualifiedName: RangedAttackStrategy, Assembly-CSharp, Version=1.0.0.0,
+    _assemblyQualifiedName: RangedProjectileAttackStrategy, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-    _niceName: RangedAttackStrategy
+    _niceName: RangedProjectileAttackStrategy
   Target:
     _assemblyQualifiedName: PlayerTargetProvider, Assembly-CSharp, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null

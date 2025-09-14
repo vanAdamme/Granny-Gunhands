@@ -11,7 +11,9 @@ public class EnemyShooter : MonoBehaviour
     [Header("Fire Control")]
     [SerializeField] private float fireCooldown = 1.2f;
     [SerializeField] private bool controlledExternally = false; // NEW: when true, FSM drives firing
+    public void SetControlledExternally(bool value) => controlledExternally = value;
     float timer;
+    public bool CanFire => timer <= 0f;
 
     [Header("Aim/Spawn")]
     [SerializeField] private Transform aimRoot;
@@ -40,8 +42,8 @@ public class EnemyShooter : MonoBehaviour
 
     void Update()
     {
-        if (controlledExternally) return;
-        if (!player) return;
+        if (controlledExternally || !player) return;
+
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
@@ -93,17 +95,15 @@ public class EnemyShooter : MonoBehaviour
     }
 
     /// <summary>Manual fire invoked by FSM; computes direction from muzzle/aimRoot.</summary>
-    public void FireAt(Vector3 targetWorldPos)
+    public bool FireAt(Vector3 worldPos)
     {
-        Vector3 spawnPos = muzzle ? muzzle.position : transform.position;
-        Vector2 dir = ((Vector2)(targetWorldPos - spawnPos)).normalized;
-        if (muzzle) dir = muzzle.right;                // If you prefer muzzle-forward, keep this line
-        Fire(spawnPos, dir);
-    }
+        if (timer > 0f || !aimRoot) return false;
 
-    public void SetControlledExternally(bool value)
-    {
-        controlledExternally = value;
+        Vector3 pivot = muzzle ? muzzle.position : aimRoot.position;
+        Vector2 dir   = ((Vector2)(worldPos - pivot)).normalized;
+        Fire(pivot, dir);
+        timer = fireCooldown;
+        return true;
     }
 
 #if UNITY_EDITOR
