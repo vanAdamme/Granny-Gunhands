@@ -53,11 +53,11 @@ Material:
     - _DistortStrength: 0.06
     - _EdgeFade: 0
     - _GlowIntensity: 1
-    - _NoiseScale: 2
-    - _PulseSpeed: 0.4
+    - _NoiseScale: 0.18
+    - _PulseSpeed: 0.342
     m_Colors:
     - _BaseColour: {r: 0.29019606, g: 0.054901943, b: 0.054901943, a: 1}
     - _HotColour: {r: 1.8443025, g: 0.121269405, b: 0, a: 1}
-    - _ScrollSpeed: {r: 0.08, g: 0.03, b: 0, a: 0}
+    - _ScrollSpeed: {r: 0.04, g: 0.01, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
