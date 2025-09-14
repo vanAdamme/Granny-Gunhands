@@ -80,8 +80,17 @@ public class Damager : MonoBehaviour
         if (nextAllowedByTarget.TryGetValue(targetId, out float next) && now < next)
             return;
 
-        // Apply damage
-        (targetComp as IDamageable).TakeDamage(damage);
+        // Apply damage. Prefer the concrete Health/Target overload that takes an attacker
+        var rootGO = owner ? owner : gameObject; // fallback if owner not set
+        if (health)
+        {
+            health.TakeDamage(damage, rootGO);
+        }
+        else if (targetComp is IDamageable idmg)
+        {
+            // legacy path (no attacker supported on IDamageable): still send damage
+            idmg.TakeDamage(damage);
+        }
 
         // Mark hit for this physics step and set cooldown window
         lastHitFixedTimeByTarget[targetId] = Time.fixedTime;

@@ -45,6 +45,7 @@ public class Health : MonoBehaviour
 
         m_CurrentHealth -= amount;
 
+        SendMessage("OnDamaged", new object[] { amount, attacker }, SendMessageOptions.DontRequireReceiver);
         if (damageNumberPrefab) damageNumberPrefab.Spawn(transform.position, amount);
         if (damageFlash) damageFlash.CallDamageFlash();
 

@@ -12,8 +12,10 @@ GameObject:
   - component: {fileID: 4043712442327093425}
   - component: {fileID: 7006801886726887758}
   - component: {fileID: 1199489653314598095}
-  - component: {fileID: 965496035837186622}
   - component: {fileID: 1189867634981756452}
+  - component: {fileID: 317652390655977345}
+  - component: {fileID: 2546985082012944299}
+  - component: {fileID: 6568101403234576348}
   m_Layer: 9
   m_Name: FSM
   m_TagString: Untagged
@@ -63,9 +65,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fsm: {fileID: 4043712442327093425}
   animator: {fileID: 5087878534804282414}
-  targetProviderSource: {fileID: 1199489653314598095}
+  targetProviderSource: {fileID: 2546985082012944299}
   movementSource: {fileID: 1189867634981756452}
-  attackSource: {fileID: 965496035837186622}
+  attackSource: {fileID: 317652390655977345}
   attackRange: 1.25
   repathInterval: 0.25
   sprite: {fileID: 7151869608450696487}
@@ -85,24 +87,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProviderSource: {fileID: 0}
   explicitPlayer: {fileID: 0}
---- !u!114 &965496035837186622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771231386720069479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0da950ab571052042bc640d8d66ba94a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damager: {fileID: 0}
-  defaultTargetMask:
-    serializedVersion: 2
-    m_Bits: 64
-  baseDamage: 1
-  cooldown: 0.6
 --- !u!114 &1189867634981756452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +104,57 @@ MonoBehaviour:
   rb: {fileID: 0}
   rbMoveSpeed: 3.5
   stopDistance: 0.2
+--- !u!114 &317652390655977345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771231386720069479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6339a146cba031846aad19b6c2eeba19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damager: {fileID: 0}
+  defaultTargetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  baseDamage: 1
+  cooldown: 0.6
+--- !u!114 &2546985082012944299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771231386720069479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 950b5e57dc7e714418d5f66b3488b71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  innerProviderSource: {fileID: 1199489653314598095}
+  aggroRange: 6
+  loseAggroRange: 12
+  forgetAfter: 3
+  requireLOS: 0
+  losMask:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &6568101403234576348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771231386720069479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650f1a9e5d8df314ab986d71fc6fa226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aggro: {fileID: 2546985082012944299}
 --- !u!1 &7989795060797501316
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +270,7 @@ MonoBehaviour:
   damageFlash: {fileID: 7583441660497736614}
   m_DamageMultiplier: 1
   contactDamage: 1
-  moveSpeed: 1.2
+  moveSpeed: 4
   experienceOnDeath: 2
   lootTable: {fileID: 11400000, guid: c70fab3c90e33734ea452f6c2084d796, type: 2}
   lootParent: {fileID: 0}

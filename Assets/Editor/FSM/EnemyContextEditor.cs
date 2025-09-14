@@ -18,6 +18,17 @@ public class EnemyContextEditor : Editor
     public override void OnInspectorGUI()
     {
         var mb = (MonoBehaviour)target;
+        if (mb is EnemyContext ctx)
+        {
+            if (!(ctx.TargetProvider is AggroTargetProvider))
+            {
+                EditorGUILayout.HelpBox(
+                    "Target provider is not AggroTargetProvider.\n" +
+                    "Enemy will aggro immediately instead of waiting for range/damage.",
+                    MessageType.Warning);
+            }
+        }
+
         var t  = mb.GetType();
         if (t.Name != "EnemyContext")
         {
