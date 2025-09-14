@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0feb0fe3ca387448cff6947dd58ed6, type: 3}
+  m_Name: DungeonRoomsTemplates
+  m_EditorClassIdentifier: 
+  RoomTemplates:
+  - {fileID: 6073519394579220104, guid: 61a9285acf5848f4887612b8fa449b75, type: 3}
+  - {fileID: 540850523972194625, guid: 25c8479fc324c4a4681b0707cba74b53, type: 3}
+  - {fileID: 8978789925020729173, guid: 630a045760b3aa94a92e8fbfdce5edb6, type: 3}
