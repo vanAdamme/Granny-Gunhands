@@ -6,7 +6,7 @@ using Pathfinding;
 /// retreat if inside FleeRange, otherwise hold (with optional gentle strafe).
 /// Works with AIPath if present; falls back to simple velocity.
 /// </summary>
-public class KeepRangeMovementStrategy : MonoBehaviour, IMovementStrategy
+public class KeepRangeMovementStrategy : MonoBehaviour, IMovementStrategy, IRangeAware
 {
     [Header("Ranges (world units)")]
     [Tooltip("If farther than this, move closer.")]
@@ -15,6 +15,9 @@ public class KeepRangeMovementStrategy : MonoBehaviour, IMovementStrategy
     public float IdealMaxRange = 6f;
     [Tooltip("If closer than this, back away.")]
     public float FleeRange     = 2.5f;
+
+public float MinPreferredRange => FleeRange;
+public float MaxPreferredRange => IdealMaxRange;
 
     [Header("Motion")]
     [Tooltip("Used only for rigidbody fallback; AIPath controls its own speed.")]
@@ -42,12 +45,18 @@ public class KeepRangeMovementStrategy : MonoBehaviour, IMovementStrategy
 
     void Awake()
     {
-        if (!ai) ai = GetComponent<AIPath>();
-        rb = rb ? rb : GetComponent<Rigidbody2D>();
+        if (!ai) ai = GetComponent<AIPath>() ?? GetComponentInParent<AIPath>();
+        if (!rb) rb = GetComponent<Rigidbody2D>() ?? GetComponentInParent<Rigidbody2D>();
 
-        // Sync AIPath speed with Enemy if available (matches your AStarMovementStrategy)
-        if (ai && TryGetComponent<Enemy>(out var enemy))
+        if (ai && TryGetComponentInParent(out Enemy enemy))
             ai.maxSpeed = Mathf.Max(ai.maxSpeed, enemy.MoveSpeed);
+    }
+
+    private bool TryGetComponentInParent<T>(out T c) where T : Component
+    {
+        c = GetComponent<T>();
+        if (!c) c = GetComponentInParent<T>();
+        return c;
     }
 
     public bool MoveTowards(IEnemyContext ctx, Vector2 targetPos, float dt)

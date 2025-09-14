@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89b25973ecdffea4a8282482c14675cb, type: 3}
-  m_Name: BruteProfile
+  m_Name: StayInRangeAndShoot
   m_EditorClassIdentifier: 
   Move:
-    _assemblyQualifiedName: RunAtPlayerStrategy, Assembly-CSharp, Version=0.0.0.0,
+    _assemblyQualifiedName: KeepRangeMovementStrategy, Assembly-CSharp, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-    _niceName: RunAtPlayerStrategy
+    _niceName: KeepRangeMovementStrategy
   Attack:
-    _assemblyQualifiedName: ContactAttackStrategy, Assembly-CSharp, Version=0.0.0.0,
+    _assemblyQualifiedName: RangedAttackStrategy, Assembly-CSharp, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-    _niceName: ContactAttackStrategy
+    _niceName: RangedAttackStrategy
   Target:
-    _assemblyQualifiedName: PlayerTargetProvider, Assembly-CSharp, Version=0.0.0.0,
+    _assemblyQualifiedName: PlayerTargetProvider, Assembly-CSharp, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
     _niceName: PlayerTargetProvider

@@ -161,18 +161,14 @@ public class EnemyStateMachine : MonoBehaviour
 
         public override void Tick(IEnemyContext ctx, float dt)
         {
-            if (!ctx.IsAlive) return;
-
-            if (!ctx.TargetProvider.TryGetTarget(out var t))
-            {
-                Owner.ChangeState(Owner.idle);
-                return;
-            }
+            if (!ctx.TargetProvider.TryGetTarget(out var t)) { Owner.ChangeState(Owner.idle); return; }
 
             var dist = Vector2.Distance(ctx.Transform.position, t.position);
             ctx.LookAt(t.position);
 
-            if (dist > ctx.AttackRange)
+            // Bail to Move if outside the preferred band in either direction.
+            if (dist > ctx.AttackRange ||
+                (ctx.Movement is IRangeAware pref && dist < pref.MinPreferredRange - 0.05f))
             {
                 Owner.ChangeState(Owner.moving);
                 return;
@@ -180,6 +176,7 @@ public class EnemyStateMachine : MonoBehaviour
 
             ctx.Attack.TryAttack(ctx, t, dt);
         }
+
     }
 
     private class HurtState : StateBase

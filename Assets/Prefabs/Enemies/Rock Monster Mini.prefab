@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4043712442327093425}
   - component: {fileID: 7006801886726887758}
   - component: {fileID: 1199489653314598095}
-  - component: {fileID: 9189212702979915103}
-  - component: {fileID: 2452430959887367104}
+  - component: {fileID: 965496035837186622}
+  - component: {fileID: 1189867634981756452}
   m_Layer: 9
   m_Name: FSM
   m_TagString: Untagged
@@ -64,8 +64,8 @@ MonoBehaviour:
   fsm: {fileID: 4043712442327093425}
   animator: {fileID: 5087878534804282414}
   targetProviderSource: {fileID: 1199489653314598095}
-  movementSource: {fileID: 2452430959887367104}
-  attackSource: {fileID: 9189212702979915103}
+  movementSource: {fileID: 1189867634981756452}
+  attackSource: {fileID: 965496035837186622}
   attackRange: 1.25
   repathInterval: 0.25
   sprite: {fileID: 7151869608450696487}
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProviderSource: {fileID: 0}
   explicitPlayer: {fileID: 0}
---- !u!114 &9189212702979915103
+--- !u!114 &965496035837186622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,19 +94,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 771231386720069479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e466378e90f91a8488e55ae56d60a733, type: 3}
+  m_Script: {fileID: 11500000, guid: 0da950ab571052042bc640d8d66ba94a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shooter: {fileID: -633672427608513262}
-  fireInterval: 0.35
-  minRange: 0
-  maxRange: 12
-  losMask:
+  damager: {fileID: 0}
+  defaultTargetMask:
     serializedVersion: 2
-    m_Bits: 0
-  faceTarget: 1
-  shootAnimTrigger: 
---- !u!114 &2452430959887367104
+    m_Bits: 64
+  baseDamage: 1
+  cooldown: 0.6
+--- !u!114 &1189867634981756452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,18 +112,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 771231386720069479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e7e7130c499402448806995beb6001b, type: 3}
+  m_Script: {fileID: 11500000, guid: f78bfd0378117424893a5aa4cd3aeb57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ApproachRange: 8
-  IdealMaxRange: 6
-  FleeRange: 2.5
-  MoveSpeed: 3.5
-  StopTolerance: 0.2
-  StrafeInBand: 1
-  StrafeRadius: 0.8
-  StrafeSpeed: 1.2
   ai: {fileID: 0}
+  stopDistance: 0.2
   callSearchPath: 1
 --- !u!1 &2732463759430836853
 GameObject:
@@ -178,7 +168,6 @@ GameObject:
   - component: {fileID: -2664356089318358207}
   - component: {fileID: -1359465381732301634}
   - component: {fileID: 7583441660497736614}
-  - component: {fileID: -633672427608513262}
   m_Layer: 9
   m_Name: Rock Monster Mini
   m_TagString: Enemy
@@ -597,30 +586,3 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-633672427608513262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7989795060797501316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f49130f9e18e0c479bdd4eeef749d76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 3817507498985466495, guid: ce569a6f26632aa4586d7f4140c923b5, type: 3}
-  projectileSpeed: 8
-  projectileDamage: 1
-  range: 10
-  fireCooldown: 1.2
-  controlledExternally: 0
-  aimRoot: {fileID: 6583322869815394305}
-  muzzle: {fileID: 6583322869815394305}
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  wallLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  poolService: {fileID: 0}
