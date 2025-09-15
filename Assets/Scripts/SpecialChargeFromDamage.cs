@@ -1,77 +1,77 @@
-using System;
-using System.Reflection;
 using UnityEngine;
 
-public sealed class SpecialChargeFromDamage : MonoBehaviour
+[DisallowMultipleComponent]
+public class SpecialChargeFromDamage : MonoBehaviour
 {
-    [Header("Wiring")]
-    [SerializeField] private MonoBehaviour specialChargeSource; // must implement ISpecialCharge
+    [Header("Sources")]
+    [Tooltip("If not assigned, will TryGetComponent<Health>() on this GameObject.")]
+    [SerializeField] private Health health;
+
+    [Header("Charge Target")]
+    [Tooltip("Assign a MonoBehaviour that implements ISpecialCharge. " +
+             "If not assigned, searches parent/children.")]
+    [SerializeField] private MonoBehaviour chargeProvider; // must implement ISpecialCharge at runtime
     private ISpecialCharge charge;
 
     [Header("Tuning")]
+    [Tooltip("Charge gained per 1.0 damage taken by this Health.")]
     [SerializeField, Min(0f)] private float chargePerDamage = 1f;
 
-    void Awake()
+    [Tooltip("Guarantee at least this much charge on any positive damage (0 = disabled).")]
+    [SerializeField, Min(0f)] private float minChargeOnHit = 0f;
+
+    void Awake() => TryResolveRefs(editorLog: true);
+
+    void OnEnable()
     {
-        charge = specialChargeSource as ISpecialCharge;
-        if (charge != null) return;
-
-#if UNITY_6000_0_OR_NEWER
-        var all = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-#else
-        var all = FindObjectsOfType<MonoBehaviour>(includeInactive: true);
-#endif
-        foreach (var mb in all)
-            if (mb is ISpecialCharge sc) { charge = sc; break; }
-
-        if (charge == null)
-            Debug.LogWarning("[SpecialChargeFromDamage] No ISpecialCharge found. Assign one in the Inspector.");
+        if (!health) TryResolveRefs(editorLog: false);
+        if (health) health.Damaged += OnDamaged;  // ← requires the Health event shown below
     }
 
-    void OnEnable()  => DamageEvents.Damaged += OnDamaged;
-    void OnDisable() => DamageEvents.Damaged -= OnDamaged;
-
-    // Matches Action<GameObject victim, Component source, float amount>
-    private void OnDamaged(GameObject victim, Component source, float amount)
+    void OnDisable()
     {
-        if (charge == null) return;
+        if (health) health.Damaged -= OnDamaged;
+    }
 
-        // Only grant when the PLAYER is the attacker
-        if (source && source.gameObject == PlayerController.Instance?.gameObject)
+    private void OnDamaged(float amount, GameObject attacker)
+    {
+        if (charge == null || amount <= 0f || chargePerDamage <= 0f) return;
+
+        float toAdd = amount * chargePerDamage;
+        if (minChargeOnHit > 0f && toAdd < minChargeOnHit) toAdd = minChargeOnHit;
+
+        if (toAdd > 0f)
+            charge.AddDamage(toAdd);  // ← matches ISpecialCharge API
+    }
+
+    private void TryResolveRefs(bool editorLog)
+    {
+        if (!health && !TryGetComponent(out health))
         {
-            int add = Mathf.Max(0, Mathf.RoundToInt(amount * chargePerDamage));
-            TryAddCharge(add);
+#if UNITY_EDITOR
+            if (editorLog) Debug.LogWarning("[SpecialChargeFromDamage] No Health found on this GameObject.", this);
+#endif
+        }
+
+        if (charge == null)
+        {
+            if (chargeProvider is ISpecialCharge c1) charge = c1;
+            else
+            {
+                // Prefer parent (e.g., Managers HUD) then children
+                charge = GetComponentInParent<ISpecialCharge>(includeInactive: true)
+                         ?? GetComponentInChildren<ISpecialCharge>(includeInactive: true);
+            }
+
+#if UNITY_EDITOR
+            if (editorLog && charge == null)
+                Debug.LogWarning("[SpecialChargeFromDamage] No ISpecialCharge found. Assign a provider or add one to parent/children.", this);
+#endif
         }
     }
 
-    // --- Helpers ---
-
-    void TryAddCharge(int add)
-    {
-        if (add <= 0 || charge == null) return;
-
-        var t = charge.GetType();
-
-        // Try common methods first
-        var m =
-            t.GetMethod("Add",           BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new[] { typeof(int) }, null) ??
-            t.GetMethod("AddCharge",     BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new[] { typeof(int) }, null) ??
-            t.GetMethod("Gain",          BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new[] { typeof(int) }, null) ??
-            t.GetMethod("Increase",      BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new[] { typeof(int) }, null) ??
-            t.GetMethod("Increment",     BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new[] { typeof(int) }, null);
-
-        if (m != null) { m.Invoke(charge, new object[] { add }); return; }
-
-        // Fallback: bump Current (clamped) if writeable or via SetCurrent(int)
-        var pCur = t.GetProperty("Current");
-        var pReq = t.GetProperty("Required");
-        int cur = pCur != null && pCur.CanRead ? Convert.ToInt32(pCur.GetValue(charge)) : 0;
-        int req = pReq != null && pReq.CanRead ? Convert.ToInt32(pReq.GetValue(charge)) : int.MaxValue;
-        int newVal = Mathf.Clamp(cur + add, 0, req);
-
-        if (pCur != null && pCur.CanWrite)          { pCur.SetValue(charge, newVal); return; }
-        var setCurrent = t.GetMethod("SetCurrent");  if (setCurrent != null)         { setCurrent.Invoke(charge, new object[] { newVal }); return; }
-
-        Debug.LogWarning("[SpecialChargeFromDamage] Could not add charge; ISpecialCharge implementation exposes no compatible API.");
-    }
+#if UNITY_EDITOR
+    [ContextMenu("Re-resolve References")]
+    private void EditorReresolve() => TryResolveRefs(editorLog: true);
+#endif
 }

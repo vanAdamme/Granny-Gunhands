@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 using DamageNumbersPro;
 
 /// <summary>
@@ -13,6 +14,7 @@ public class Health : MonoBehaviour
     [SerializeField] private DamageNumber damageNumberPrefab;
     [SerializeField] private DamageFlash damageFlash;
 
+    public event System.Action<float, GameObject> Damaged;
     public event System.Action OnDied;
 
     protected bool m_IsInvulnerable;
@@ -45,7 +47,12 @@ public class Health : MonoBehaviour
 
         m_CurrentHealth -= amount;
 
+        // NEW: fire typed event for listeners
+        Damaged?.Invoke(amount, attacker);
+
+        // Keep legacy SendMessage for now (backward-compat)
         SendMessage("OnDamaged", new object[] { amount, attacker }, SendMessageOptions.DontRequireReceiver);
+
         if (damageNumberPrefab) damageNumberPrefab.Spawn(transform.position, amount);
         if (damageFlash) damageFlash.CallDamageFlash();
 

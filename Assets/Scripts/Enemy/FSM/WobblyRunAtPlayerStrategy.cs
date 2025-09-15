@@ -118,7 +118,8 @@ public class WobblyRunAtPlayerStrategy : MonoBehaviour, IMovementStrategy
             amp *= Mathf.Clamp01(dist / approach);
         }
 
-        var desiredOffset = right * (sign * amp * sine);
+        float wave = Mathf.Sin((t + _phase) * TwoPi * frequency);
+        var desiredOffset = right * (sign * amplitude * wave);
 
         // Smooth the offset to avoid harsh corners (frame-rate independent)
         float s = 1f - Mathf.Pow(1f - Mathf.Clamp01(smooth), dt * 60f);
