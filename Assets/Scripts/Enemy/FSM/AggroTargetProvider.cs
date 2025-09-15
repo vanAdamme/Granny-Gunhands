@@ -22,13 +22,49 @@ public class AggroTargetProvider : MonoBehaviour, ITargetProvider
     float lastAggroTime;
     Transform lastTarget;
 
+    void OnValidate()
+    {
+        // Keep the cached interface in sync when editing in Inspector
+        inner = innerProviderSource as ITargetProvider;
+    }
+
     void Awake()
     {
-        inner = innerProviderSource as ITargetProvider;
+        BindInner();
         if (inner == null)
             Debug.LogError($"{name}: AggroTargetProvider requires an inner ITargetProvider");
     }
 
+private void BindInner()
+    {
+        // 1) Respect explicit Inspector assignment
+        inner = innerProviderSource as ITargetProvider;
+        if (inner != null) return;
+
+        // 2) If there’s already some ITargetProvider on this GO, use it
+        //    (e.g., CookieTargetProvider or PlayerTargetProvider)
+        foreach (var mb in GetComponents<MonoBehaviour>())
+        {
+            if (mb == null) continue;
+            if (mb == (MonoBehaviour)this) continue;
+            if (mb is ITargetProvider itp)
+            {
+                innerProviderSource = mb; // serialize for clarity
+                inner = itp;
+                return;
+            }
+        }
+
+        // 3) Nothing found? Add a PlayerTargetProvider and use that
+        var p = gameObject.AddComponent<PlayerTargetProvider>();   // zero-config; it auto-binds GameSystems/Player
+        innerProviderSource = p;
+        inner = p;
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+            UnityEditor.EditorUtility.SetDirty(this);
+#endif
+    }
+    
     public bool TryGetTarget(out Transform target)
     {
         target = null;
