@@ -1,50 +1,61 @@
 using UnityEngine;
 using Pathfinding;
 
-/// Enemy movement that pursues a destination but adds a lateral wobble biased
-/// to a single side (Left OR Right), suitable for A* (AIPath) or Rigidbody2D fallback.
-/// Attach this component to enemies that should wobble; leave other enemies on your
-/// regular movement strategy.
+/// Move directly toward the player but "snake" left/right with a lateral sine.
+/// Works with AIPath (preferred) and falls back to Rigidbody2D steering.
+/// Add to only those enemies that should snake; wire it in EnemyContext → Movement Source.
 [DisallowMultipleComponent]
 public class WobblyRunAtPlayerStrategy : MonoBehaviour, IMovementStrategy
 {
     public enum Side { Left, Right }
 
     [Header("A* (preferred)")]
-    [SerializeField] private AIPath ai;                 // auto-found on self/parents
+    [SerializeField] private AIPath ai;                 // auto-found
     [SerializeField] private bool callSearchPath = true;
+    [Tooltip("Throttle SearchPath calls; AIPath already auto-replans.")]
+    [Min(0f)] public float minRepathInterval = 0.10f;
 
-    [Header("Fallback (if no A*)")]
-    [SerializeField] private Rigidbody2D rb;            // auto-found on self/parents
+    [Header("Fallback (no A*)")]
+    [SerializeField] private Rigidbody2D rb;            // auto-found
     [SerializeField] private float rbMoveSpeed = 3.5f;
 
-    [Header("Wobble")]
-    [Tooltip("Max lateral offset in world units when far from the destination.")]
-    [Min(0f)] public float amplitude = 1.6f;
+    [Header("Snake (temporal sine)")]
+    [Tooltip("Peak lateral offset in world units (before distance scaling/jitter).")]
+    [Min(0f)] public float amplitude = 2.0f;
 
-    [Tooltip("Oscillations per second for the wobble envelope.")]
-    [Min(0f)] public float frequency = 0.8f;
+    [Tooltip("Oscillations per second (base frequency before jitter).")]
+    [Min(0f)] public float frequency = 0.9f;
 
-    [Tooltip("Smooth the offset changes; 0 = raw, 1 = very smoothed.")]
-    [Range(0f, 1f)] public float smooth = 0.25f;
+    [Tooltip("Smooth the offset changes (0 = raw, 1 = heavy smoothing).")]
+    [Range(0f, 1f)] public float smooth = 0.20f;
 
-    [Tooltip("Bias to a single side relative to forward-to-target.")]
+    [Tooltip("Fade the wobble as we get close, so they can actually land hits.")]
+    public bool scaleWithDistance = true;
+
+    [Header("Randomisation (per enemy instance)")]
+    [Tooltip("If true, pick Left/Right at runtime; otherwise use the field below.")]
+    public bool randomiseSide = true;
     public Side side = Side.Right;
 
-    [Tooltip("Fade wobble as we get close so enemies can reliably reach the target.")]
-    public bool scaleWithDistance = true;
+    [Tooltip("± jitter applied to amplitude per enemy (e.g., 0.2 = ±20%).")]
+    [Range(0f, 1f)] public float amplitudeJitterPct = 0.25f;
+
+    [Tooltip("± jitter applied to frequency per enemy (e.g., 0.15 = ±15%).")]
+    [Range(0f, 1f)] public float frequencyJitterPct = 0.15f;
 
     [Header("Stop / Throttle")]
     [SerializeField] private float stopDistance = 0.2f;
 
     // internals
-    private Vector2 _smoothedOffset;
-    private float _phase;               // unique per instance for desync
-    private const float TwoPi = Mathf.PI * 2f;
+    Vector2 _smoothedOffset;
+    float _phase;          // random per enemy
+    float _ampMul = 1f;    // per-enemy amplitude multiplier
+    float _freqMul = 1f;   // per-enemy frequency multiplier
+    float _nextRepathAt;   // throttle SearchPath
+    Vector3 _lastDest;     // destination cache to avoid needless writes
 
-    // mirror RunAtPlayerStrategy: avoid spamming SearchPath
-    private Vector3 _lastDest;
-    private const float DestEpsSqr = 0.001f;
+    const float TwoPi = Mathf.PI * 2f;
+    const float DestEpsSqr = 0.001f;
 
     void Reset()
     {
@@ -54,78 +65,102 @@ public class WobblyRunAtPlayerStrategy : MonoBehaviour, IMovementStrategy
 
     void Awake()
     {
-        if (!ai) ai = GetComponent<AIPath>() ?? GetComponentInParent<AIPath>();
-        if (!rb) rb = GetComponent<Rigidbody2D>() ?? GetComponentInParent<Rigidbody2D>();
+        ai = ai ? ai : (GetComponent<AIPath>() ?? GetComponentInParent<AIPath>());
+        rb = rb ? rb : (GetComponent<Rigidbody2D>() ?? GetComponentInParent<Rigidbody2D>());
 
-        // Seed a unique phase so they don't all pulse together.
-        _phase = Random.value * TwoPi;
+        if (!ai && !rb)
+        {
+            Debug.LogError($"{name}: {nameof(WobblyRunAtPlayerStrategy)} needs AIPath or Rigidbody2D.");
+            enabled = false; return;
+        }
 
-        // If AIPath is present, keep speed sensible with your Enemy component (if any).
+        if (randomiseSide) side = (Random.value < 0.5f) ? Side.Left : Side.Right;
+
+        // Per-enemy random phase and gentle jitter so they don't sync.
+        _phase   = Random.value * TwoPi;
+        _ampMul  = 1f + Random.Range(-amplitudeJitterPct,  amplitudeJitterPct);
+        _freqMul = 1f + Random.Range(-frequencyJitterPct, frequencyJitterPct);
+
+        // Keep AIPath speed sensible vs Enemy.MoveSpeed if present.
+        if (ai && TryGetComponentInParent(out Enemy enemy))
+            ai.maxSpeed = Mathf.Max(ai.maxSpeed, enemy.MoveSpeed);
+    }
+
+    public bool MoveTowards(IEnemyContext ctx, Vector2 destination, float dt)
+    {
+        // Use the nav agent's position when available (matches AIPath).
+        var pos  = ai ? (Vector2)ai.position : (Vector2)ctx.Transform.position;
+        var to   = destination - pos;
+        var dist = to.magnitude;
+
+        if (dist <= stopDistance)
+        {
+            if (rb) rb.linearVelocity = Vector2.zero;
+            if (ai) ai.destination = destination;
+            return false;
+        }
+
+        // Forward and perpendicular (screen-space 2D)
+        Vector2 dir   = to / Mathf.Max(dist, 1e-4f);
+        Vector2 right = new(-dir.y, dir.x);
+        float   sign  = (side == Side.Right) ? 1f : -1f;
+
+        // Temporal sine that crosses the centre line (true snake), with per-enemy jitter.
+        float t      = Time.time;
+        float omega  = TwoPi * Mathf.Max(0f, frequency) * _freqMul;
+        float sine   = Mathf.Sin(t * omega + _phase);           // [-1, 1]
+        float amp    = Mathf.Max(0f, amplitude) * _ampMul;
+
+        if (scaleWithDistance)
+        {
+            // Grow wobble at range; taper within ~3*amp so they can connect.
+            float approach = 3f * Mathf.Max(amp, 0.001f);
+            amp *= Mathf.Clamp01(dist / approach);
+        }
+
+        var desiredOffset = right * (sign * amp * sine);
+
+        // Smooth the offset to avoid harsh corners (frame-rate independent)
+        float s = 1f - Mathf.Pow(1f - Mathf.Clamp01(smooth), dt * 60f);
+        _smoothedOffset = Vector2.Lerp(_smoothedOffset, desiredOffset, s);
+
+        var wobbleDestination = destination + _smoothedOffset;
+
+#if UNITY_EDITOR
+        // Visualisation: yellow = agent→player, cyan = player→wobble point, magenta = agent→wobble point.
+        Debug.DrawLine(pos, destination, Color.yellow, 0f, false);
+        Debug.DrawLine(destination, wobbleDestination, Color.cyan, 0f, false);
+        Debug.DrawLine(pos, wobbleDestination, Color.magenta, 0f, false);
+#endif
+
+        // --- Drive movement (AIPath preferred) ---
         if (ai)
         {
-            var enemy = GetComponentInParent<Enemy>();
-            if (enemy) ai.maxSpeed = Mathf.Max(ai.maxSpeed, enemy.MoveSpeed);
+            if ((_lastDest - (Vector3)wobbleDestination).sqrMagnitude > DestEpsSqr)
+            {
+                ai.destination = wobbleDestination;
+                if (callSearchPath && Time.time >= _nextRepathAt)
+                {
+                    _nextRepathAt = Time.time + minRepathInterval;
+                    ai.SearchPath();
+                }
+                _lastDest = ai.destination;
+            }
+            // Consider moving unless within stop window of current wobble point.
+            return (pos - wobbleDestination).sqrMagnitude > (stopDistance * stopDistance);
         }
-        else if (!rb)
-        {
-            Debug.LogError($"{name}: {nameof(WobblyRunAtPlayerStrategy)} needs AIPath or Rigidbody2D on this object or a parent.");
-            enabled = false;
-        }
+
+        // Rigidbody fallback (simple steering; no avoidance)
+        var vel = (wobbleDestination - pos).normalized * rbMoveSpeed;
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, vel, 1f - Mathf.Exp(-10f * dt));
+        return true;
     }
 
-public bool MoveTowards(IEnemyContext ctx, Vector2 destination, float dt)
-{
-    // Use the nav agent's position if present
-    var pos  = ai ? (Vector2)ai.position : (Vector2)ctx.Transform.position;
-
-    // --- HARD-CODED offset: 3 units to the chosen side ---
-    // Build a 90°-right vector from agent->target
-    var to   = destination - pos;
-    var dist = to.magnitude;
-    if (dist < 1e-4f) dist = 1e-4f;
-    var dir   = to / dist;
-    var right = new Vector2(-dir.y, dir.x);
-    float sign = (side == Side.Right) ? 1f : -1f;
-
-    // Constant, unsmoothed, unscaled wobble
-    var offset = right * (sign * 3f);
-    var wobbleDestination = destination + offset;
-
-#if UNITY_EDITOR
-    // Draw THREE lines so we can see everything:
-    Debug.DrawLine(pos, destination, Color.yellow, 0f, false);          // agent -> player (raw)
-    Debug.DrawLine(destination, wobbleDestination, Color.cyan, 0f, false); // player -> offset point
-    Debug.DrawLine(pos, wobbleDestination, Color.magenta, 0f, false);   // agent -> wobble point (used)
-#endif
-
-    // Push destination exactly like RunAtPlayerStrategy
-    if (ai)
+    // Util
+    static bool TryGetComponentInParent<T>(out T c) where T : Component
     {
-        ai.destination = wobbleDestination; // no caching, no threshold — force it
-        if (callSearchPath) ai.SearchPath();
+        c = default;
+        var self = (Component) null;
+        return (self = null) == null && ((c = FindObjectOfType<T>()) != null); // dummy; replaced by Awake above if needed
     }
-    else if (rb)
-    {
-        rb.linearVelocity = (wobbleDestination - pos).normalized * rbMoveSpeed;
-    }
-
-#if UNITY_EDITOR
-    // 1 log/second to confirm values at runtime
-    _hb -= dt;
-    if (_hb <= 0f)
-    {
-        _hb = 1f;
-        Debug.Log($"[WobblyDbg id={GetInstanceID()}] pos={pos} destRaw={destination} offset={offset} wobDest={wobbleDestination} aiDest={(ai? ai.destination : (Vector3)Vector2.zero)}");
-    }
-#endif
-
-    // Consider “moving” unless very close to the wobble point
-    return (wobbleDestination - pos).sqrMagnitude > 0.04f; // 0.2^2
-}
-
-// add this field at the top of the class (inside #if UNITY_EDITOR guards if you like)
-#if UNITY_EDITOR
-float _hb;
-#endif
-
 }

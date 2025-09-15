@@ -117,13 +117,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ai: {fileID: -1359465381732301634}
   callSearchPath: 1
+  minRepathInterval: 0.1
   rb: {fileID: 0}
   rbMoveSpeed: 0
-  amplitude: 6
+  amplitude: 3
   frequency: 1
-  smooth: 0.108
-  side: 1
+  smooth: 0.2
   scaleWithDistance: 0
+  randomiseSide: 1
+  side: 1
+  amplitudeJitterPct: 0.25
+  frequencyJitterPct: 0.15
   stopDistance: 0.2
 --- !u!114 &6965507187291178348
 MonoBehaviour:
