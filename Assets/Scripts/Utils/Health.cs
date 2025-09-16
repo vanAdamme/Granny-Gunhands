@@ -51,7 +51,7 @@ public class Health : MonoBehaviour
         Damaged?.Invoke(amount, attacker);
 
         // Keep legacy SendMessage for now (backward-compat)
-        SendMessage("OnDamaged", new object[] { amount, attacker }, SendMessageOptions.DontRequireReceiver);
+        // SendMessage("OnDamaged", new object[] { amount, attacker }, SendMessageOptions.DontRequireReceiver);
 
         if (damageNumberPrefab) damageNumberPrefab.Spawn(transform.position, amount);
         if (damageFlash) damageFlash.CallDamageFlash();

@@ -17,20 +17,22 @@ public class WeaponUpgradePickup : PickupBase
     {
         if (consumed || !upgradeItem) return;
 
-        var root = other.attachedRigidbody ? other.attachedRigidbody.transform.root : other.transform.root;
-        var inv  = root ? root.GetComponentInChildren<ItemInventory>() : null;
+        // Be explicit: only react to the player
+        var player = other.GetComponentInParent<PlayerController>();
+        if (!player) return; // something else touched us (weapon, VFX, debris, etc.)
+
+        var inv = player.ItemInventory; // single source of truth
         if (!inv)
         {
 #if UNITY_EDITOR
-            Debug.LogWarning("[WeaponUpgradePickup] No ItemInventory found on player root/children.", this);
+            Debug.LogWarning("[WeaponUpgradePickup] Player has no ItemInventory reference.", this);
 #endif
             return;
         }
 
-        // ItemInventory.Add(...) typically returns void; consume after adding.
         inv.Add(upgradeItem, 1);
 
-        var n = upgradeItem.DisplayName ?? "Upgrade";
+        var n = string.IsNullOrEmpty(upgradeItem.DisplayName) ? "Upgrade" : upgradeItem.DisplayName;
         ShowToastTemplate(n, ("name", n));
         StartCoroutine(Consume());
     }

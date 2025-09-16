@@ -28,7 +28,6 @@ public void BeginEncounter()
     foreach (var d in doors) d.Lock();
 
     if (spawnPoints == null || spawnPoints.Count == 0)
-        Debug.LogWarning($"[RoomController] No EnemySpawnPoints under {name}", this);
         
         foreach (var sp in spawnPoints)
         {

@@ -3962,6 +3962,8 @@ MonoBehaviour:
   collectionChecks: 0
   defaultCapacity: 16
   maxSize: 256
+  activeParent: {fileID: 0}
+  hideActiveInHierarchy: 0
 --- !u!114 &718737863
 MonoBehaviour:
   m_ObjectHideFlags: 0
