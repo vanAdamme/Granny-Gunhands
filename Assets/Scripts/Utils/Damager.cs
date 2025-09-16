@@ -26,17 +26,6 @@ public class Damager : MonoBehaviour
         col.isTrigger = true;
     }
 
-    private void Start()
-    {
-        // If no explicit damage was set/configured, inherit from parent Enemy
-        if (Mathf.Approximately(damage, 0f))
-        {
-            var enemy = GetComponentInParent<Enemy>();
-            if (enemy != null)
-                damage = enemy.ContactDamage;
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D other) => TryHit(other);
     private void OnTriggerStay2D(Collider2D other)  => TryHit(other);
 

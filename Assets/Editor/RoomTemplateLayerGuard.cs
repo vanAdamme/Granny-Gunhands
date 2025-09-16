@@ -7,7 +7,7 @@ public static class RoomTemplateLayerGuard
 {
     // Edit this list once; keep your naming consistent with the template and Edgar layer mapping.
     private static readonly string[] RequiredTilemaps = {
-        "Floor", "Walls", "NoWalk", "Magma", "Deco"
+        "Floor", "Walls", "Magma", 
     };
 
     [MenuItem("Tools/Rooms/Validate Selected Room Template %#r")] // Ctrl/Cmd+Shift+R

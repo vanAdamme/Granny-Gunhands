@@ -3,7 +3,6 @@ using UnityEngine;
 public class Enemy : Target
 {
     [Header("Enemy Settings")]
-    [SerializeField] private float contactDamage = 1f;
     [SerializeField] private float moveSpeed = 1f;           // still used by AIPath via a strategy
     [SerializeField] private int experienceOnDeath = 1;
 
@@ -12,7 +11,6 @@ public class Enemy : Target
     [SerializeField] private Transform lootParent;
 
     // Optional: expose for strategies that want it
-    public float ContactDamage => contactDamage;
     public float MoveSpeed => moveSpeed;
 
     protected override void Die()

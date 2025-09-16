@@ -24,7 +24,7 @@ TagManager:
   - PlayerProjectile
   - FlyingEnemy
   - NoWalk
-  - 
+  - Overhead
   - 
   - 
   - 
@@ -58,7 +58,7 @@ TagManager:
   - name: Weapons
     uniqueID: 911499633
     locked: 0
-  - name: Objects
+  - name: Characters
     uniqueID: 1919248021
     locked: 0
   - name: Foreground

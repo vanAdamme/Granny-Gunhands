@@ -146,7 +146,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
   m_SortingLayer: 5
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 3015177024873187116, guid: 4926bcb732120a242b452056b6646b73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -314,7 +314,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
   m_SortingLayer: 5
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 3015177024873187116, guid: 4926bcb732120a242b452056b6646b73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -698,8 +698,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974340708dc1f0242bad415c116724b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specialChargeSource: {fileID: 0}
+  health: {fileID: 0}
+  chargeProvider: {fileID: 0}
   chargePerDamage: 1
+  minChargeOnHit: 0
 --- !u!1 &6202198162406223626
 GameObject:
   m_ObjectHideFlags: 0

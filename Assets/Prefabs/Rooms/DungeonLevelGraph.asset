@@ -165,7 +165,7 @@ MonoBehaviour:
   - {fileID: -6635862569167004517}
   - {fileID: 5577311173678482691}
   EditorData:
-    PanOffset: {x: -79.06135, y: 54.07115}
+    PanOffset: {x: 137.01729, y: 37.01232}
     Zoom: 0.7034475
   RoomType: Edgar.Unity.Room
   ConnectionType: Edgar.Unity.Connection
@@ -226,7 +226,8 @@ MonoBehaviour:
   Position: {x: 576, y: 208}
   Name: Room
   IndividualRoomTemplates: []
-  RoomTemplateSets: []
+  RoomTemplateSets:
+  - {fileID: 11400000, guid: 1c9eaa185bfd658408f7e7c536aef0cb, type: 2}
 --- !u!114 &5616310954273846778
 MonoBehaviour:
   m_ObjectHideFlags: 0

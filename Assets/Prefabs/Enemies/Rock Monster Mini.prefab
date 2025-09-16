@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6568101403234576348}
   - component: {fileID: 5500934003411631247}
   - component: {fileID: 6965507187291178348}
+  - component: {fileID: 7543022333639998500}
   m_Layer: 9
   m_Name: FSM
   m_TagString: Untagged
@@ -149,6 +150,18 @@ MonoBehaviour:
   losMask:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &7543022333639998500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771231386720069479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97817afd4af76ab45a1da4ce901573e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7989795060797501316
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +247,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1919248021
   m_SortingLayer: 5
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: -790784623036298336, guid: 040711d92245b56418b837956c390e79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -258,14 +271,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b1f83f52d8bac842b8a5eef4a4b3bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 10
+  m_MaxHealth: 5
   m_CurrentHealth: 0
   damageNumberPrefab: {fileID: 2556215940150367559, guid: 3665fc2192b950245823ff3a982f8f0a, type: 3}
   damageFlash: {fileID: 7583441660497736614}
   m_DamageMultiplier: 1
   contactDamage: 1
   moveSpeed: 3
-  experienceOnDeath: 2
+  experienceOnDeath: 1
   lootTable: {fileID: 11400000, guid: c70fab3c90e33734ea452f6c2084d796, type: 2}
   lootParent: {fileID: 0}
 --- !u!50 &5065733521576241343
@@ -365,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b2b4ab47325049986449b8862238f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 1
   destroyOnHit: 0
   hitCooldown: 0.1
   targetLayers:

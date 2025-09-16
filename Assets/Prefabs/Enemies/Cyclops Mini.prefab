@@ -200,9 +200,10 @@ MonoBehaviour:
   damageNumberPrefab: {fileID: 0}
   damageFlash: {fileID: 851468478211253564}
   m_DamageMultiplier: 1
+  contactDamage: 2
   moveSpeed: 2
   experienceOnDeath: 2
-  lootTable: {fileID: 0}
+  lootTable: {fileID: 11400000, guid: c70fab3c90e33734ea452f6c2084d796, type: 2}
   lootParent: {fileID: 0}
 --- !u!114 &851468478211253564
 MonoBehaviour:
@@ -335,12 +336,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4482853706745340329}
-  - component: {fileID: 2730909878983983821}
   - component: {fileID: 7932447468505536179}
+  - component: {fileID: 2730909878983983821}
   - component: {fileID: 4893845923001296938}
   - component: {fileID: 6755815264712036098}
-  - component: {fileID: 7574650290387783369}
   - component: {fileID: 2552548286836468865}
+  - component: {fileID: 4350182482110483616}
   m_Layer: 0
   m_Name: FSM
   m_TagString: Untagged
@@ -363,6 +364,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5025724235550333252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7932447468505536179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8283451883547255168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e57dee7b3aab44fbc397d03a2efe8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contextSource: {fileID: 2730909878983983821}
 --- !u!114 &2730909878983983821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,25 +393,12 @@ MonoBehaviour:
   animator: {fileID: 3641241029426152840}
   targetProviderSource: {fileID: 2552548286836468865}
   movementSource: {fileID: 6755815264712036098}
-  attackSource: {fileID: 7574650290387783369}
+  attackSource: {fileID: 4350182482110483616}
   attackRange: 1.25
   repathInterval: 0.25
   sprite: {fileID: 275300114247081107}
   flipByScale: 1
   defaultFacingRight: 1
---- !u!114 &7932447468505536179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8283451883547255168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9e57dee7b3aab44fbc397d03a2efe8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  contextSource: {fileID: 2730909878983983821}
 --- !u!114 &4893845923001296938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,26 +424,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ai: {fileID: 0}
-  stopDistance: 0.2
   callSearchPath: 1
---- !u!114 &7574650290387783369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8283451883547255168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0da950ab571052042bc640d8d66ba94a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damager: {fileID: 6420365253097603999}
-  defaultTargetMask:
-    serializedVersion: 2
-    m_Bits: 64
-  baseDamage: 1
-  cooldown: 0.6
+  rb: {fileID: 0}
+  rbMoveSpeed: 3.5
+  stopDistance: 0.2
 --- !u!114 &2552548286836468865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,3 +442,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProviderSource: {fileID: 0}
   explicitPlayer: {fileID: 0}
+--- !u!114 &4350182482110483616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8283451883547255168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6339a146cba031846aad19b6c2eeba19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damager: {fileID: 6420365253097603999}
+  defaultTargetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  baseDamage: 1
+  cooldown: 0.6
