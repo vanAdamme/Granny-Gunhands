@@ -35,7 +35,7 @@ public class EnemySpawnPoint : MonoBehaviour
     private void Awake()
     {
         if (!floorTilemap)
-            floorTilemap = FindFirstObjectByType<Tilemap>();  // CS0618-safe
+            floorTilemap = FindFirstObjectByType<Tilemap>();  // Unity 6+ safe API
 
         if (floorTilemap)
             cellSize = floorTilemap.layoutGrid ? floorTilemap.layoutGrid.cellSize : floorTilemap.cellSize;
@@ -44,18 +44,43 @@ public class EnemySpawnPoint : MonoBehaviour
     public IEnumerable<Health> Spawn()
     {
         if (!enemyPrefab) { Debug.LogWarning($"[EnemySpawnPoint] No enemy prefab on {name}", this); yield break; }
+
         for (int i = 0; i < count; i++)
         {
             var pos = TrySampleValidPosition(out var p) ? (Vector3)p : transform.position;
             var h = Instantiate(enemyPrefab, pos, Quaternion.identity);
-            if (!h) Debug.LogError($"[EnemySpawnPoint] Instantiated enemy has no Health: {enemyPrefab}", this);
+
+            if (!h)
+            {
+                Debug.LogError($"[EnemySpawnPoint] Instantiated enemy has no Health: {enemyPrefab}", this);
+                continue;
+            }
+
+            TryApplyFadeIn(h.gameObject);
             yield return h;
         }
     }
 
+    private void TryApplyFadeIn(GameObject go)
+    {
+        if (!useFadeIn || !go) return;
+
+        // Expect SpawnFadeIn component to exist in project (as provided earlier).
+        var fade = go.GetComponent<SpawnFadeIn>();
+        if (!fade) fade = go.AddComponent<SpawnFadeIn>();
+
+        fade.Configure(
+            duration:          fadeDuration,
+            curve:             fadeCurve,
+            includeChildren:   fadeIncludeChildren,
+            fromBlack:         fadeFromBlack,
+            useUnscaledTime:   fadeUseUnscaledTime
+        );
+        fade.Play();
+    }
+
     private bool TrySampleValidPosition(out Vector2 result)
     {
-        
         // If radius is 0, just validate the marker position once.
         if (radius <= 0f)
         {

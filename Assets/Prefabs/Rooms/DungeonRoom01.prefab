@@ -316,7 +316,7 @@ Transform:
   m_GameObject: {fileID: 2447889488029655324}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.23, y: 3.64, z: 0}
+  m_LocalPosition: {x: -0.66, y: 2.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -335,11 +335,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4540411707509837, guid: 4cb2e59cf9ad48748b981d865bee1042, type: 3}
-  count: 1
-  radius: 2.54
+  count: 4
+  radius: 4.21
   maxAttemptsPerEnemy: 20
   floorTilemap: {fileID: 3633491086564121701}
   cellClearance: 0
+  useFadeIn: 1
+  fadeDuration: 0.35
+  fadeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeIncludeChildren: 1
+  fadeFromBlack: 1
+  fadeUseUnscaledTime: 0
 --- !u!1 &3131764338029269579
 GameObject:
   m_ObjectHideFlags: 0

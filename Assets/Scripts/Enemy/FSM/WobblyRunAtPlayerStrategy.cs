@@ -162,6 +162,6 @@ public class WobblyRunAtPlayerStrategy : MonoBehaviour, IMovementStrategy
     {
         c = default;
         var self = (Component) null;
-        return (self = null) == null && ((c = FindObjectOfType<T>()) != null); // dummy; replaced by Awake above if needed
+        return (self = null) == null && ((c = FindFirstObjectByType<T>()) != null); // dummy; replaced by Awake above if needed
     }
 }
