@@ -21,6 +21,14 @@ public class EnemySpawnPoint : MonoBehaviour
     [Tooltip("Check neighbouring cells so large enemies don’t clip walls. 0 = only the cell under the spawn point.")]
     [SerializeField, Min(0)] private int cellClearance = 0;
 
+    [Header("Spawn Effect (Fade-In)")]
+    [SerializeField] private bool useFadeIn = true;
+    [SerializeField, Min(0f)] private float fadeDuration = 0.35f;
+    [SerializeField] private AnimationCurve fadeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [SerializeField] private bool fadeIncludeChildren = true;
+    [SerializeField] private bool fadeFromBlack = true;
+    [SerializeField] private bool fadeUseUnscaledTime = false;
+
     // If your Floor tile size isn’t 1x1, we derive it from the tilemap.
     private Vector3 cellSize = Vector3.one;
 
@@ -61,8 +69,6 @@ public class EnemySpawnPoint : MonoBehaviour
             if (IsOnFloor(candidate))
             {
                 // when a position is accepted
-Debug.Log($"[EnemySpawnPoint] Sample OK at {candidate}", this);
-
                 result = candidate;
                 return true;
             }
@@ -75,7 +81,6 @@ Debug.Log($"[EnemySpawnPoint] Sample OK at {candidate}", this);
             result = fallback;
             return true;
         }
-Debug.Log("[EnemySpawnPoint] Sampling failed; using marker position", this);
 
         // No valid spot found
         result = default;

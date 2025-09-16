@@ -39,8 +39,6 @@ public void BeginEncounter()
                 enemy.OnDied += () => OnEnemyDied(enemy);
             }
         }
-Debug.Log($"[RoomController] Spawned enemies: {activeEnemies.Count}", this);
-
         if (activeEnemies.Count == 0) UnlockDoors();
     }
 
