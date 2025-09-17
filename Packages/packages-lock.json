@@ -1,18 +1,5 @@
 {
   "dependencies": {
-    "com.seanba.super-tiled2unity": {
-      "version": "file:com.seanba.super-tiled2unity",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.2d.sprite": "1.0.0",
-        "com.unity.2d.tilemap": "1.0.0",
-        "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.physics2d": "1.0.0",
-        "com.unity.modules.tilemap": "1.0.0",
-        "com.unity.burst": "1.0.0"
-      }
-    },
     "com.unity.2d.animation": {
       "version": "11.0.0",
       "depth": 1,
@@ -111,7 +98,7 @@
     },
     "com.unity.burst": {
       "version": "1.8.23",
-      "depth": 1,
+      "depth": 2,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
@@ -120,11 +107,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.cinemachine": {
-      "version": "3.1.2",
+      "version": "3.1.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.splines": "2.0.0"
+        "com.unity.splines": "2.0.0",
+        "com.unity.modules.imgui": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -169,7 +157,7 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.36",
+      "version": "3.0.37",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -336,7 +324,7 @@
       }
     },
     "com.unity.visualscripting": {
-      "version": "1.9.7",
+      "version": "1.9.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -344,6 +332,16 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.vinarkgames.betterruletiles": {
+      "version": "file:BetterRuleTiles",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.modules.tilemap": "1.0.0",
+        "com.unity.2d.tilemap": "1.0.0",
+        "com.unity.2d.tilemap.extras": "1.6.0"
+      }
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

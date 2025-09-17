@@ -949,6 +949,7 @@ namespace DamageNumbersPro.Internal {
             tmp.horizontalAlignment = HorizontalAlignmentOptions.Center;
             tmp.text = "1";
             tmp.textWrappingMode = TextWrappingModes.NoWrap;
+            tmp.font = Resources.Load<DNPPreset>("DNP/Style/Basic/Basic Default").fontAsset;
 
             // Size Delta
             RectTransform rectTransform = tmp.GetComponent<RectTransform>();

@@ -6,14 +6,13 @@ using UnityEditor;
 using TMPro;
 using UnityEngine.Rendering;
 using DamageNumbersPro.Internal;
-using UnityEditor.SceneManagement;
 
 namespace DamageNumbersPro
 {
     [CustomEditor(typeof(DamageNumber), true), CanEditMultipleObjects]
     public class DamageNumberEditor : Editor
     {
-        public static string version = "4.50";
+        public static string version = "4.51";
 
         void OnEnable()
         {
@@ -363,57 +362,65 @@ namespace DamageNumbersPro
             string is3D = dn.enable3DGame ? "3D" : "";
             if(dn.enable3DGame && dn.IsMesh() && font != null && font.name + is3D != dn.editorLastFont)
             {
+                // Cache last font to only check once
                 dn.editorLastFont = font.name + is3D;
 
-                Object[] objects = new Object[2];
-                objects[0] = dn;
-                objects[1] = font;
-                Undo.RecordObjects(objects, "Swiched shader to distance field overlay.");
-
-                // Fixing the text shader
-                if(GraphicsSettings.currentRenderPipeline != null)
+                // Check if font is from the asset
+                string path = AssetDatabase.GetAssetPath(font);
+                if (path != null && path.Contains("DamageNumbers"))
                 {
-                    string pipeline = GraphicsSettings.currentRenderPipeline.GetType().ToString();
+                    // Undo record
+                    Object[] objects = new Object[3];
+                    objects[0] = dn;
+                    objects[1] = font;
+                    objects[2] = font.material;
+                    Undo.RecordObjects(objects, "Swiched shader to distance field overlay.");
 
-                    if(pipeline.Contains("High") || pipeline.Contains("HD"))
+                    // Fixing the text shader
+                    if (GraphicsSettings.currentRenderPipeline != null)
                     {
+                        string pipeline = GraphicsSettings.currentRenderPipeline.GetType().ToString();
 
+                        if (pipeline.Contains("High") || pipeline.Contains("HD"))
+                        {
+
+                        }
+                        else
+                        {
+                            ChangeShaderToOverlay(dn);
+                        }
                     }
                     else
                     {
                         ChangeShaderToOverlay(dn);
                     }
-                }
-                else
-                {
-                    ChangeShaderToOverlay(dn);
-                }
 
-                // Fixing the sprite shader
-                TMP_Text tmp = dn.GetTextMesh();
-                if (tmp.spriteAsset != null && tmp.spriteAsset.material != null)
-                {
-                    // Sprite Shader
-                    if (tmp.spriteAsset.material.shader.name != "TextMeshPro/Sprite Overlay")
+                    // Fixing the sprite shader
+                    TMP_Text tmp = dn.GetTextMesh();
+                    if (tmp.spriteAsset != null && tmp.spriteAsset.material != null)
                     {
-                        Shader spriteOverlay = Shader.Find("TextMeshPro/Sprite Overlay");
-
-                        if (spriteOverlay != null)
+                        // Sprite Shader
+                        if (tmp.spriteAsset.material.shader.name != "TextMeshPro/Sprite Overlay")
                         {
-                            tmp.spriteAsset.material.shader = spriteOverlay;
+                            Shader spriteOverlay = Shader.Find("TextMeshPro/Sprite Overlay");
+
+                            if (spriteOverlay != null)
+                            {
+                                tmp.spriteAsset.material.shader = spriteOverlay;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    // Default Sprite Shader
-                    if (TMP_Settings.defaultSpriteAsset != null && TMP_Settings.defaultSpriteAsset.material != null && TMP_Settings.defaultSpriteAsset.material.shader.name != "TextMeshPro/Sprite Overlay")
+                    else
                     {
-                        Shader spriteOverlay = Shader.Find("TextMeshPro/Sprite Overlay");
-
-                        if (spriteOverlay != null)
+                        // Default Sprite Shader
+                        if (TMP_Settings.defaultSpriteAsset != null && TMP_Settings.defaultSpriteAsset.material != null && TMP_Settings.defaultSpriteAsset.material.shader.name != "TextMeshPro/Sprite Overlay")
                         {
-                            TMP_Settings.defaultSpriteAsset.material.shader = spriteOverlay;
+                            Shader spriteOverlay = Shader.Find("TextMeshPro/Sprite Overlay");
+
+                            if (spriteOverlay != null)
+                            {
+                                TMP_Settings.defaultSpriteAsset.material.shader = spriteOverlay;
+                            }
                         }
                     }
                 }
@@ -1142,11 +1149,12 @@ namespace DamageNumbersPro
                             GUI.color = new Color(1, 1, 1, 0.7f);
                             EditorGUILayout.Space();
                             DNPEditorInternal.ScalingLabel("This option exists in-case the overlay shader does <b>not work</b>.", 371);
-                            DNPEditorInternal.ScalingLabel("Make sure to try the <b>'Distance Field Overlay'</b> shader first.",354);
-                            DNPEditorInternal.ScalingLabel("It's better for <b>performance</b> to use the shader instead.",330);
+                            DNPEditorInternal.ScalingLabel("Make sure to try the <b>'Distance Field Overlay'</b> shader first.", 354);
+                            DNPEditorInternal.ScalingLabel("It's better for <b>performance</b> to use the overlay shader.", 330);
+                            DNPEditorInternal.ScalingLabel("Keep in mind that the shader does not support <b>UI masking</b> though.", 410);
                             EditorGUILayout.Space();
                             EditorGUILayout.BeginHorizontal();
-                            DNPEditorInternal.ScalingLabel("Go to the material or use the button.",333);
+                            DNPEditorInternal.ScalingLabel("Go to the material tab or use the button.", 333);
                             GUI.color = Color.white;
 
                             bool buttonPressed = false;
