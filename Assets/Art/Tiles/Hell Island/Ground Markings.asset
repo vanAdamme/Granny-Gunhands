@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7c9615a5cbd6b740a310c57c8d53257, type: 3}
+  m_Name: Ground Markings
+  m_EditorClassIdentifier: 
+  settings:
+    _gridShape: 0
+    _zoomAmount: 1
+    _gridCellSize: {x: 32, y: 32}
+    _tileRenderOffset: {x: 0, y: 0}
+    _gridOffset: {x: 0, y: 0}
+    _lockWindows: 1
+    _hideSprites: 0
+    _showRuler: 1
+    _showModified: 0
+    _renderSmallGrid: 0
+    _zoomTreshold: 0.35
+    _drawerSize: 6
+    _displaySpriteDrawer: 1
+    _displayUniversalSpriteSettings: 0
+    _saveSpriteDrawer: 1
+    _drawerHeight: 50
+    _drawerCollumns: 2
+    _expandedDrawerCollumns: 10
+    _renderLockedOverlay: 0
+    _renderLockedOutline: 1
+    _lockedOutlineColor: {r: 1, g: 0, b: 0, a: 1}
+    _collapseSimilarRules: 0
+    _useUniversalSpriteSettings: 0
+    _treatSimilarTilesAsSame: 0
+    _presetBlockColor: {r: 1, g: 0.5764706, b: 0.05882353, a: 1}
+  _imageObjects: []
+  _tileObjects: []
+  _hexTileObjects: []
+  _grid: []
+  _tiles: []
+  _overrideSprites: []
+  _presetBlocks: []

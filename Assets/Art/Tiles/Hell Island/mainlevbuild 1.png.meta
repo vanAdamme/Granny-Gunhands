@@ -1,13 +1,55 @@
 fileFormatVersion: 2
-guid: 2b5b10d3bd7fc064f9c853285de26eb7
+guid: 35604168167719d43836525254ca0937
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5960436355002245851
-    second: ruletilesprites04_0
+      213: -418600334569417129
+    second: mainlevbuild_0
   - first:
-      213: 3886529861249225224
-    second: ruletilesprites04_1
+      213: -5727760111797192145
+    second: mainlevbuild_1
+  - first:
+      213: 4011826581710594722
+    second: mainlevbuild_2
+  - first:
+      213: -2921649638176895635
+    second: mainlevbuild_3
+  - first:
+      213: -5296460117389895971
+    second: mainlevbuild_4
+  - first:
+      213: -7498149340825567013
+    second: mainlevbuild_5
+  - first:
+      213: 4188783655783027223
+    second: mainlevbuild_6
+  - first:
+      213: 4262012770324947943
+    second: mainlevbuild_7
+  - first:
+      213: -3679733267116199293
+    second: mainlevbuild_8
+  - first:
+      213: 7759064944903599796
+    second: mainlevbuild_9
+  - first:
+      213: 7849981455521004453
+    second: mainlevbuild_10
+  - first:
+      213: 4862577987027710429
+    second: mainlevbuild_11
+  - first:
+      213: -5629698620501372720
+    second: mainlevbuild_12
+  - first:
+      213: -8026734006290447909
+    second: mainlevbuild_13
+  - first:
+      213: 9052083678068739164
+    second: mainlevbuild_14
+  - first:
+      213: 8663717305663940273
+    second: mainlevbuild_15
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,7 +82,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -78,7 +120,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -103,13 +145,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ruletilesprites04_0
+      name: mainlevbuild_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 288
-        width: 32
-        height: 32
+        y: 95
+        width: 961
+        height: 929
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +160,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bd2ab3ef849b7b250800000000000000
-      internalID: 5960436355002245851
+      spriteID: 756512ba635d03af0800000000000000
+      internalID: -418600334569417129
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_1
+      name: mainlevbuild_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 288
-        width: 32
-        height: 32
+        x: 991
+        y: 63
+        width: 194
+        height: 961
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,426 +182,316 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 80255bc215abfe530800000000000000
-      internalID: 3886529861249225224
+      spriteID: f2a3da97688e280b0800000000000000
+      internalID: -5727760111797192145
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_2
+      name: mainlevbuild_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 288
-        width: 32
-        height: 32
+        x: 1194
+        y: 847
+        width: 172
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a09ec70517e9d0642b6338cb2309f967
-      internalID: -194144109
+      spriteID: 2a2645f350fdca730800000000000000
+      internalID: 4011826581710594722
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_3
+      name: mainlevbuild_3
       rect:
         serializedVersion: 2
-        x: 96
-        y: 288
-        width: 32
-        height: 32
+        x: 1375
+        y: 63
+        width: 194
+        height: 961
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 718b2adb2e503ca4eb7156d40899fce6
-      internalID: 1999310351
+      spriteID: d6d415632273477d0800000000000000
+      internalID: -2921649638176895635
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_4
+      name: mainlevbuild_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 256
-        width: 32
-        height: 32
+        x: 1578
+        y: 848
+        width: 172
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b03378303e49bda40b751480bea3ec19
-      internalID: 761295159
+      spriteID: dd693f7c5913f76b0800000000000000
+      internalID: -5296460117389895971
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_5
+      name: mainlevbuild_5
       rect:
         serializedVersion: 2
-        x: 32
-        y: 256
-        width: 32
-        height: 32
+        x: 1194
+        y: 656
+        width: 172
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 113520e8cce7976449661327beeae675
-      internalID: 2118745310
+      spriteID: bd04343c6e831f790800000000000000
+      internalID: -7498149340825567013
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_6
+      name: mainlevbuild_6
       rect:
         serializedVersion: 2
-        x: 64
-        y: 256
-        width: 32
-        height: 32
+        x: 1578
+        y: 656
+        width: 172
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: bb392d636422146468782b6a880ed5c9
-      internalID: -785636337
+      spriteID: 712d8e3ba8c812a30800000000000000
+      internalID: 4188783655783027223
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_7
+      name: mainlevbuild_7
       rect:
         serializedVersion: 2
-        x: 96
-        y: 256
-        width: 32
-        height: 32
+        x: 1194
+        y: 463
+        width: 172
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: dff469a87b71822408a6c71e97276cee
-      internalID: -1885814297
+      spriteID: 7e3a5639806b52b30800000000000000
+      internalID: 4262012770324947943
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_8
+      name: mainlevbuild_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 224
-        width: 32
-        height: 32
+        x: 1578
+        y: 464
+        width: 172
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b17d1c95bf939d2459cafbde78fb31e9
-      internalID: 1043537738
+      spriteID: 382f951f616feecc0800000000000000
+      internalID: -3679733267116199293
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_9
+      name: mainlevbuild_9
       rect:
         serializedVersion: 2
-        x: 32
-        y: 224
-        width: 32
-        height: 32
+        x: 447
+        y: 63
+        width: 514
+        height: 386
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: c9ac131ccd888da4fa6f39271fddd605
-      internalID: -1813360350
+      spriteID: 4b63a26457cbdab60800000000000000
+      internalID: 7759064944903599796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_10
+      name: mainlevbuild_10
       rect:
         serializedVersion: 2
-        x: 64
-        y: 224
-        width: 32
-        height: 32
+        x: 1194
+        y: 271
+        width: 172
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 9d54d9ee97f69064cb2ac63fdc8c2b8d
-      internalID: -1096701059
+      spriteID: 5abbbb5fa8cb0fc60800000000000000
+      internalID: 7849981455521004453
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_11
+      name: mainlevbuild_11
       rect:
         serializedVersion: 2
-        x: 96
-        y: 224
-        width: 32
-        height: 32
+        x: 1578
+        y: 272
+        width: 172
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a88b8713ca26e554395fbc005a3ac080
-      internalID: 1871738020
+      spriteID: dd1bb698ae85b7340800000000000000
+      internalID: 4862577987027710429
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_12
+      name: mainlevbuild_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 192
-        width: 32
-        height: 32
+        x: 22
+        y: 0
+        width: 212
+        height: 233
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 6058a008080617a4cb115d908566d42e
-      internalID: 527273754
+      spriteID: 0d0528c9eea4fd1b0800000000000000
+      internalID: -5629698620501372720
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_13
+      name: mainlevbuild_13
       rect:
         serializedVersion: 2
-        x: 32
-        y: 192
-        width: 32
-        height: 32
+        x: 1194
+        y: 79
+        width: 172
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 8dd6e73de86b20444ab93b12ab00e12a
-      internalID: 363160360
+      spriteID: bd18280e2ff4b9090800000000000000
+      internalID: -8026734006290447909
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_14
+      name: mainlevbuild_14
       rect:
         serializedVersion: 2
-        x: 64
-        y: 192
-        width: 32
-        height: 32
+        x: 1578
+        y: 80
+        width: 172
+        height: 161
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: feab99a388b432a4e8911a7288dd7368
-      internalID: 781673125
+      spriteID: c5c066c25267f9d70800000000000000
+      internalID: 9052083678068739164
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites04_15
+      name: mainlevbuild_15
       rect:
         serializedVersion: 2
-        x: 0
-        y: 160
-        width: 32
-        height: 32
+        x: 287
+        y: 0
+        width: 130
+        height: 65
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: d6404495804a98e40bfc253bdfb06159
-      internalID: 1500854372
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites04_16
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 160
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7f8ef8f74e31bd942894affa87bbffad
-      internalID: 680533333
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites04_17
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 160
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b27f73e8776d7d54ea0e37b2e9fc5bc6
-      internalID: -838262336
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites04_18
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ce64375a59b43b84693964d5aefd492f
-      internalID: -511235315
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites04_19
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5950fc461dd739f4ba67633db5b04758
-      internalID: -886027596
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites04_20
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 957fa2b593da7ac42bbcee44cfe12849
-      internalID: -2024271270
+      spriteID: 1b6e086bcf4bb3870800000000000000
+      internalID: 8663717305663940273
       vertices: []
       indices: 
       edges: []
@@ -568,7 +500,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c658d98d8c399564f9dc7ae1d3d7f1e9
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -576,31 +508,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      ruletilesprites04_0: 5960436355002245851
-      ruletilesprites04_1: 3886529861249225224
-      ruletilesprites04_10: -1096701059
-      ruletilesprites04_11: 1871738020
-      ruletilesprites04_12: 527273754
-      ruletilesprites04_13: 363160360
-      ruletilesprites04_14: 781673125
-      ruletilesprites04_15: 1500854372
-      ruletilesprites04_16: 680533333
-      ruletilesprites04_17: -838262336
-      ruletilesprites04_18: -511235315
-      ruletilesprites04_19: -886027596
-      ruletilesprites04_2: -194144109
-      ruletilesprites04_20: -2024271270
-      ruletilesprites04_3: 1999310351
-      ruletilesprites04_4: 761295159
-      ruletilesprites04_5: 2118745310
-      ruletilesprites04_6: -785636337
-      ruletilesprites04_7: -1885814297
-      ruletilesprites04_8: 1043537738
-      ruletilesprites04_9: -1813360350
+      mainlevbuild_0: -418600334569417129
+      mainlevbuild_1: -5727760111797192145
+      mainlevbuild_10: 7849981455521004453
+      mainlevbuild_11: 4862577987027710429
+      mainlevbuild_12: -5629698620501372720
+      mainlevbuild_13: -8026734006290447909
+      mainlevbuild_14: 9052083678068739164
+      mainlevbuild_15: 8663717305663940273
+      mainlevbuild_2: 4011826581710594722
+      mainlevbuild_3: -2921649638176895635
+      mainlevbuild_4: -5296460117389895971
+      mainlevbuild_5: -7498149340825567013
+      mainlevbuild_6: 4188783655783027223
+      mainlevbuild_7: 4262012770324947943
+      mainlevbuild_8: -3679733267116199293
+      mainlevbuild_9: 7759064944903599796
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
