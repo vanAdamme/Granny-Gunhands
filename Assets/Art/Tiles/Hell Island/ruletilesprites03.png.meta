@@ -584,94 +584,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_22
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f455b40bb5effb47b3109d982fb5f86
-      internalID: 327002282
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites03_23
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ce2fd2234a0c0594ea3108d7f72f0bb5
-      internalID: -449857119
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites03_24
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dcdea701fc7a0d64d8e750ac767a6e40
-      internalID: 269793760
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites03_25
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e60697da6c2c3e241980788fff792665
-      internalID: -26373134
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: ruletilesprites03_26
       rect:
         serializedVersion: 2
@@ -980,11 +892,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_40
+      name: ruletilesprites03_56
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 288
         width: 32
         height: 32
       alignment: 0
@@ -995,18 +907,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 622abac5ca9faf444972876f73759fd3
-      internalID: -514912191
+      spriteID: 912c77f9fe68f1d42a90e236186df958
+      internalID: -1078672895
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_41
+      name: ruletilesprites03_57
       rect:
         serializedVersion: 2
         x: 32
-        y: 32
+        y: 288
         width: 32
         height: 32
       alignment: 0
@@ -1017,18 +929,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1a0e3a699d3498408477e5537c239ac
-      internalID: 1618870404
+      spriteID: b5fab8c135813ff44b8259b45e930593
+      internalID: -1830483027
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_42
+      name: ruletilesprites03_58
       rect:
         serializedVersion: 2
         x: 64
-        y: 32
+        y: 288
         width: 32
         height: 32
       alignment: 0
@@ -1039,18 +951,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9a6bd75cf133ca44821802e80554473
-      internalID: -1358737482
+      spriteID: 9cd377b8784ae87489c5e1e9b7ff8043
+      internalID: 965729169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_43
+      name: ruletilesprites03_59
       rect:
         serializedVersion: 2
         x: 96
-        y: 32
+        y: 288
         width: 32
         height: 32
       alignment: 0
@@ -1061,18 +973,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c62109a9d381ae4eb4a2fda00f6c491
-      internalID: 407290053
+      spriteID: 2a8ed4e2e81edb540ba49ca69ae15e31
+      internalID: 1961646637
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_44
+      name: ruletilesprites03_60
       rect:
         serializedVersion: 2
         x: 128
-        y: 32
+        y: 288
         width: 32
         height: 32
       alignment: 0
@@ -1083,18 +995,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c402a963174c294e8c085b8b0cbb4f3
-      internalID: 91210880
+      spriteID: 321706b868dd8c1488bb2d7bda1d0dde
+      internalID: -1855360468
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_45
+      name: ruletilesprites03_61
       rect:
         serializedVersion: 2
         x: 160
-        y: 32
+        y: 288
         width: 32
         height: 32
       alignment: 0
@@ -1105,18 +1017,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b70ae37ef8128834f88bd5ad7a89ddcd
-      internalID: -1305422636
+      spriteID: f7048c35715a2e84fb842dc3a456a394
+      internalID: 292140517
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_46
+      name: ruletilesprites03_62
       rect:
         serializedVersion: 2
         x: 192
-        y: 32
+        y: 288
         width: 32
         height: 32
       alignment: 0
@@ -1127,18 +1039,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0d30d69166b81843a10b4c0c7b4b69b
-      internalID: -495029720
+      spriteID: ce498b8c38d4f9f48b586a6a9f2f050f
+      internalID: 512047030
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_47
+      name: ruletilesprites03_63
       rect:
         serializedVersion: 2
         x: 224
-        y: 32
+        y: 288
         width: 32
         height: 32
       alignment: 0
@@ -1149,18 +1061,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08c2b733687df5e4e908b78d6f568ff6
-      internalID: 1287991654
+      spriteID: 7ceb783b5d7a74246b6b44b4dbf91a51
+      internalID: -1142947331
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_48
+      name: ruletilesprites03_64
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 256
         width: 32
         height: 32
       alignment: 0
@@ -1171,18 +1083,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cf13c513c757c7419f23991dc316b62
-      internalID: 401763443
+      spriteID: b9c1b41691b973949a9ef927892065d3
+      internalID: -1141813021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_49
+      name: ruletilesprites03_65
       rect:
         serializedVersion: 2
         x: 32
-        y: 0
+        y: 256
         width: 32
         height: 32
       alignment: 0
@@ -1193,106 +1105,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dad8076dca9162d4fae155a969dc077c
-      internalID: 124953760
+      spriteID: 117627cad453b264aa732132c9b44022
+      internalID: 376572846
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_50
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 078f99df40c62584da0723367c3a362f
-      internalID: 1068999602
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites03_51
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99661a5d68804514e94dea3b7a850ca8
-      internalID: 260630402
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites03_52
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e7df0889ce4c21340829bed7d4fba7d9
-      internalID: 1214958295
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites03_53
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d77d32f685db4374e96f1eff42eec2aa
-      internalID: -494373677
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites03_54
+      name: ruletilesprites03_66
       rect:
         serializedVersion: 2
         x: 192
-        y: 0
+        y: 256
         width: 32
         height: 32
       alignment: 0
@@ -1303,18 +1127,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a019753a15b15b458cf5e6be45773ba
-      internalID: 1761238319
+      spriteID: aea60664bf876274a8911d1f50caa13c
+      internalID: -1260479098
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites03_55
+      name: ruletilesprites03_67
       rect:
         serializedVersion: 2
         x: 224
-        y: 0
+        y: 256
         width: 32
         height: 32
       alignment: 0
@@ -1325,8 +1149,184 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de9d35f6cc09283468596ba61c6a2595
-      internalID: 55055770
+      spriteID: 984c5632f71d61144adf5ef9e7d92be6
+      internalID: 1419858576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruletilesprites03_68
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5517ed4b2085b0e4e9d4c6ee93ba5a00
+      internalID: -652297428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruletilesprites03_69
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c34d34c1efd6905439d8a787f511e601
+      internalID: -2102818854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruletilesprites03_70
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fd527167f56333438e719532691dac0
+      internalID: 1328524427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruletilesprites03_71
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdc5105a570cec64398f912a2dd9e729
+      internalID: -596224436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruletilesprites03_72
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbff587910f9c5f4689596cc09f3e691
+      internalID: 155137292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruletilesprites03_73
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ddcbc561135b1b4fb83ef91368c83c4
+      internalID: -66265105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruletilesprites03_74
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e67dbcd04a14a9f4aa857b3d8a17d8c7
+      internalID: 957650696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruletilesprites03_75
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e2587bf8d6a2cb44854dae30ba960e4
+      internalID: -330731369
       vertices: []
       indices: 
       edges: []
@@ -1345,7 +1345,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":1,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       ruletilesprites03_0: 2841262105606460296
       ruletilesprites03_1: 299676411
@@ -1399,8 +1399,28 @@ TextureImporter:
       ruletilesprites03_53: -494373677
       ruletilesprites03_54: 1761238319
       ruletilesprites03_55: 55055770
+      ruletilesprites03_56: -1078672895
+      ruletilesprites03_57: -1830483027
+      ruletilesprites03_58: 965729169
+      ruletilesprites03_59: 1961646637
       ruletilesprites03_6: 590963958
+      ruletilesprites03_60: -1855360468
+      ruletilesprites03_61: 292140517
+      ruletilesprites03_62: 512047030
+      ruletilesprites03_63: -1142947331
+      ruletilesprites03_64: -1141813021
+      ruletilesprites03_65: 376572846
+      ruletilesprites03_66: -1260479098
+      ruletilesprites03_67: 1419858576
+      ruletilesprites03_68: -652297428
+      ruletilesprites03_69: -2102818854
       ruletilesprites03_7: 2042787602
+      ruletilesprites03_70: 1328524427
+      ruletilesprites03_71: -596224436
+      ruletilesprites03_72: 155137292
+      ruletilesprites03_73: -66265105
+      ruletilesprites03_74: 957650696
+      ruletilesprites03_75: -330731369
       ruletilesprites03_8: 72911901
       ruletilesprites03_9: 353114051
   mipmapLimitGroupName: 
