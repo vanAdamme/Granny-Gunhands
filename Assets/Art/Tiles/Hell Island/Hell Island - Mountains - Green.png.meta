@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 6f7e7729ab18aa54591533be0c0a6c1b
+guid: e8892da074e439245ab3aa4237d244bf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6280304399861506231
-    second: ruletilesprites06_0
+      213: 2821611801041108000
+    second: Hell Island - Mountains - Green_0
+  - first:
+      213: 4366196710774290649
+    second: Hell Island - Mountains - Green_1
+  - first:
+      213: -5888102510033710388
+    second: Hell Island - Mountains - Green_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +81,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ruletilesprites06_0
+      name: Hell Island - Mountains - Green_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
+        x: 22
+        y: 287
+        width: 212
+        height: 234
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,74 +121,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 94f9eec3c60e7d8a0800000000000000
-      internalID: -6280304399861506231
+      spriteID: 02cfa17cbf0682720800000000000000
+      internalID: 2821611801041108000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites06_1
+      name: Hell Island - Mountains - Green_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
+        x: 54
+        y: 127
+        width: 148
+        height: 130
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 03387479fe33fd0408e8424ea4b4769b
-      internalID: 2001152061
+      spriteID: 9d83e2d76c8d79c30800000000000000
+      internalID: 4366196710774290649
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ruletilesprites06_2
+      name: Hell Island - Mountains - Green_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
+        x: 63
+        y: 31
+        width: 130
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 1aa3afdba336bc642aa0c733688a2901
-      internalID: 1219192051
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites06_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02d7d3e3a8ab17d4a98998f2f7d32a5f
-      internalID: -673509593
+      spriteID: cc2da50b6f1494ea0800000000000000
+      internalID: -5888102510033710388
       vertices: []
       indices: 
       edges: []
@@ -191,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9c89714cf0c7312439c32c6c55de6fa8
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -199,14 +183,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      ruletilesprites06_0: -6280304399861506231
-      ruletilesprites06_1: 2001152061
-      ruletilesprites06_2: 1219192051
-      ruletilesprites06_3: -673509593
+      Hell Island - Mountains - Green_0: 2821611801041108000
+      Hell Island - Mountains - Green_1: 4366196710774290649
+      Hell Island - Mountains - Green_2: -5888102510033710388
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -104,7 +104,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 288
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -126,7 +126,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 288
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -148,7 +148,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 288
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -170,7 +170,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 288
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -192,7 +192,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 288
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -213,8 +213,8 @@ TextureImporter:
       name: ruletilesprites05_5
       rect:
         serializedVersion: 2
-        x: 160
-        y: 288
+        x: 0
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -235,8 +235,8 @@ TextureImporter:
       name: ruletilesprites05_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 256
+        x: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -257,8 +257,8 @@ TextureImporter:
       name: ruletilesprites05_7
       rect:
         serializedVersion: 2
-        x: 32
-        y: 256
+        x: 64
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -279,8 +279,8 @@ TextureImporter:
       name: ruletilesprites05_8
       rect:
         serializedVersion: 2
-        x: 64
-        y: 256
+        x: 96
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -301,8 +301,8 @@ TextureImporter:
       name: ruletilesprites05_9
       rect:
         serializedVersion: 2
-        x: 96
-        y: 256
+        x: 128
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -323,8 +323,8 @@ TextureImporter:
       name: ruletilesprites05_10
       rect:
         serializedVersion: 2
-        x: 128
-        y: 256
+        x: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -345,8 +345,8 @@ TextureImporter:
       name: ruletilesprites05_11
       rect:
         serializedVersion: 2
-        x: 160
-        y: 256
+        x: 32
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -367,8 +367,8 @@ TextureImporter:
       name: ruletilesprites05_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 224
+        x: 64
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -389,8 +389,8 @@ TextureImporter:
       name: ruletilesprites05_13
       rect:
         serializedVersion: 2
-        x: 32
-        y: 224
+        x: 96
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -411,8 +411,8 @@ TextureImporter:
       name: ruletilesprites05_14
       rect:
         serializedVersion: 2
-        x: 64
-        y: 224
+        x: 128
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -433,8 +433,8 @@ TextureImporter:
       name: ruletilesprites05_15
       rect:
         serializedVersion: 2
-        x: 96
-        y: 224
+        x: 0
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -455,8 +455,8 @@ TextureImporter:
       name: ruletilesprites05_16
       rect:
         serializedVersion: 2
-        x: 128
-        y: 224
+        x: 32
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -477,8 +477,8 @@ TextureImporter:
       name: ruletilesprites05_17
       rect:
         serializedVersion: 2
-        x: 160
-        y: 224
+        x: 64
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -499,8 +499,8 @@ TextureImporter:
       name: ruletilesprites05_18
       rect:
         serializedVersion: 2
-        x: 0
-        y: 192
+        x: 96
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -521,8 +521,8 @@ TextureImporter:
       name: ruletilesprites05_19
       rect:
         serializedVersion: 2
-        x: 32
-        y: 192
+        x: 128
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -535,226 +535,6 @@ TextureImporter:
       bones: []
       spriteID: dcd22327ffa853744a6369cdf5b7362f
       internalID: -1456475347
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites05_20
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 192
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 332b31bf647a9c740a446cb79d48093b
-      internalID: -1117364928
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites05_21
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 192
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8d24fbe5862cec541a51cb82a30a9e23
-      internalID: -71493241
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites05_22
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 192
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3c3a577a50e67c84c948a11e5a281c9f
-      internalID: -536483189
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites05_23
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 192
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 336fdbb059943e24694be445a7f8923c
-      internalID: -53589786
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites05_24
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 160
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cbae706f7c44e0343b1461b06b33c625
-      internalID: -260983430
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites05_25
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 160
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6c3fb0a56f5f7c043a5c514643657b3b
-      internalID: -3649717
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites05_26
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 160
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: edc0cb5ccaf17294b9f54db0f2980576
-      internalID: -1333985142
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites05_27
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 160
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 763cf8583816ede40b551305781fe38b
-      internalID: 1422779599
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites05_28
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 160
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b8ba6e24334e16b4a9405abb416e161b
-      internalID: -1428455158
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ruletilesprites05_29
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 160
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 90ba74357e800824fb79a9db2a24161c
-      internalID: 33933683
       vertices: []
       indices: 
       edges: []
@@ -788,16 +568,6 @@ TextureImporter:
       ruletilesprites05_18: -855620886
       ruletilesprites05_19: -1456475347
       ruletilesprites05_2: -1773916634
-      ruletilesprites05_20: -1117364928
-      ruletilesprites05_21: -71493241
-      ruletilesprites05_22: -536483189
-      ruletilesprites05_23: -53589786
-      ruletilesprites05_24: -260983430
-      ruletilesprites05_25: -3649717
-      ruletilesprites05_26: -1333985142
-      ruletilesprites05_27: 1422779599
-      ruletilesprites05_28: -1428455158
-      ruletilesprites05_29: 33933683
       ruletilesprites05_3: 2028159462
       ruletilesprites05_4: 1609098307
       ruletilesprites05_5: 623165791
