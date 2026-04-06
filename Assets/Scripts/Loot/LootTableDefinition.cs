@@ -48,12 +48,12 @@ public class LootTableDefinition : ScriptableObject
     [Header("Spawn")]
     [SerializeField] private Vector2 spawnJitter = new Vector2(0.25f, 0.25f);
 
-    public void TrySpawnLoot(Vector3 where, Transform parent = null)
+    public bool TrySpawnLoot(Vector3 where, Transform parent = null)
     {
-        if (entries == null || entries.Count == 0) return;
+        if (entries == null || entries.Count == 0) return false;
 
         // 1) Global drop roll
-        if (!Roll(overallDropChance)) return;
+        if (!Roll(overallDropChance)) return false;
 
         // 2) Build weight list using rarity settings (with overrides)
         int total = 0;
@@ -69,7 +69,7 @@ public class LootTableDefinition : ScriptableObject
             total += weights[i];
         }
 
-        if (total <= 0) return;
+        if (total <= 0) return false;
 
         // 3) Pick one entry by weight
         int pick = PickWeightedIndex(weights, total);
@@ -80,7 +80,7 @@ public class LootTableDefinition : ScriptableObject
             ? entry.dropChanceOverride
             : raritySettings.GetDefaultDropChance(entry.GetRarity());
 
-        if (!Roll(chance)) return;
+        if (!Roll(chance)) return false;
 
         // 5) Spawn the right thing
         Vector3 pos = where + (Vector3)new Vector2(UnityEngine.Random.Range(-spawnJitter.x, spawnJitter.x),
@@ -91,52 +91,47 @@ public class LootTableDefinition : ScriptableObject
             if (!weaponPickupPrefab)
             {
                 Debug.LogWarning("[LootTable] WeaponPickup Prefab not set.");
-                return;
+                return false;
             }
 
             var pickup = Instantiate(weaponPickupPrefab, pos, Quaternion.identity, parent);
-            pickup.SetDefinition(entry.weaponDef); // make sure WeaponPickup exposes SetDefinition(WeaponDefinition)
+            pickup.SetDefinition(entry.weaponDef);
+            return true;
         }
         else if (entry.HasPowerUp)
         {
             if (!powerUpPickupPrefab)
             {
                 Debug.LogWarning("[LootTable] PowerUpPickup Prefab not set.");
-                return;
+                return false;
             }
 
             var pickup = Instantiate(powerUpPickupPrefab, pos, Quaternion.identity, parent);
-            pickup.SetDefinition(entry.powerUpDef); // see PowerUpPickup below
+            pickup.SetDefinition(entry.powerUpDef);
+            return true;
         }
         else if (entry.upgradeItemDef)
         {
             if (!upgradePickupPrefab)
             {
                 Debug.LogError("[LootTable] Upgrade Pickup Prefab not assigned.");
-                return;
+                return false;
             }
             var p = Instantiate(upgradePickupPrefab, pos, Quaternion.identity, parent);
             p.SetDefinition(entry.upgradeItemDef);
-            return;
+            return true;
         }
         else if (entry.HasPrefab)
         {
             Instantiate(entry.prefab, pos, Quaternion.identity, parent);
+            return true;
         }
-        else
-        {
-            // nothing selected; silent no-op
-        }
+
+        return false;
     }
 
     // Back-compat shim for older callers
-    public bool TrySpawnDrop(Vector3 where)
-    {
-        TrySpawnLoot(where, null);
-        // TrySpawnLoot is void; return true means "attempted". Change to
-        // a bool return in future if you want certainty.
-        return true;
-    }
+    public bool TrySpawnDrop(Vector3 where) => TrySpawnLoot(where, null);
 
     private static bool Roll(float p) => p > 0f && UnityEngine.Random.value <= p;
 

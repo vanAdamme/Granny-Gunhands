@@ -43,7 +43,7 @@ public class Health : MonoBehaviour
 
     public virtual void TakeDamage(float amount, GameObject attacker)
     {
-        if (m_IsDead || m_IsInvulnerable) return;
+        if (m_IsDead || m_IsInvulnerable || amount <= 0f) return;
 
         m_CurrentHealth -= amount;
 

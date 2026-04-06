@@ -42,6 +42,9 @@ public class EnemyShooter : MonoBehaviour
 
     void Update()
     {
+        if (!player && PlayerController.Instance)
+            player = PlayerController.Instance.transform;
+
         if (controlledExternally || !player) return;
 
         timer -= Time.deltaTime;
@@ -56,6 +59,9 @@ public class EnemyShooter : MonoBehaviour
 
     void LateUpdate()
     {
+        if (!player && PlayerController.Instance)
+            player = PlayerController.Instance.transform;
+
         if (!player || !aimRoot) return;
         Vector3 pivot = muzzle ? muzzle.position : aimRoot.position;
 
@@ -83,7 +89,11 @@ public class EnemyShooter : MonoBehaviour
             : Instantiate(projectilePrefab.gameObject, spawnPos, rot);
 
         var p = go.GetComponent<Projectile>();
-        if (!p) p = go.AddComponent<Projectile>();
+        if (!p)
+        {
+            Debug.LogWarning($"[EnemyShooter] Spawned object '{go.name}' has no Projectile component; adding one at runtime. Check pool prefab configuration.", go);
+            p = go.AddComponent<Projectile>();
+        }
 
         // Initialise projectile (Damager config is handled inside Projectile.Init as well)
         p.Init(gameObject, targetLayers, projectileDamage, dir);

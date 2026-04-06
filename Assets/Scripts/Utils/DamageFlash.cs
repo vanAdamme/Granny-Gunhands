@@ -33,6 +33,7 @@ public class DamageFlash : MonoBehaviour
 
     public void CallDamageFlash()
     {
+        if (damageFlashCoroutine != null) StopCoroutine(damageFlashCoroutine);
         damageFlashCoroutine = StartCoroutine(DamageFlasher());
     }
 
