@@ -13,7 +13,7 @@ public class PowerUpHUD : MonoBehaviour
 
     private void Start()
     {
-        var player = FindFirstObjectByType<PowerUpController>();
+        var player = FindFirstObjectByType<PowerUpController>(FindObjectsInactive.Include);
         if (!player) { gameObject.SetActive(false); return; }
 
         controller = player;

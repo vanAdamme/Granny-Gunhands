@@ -82,8 +82,8 @@ public class WobblyRunAtPlayerStrategy : MonoBehaviour, IMovementStrategy
         _freqMul = 1f + Random.Range(-frequencyJitterPct, frequencyJitterPct);
 
         // Keep AIPath speed sensible vs Enemy.MoveSpeed if present.
-        if (ai && TryGetComponentInParent(out Enemy enemy))
-            ai.maxSpeed = Mathf.Max(ai.maxSpeed, enemy.MoveSpeed);
+        var enemy = GetComponentInParent<Enemy>();
+        if (ai && enemy) ai.maxSpeed = Mathf.Max(ai.maxSpeed, enemy.MoveSpeed);
     }
 
     public bool MoveTowards(IEnemyContext ctx, Vector2 destination, float dt)
@@ -157,11 +157,4 @@ public class WobblyRunAtPlayerStrategy : MonoBehaviour, IMovementStrategy
         return true;
     }
 
-    // Util
-    static bool TryGetComponentInParent<T>(out T c) where T : Component
-    {
-        c = default;
-        var self = (Component) null;
-        return (self = null) == null && ((c = FindFirstObjectByType<T>()) != null); // dummy; replaced by Awake above if needed
-    }
 }

@@ -30,7 +30,7 @@ public class EnemyShooter : MonoBehaviour
 
     void Awake()
     {
-        if (!poolService) poolService = FindFirstObjectByType<UnityPoolService>(); // Unity 6-safe
+        if (!poolService) poolService = FindFirstObjectByType<UnityPoolService>(FindObjectsInactive.Include);
         if (!aimRoot) aimRoot = transform;
         if (targetLayers.value == 0) targetLayers = LayerMask.GetMask("Player");
     }

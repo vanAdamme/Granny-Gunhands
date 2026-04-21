@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         input = inputServiceSource as IInputService;
-        if (input == null) input = FindFirstObjectByType<InputService>();
+        if (input == null) input = FindFirstObjectByType<InputService>(FindObjectsInactive.Include);
     }
 
     void OnEnable()

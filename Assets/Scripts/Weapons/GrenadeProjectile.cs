@@ -8,6 +8,9 @@ public class GrenadeProjectile : MonoBehaviour
     [SerializeField] private float explosionRadius = 1.6f;
     [SerializeField] private GameObject explosionVFX;
 
+    // Pre-allocated to avoid per-explosion heap allocation (non-allocating physics API, Unity 6.3+).
+    private static readonly Collider2D[] OverlapBuffer = new Collider2D[32];
+
     private Rigidbody2D rb;
     private float despawnAt;
     private float damage;
@@ -50,11 +53,11 @@ public class GrenadeProjectile : MonoBehaviour
         if (explosionVFX)
             VFX.Spawn(explosionVFX, transform.position, Quaternion.identity, 1.2f);
 
-        // Damage in radius
-        var hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius, targetLayers);
-        for (int i = 0; i < hits.Length; i++)
+        // Damage in radius — non-allocating path avoids GC pressure with Box2D v3 (Unity 6.3+).
+        int hitCount = Physics2D.OverlapCircleNonAlloc(transform.position, explosionRadius, OverlapBuffer, targetLayers);
+        for (int i = 0; i < hitCount; i++)
         {
-            var h = hits[i];
+            var h = OverlapBuffer[i];
             if (!h) continue;
             if (ownerRoot && h.transform.root.gameObject == ownerRoot) continue;
 
