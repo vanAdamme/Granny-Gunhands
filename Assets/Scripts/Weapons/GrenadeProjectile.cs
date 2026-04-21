@@ -53,8 +53,10 @@ public class GrenadeProjectile : MonoBehaviour
         if (explosionVFX)
             VFX.Spawn(explosionVFX, transform.position, Quaternion.identity, 1.2f);
 
-        // Damage in radius — non-allocating path avoids GC pressure with Box2D v3 (Unity 6.3+).
-        int hitCount = Physics2D.OverlapCircleNonAlloc(transform.position, explosionRadius, OverlapBuffer, targetLayers);
+        // Damage in radius — ContactFilter2D overload is the non-deprecated non-allocating path in Unity 6.3+.
+        // useTriggers = true matches the old OverlapCircleAll/NonAlloc behaviour (includes trigger colliders).
+        var filter = new ContactFilter2D { useLayerMask = true, layerMask = targetLayers, useTriggers = true };
+        int hitCount = Physics2D.OverlapCircle(transform.position, explosionRadius, filter, OverlapBuffer);
         for (int i = 0; i < hitCount; i++)
         {
             var h = OverlapBuffer[i];
