@@ -156,8 +156,8 @@ public class EnemyStateMachine : MonoBehaviour
 
     private class AttackState : StateBase
     {
-        public override void OnEnter(IEnemyContext ctx) => ctx.PlayAnim("Attack");
-        public override void OnExit(IEnemyContext ctx) { }
+        public override void OnEnter(IEnemyContext ctx) { ctx.PlayAnim("Attack"); ctx.Attack.OnEnter(ctx); }
+        public override void OnExit(IEnemyContext ctx)  { ctx.Attack.OnExit(ctx); }
 
         public override void Tick(IEnemyContext ctx, float dt)
         {

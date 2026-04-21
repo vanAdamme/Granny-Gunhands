@@ -1,23 +1,10 @@
 using UnityEngine;
 
-public interface IPlayerContext
+// IPlayerContext composes the four focused sub-interfaces.
+// New code should depend on the narrowest interface that satisfies its needs
+// (e.g. a heal effect only needs IHealthContext; a speed buff only needs IMovementContext).
+public interface IPlayerContext : IHealthContext, IMovementContext, IProgressionContext, IWeaponContext
 {
-    // Health
-    float MaxHealth { get; set; }
-    void Heal(float amount);
-    bool IsInvulnerable { get; set; }
-
-    // Movement
-    float MoveSpeed { get; set; }
-
-    // Progression
-    void AddExperience(int amount);
-
-    // Weapons
-    bool TryGetActiveWeapon(Hand hand, out Weapon weapon);
-    bool TryGetActiveWeapon<T>(Hand hand, out T weapon) where T : Weapon;
-
-    // Misc
     Transform Transform { get; }
     ItemInventory ItemInventory { get; }
 }
