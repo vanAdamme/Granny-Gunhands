@@ -36,7 +36,7 @@ public abstract class SpecialWeaponBase : MonoBehaviour
         if (local != null) { charge = local; return true; }
 
         // 3) Last-ditch: global find (only if there is truly one in scene)
-        charge = Object.FindFirstObjectByType<SpecialChargeSimple>();
+        charge = Object.FindFirstObjectByType<SpecialChargeSimple>(FindObjectsInactive.Include);
         return charge != null;
     }
 

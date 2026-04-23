@@ -45,18 +45,9 @@ public class InventoryItemsUI : MonoBehaviour, IInventoryPanel
 
     private void TryResolveContextAndInventories()
     {
-        // 1) Find a player context (prefer PlayerController)
+        // 1) Find a player context — PlayerController is the only IPlayerContext in the project.
         if (ctx == null)
-        {
             ctx = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include) as IPlayerContext;
-            if (ctx == null)
-            {
-                // Fallback: scan for any MonoBehaviour that implements IPlayerContext
-                var all = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-                for (int i = 0; i < all.Length && ctx == null; i++)
-                    if (all[i] is IPlayerContext asCtx) ctx = asCtx;
-            }
-        }
 
         // 2) Bind the SAME ItemInventory the player exposes
         if (ctx != null && itemInventory == null)

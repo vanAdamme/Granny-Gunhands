@@ -12,7 +12,7 @@ public class PowerUpBar : MonoBehaviour
 
     private void Start()
     {
-        controller = FindFirstObjectByType<PowerUpController>();
+        controller = FindFirstObjectByType<PowerUpController>(FindObjectsInactive.Include);
         if (!controller) { gameObject.SetActive(false); return; }
     }
 

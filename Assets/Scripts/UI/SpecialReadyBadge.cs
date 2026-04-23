@@ -123,11 +123,8 @@ public class SpecialReadyBadge : MonoBehaviour
             if (c2) return c2;
         }
 
-        // As a last resort, any MonoBehaviour that implements ISpecialCharge
-        var mbs = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        foreach (var mb in mbs) if (mb is ISpecialCharge c3) return c3;
-
-        return null;
+        // Typed lookup — avoids scanning every MonoBehaviour in the scene.
+        return FindFirstObjectByType<SpecialChargeSimple>(FindObjectsInactive.Include);
     }
 
     private void MaybeSubscribe()

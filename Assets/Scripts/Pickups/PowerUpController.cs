@@ -8,7 +8,7 @@ public class PowerUpController : MonoBehaviour
 {
     private IPlayerContext player;
     private readonly List<ActivePower> active = new();
-    // private static int nextId = 1;
+    private static int nextId = 1;
 
     // Keep existing events if you like
     public event Action<PowerUpDefinition, float> OnPowerUpStarted;
@@ -135,11 +135,18 @@ public class PowerUpController : MonoBehaviour
             rt.Apply(player);
         }
 
-        // 5) Spawn duration VFX as you already do, then track & fire event …
-        // … (rest of your existing code) …
+        float remaining = def.durationSeconds > 0f ? def.durationSeconds : -1f;
+        float expiresAt = def.durationSeconds > 0f ? now + def.durationSeconds : 0f;
 
-        active.Add(new ActivePower { /* … */ });
-        OnPowerUpStarted?.Invoke(def, /*remaining*/  def.durationSeconds > 0 ? def.durationSeconds : -1f);
+        active.Add(new ActivePower
+        {
+            id        = nextId++,
+            def       = def,
+            effects   = effects,
+            expiresAt = expiresAt,
+            remaining = remaining,
+        });
+        OnPowerUpStarted?.Invoke(def, remaining);
 
         return true; // started a new timed effect → consume
     }

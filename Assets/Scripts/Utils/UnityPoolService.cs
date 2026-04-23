@@ -121,18 +121,18 @@ public class UnityPoolService : MonoBehaviour, IGameObjectPool
 
         void OnGet(GameObject go)
         {
-            // Activate and show (unless you've opted to hide active too)
             go.SetActive(true);
             go.hideFlags = hideActiveInHierarchy ? HideFlags.HideInHierarchy : HideFlags.None;
 
-            // Give listeners a chance to initialize
-            go.SendMessage("OnSpawnedFromPool", SendMessageOptions.DontRequireReceiver);
+            // Type-safe callbacks — avoids SendMessage overhead and works correctly with Box2D v3.
+            foreach (var r in go.GetComponentsInChildren<IPoolCallbackReceiver>(true))
+                r.OnSpawnedFromPool();
         }
 
         void OnRelease(GameObject go)
         {
-            // Let listeners clean up before hiding
-            go.SendMessage("OnDespawnedToPool", SendMessageOptions.DontRequireReceiver);
+            foreach (var r in go.GetComponentsInChildren<IPoolCallbackReceiver>(true))
+                r.OnDespawnedToPool();
 
             // Park under hidden root & hide in hierarchy while inactive
             if (hiddenRoot && go.transform.parent != hiddenRoot)

@@ -12,7 +12,7 @@ public class DamageSinceSpecialCounter : MonoBehaviour
     void Awake()
     {
         if (!label) label = GetComponent<TMP_Text>();
-        meter = FindFirstObjectByType<SpecialChargeSimple>();
+        meter = FindFirstObjectByType<SpecialChargeSimple>(FindObjectsInactive.Include);
     }
 
     void OnEnable()

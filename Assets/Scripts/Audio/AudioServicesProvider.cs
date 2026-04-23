@@ -13,7 +13,7 @@ public sealed class AudioServicesProvider : MonoBehaviour
         if (transform.parent != null && transform.root != transform) transform.SetParent(null, true);
         DontDestroyOnLoad(gameObject);
 
-        Audio ??= audioService as IAudioService ?? FindFirstObjectByType<AudioService>();
-        Music ??= musicService as IMusicService ?? FindFirstObjectByType<MusicService>();
+        Audio ??= audioService as IAudioService ?? FindFirstObjectByType<AudioService>(FindObjectsInactive.Include);
+        Music ??= musicService as IMusicService ?? FindFirstObjectByType<MusicService>(FindObjectsInactive.Include);
     }
 }

@@ -30,14 +30,6 @@ public class SpecialChargeMeter : MonoBehaviour
             pendingUiSync = false;
             PushUI();
         }
-
-        if (Current > 0)
-        {
-            // decay as float but clamp to int for display; optional
-            float f = Mathf.Max(0f, Current * Time.deltaTime);
-            int newVal = Mathf.FloorToInt(f);
-            if (newVal != Current) { Current = newVal; PushUI(); }
-        }
     }
 
     void HandleKill()

@@ -37,8 +37,8 @@ public class InventoryUI : MonoBehaviour
 
     void Awake()
     {
-        if (!inventory) inventory = FindFirstObjectByType<WeaponInventory>();
-        input = inputServiceSource as IInputService ?? FindFirstObjectByType<InputService>();
+        if (!inventory) inventory = FindFirstObjectByType<WeaponInventory>(FindObjectsInactive.Include);
+        input = inputServiceSource as IInputService ?? FindFirstObjectByType<InputService>(FindObjectsInactive.Include);
 
         assignLeftButton?.onClick.AddListener(() => { assignTarget = Hand.Left;  RefreshAssignButtons(); });
         assignRightButton?.onClick.AddListener(() => { assignTarget = Hand.Right; RefreshAssignButtons(); });

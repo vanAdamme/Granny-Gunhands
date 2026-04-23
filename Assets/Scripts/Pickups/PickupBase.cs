@@ -40,22 +40,16 @@ public abstract class PickupBase : MonoBehaviour
         if (spriteRenderer && icon) spriteRenderer.sprite = icon;
     }
 
-    // CENTRAL: resolves lazily; call this right before showing a toast
+    // Resolves lazily. Wire toastServiceSource in the Inspector on any pickup that needs
+    // toasts; if left empty, falls back to the scene's ToastManager.
     private void TryResolveToast()
     {
         if (toast != null) return;
 
         if (toastServiceSource is IToastService svc) { toast = svc; return; }
 
-        // Try to find a ToastManager in the scene (even if inactive)
         var manager = FindFirstObjectByType<ToastManager>(FindObjectsInactive.Include);
         if (manager) { toast = manager; return; }
-
-        // Last-ditch: scan for any component that implements IToastService
-        foreach (var mb in FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-        {
-            if (mb is IToastService found) { toast = found; return; }
-        }
     }
 
     protected void ShowToast(string message)
